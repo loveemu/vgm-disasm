@@ -45,7 +45,7 @@
 075c: 3f 2c 0b  call  $0b2c
 075f: e8 7f     mov   a,#$7f
 0761: c5 3f 03  mov   $033f,a
-0764: c4 b4     mov   $b4,a
+0764: c4 b4     mov   $b4,a             ; master volume
 0766: 8f 25 fa  mov   $fa,#$25
 0769: 8f 00 f1  mov   $f1,#$00
 076c: 8f 01 f1  mov   $f1,#$01
@@ -173,7 +173,7 @@
 
 086b: e4 f4     mov   a,$f4
 086d: 64 f4     cmp   a,$f4
-086f: d0 fa     bne   $086b
+086f: d0 fa     bne   $086b             ; poll APU0 input
 0871: 65 3f 03  cmp   a,$033f
 0874: d0 01     bne   $0877
 0876: 6f        ret
@@ -188,15 +188,20 @@
 0888: 5d        mov   x,a
 0889: 1f 8c 08  jmp   ($088c+x)
 
-088c: ba 08     movw  ya,$08
-088e: 15 09 33  or    a,$3309+x
-0891: 09 6f 09  or    ($09),($6f)
-0894: 1d        dec   x
-0895: 0a 40 0a  or1   c,$0a40,0
-0898: e5 09 12  mov   a,$1209
-089b: 09 a2 08  or    ($08),($a2)
-089e: ba 08     movw  ya,$08
-08a0: 6b 09     ror   $09
+; cpu cmd dispatch table
+088c: dw $08ba  ; 00
+088e: dw $0915  ; 02
+0890: dw $0933  ; 04
+0892: dw $096f  ; 06
+0894: dw $0a1d  ; 08
+0896: dw $0a40  ; 0a
+0898: dw $09e5  ; 0c
+089a: dw $0912  ; 0e
+089c: dw $08a2  ; 10
+089e: dw $08ba  ; 12
+08a0: dw $096b  ; 14
+
+; cpu cmd 10
 08a2: e8 ff     mov   a,#$ff
 08a4: 8d 01     mov   y,#$01
 08a6: 58 01 c8  eor   $c8,#$01
@@ -209,6 +214,7 @@
 08b6: 8f 01 f1  mov   $f1,#$01
 08b9: 6f        ret
 
+; cpu cmd 00,12
 08ba: 38 00 c1  and   $c1,#$00
 08bd: e8 00     mov   a,#$00
 08bf: c5 1a 03  mov   $031a,a
@@ -250,21 +256,24 @@
 090e: d5 28 03  mov   $0328+x,a
 0911: 6f        ret
 
+; cpu cmd 0e
 0912: 8f 00 cf  mov   $cf,#$00
+; cpu cmd 02 - load song from $b9 (usually 5c00)
 0915: fa cf b4  mov   ($b4),($cf)
 0918: 18 01 c1  or    $c1,#$01
 091b: cd 07     mov   x,#$07
-091d: 3f bf 0a  call  $0abf
+091d: 3f bf 0a  call  $0abf             ; initialize all tracks
 0920: 1d        dec   x
 0921: 10 fa     bpl   $091d
 0923: 8f ff ce  mov   $ce,#$ff
-0926: 3f ff 0b  call  $0bff
+0926: 3f ff 0b  call  $0bff             ; load all track addresses
 0929: 02 c0     set0  $c0
 092b: 8f 78 ae  mov   $ae,#$78
 092e: e8 ff     mov   a,#$ff
 0930: c4 b1     mov   $b1,a
 0932: 6f        ret
 
+; cpu cmd 04
 0933: e4 f7     mov   a,$f7
 0935: c4 9b     mov   $9b,a
 0937: e4 f6     mov   a,$f6
@@ -290,9 +299,11 @@
 0961: db $ff,$c8,$96,$64,$50,$3c,$28,$14
 0969: db $0a,$01
 
+; cpu cmd 14
 096b: fa b4 f6  mov   ($f6),($b4)
 096e: 6f        ret
 
+; cpu cmd 06
 096f: e4 f6     mov   a,$f6
 0971: c4 f6     mov   $f6,a
 0973: 1c        asl   a
@@ -310,7 +321,6 @@
 
 098a: 6f        ret
 
-; play song in Y
 098b: 38 bf 61  and   $61,#$bf
 098e: 38 bf 65  and   $65,#$bf
 0991: 38 bf 72  and   $72,#$bf
@@ -347,9 +357,10 @@
 09da: f6 27 0c  mov   a,$0c27+y
 09dd: d4 7d     mov   $7d+x,a
 09df: f6 26 0c  mov   a,$0c26+y
-09e2: d4 73     mov   $73+x,a           ; load voice ptr address
+09e2: d4 73     mov   $73+x,a
 09e4: 6f        ret
 
+; cpu cmd 0c
 09e5: 8f 00 ca  mov   $ca,#$00
 09e8: 8f 04 cb  mov   $cb,#$04
 09eb: 3f 44 11  call  $1144
@@ -374,6 +385,7 @@
 
 0a1c: 6f        ret
 
+; cpu cmd 08
 0a1d: e4 f6     mov   a,$f6
 0a1f: c4 f6     mov   $f6,a
 0a21: 32 c0     clr1  $c0
@@ -394,6 +406,7 @@
 0a3d: c4 63     mov   $63,a
 0a3f: 6f        ret
 
+; cpu cmd 0a
 0a40: 3f ba 08  call  $08ba
 0a43: fa b9 ca  mov   ($ca),($b9)
 0a46: fa ba cb  mov   ($cb),($ba)
@@ -458,6 +471,7 @@
 0abc: d2 71     clr6  $71
 0abe: 6f        ret
 
+; initialize track x
 0abf: e8 ff     mov   a,#$ff
 0ac1: d5 14 02  mov   $0214+x,a
 0ac4: d5 1e 03  mov   $031e+x,a
@@ -502,14 +516,14 @@
 
 0b2c: e8 1b     mov   a,#$1b
 0b2e: 8f 5d f2  mov   $f2,#$5d
-0b31: c4 f3     mov   $f3,a             ; DIR
+0b31: c4 f3     mov   $f3,a             ; DIR = 0x1b00
 0b33: c4 a9     mov   $a9,a
 0b35: 8f 80 a8  mov   $a8,#$80
 0b38: c4 b8     mov   $b8,a
 0b3a: 8f 00 b7  mov   $b7,#$00
 0b3d: 8d 7f     mov   y,#$7f
 0b3f: e8 00     mov   a,#$00
-0b41: d7 b7     mov   ($b7)+y,a
+0b41: d7 b7     mov   ($b7)+y,a         ; clear DIR entries
 0b43: dc        dec   y
 0b44: 10 fb     bpl   $0b41
 0b46: eb bf     mov   y,$bf
@@ -545,7 +559,7 @@
 0b90: db $ff,$ff,$ff,$ff
 0b94: db $ff,$ff,$ff,$ff
 0b98: db $ff,$ff,$ff,$ff
-0b9c: db $ff,$ff,$ff,$ff
+0b9a: db $ff,$ff,$ff,$ff
 
 0b9c: 2d        push  a
 0b9d: e4 f4     mov   a,$f4
@@ -600,23 +614,25 @@
 0bfb: 98 04 bb  adc   $bb,#$04
 0bfe: 6f        ret
 
+; load all track addresses
 0bff: e8 00     mov   a,#$00
 0c01: fd        mov   y,a
 0c02: 5d        mov   x,a
 0c03: c4 67     mov   $67,a
+; for x in 0..8
 0c05: 4b 67     lsr   $67
 0c07: f7 b9     mov   a,($b9)+y
-0c09: d4 73     mov   $73+x,a
+0c09: d4 73     mov   $73+x,a           ; load voice address (lo)
 0c0b: c4 00     mov   $00,a
 0c0d: fc        inc   y
 0c0e: f7 b9     mov   a,($b9)+y
 0c10: c4 01     mov   $01,a
 0c12: 60        clrc
-0c13: 84 ba     adc   a,$ba
-0c15: d4 7d     mov   $7d+x,a
+0c13: 84 ba     adc   a,$ba             ; convert offset to address
+0c15: d4 7d     mov   $7d+x,a           ; load voice address (hi)
 0c17: 09 01 00  or    ($00),($01)
-0c1a: f0 03     beq   $0c1f
-0c1c: 18 80 67  or    $67,#$80
+0c1a: f0 03     beq   $0c1f             ; offset 0 = unused track
+0c1c: 18 80 67  or    $67,#$80          ; indicate track availability
 0c1f: fc        inc   y
 0c20: 3d        inc   x
 0c21: c8 08     cmp   x,#$08
@@ -1142,7 +1158,7 @@
 1605: d5 1e 03  mov   $031e+x,a
 1608: c8 08     cmp   x,#$08
 160a: b0 08     bcs   $1614
-160c: eb b4     mov   y,$b4
+160c: eb b4     mov   y,$b4             ; master volume
 160e: cf        mul   ya
 160f: 4d        push  x
 1610: cd 7f     mov   x,#$7f
@@ -1284,6 +1300,7 @@
 175a: d5 64 02  mov   $0264+x,a
 175d: 5f 70 17  jmp   $1770
 
+; change instrument
 1760: f5 28 02  mov   a,$0228+x
 1763: 75 28 03  cmp   a,$0328+x
 1766: f0 08     beq   $1770
