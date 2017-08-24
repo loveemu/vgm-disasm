@@ -1383,7 +1383,7 @@
 13ab: dw $14af  ; 05 - (1+2*N byte)
 13ad: dw $14c7  ; 06 - (1+2*N byte)
 13af: dw $14d4  ; 07 - set initial echo param (1 or 8 bytes)
-13b1: dw $1531  ; 08 - (1 byte)
+13b1: dw $1531  ; 08 - set note velocity on/off
 13b3: dw $153a  ; 09 - (1+2*N byte)
 
 ; extra header 01 - set channel addresses
@@ -1579,10 +1579,10 @@
 152c: 42 be     set2  $be
 152e: 5f 98 13  jmp   $1398
 
-; extra header 08
+; extra header 08 - set note velocity on/off
 1531: f7 04     mov   a,($04)+y
 1533: f0 02     beq   $1537
-1535: a2 be     set5  $be
+1535: a2 be     set5  $be               ; note will have a velocity parameter
 1537: 5f 98 13  jmp   $1398
 
 ; extra header 09
@@ -1979,7 +1979,7 @@
 184b: dw $1ce2  ; 09 - (0 byte)
 184d: dw $1cef  ; 0a - (0 byte)
 184f: dw $1cfa  ; 0b - (0 byte)
-1851: dw $1d0c  ; 0c - (0 byte)
+1851: dw $1d0c  ; 0c - note velocity off
 1853: dw $1d17  ; 0d - (1 byte)
 1855: dw $17c3  ; 0e - nop
 1857: dw $17c3  ; 0f - nop
@@ -2116,17 +2116,19 @@
 1943: 28 7f     and   a,#$7f
 1945: d5 73 02  mov   $0273+x,a
 1948: b3 be 1a  bbc5  $be,$1965
+; when note velocity is enabled:
 194b: f4 b6     mov   a,$b6+x
-194d: 30 16     bmi   $1965
+194d: 30 16     bmi   $1965             ; skip if it's disabled by subcmd 0c
 194f: 8d 00     mov   y,#$00
 1951: f7 04     mov   a,($04)+y
-1953: 3a 04     incw  $04
+1953: 3a 04     incw  $04               ; read one more byte from voice ptr
 1955: 75 83 02  cmp   a,$0283+x
-1958: f0 0b     beq   $1965
+1958: f0 0b     beq   $1965             ; skip if the value is not changed
 195a: d5 83 02  mov   $0283+x,a
 195d: f5 73 02  mov   a,$0273+x
 1960: 28 7f     and   a,#$7f
-1962: d5 73 02  mov   $0273+x,a
+1962: d5 73 02  mov   $0273+x,a         ; indicate that volume is changed
+;
 1965: e4 04     mov   a,$04
 1967: d5 01 02  mov   $0201+x,a
 196a: e4 05     mov   a,$05
@@ -2645,7 +2647,7 @@
 1d06: 3f 3a 20  call  $203a
 1d09: 5f c3 17  jmp   $17c3
 
-; subcmd 0c
+; subcmd 0c - note velocity off
 1d0c: f8 4a     mov   x,$4a
 1d0e: f4 b6     mov   a,$b6+x
 1d10: 08 80     or    a,#$80
