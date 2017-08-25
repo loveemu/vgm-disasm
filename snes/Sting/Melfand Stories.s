@@ -1042,14 +1042,14 @@
 0bb6: f5 01 22  mov   a,$2201+x
 0bb9: fd        mov   y,a
 0bba: f5 00 22  mov   a,$2200+x
-0bbd: da 10     movw  $10,ya            ; sfx table $2200?
+0bbd: da 10     movw  $10,ya            ; load header address from sfx table $2200?
 0bbf: 8d 00     mov   y,#$00
 0bc1: 2f 14     bra   $0bd7
 0bc3: 1c        asl   a
 0bc4: 5d        mov   x,a
 0bc5: f5 01 12  mov   a,$1201+x
 0bc8: fd        mov   y,a
-0bc9: f5 00 12  mov   a,$1200+x         ; song table $1200
+0bc9: f5 00 12  mov   a,$1200+x         ; load header address from song table $1200
 0bcc: da 10     movw  $10,ya
 0bce: e8 00     mov   a,#$00
 0bd0: c4 75     mov   $75,a

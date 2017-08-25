@@ -1386,17 +1386,20 @@
 12ac: cd 00     mov   x,#$00
 12ae: 1f c4 00  jmp   ($00c4+x)
 
+; load song A
 12b1: 68 b6     cmp   a,#$b6
-12b3: b0 5f     bcs   $1314
+12b3: b0 5f     bcs   $1314             ; skip if a >= 0xb6
 12b5: 68 10     cmp   a,#$10
 12b7: 90 0b     bcc   $12c4
+; a >= 0x10
 12b9: 80        setc
 12ba: a8 10     sbc   a,#$10
 12bc: 8f 00 c2  mov   $c2,#$00
-12bf: 8f 1a c3  mov   $c3,#$1a
+12bf: 8f 1a c3  mov   $c3,#$1a          ; sfx list ptr $1a00?
 12c2: 2f 18     bra   $12dc
+; a < 0x10
 12c4: 8f 00 c2  mov   $c2,#$00
-12c7: 8f 3a c3  mov   $c3,#$3a
+12c7: 8f 3a c3  mov   $c3,#$3a          ; song list ptr $3a00
 12ca: cd 00     mov   x,#$00
 12cc: d8 02     mov   $02,x
 12ce: d8 06     mov   $06,x
@@ -1405,38 +1408,41 @@
 12d4: d8 0f     mov   $0f,x
 12d6: 23 d0 03  bbs1  $d0,$12dc
 12d9: 8f ff 10  mov   $10,#$ff
+;
 12dc: 8d 00     mov   y,#$00
 12de: c4 c7     mov   $c7,a
 12e0: f7 c2     mov   a,($c2)+y
 12e2: c4 c4     mov   $c4,a
 12e4: fc        inc   y
 12e5: f7 c2     mov   a,($c2)+y
-12e7: c4 c5     mov   $c5,a
+12e7: c4 c5     mov   $c5,a             ; $c4/5 = pointer to song table
 12e9: e4 c7     mov   a,$c7
 12eb: 8f 00 c6  mov   $c6,#$00
 12ee: 1c        asl   a
 12ef: 2b c6     rol   $c6
 12f1: eb c6     mov   y,$c6
 12f3: 7a c4     addw  ya,$c4
-12f5: da c4     movw  $c4,ya
+12f5: da c4     movw  $c4,ya            ; $c4/5 += song number * 2
 12f7: 8d 00     mov   y,#$00
 12f9: f7 c4     mov   a,($c4)+y
 12fb: c4 c8     mov   $c8,a
 12fd: fc        inc   y
-12fe: f7 c4     mov   a,($c4)+y
-1300: c4 c9     mov   $c9,a
+12fe: f7 c4     mov   a,($c4)+y         ; read song header address from $c4/5
+1300: c4 c9     mov   $c9,a             ; then set it to $c8/9
 1302: dc        dec   y
-1303: f7 c8     mov   a,($c8)+y
+; start reading track header
+1303: f7 c8     mov   a,($c8)+y         ; header +00h - track index 0,2,4... (i.e. load destination)
 1305: 3a c8     incw  $c8
 1307: c4 c2     mov   $c2,a
 1309: 28 1f     and   a,#$1f
 130b: c4 12     mov   $12,a
-130d: f7 c8     mov   a,($c8)+y
+130d: f7 c8     mov   a,($c8)+y         ; header +01h - track mask 01,02,04... (0: end of header)
 130f: 3a c8     incw  $c8
 1311: fd        mov   y,a
 1312: d0 01     bne   $1315
+; zero indicates the end of header, so quit now
 1314: 6f        ret
-
+; load track
 1315: c4 c3     mov   $c3,a
 1317: f8 12     mov   x,$12
 1319: c8 10     cmp   x,#$10
@@ -1515,11 +1521,11 @@
 13b1: d4 a9     mov   $a9+x,a           ; voice ptr stack pointer (hi)
 13b3: 8d 00     mov   y,#$00
 13b5: f7 c8     mov   a,($c8)+y
-13b7: d4 90     mov   $90+x,a           ; load voice address (lo)
+13b7: d4 90     mov   $90+x,a           ; header +02h - voice address (lo)
 13b9: 3a c8     incw  $c8
 13bb: f7 c8     mov   a,($c8)+y
 13bd: 3a c8     incw  $c8
-13bf: d4 91     mov   $91+x,a           ; load voice address (hi)
+13bf: d4 91     mov   $91+x,a           ; header +03h - voice address (hi)
 13c1: c8 10     cmp   x,#$10
 13c3: 90 19     bcc   $13de
 13c5: e4 c3     mov   a,$c3
