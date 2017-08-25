@@ -30,34 +30,34 @@
 0832: 8f ff 10  mov   $10,#$ff
 0835: e8 00     mov   a,#$00
 0837: 8d 0c     mov   y,#$0c
-0839: 3f 7a 16  call  $167a
+0839: 3f 7a 16  call  $167a             ; set MVOL(L)
 083c: 8d 1c     mov   y,#$1c
-083e: 3f 7a 16  call  $167a
+083e: 3f 7a 16  call  $167a             ; set MVOL(R)
 0841: 8d 2c     mov   y,#$2c
-0843: 3f 7a 16  call  $167a
+0843: 3f 7a 16  call  $167a             ; set EVOL(L)
 0846: 8d 3c     mov   y,#$3c
-0848: 3f 7a 16  call  $167a
+0848: 3f 7a 16  call  $167a             ; set EVOL(R)
 084b: 8d 2d     mov   y,#$2d
-084d: 3f 7a 16  call  $167a
+084d: 3f 7a 16  call  $167a             ; set PMON
 0850: 8d 3d     mov   y,#$3d
-0852: 3f 7a 16  call  $167a
+0852: 3f 7a 16  call  $167a             ; set NON
 0855: 8d 4d     mov   y,#$4d
-0857: 3f 7a 16  call  $167a
+0857: 3f 7a 16  call  $167a             ; set EON
 085a: e8 19     mov   a,#$19
 085c: 8d 5d     mov   y,#$5d
-085e: 3f 7a 16  call  $167a
+085e: 3f 7a 16  call  $167a             ; set DIR
 0861: e8 ff     mov   a,#$ff
 0863: c4 0d     mov   $0d,a
 0865: e8 64     mov   a,#$64
 0867: c4 d8     mov   $d8,a
 0869: e8 7f     mov   a,#$7f
 086b: 8d 0c     mov   y,#$0c
-086d: 3f 7a 16  call  $167a
+086d: 3f 7a 16  call  $167a             ; set MVOL(L)
 0870: 8d 1c     mov   y,#$1c
-0872: 3f 7a 16  call  $167a
+0872: 3f 7a 16  call  $167a             ; set MVOL(R)
 0875: e8 ff     mov   a,#$ff
 0877: 8d 5c     mov   y,#$5c
-0879: 3f 7a 16  call  $167a
+0879: 3f 7a 16  call  $167a             ; set KOF
 087c: e8 24     mov   a,#$24
 087e: c4 fa     mov   $fa,a
 0880: e8 01     mov   a,#$01
@@ -607,16 +607,16 @@
 0ce7: fd        mov   y,a
 0ce8: e4 c8     mov   a,$c8
 0cea: cb f2     mov   $f2,y
-0cec: c4 f3     mov   $f3,a
+0cec: c4 f3     mov   $f3,a             ; set P(L)
 0cee: fc        inc   y
 0cef: e4 c9     mov   a,$c9
-0cf1: 5f 7a 16  jmp   $167a
+0cf1: 5f 7a 16  jmp   $167a             ; set P(H)
 
 0cf4: f4 18     mov   a,$18+x
 0cf6: f0 01     beq   $0cf9
 0cf8: 6f        ret
 
-0cf9: 3f 64 16  call  $1664
+0cf9: 3f 64 16  call  $1664             ; read vcmd
 0cfc: fd        mov   y,a
 0cfd: d0 60     bne   $0d5f
 0cff: e4 15     mov   a,$15
@@ -655,12 +655,12 @@
 0d47: 4e ea 00  tclr1 $00ea
 0d4a: 4e e3 00  tclr1 $00e3
 0d4d: 8d 5c     mov   y,#$5c
-0d4f: 3f 7a 16  call  $167a
+0d4f: 3f 7a 16  call  $167a             ; set KOF
 0d52: e8 00     mov   a,#$00
 0d54: 8d 2d     mov   y,#$2d
-0d56: 3f 7a 16  call  $167a
+0d56: 3f 7a 16  call  $167a             ; set PMON
 0d59: 8d 3d     mov   y,#$3d
-0d5b: 3f 7a 16  call  $167a
+0d5b: 3f 7a 16  call  $167a             ; set NON
 0d5e: 6f        ret
 
 0d5f: fd        mov   y,a
@@ -686,7 +686,7 @@
 0d82: 5f 0b 0e  jmp   $0e0b
 
 ; vcmd c8
-0d85: 3f 64 16  call  $1664
+0d85: 3f 64 16  call  $1664             ; read byte from voice ptr
 0d88: fd        mov   y,a
 0d89: 3f 8f 0d  call  $0d8f
 0d8c: 5f f9 0c  jmp   $0cf9
@@ -739,7 +739,7 @@
 0de9: f3 d1 0d  bbc7  $d1,$0df9
 0dec: e4 15     mov   a,$15
 0dee: 8d 5c     mov   y,#$5c
-0df0: 3f 7a 16  call  $167a
+0df0: 3f 7a 16  call  $167a             ; set KOF
 0df3: 3f bb 16  call  $16bb
 0df6: 3f 93 16  call  $1693
 0df9: 3f 63 0c  call  $0c63
@@ -769,9 +769,9 @@
 
 0e2e: 3f 5e 16  call  $165e
 0e31: d5 71 02  mov   $0271+x,a
-0e34: 3f 64 16  call  $1664
+0e34: 3f 64 16  call  $1664             ; read byte from voice ptr
 0e37: d4 49     mov   $49+x,a
-0e39: 3f 64 16  call  $1664
+0e39: 3f 64 16  call  $1664             ; read byte from voice ptr
 0e3c: c8 10     cmp   x,#$10
 0e3e: b0 03     bcs   $0e43
 0e40: 60        clrc
@@ -843,9 +843,9 @@
 0ebb: dw $11f9  ; f2
 0ebd: dw $1202  ; f3
 0ebf: dw $120a  ; f4
-0ec1: dw $1212  ; f5
-0ec3: dw $121e  ; f6
-0ec5: dw $123f  ; f7
+0ec1: dw $1212  ; f5 - goto
+0ec3: dw $121e  ; f6 - call subroutine
+0ec5: dw $123f  ; f7 - end subroutine
 0ec7: dw $1259  ; f8
 0ec9: dw $1271  ; f9
 
@@ -854,7 +854,7 @@
 0ece: 8f 80 11  mov   $11,#$80
 0ed1: 2f 03     bra   $0ed6
 ; vcmd d0
-0ed3: 3f 64 16  call  $1664
+0ed3: 3f 64 16  call  $1664             ; read byte from voice ptr
 0ed6: c4 c5     mov   $c5,a
 0ed8: c8 10     cmp   x,#$10
 0eda: b0 09     bcs   $0ee5
@@ -878,7 +878,7 @@
 0eff: e4 c5     mov   a,$c5
 0f01: eb 14     mov   y,$14
 0f03: cb f2     mov   $f2,y
-0f05: c4 f3     mov   $f3,a
+0f05: c4 f3     mov   $f3,a             ; set SRCN
 0f07: 8d 00     mov   y,#$00
 0f09: e4 c5     mov   a,$c5
 0f0b: f0 04     beq   $0f11
@@ -893,7 +893,7 @@
 0f1c: 6f        ret
 
 ; vcmd d2
-0f1d: 3f 64 16  call  $1664
+0f1d: 3f 64 16  call  $1664             ; read byte from voice ptr
 0f20: 08 80     or    a,#$80
 0f22: c4 c2     mov   $c2,a
 0f24: c8 10     cmp   x,#$10
@@ -906,11 +906,11 @@
 0f33: 08 05     or    a,#$05
 0f35: fd        mov   y,a
 0f36: e4 c2     mov   a,$c2
-0f38: 3f 7a 16  call  $167a
+0f38: 3f 7a 16  call  $167a             ; set ADSR(1)
 0f3b: 5f f9 0c  jmp   $0cf9
 
 ; vcmd d3
-0f3e: 3f 64 16  call  $1664
+0f3e: 3f 64 16  call  $1664             ; read byte from voice ptr
 0f41: c4 c2     mov   $c2,a
 0f43: c8 10     cmp   x,#$10
 0f45: b0 09     bcs   $0f50
@@ -922,11 +922,11 @@
 0f52: 08 06     or    a,#$06
 0f54: fd        mov   y,a
 0f55: e4 c2     mov   a,$c2
-0f57: 3f 7a 16  call  $167a
+0f57: 3f 7a 16  call  $167a             ; set ADSR(2)
 0f5a: 5f f9 0c  jmp   $0cf9
 
 ; vcmd d4
-0f5d: 3f 64 16  call  $1664
+0f5d: 3f 64 16  call  $1664             ; read byte from voice ptr
 0f60: 28 1f     and   a,#$1f
 0f62: 08 a0     or    a,#$a0
 0f64: d5 99 01  mov   $0199+x,a
@@ -946,7 +946,7 @@
 0f80: 5f f9 0c  jmp   $0cf9
 
 ; vcmd d7
-0f83: 3f 64 16  call  $1664
+0f83: 3f 64 16  call  $1664             ; read byte from voice ptr
 0f86: c4 c2     mov   $c2,a
 0f88: 38 3f d2  and   $d2,#$3f
 0f8b: e8 c0     mov   a,#$c0
@@ -960,7 +960,7 @@
 0f9c: 5f f9 0c  jmp   $0cf9
 
 ; vcmd d6
-0f9f: 3f 64 16  call  $1664
+0f9f: 3f 64 16  call  $1664             ; read byte from voice ptr
 0fa2: c4 c2     mov   $c2,a
 0fa4: 28 70     and   a,#$70
 0fa6: 9f        xcn   a
@@ -978,18 +978,18 @@
 0fbf: 5f f9 0c  jmp   $0cf9
 
 ; vcmd d9
-0fc2: 3f 64 16  call  $1664
+0fc2: 3f 64 16  call  $1664             ; read byte from voice ptr
 0fc5: c4 0d     mov   $0d,a
 0fc7: 5f f9 0c  jmp   $0cf9
 
 ; vcmd db
-0fca: 3f 64 16  call  $1664
+0fca: 3f 64 16  call  $1664             ; read byte from voice ptr
 0fcd: d4 30     mov   $30+x,a
 0fcf: 22 d1     set1  $d1
 0fd1: 5f f9 0c  jmp   $0cf9
 
 ; vcmd dc
-0fd4: 3f 58 16  call  $1658
+0fd4: 3f 58 16  call  $1658             ; read word from voice ptr
 0fd7: eb c2     mov   y,$c2
 0fd9: db 31     mov   $31+x,y
 0fdb: d5 40 02  mov   $0240+x,a
@@ -1009,12 +1009,12 @@
 0ff8: 5f f9 0c  jmp   $0cf9
 
 ; vcmd d1
-0ffb: 3f 64 16  call  $1664
+0ffb: 3f 64 16  call  $1664             ; read byte from voice ptr
 0ffe: c4 10     mov   $10,a
 1000: 5f f9 0c  jmp   $0cf9
 
 ; vcmd d8
-1003: 3f 58 16  call  $1658
+1003: 3f 58 16  call  $1658             ; read word from voice ptr
 1006: eb c2     mov   y,$c2
 1008: db 48     mov   $48+x,y
 100a: d5 f9 01  mov   $01f9+x,a
@@ -1034,7 +1034,7 @@
 1028: 5f f9 0c  jmp   $0cf9
 
 ; vcmd da
-102b: 3f 58 16  call  $1658
+102b: 3f 58 16  call  $1658             ; read word from voice ptr
 102e: eb c2     mov   y,$c2
 1030: cb 08     mov   $08,y
 1032: c4 0c     mov   $0c,a
@@ -1053,11 +1053,11 @@
 104a: 5f f9 0c  jmp   $0cf9
 
 ; vcmd dd
-104d: 3f 64 16  call  $1664
+104d: 3f 64 16  call  $1664             ; read byte from voice ptr
 1050: d5 d0 02  mov   $02d0+x,a
-1053: 3f 64 16  call  $1664
+1053: 3f 64 16  call  $1664             ; read byte from voice ptr
 1056: d5 e9 02  mov   $02e9+x,a
-1059: 3f 64 16  call  $1664
+1059: 3f 64 16  call  $1664             ; read byte from voice ptr
 105c: 2f 07     bra   $1065
 ; vcmd e0
 105e: f8 12     mov   x,$12
@@ -1068,7 +1068,7 @@
 
 ; vcmd de
 106a: c2 d1     set6  $d1
-106c: 3f 58 16  call  $1658
+106c: 3f 58 16  call  $1658             ; read word from voice ptr
 106f: c4 c3     mov   $c3,a
 1071: 60        clrc
 1072: 95 10 02  adc   a,$0210+x
@@ -1101,22 +1101,22 @@
 10ac: 5f f9 0c  jmp   $0cf9
 
 ; vcmd e1
-10af: 3f 64 16  call  $1664
+10af: 3f 64 16  call  $1664             ; read byte from voice ptr
 10b2: c4 0f     mov   $0f,a
 10b4: 5f f9 0c  jmp   $0cf9
 
 ; vcmd e2
-10b7: 3f 64 16  call  $1664
+10b7: 3f 64 16  call  $1664             ; read byte from voice ptr
 10ba: d5 80 01  mov   $0180+x,a
 10bd: 5f f9 0c  jmp   $0cf9
 
 ; vcmd e3
-10c0: 3f 64 16  call  $1664
+10c0: 3f 64 16  call  $1664             ; read byte from voice ptr
 10c3: d5 81 01  mov   $0181+x,a
 10c6: 5f f9 0c  jmp   $0cf9
 
 ; vcmd e4
-10c9: 3f 64 16  call  $1664
+10c9: 3f 64 16  call  $1664             ; read byte from voice ptr
 10cc: d5 89 02  mov   $0289+x,a
 10cf: 3f 66 16  call  $1666
 10d2: d5 a0 02  mov   $02a0+x,a
@@ -1132,7 +1132,7 @@
 10e8: 5f f9 0c  jmp   $0cf9
 
 ; vcmd e6
-10eb: 3f 58 16  call  $1658
+10eb: 3f 58 16  call  $1658             ; read word from voice ptr
 10ee: d5 b0 01  mov   $01b0+x,a
 10f1: e4 c2     mov   a,$c2
 10f3: d5 b1 01  mov   $01b1+x,a
@@ -1153,18 +1153,18 @@
 1109: 5f f9 0c  jmp   $0cf9
 
 ; vcmd ea
-110c: 3f 64 16  call  $1664
+110c: 3f 64 16  call  $1664             ; read byte from voice ptr
 110f: c4 07     mov   $07,a
 1111: 3f f3 16  call  $16f3
 1114: 5f f9 0c  jmp   $0cf9
 
 ; vcmd eb
-1117: 3f 64 16  call  $1664
+1117: 3f 64 16  call  $1664             ; read byte from voice ptr
 111a: c4 06     mov   $06,a
 111c: 5f f9 0c  jmp   $0cf9
 
 ; vcmd ec
-111f: 3f 64 16  call  $1664
+111f: 3f 64 16  call  $1664             ; read byte from voice ptr
 1122: 8f 00 c2  mov   $c2,#$00
 1125: 8f 3a c3  mov   $c3,#$3a
 1128: c4 c7     mov   $c7,a
@@ -1187,7 +1187,7 @@
 1145: cd 0f     mov   x,#$0f
 1147: f7 c8     mov   a,($c8)+y
 1149: d8 f2     mov   $f2,x
-114b: c4 f3     mov   $f3,a
+114b: c4 f3     mov   $f3,a             ; set FIR C0-C7
 114d: fc        inc   y
 114e: 7d        mov   a,x
 114f: 60        clrc
@@ -1198,7 +1198,7 @@
 1157: 5f f9 0c  jmp   $0cf9
 
 ; vcmd ed
-115a: 3f 64 16  call  $1664
+115a: 3f 64 16  call  $1664             ; read byte from voice ptr
 115d: 43 d0 0a  bbs2  $d0,$116a
 1160: 28 7f     and   a,#$7f
 1162: c4 05     mov   $05,a
@@ -1255,10 +1255,10 @@
 
 11c7: 3f 5e 16  call  $165e
 11ca: c4 c2     mov   $c2,a
-11cc: 3f 64 16  call  $1664
+11cc: 3f 64 16  call  $1664             ; read byte from voice ptr
 11cf: 2f 03     bra   $11d4
 ; vcmd f1
-11d1: 3f 58 16  call  $1658
+11d1: 3f 58 16  call  $1658             ; read word from voice ptr
 11d4: c8 10     cmp   x,#$10
 11d6: 90 ef     bcc   $11c7
 11d8: eb c2     mov   y,$c2
@@ -1296,81 +1296,83 @@
 120c: 8f 00 ea  mov   $ea,#$00
 120f: 5f f9 0c  jmp   $0cf9
 
-; vcmd f5
-1212: 3f 58 16  call  $1658
+; vcmd f5 - goto
+1212: 3f 58 16  call  $1658             ; read word from voice ptr
 1215: d4 91     mov   $91+x,a
 1217: e4 c2     mov   a,$c2
-1219: d4 90     mov   $90+x,a
+1219: d4 90     mov   $90+x,a           ; jump to the destination address
 121b: 5f f9 0c  jmp   $0cf9
 
-; vcmd f6
-121e: 3f 58 16  call  $1658
+; vcmd f6 - call subroutine
+121e: 3f 58 16  call  $1658             ; read word from voice ptr
 1221: fd        mov   y,a
 1222: f4 90     mov   a,$90+x
 1224: c7 a8     mov   ($a8+x),a
 1226: f4 91     mov   a,$91+x
 1228: bb a8     inc   $a8+x
-122a: c7 a8     mov   ($a8+x),a
+122a: c7 a8     mov   ($a8+x),a         ; push return address
 122c: bb a8     inc   $a8+x
 122e: e4 c2     mov   a,$c2
 1230: d4 90     mov   $90+x,a
 1232: dd        mov   a,y
-1233: d4 91     mov   $91+x,a
+1233: d4 91     mov   $91+x,a           ; jump to the destination address
 1235: f5 78 03  mov   a,$0378+x
 1238: bc        inc   a
-1239: d5 78 03  mov   $0378+x,a
+1239: d5 78 03  mov   $0378+x,a         ; increment subroutine nest level
 123c: 5f f9 0c  jmp   $0cf9
 
-; vcmd f7
+; vcmd f7 - end subroutine
 123f: f8 12     mov   x,$12
 1241: f5 78 03  mov   a,$0378+x
-1244: f0 10     beq   $1256
+1244: f0 10     beq   $1256             ; skip if subroutine nest level == 0
 1246: 9c        dec   a
-1247: d5 78 03  mov   $0378+x,a
+1247: d5 78 03  mov   $0378+x,a         ; decrease nest level
 124a: 9b a8     dec   $a8+x
 124c: e7 a8     mov   a,($a8+x)
 124e: d4 91     mov   $91+x,a
 1250: 9b a8     dec   $a8+x
 1252: e7 a8     mov   a,($a8+x)
-1254: d4 90     mov   $90+x,a
+1254: d4 90     mov   $90+x,a           ; back to the return address
 1256: 5f f9 0c  jmp   $0cf9
 
-; vcmd f8
-1259: 3f 64 16  call  $1664
+; vcmd f8 - repeat start
+1259: 3f 64 16  call  $1664             ; arg1: repeat count
 125c: fd        mov   y,a
 125d: f4 90     mov   a,$90+x
 125f: c7 a8     mov   ($a8+x),a
 1261: bb a8     inc   $a8+x
 1263: f4 91     mov   a,$91+x
-1265: c7 a8     mov   ($a8+x),a
+1265: c7 a8     mov   ($a8+x),a         ; push the repeat start address to stack
 1267: bb a8     inc   $a8+x
 1269: dd        mov   a,y
-126a: c7 a8     mov   ($a8+x),a
+126a: c7 a8     mov   ($a8+x),a         ; push repeat count
 126c: bb a8     inc   $a8+x
 126e: 5f f9 0c  jmp   $0cf9
 
-; vcmd f9
+; vcmd f9 - repeat end
 1271: f8 12     mov   x,$12
 1273: 9b a8     dec   $a8+x
-1275: e7 a8     mov   a,($a8+x)
+1275: e7 a8     mov   a,($a8+x)         ; pop repeat count
 1277: 9c        dec   a
-1278: d0 07     bne   $1281
+1278: d0 07     bne   $1281             ; repeat again if non-zero
+; repeat over
 127a: 9b a8     dec   $a8+x
 127c: 9b a8     dec   $a8+x
 127e: 5f f9 0c  jmp   $0cf9
-
-1281: c7 a8     mov   ($a8+x),a
+; repeat again
+1281: c7 a8     mov   ($a8+x),a         ; update the repeat count
 1283: 9b a8     dec   $a8+x
 1285: e7 a8     mov   a,($a8+x)
 1287: d4 91     mov   $91+x,a
 1289: 9b a8     dec   $a8+x
 128b: e7 a8     mov   a,($a8+x)
-128d: d4 90     mov   $90+x,a
+128d: d4 90     mov   $90+x,a           ; back to the repeat start address
 128f: bb a8     inc   $a8+x
 1291: bb a8     inc   $a8+x
-1293: bb a8     inc   $a8+x
+1293: bb a8     inc   $a8+x             ; restore the stack pointer
 1295: 5f f9 0c  jmp   $0cf9
 
+; dispatch cpucmd
 1298: 68 f0     cmp   a,#$f0
 129a: 90 15     bcc   $12b1
 129c: 28 0f     and   a,#$0f
@@ -1508,9 +1510,9 @@
 13a7: ab c7     inc   $c7
 13a9: 8b c5     dec   $c5
 13ab: d0 f5     bne   $13a2
-13ad: d4 a8     mov   $a8+x,a
+13ad: d4 a8     mov   $a8+x,a           ; voice ptr stack pointer (lo)
 13af: e4 c7     mov   a,$c7
-13b1: d4 a9     mov   $a9+x,a
+13b1: d4 a9     mov   $a9+x,a           ; voice ptr stack pointer (hi)
 13b3: 8d 00     mov   y,#$00
 13b5: f7 c8     mov   a,($c8)+y
 13b7: d4 90     mov   $90+x,a           ; load voice address (lo)
@@ -1544,21 +1546,22 @@
 13f7: 4e ea 00  tclr1 $00ea
 13fa: 5f 03 13  jmp   $1303
 
-13fd: dw $1480
-13ff: dw $1484
-1401: dw $1422
-1403: dw $1427
-1405: dw $142c
-1407: dw $1431
-1409: dw $1436
-140b: dw $1437
-140d: dw $1459
-140f: dw $1421
-1411: dw $148c
-1413: dw $1485
-1415: dw $14e3
-1417: dw $15b3
-1419: dw $141b
+; cpucmd dispatch table
+13fd: dw $1480  ; f0
+13ff: dw $1484  ; f1
+1401: dw $1422  ; f2
+1403: dw $1427  ; f3
+1405: dw $142c  ; f4
+1407: dw $1431  ; f5
+1409: dw $1436  ; f6
+140b: dw $1437  ; f7
+140d: dw $1459  ; f8
+140f: dw $1421  ; f9
+1411: dw $148c  ; fa
+1413: dw $1485  ; fb
+1415: dw $14e3  ; fc
+1417: dw $15b3  ; fd
+1419: dw $141b  ; fe
 
 141b: cd 02     mov   x,#$02
 141d: e8 ff     mov   a,#$ff
@@ -1641,9 +1644,9 @@
 14a2: c4 03     mov   $03,a
 14a4: c4 04     mov   $04,a
 14a6: 8d 3c     mov   y,#$3c
-14a8: 3f 7a 16  call  $167a
+14a8: 3f 7a 16  call  $167a             ; set EVOL(R)
 14ab: 8d 2c     mov   y,#$2c
-14ad: 3f 7a 16  call  $167a
+14ad: 3f 7a 16  call  $167a             ; set EVOL(L)
 14b0: cd db     mov   x,#$db
 14b2: e8 00     mov   a,#$00
 14b4: af        mov   (x)+,a
@@ -1651,7 +1654,7 @@
 14b7: d0 fb     bne   $14b4
 14b9: e8 ff     mov   a,#$ff
 14bb: 8d 5c     mov   y,#$5c
-14bd: 3f 7a 16  call  $167a
+14bd: 3f 7a 16  call  $167a             ; set KOF
 14c0: f3 ca 15  bbc7  $ca,$14d8
 14c3: 8d 04     mov   y,#$04
 14c5: f6 ce 17  mov   a,$17ce+y
@@ -1839,7 +1842,7 @@
 1627: bc        inc   a
 1628: 3f 49 16  call  $1649
 162b: eb 14     mov   y,$14
-162d: 3f 7a 16  call  $167a
+162d: 3f 7a 16  call  $167a             ; set VOL(L),VOL(R)
 1630: e8 14     mov   a,#$14
 1632: 80        setc
 1633: a4 cc     sbc   a,$cc
@@ -1884,6 +1887,7 @@
 1677: c4 d1     mov   $d1,a
 1679: 6f        ret
 
+; set A to dsp register Y
 167a: cb f2     mov   $f2,y
 167c: c4 f3     mov   $f3,a
 167e: 6f        ret
@@ -1905,32 +1909,32 @@
 1697: fd        mov   y,a
 1698: f5 49 03  mov   a,$0349+x
 169b: cb f2     mov   $f2,y
-169d: c4 f3     mov   $f3,a
+169d: c4 f3     mov   $f3,a             ; set ADSR(1)
 169f: fc        inc   y
 16a0: f5 60 03  mov   a,$0360+x
 16a3: cb f2     mov   $f2,y
-16a5: c4 f3     mov   $f3,a
+16a5: c4 f3     mov   $f3,a             ; set ADSR(2)
 16a7: 6f        ret
 
 16a8: 08 05     or    a,#$05
 16aa: fd        mov   y,a
 16ab: f5 49 03  mov   a,$0349+x
 16ae: 28 7f     and   a,#$7f
-16b0: 3f 7a 16  call  $167a
+16b0: 3f 7a 16  call  $167a             ; set ADSR(1)
 16b3: fc        inc   y
 16b4: fc        inc   y
 16b5: f5 99 01  mov   a,$0199+x
-16b8: 5f 7a 16  jmp   $167a
+16b8: 5f 7a 16  jmp   $167a             ; set GAIN
 
 16bb: e4 13     mov   a,$13
 16bd: 08 05     or    a,#$05
 16bf: fd        mov   y,a
 16c0: e8 00     mov   a,#$00
-16c2: 3f 7a 16  call  $167a
+16c2: 3f 7a 16  call  $167a             ; set ADSR(1)
 16c5: fc        inc   y
 16c6: fc        inc   y
 16c7: e8 bf     mov   a,#$bf
-16c9: 5f 7a 16  jmp   $167a
+16c9: 5f 7a 16  jmp   $167a             ; set GAIN
 
 16cc: ed        notc
 16cd: 6b c2     ror   $c2
@@ -1966,15 +1970,15 @@
 16fd: e4 01     mov   a,$01
 16ff: 8d 6c     mov   y,#$6c
 1701: cb f2     mov   $f2,y
-1703: c4 f3     mov   $f3,a
+1703: c4 f3     mov   $f3,a             ; set FLG
 1705: e4 07     mov   a,$07
 1707: 8d 7d     mov   y,#$7d
 1709: cb f2     mov   $f2,y
-170b: c4 f3     mov   $f3,a
+170b: c4 f3     mov   $f3,a             ; set EDL
 170d: e4 c2     mov   a,$c2
 170f: 8d 6d     mov   y,#$6d
 1711: cb f2     mov   $f2,y
-1713: c4 f3     mov   $f3,a
+1713: c4 f3     mov   $f3,a             ; set ESA
 1715: e8 80     mov   a,#$80
 1717: c4 fb     mov   $fb,a
 1719: e8 03     mov   a,#$03
@@ -2008,7 +2012,7 @@
 1748: e8 20     mov   a,#$20
 174a: c4 01     mov   $01,a
 174c: 8d 6c     mov   y,#$6c
-174e: 5f 7a 16  jmp   $167a
+174e: 5f 7a 16  jmp   $167a             ; set FLG
 
 1751: e4 f4     mov   a,$f4
 1753: 68 ef     cmp   a,#$ef
@@ -2061,9 +2065,12 @@
 17c2: db $96,$aa,$b9,$c8,$d4,$e1,$eb,$f5
 17ca: db $ff
 
+; dsp reg shadows
+; KON,KOF,PMON,NON,EON,EFB,EVOL(L),EVOL(R),FLG
 17cb: db $4c,$5c,$2d,$3d,$4d,$0d,$2c,$3c,$6c
 17d4: db $02,$06,$03,$04,$01,$16,$17,$ea,$e3
 
+; pitch table
 17dd: dw $085f
 17df: dw $08de
 17e1: dw $0965
@@ -2080,176 +2087,3 @@
 17f7: dw $10be
 17f9: dw $10be
 17fb: dw $10be
-
-17fd: ff ff ff
-1800: 03 d8 07
-1803: ac 09 00
-1806: 06
-1807: 50 07
-1809: 80
-180a: 08 00
-180c: 03 00 07
-180f: 00
-1810: 03 00 1e
-1813: 00
-1814: 00
-1815: 00
-1816: 00
-1817: 00
-1818: 00
-1819: 00
-181a: 00
-181b: 00
-181c: 00
-181d: 00
-181e: 00
-181f: 00
-1820: 02 fe
-1822: 02 fe
-1824: 05 fc 02
-1827: aa 03 03
-182a: 02 20
-182c: 02 fe
-182e: 02 fe
-1830: 01
-1831: 80
-1832: 03 d0 00
-1835: 00
-1836: 00
-1837: 00
-1838: 00
-1839: 00
-183a: 00
-183b: 00
-183c: 00
-183d: 00
-183e: 00
-183f: 00
-1840: 00
-1841: 00
-1842: 00
-1843: 00
-1844: 00
-1845: 00
-1846: 00
-1847: 00
-1848: 00
-1849: 00
-184a: 00
-184b: 00
-184c: 00
-184d: 00
-184e: 00
-184f: 00
-1850: 00
-1851: 00
-1852: 00
-1853: 00
-1854: 00
-1855: 00
-1856: 00
-1857: 00
-1858: 00
-1859: 00
-185a: 00
-185b: 00
-185c: 00
-185d: 00
-185e: 00
-185f: 00
-1860: 00
-1861: 00
-1862: 00
-1863: 00
-1864: 00
-1865: 00
-1866: 00
-1867: 00
-1868: 00
-1869: 00
-186a: 00
-186b: 00
-186c: 00
-186d: 00
-186e: 00
-186f: 00
-1870: 00
-1871: 00
-1872: 00
-1873: 00
-1874: 00
-1875: 00
-1876: 00
-1877: 00
-1878: 00
-1879: 00
-187a: 00
-187b: 00
-187c: 00
-187d: 00
-187e: 00
-187f: 00
-1880: 00
-1881: 00
-1882: 00
-1883: 00
-1884: 00
-1885: 00
-1886: 00
-1887: 00
-1888: 00
-1889: 00
-188a: 00
-188b: 00
-188c: 00
-188d: 00
-188e: 00
-188f: 00
-1890: 00
-1891: 00
-1892: 00
-1893: 00
-1894: 00
-1895: 00
-1896: 00
-1897: 00
-1898: 00
-1899: 00
-189a: 00
-189b: 00
-189c: 00
-189d: 00
-189e: 00
-189f: 00
-18a0: 00
-18a1: 00
-18a2: 00
-18a3: 00
-18a4: 00
-18a5: 00
-18a6: 00
-18a7: 00
-18a8: 00
-18a9: 00
-18aa: 00
-18ab: 00
-18ac: 00
-18ad: 00
-18ae: 00
-18af: 00
-18b0: 00
-18b1: 00
-18b2: 00
-18b3: 00
-18b4: 00
-18b5: 00
-18b6: 00
-18b7: 00
-18b8: 00
-18b9: 00
-18ba: 00
-18bb: 00
-18bc: 00
-18bd: 00
-18be: 00
-18bf: 00
