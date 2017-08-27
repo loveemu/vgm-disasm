@@ -413,20 +413,21 @@
 061f: d4 bf     mov   $bf+x,a           ; back to return addr instead
 0621: 2f e2     bra   $0605             ; then continue
 0623: 30 1e     bmi   $0643
-0625: d5 00 02  mov   $0200+x,a
-0628: 4f 23     pcall $23
-062a: 30 17     bmi   $0643
+; vcmd 01-7f - note param
+0625: d5 00 02  mov   $0200+x,a         ; set note length by voice byte itself
+0628: 4f 23     pcall $23               ; arg1: duration/velocity
+062a: 30 17     bmi   $0643             ; quit if next byte >= 0x80 (note)
 062c: 2d        push  a
 062d: 9f        xcn   a
 062e: 28 07     and   a,#$07
 0630: fd        mov   y,a
-0631: f6 e8 0f  mov   a,$0fe8+y
+0631: f6 e8 0f  mov   a,$0fe8+y         ; set dur% from high nybble
 0634: d5 01 02  mov   $0201+x,a
 0637: ae        pop   a
 0638: 28 0f     and   a,#$0f
 063a: fd        mov   y,a
 063b: f6 f0 0f  mov   a,$0ff0+y
-063e: d5 16 02  mov   $0216+x,a
+063e: d5 16 02  mov   $0216+x,a         ; set per-note volume (velocity) from low nybble
 0641: 4f 23     pcall $23               ; read voice byte
 0643: 68 e0     cmp   a,#$e0
 0645: 90 03     bcc   $064a
@@ -493,7 +494,7 @@
 ; vcmd c8,c9 - tie, rest
 06b7: 6f        ret
 
-; tcall 11 - process voice byte 00-df
+; tcall 11 - process voice byte 80-df
 06b8: ad ca     cmp   y,#$ca
 06ba: 90 03     bcc   $06bf
 ; vcmd ca-df - percussion note
@@ -502,7 +503,7 @@
 ;
 06bf: ad c8     cmp   y,#$c8
 06c1: b0 f4     bcs   $06b7
-; vcmd 00-c7
+; vcmd 80-c7 - note
 06c3: e4 28     mov   a,$28
 06c5: 24 27     and   a,$27
 06c7: d0 ee     bne   $06b7
@@ -1255,19 +1256,19 @@
 0c0f: 6f        ret
 
 ; vcmd ff - set ADSR
-0c10: 2d        push  a
+0c10: 2d        push  a                 ; arg1: ADSR(1)
 0c11: f5 ce 0d  mov   a,$0dce+x
 0c14: 08 05     or    a,#$05
 0c16: fd        mov   y,a
 0c17: ae        pop   a
-0c18: 08 80     or    a,#$80
-0c1a: 24 20     and   a,$20
+0c18: 08 80     or    a,#$80            ; set ADSR/GAIN flag
+0c1a: 24 20     and   a,$20             ; apply mask to ADSR/GAIN flag?
 0c1c: 4f 16     pcall $16               ; set ADSR(1)
 0c1e: fc        inc   y
 0c1f: 6d        push  y
-0c20: 4f 23     pcall $23
+0c20: 4f 23     pcall $23               ; arg2: sustain rate
 0c22: c4 11     mov   $11,a
-0c24: 4f 23     pcall $23
+0c24: 4f 23     pcall $23               ; arg3: sustain level
 0c26: 9f        xcn   a
 0c27: 1c        asl   a
 0c28: 04 11     or    a,$11
