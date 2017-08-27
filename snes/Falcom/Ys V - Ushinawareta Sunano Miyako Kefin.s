@@ -841,10 +841,10 @@
 13d0: dw $141e  ; d6 - octave 6
 13d2: dw $1429  ; d7 - tempo
 13d4: dw $1443  ; d8 - instrument
-13d6: dw $14c0  ; d9
-13d8: dw $14f0  ; da
-13da: dw $14fe  ; db
-13dc: dw $1508  ; dc
+13d6: dw $14c0  ; d9 - vibrato
+13d8: dw $14f0  ; da - vibrato on/off
+13da: dw $14fe  ; db - nop.3
+13dc: dw $1508  ; dc - nop.1
 13de: dw $150c  ; dd - quantize
 13e0: dw $1515  ; de - volume
 13e2: dw $151e  ; df - decrease volume by 8
@@ -856,25 +856,25 @@
 13ee: dw $154f  ; e5 - increase volume by 2
 13f0: dw $1554  ; e6 - increase volume by 4
 13f2: dw $156e  ; e7 - pan
-13f4: dw $1581  ; e8
-13f6: dw $159b  ; e9
-13f8: dw $15b5  ; ea
-13fa: dw $15e5  ; eb
+13f4: dw $1581  ; e8 - decrease pan by 8
+13f6: dw $159b  ; e9 - increase pan by 8
+13f8: dw $15b5  ; ea - pan LFO
+13fa: dw $15e5  ; eb - pan LFO on/off
 13fc: dw $15f4  ; ec - tuning
 13fe: dw $16c7  ; ed - repeat start
 1400: dw $16d1  ; ee - repeat break
 1402: dw $1701  ; ef - repeat end
-1404: dw $1726  ; f0
-1406: dw $1740  ; f1
+1404: dw $1726  ; f0 - pitch envelope
+1406: dw $1740  ; f1 - pitch envelope on/off
 1408: dw $174f  ; f2 - ADSR
-140a: dw $179b  ; f3
-140c: dw $17af  ; f4
+140a: dw $179b  ; f3 - GAIN (not working)
+140c: dw $17af  ; f4 - noise frequency
 140e: dw $17e4  ; f5 - pitchmod on/off
 1410: dw $17ed  ; f6 - echo on/off
 1412: dw $17f6  ; f7 - echo param
-1414: dw $1864  ; f8
+1414: dw $1864  ; f8 - echo volume on/off
 1416: dw $187f  ; f9 - echo volume
-1418: dw $1890  ; fa
+1418: dw $1890  ; fa - echo FIR overwrite
 141a: dw $18a6  ; fb - nop.1
 141c: dw $1473  ; fc - goto / halt
 
@@ -971,14 +971,14 @@
 
 14be: db $df,$bf
 
-; vcmd d9
+; vcmd d9 - vibrato
 14c0: f8 aa     mov   x,$aa
-14c2: 3f 07 1a  call  $1a07
+14c2: 3f 07 1a  call  $1a07             ; arg1: vibrato delay
 14c5: d4 06     mov   $06+x,a
 14c7: d5 00 02  mov   $0200+x,a
-14ca: 3f 07 1a  call  $1a07
+14ca: 3f 07 1a  call  $1a07             ; arg2: vibrato depth
 14cd: d4 10     mov   $10+x,a
-14cf: 3f 07 1a  call  $1a07
+14cf: 3f 07 1a  call  $1a07             ; arg3: vibrato rate
 14d2: fd        mov   y,a
 14d3: 68 80     cmp   a,#$80
 14d5: 90 0c     bcc   $14e3
@@ -997,22 +997,22 @@
 14ec: d5 0a 02  mov   $020a+x,a
 14ef: 6f        ret
 
-; vcmd da
+; vcmd da - vibrato on/off
 14f0: f8 aa     mov   x,$aa
-14f2: 3f 07 1a  call  $1a07
+14f2: 3f 07 1a  call  $1a07             ; arg1: vibrato on/off (0: off, 1: on)
 14f5: fd        mov   y,a
 14f6: f0 03     beq   $14fb
 14f8: f5 0a 02  mov   a,$020a+x
 14fb: d4 1a     mov   $1a+x,a
 14fd: 6f        ret
 
-; vcmd db
+; vcmd db - nop
 14fe: 3f 07 1a  call  $1a07
 1501: 3f 07 1a  call  $1a07
 1504: 3f 07 1a  call  $1a07
 1507: 6f        ret
 
-; vcmd dc
+; vcmd dc - nop
 1508: 3f 07 1a  call  $1a07
 150b: 6f        ret
 
@@ -1085,7 +1085,7 @@
 157d: d5 8c 02  mov   $028c+x,a
 1580: 6f        ret
 
-; vcmd e8
+; vcmd e8 - decrease pan by 8
 1581: f8 aa     mov   x,$aa
 1583: f5 0a 03  mov   a,$030a+x
 1586: f0 12     beq   $159a
@@ -1100,7 +1100,7 @@
 
 159a: 6f        ret
 
-; vcmd e9
+; vcmd e9 - increase pan by 8
 159b: f8 aa     mov   x,$aa
 159d: f5 0a 03  mov   a,$030a+x
 15a0: 30 12     bmi   $15b4
@@ -1115,11 +1115,11 @@
 
 15b4: 6f        ret
 
-; vcmd ea
+; vcmd ea - pan LFO
 15b5: f8 aa     mov   x,$aa
 15b7: f5 0a 03  mov   a,$030a+x
 15ba: 2d        push  a
-15bb: 3f 07 1a  call  $1a07
+15bb: 3f 07 1a  call  $1a07             ; arg1: target pan value?
 15be: 72 a6     clr3  $a6
 15c0: 75 0a 03  cmp   a,$030a+x
 15c3: b0 07     bcs   $15cc
@@ -1130,15 +1130,15 @@
 15cc: d5 82 02  mov   $0282+x,a
 15cf: ae        pop   a
 15d0: d5 78 02  mov   $0278+x,a
-15d3: 3f 07 1a  call  $1a07
+15d3: 3f 07 1a  call  $1a07             ; arg2: depth (pan delta)
 15d6: d5 8c 02  mov   $028c+x,a
 15d9: d5 96 02  mov   $0296+x,a
-15dc: 3f 07 1a  call  $1a07
+15dc: 3f 07 1a  call  $1a07             ; arg3: rate (step)
 15df: d4 42     mov   $42+x,a
 15e1: d5 6e 02  mov   $026e+x,a
 15e4: 6f        ret
 
-; vcmd eb
+; vcmd eb - pan LFO on/off
 15e5: f8 aa     mov   x,$aa
 15e7: 3f 07 1a  call  $1a07
 15ea: fd        mov   y,a
@@ -1276,21 +1276,21 @@
 1723: 3a a4     incw  $a4               ; skip the counter
 1725: 6f        ret
 
-; vcmd f0
+; vcmd f0 - pitch envelope
 1726: f8 aa     mov   x,$aa
-1728: 3f 07 1a  call  $1a07
+1728: 3f 07 1a  call  $1a07             ; arg1: delay
 172b: d4 4c     mov   $4c+x,a
 172d: d5 c8 02  mov   $02c8+x,a
-1730: 3f 07 1a  call  $1a07
+1730: 3f 07 1a  call  $1a07             ; arg2: depth (unsigned)
 1733: d5 d2 02  mov   $02d2+x,a
 1736: d5 dc 02  mov   $02dc+x,a
-1739: 3f 07 1a  call  $1a07
+1739: 3f 07 1a  call  $1a07             ; arg3: rate (signed value will make the direction negative)
 173c: d5 e6 02  mov   $02e6+x,a
 173f: 6f        ret
 
-; vcmd f1
+; vcmd f1 - pitch envelope on/off
 1740: f8 aa     mov   x,$aa
-1742: 3f 07 1a  call  $1a07
+1742: 3f 07 1a  call  $1a07             ; arg1: pitch envelope on/off (0: off, 1: on)
 1745: fd        mov   y,a
 1746: f0 03     beq   $174b
 1748: f5 dc 02  mov   a,$02dc+x
@@ -1333,25 +1333,25 @@
 1799: ae        pop   a
 179a: 6f        ret
 
-; vcmd f3
+; vcmd f3 - GAIN (not working)
 179b: f8 aa     mov   x,$aa
 179d: f5 5a 02  mov   a,$025a+x
 17a0: 28 ef     and   a,#$ef
 17a2: 8d 05     mov   y,#$05
 17a4: 3f 0e 1a  call  $1a0e             ; set ADSR(1)
-17a7: 3f 07 1a  call  $1a07
+17a7: 3f 07 1a  call  $1a07             ; arg1: GAIN
 17aa: 8d 07     mov   y,#$07
 17ac: 5f 0e 1a  jmp   $1a0e             ; set GAIN
 
-; vcmd f4
+; vcmd f4 - noise frequency
 17af: f8 aa     mov   x,$aa
-17b1: 3f 07 1a  call  $1a07
+17b1: 3f 07 1a  call  $1a07             ; arg1: noise frequency
 17b4: d4 38     mov   $38+x,a
 17b6: 8d 6c     mov   y,#$6c
-17b8: 38 20 71  and   $71,#$20
+17b8: 38 20 71  and   $71,#$20          ; preserve echo write bit
 17bb: 04 71     or    a,$71
 17bd: c4 71     mov   $71,a
-17bf: 3f 0e 1a  call  $1a0e             ; set FLG?
+17bf: 3f 0e 1a  call  $1a0e             ; set FLG
 17c2: c8 08     cmp   x,#$08
 17c4: b0 01     bcs   $17c7
 17c6: 6f        ret
@@ -1429,18 +1429,19 @@
 1854: db $00,$00,$00,$00,$00,$00,$00,$00
 185c: db $00,$00,$00,$00,$00,$00,$00,$00
 
-; vcmd f8
-1864: 3f 07 1a  call  $1a07
+; vcmd f8 - echo volume on/off
+1864: 3f 07 1a  call  $1a07             ; arg1: echo volume on/off (0: off, 1: on)
 1867: fd        mov   y,a
 1868: f0 10     beq   $187a
+; echo volume on
 186a: e5 3d 03  mov   a,$033d
-186d: c4 62     mov   $62,a
+186d: c4 62     mov   $62,a             ; set EVOL(L) shadow
 186f: e5 3e 03  mov   a,$033e
-1872: c4 63     mov   $63,a
+1872: c4 63     mov   $63,a             ; set EVOL(R) shadow
 1874: e5 3c 03  mov   a,$033c
-1877: c4 64     mov   $64,a
+1877: c4 64     mov   $64,a             ; set EFB shadow
 1879: 6f        ret
-
+; echo volume off
 187a: c4 62     mov   $62,a
 187c: c4 63     mov   $63,a
 187e: 6f        ret
@@ -1454,20 +1455,20 @@
 188d: c4 63     mov   $63,a
 188f: 6f        ret
 
-; vcmd fa
-1890: 3f 07 1a  call  $1a07
+; vcmd fa - echo FIR overwrite
+1890: 3f 07 1a  call  $1a07             ; arg1: preset # to overwrite
 1893: 8d 08     mov   y,#$08
 1895: cf        mul   ya
 1896: 5d        mov   x,a
 1897: 8f 08 00  mov   $00,#$08
-189a: 3f 07 1a  call  $1a07
-189d: d5 34 18  mov   $1834+x,a
+189a: 3f 07 1a  call  $1a07             ; arg2~9: FIR
+189d: d5 34 18  mov   $1834+x,a         ; overwrite the FIR table (it cannot be undone!)
 18a0: 3d        inc   x
 18a1: 8b 00     dec   $00
 18a3: d0 f5     bne   $189a
 18a5: 6f        ret
 
-; vcmd fb - nop.1
+; vcmd fb - nop
 18a6: 5f 07 1a  jmp   $1a07
 
 18a9: f5 d2 02  mov   a,$02d2+x
