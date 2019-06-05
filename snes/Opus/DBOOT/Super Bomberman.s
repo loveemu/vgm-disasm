@@ -1,3 +1,13 @@
+; .. seealso::
+;
+;    LIJI32/superbomberman: Disassembly and remade build system for SNES game Super Bomberman
+;    https://github.com/LIJI32/superbomberman
+;
+
+0800: db $00,$22,$00,$23,$f0,$89,$fc,$8a
+0808: db $bc,$9f,$3c,$a0,$bc,$a0,$3c,$a1
+0810: db $00,$00
+
 0812: c0        di
 0813: 20        clrp
 0814: cd ff     mov   x,#$ff
