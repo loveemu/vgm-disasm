@@ -70,15 +70,15 @@
 088c: 5d        mov   x,a
 088d: 1f 90 08  jmp   ($0890+x)
 
-0890: dw $08ca  ;
-0892: dw $08eb  ;
-0894: dw $08e7  ;
-0896: dw $08e3  ;
-0898: dw $08df  ;
-089a: dw $08f3  ;
-089c: dw $08ef  ;
-089e: dw $08f7  ;
-08a0: dw $0900  ;
+0890: dw $08ca  ; 37
+0892: dw $08eb  ; 38
+0894: dw $08e7  ; 39
+0896: dw $08e3  ; 3a
+0898: dw $08df  ; 3b
+089a: dw $08f3  ; 3c
+089c: dw $08ef  ; 3d
+089e: dw $08f7  ; 3e
+08a0: dw $0900  ; 3f
 
 08a2: 3f c5 08  call  $08c5
 08a5: 68 ff     cmp   a,#$ff
@@ -138,7 +138,7 @@
 0905: c5 00 02  mov   $0200,a
 0908: c4 17     mov   $17,a
 090a: e8 80     mov   a,#$80
-090c: c5 03 02  mov   $0203,a
+090c: c5 03 02  mov   $0203,a           ; default tempo
 090f: e8 ff     mov   a,#$ff
 0911: c4 67     mov   $67,a
 0913: c4 69     mov   $69,a
@@ -204,27 +204,27 @@
 098b: 5d        mov   x,a
 098c: f5 52 d3  mov   a,$d352+x
 098f: c4 02     mov   $02,a
-0991: f5 53 d3  mov   a,$d353+x         ; read song table
-0994: c4 03     mov   $03,a             ; get header address into $02/3
+0991: f5 53 d3  mov   a,$d353+x         ; read address from song table ($d352+x)
+0994: c4 03     mov   $03,a             ; $02/3 = song address
 0996: 8d 00     mov   y,#$00
 0998: cd 00     mov   x,#$00
 ; initialize for each tracks
 099a: 8d 00     mov   y,#$00
-099c: f7 02     mov   a,($02)+y         ; offset +0: track address (lo)
+099c: f7 02     mov   a,($02)+y         ; offset +0: track size (lo)
 099e: c4 04     mov   $04,a
 09a0: 3a 02     incw  $02
-09a2: f7 02     mov   a,($02)+y         ; offset +1: track address (hi)
+09a2: f7 02     mov   a,($02)+y         ; offset +1: track size (hi)
 09a4: 68 ff     cmp   a,#$ff
 09a6: f0 3c     beq   $09e4             ; branch if $ffxx, end of header
-09a8: c4 05     mov   $05,a
+09a8: c4 05     mov   $05,a             ; $04/5 = track size
 09aa: 3a 02     incw  $02
 09ac: e4 03     mov   a,$03
-09ae: fd        mov   y,a
-09af: d5 15 02  mov   $0215+x,a
-09b2: e4 02     mov   a,$02             ; load header address into YA
-09b4: d5 05 02  mov   $0205+x,a
-09b7: 7a 04     addw  ya,$04            ; convert track offset to address
-09b9: da 02     movw  $02,ya
+09ae: fd        mov   y,a               ; offset +2: track data
+09af: d5 15 02  mov   $0215+x,a         ; set initial track address (hi)
+09b2: e4 02     mov   a,$02
+09b4: d5 05 02  mov   $0205+x,a         ; set initial track address (lo)
+09b7: 7a 04     addw  ya,$04
+09b9: da 02     movw  $02,ya            ; set header pointer to the next track
 09bb: 40        setp
 09bc: e8 00     mov   a,#$00
 09be: d4 06     mov   $06+x,a
@@ -243,13 +243,14 @@
 09dd: c8 10     cmp   x,#$10
 09df: d0 b9     bne   $099a             ; repeat for 16 tracks
 09e1: 5f f1 09  jmp   $09f1
-
+; initialize unused track regions
 09e4: e8 00     mov   a,#$00
 09e6: d5 15 02  mov   $0215+x,a
-09e9: d5 05 02  mov   $0205+x,a
+09e9: d5 05 02  mov   $0205+x,a         ; zero voice pointer
 09ec: 3d        inc   x
 09ed: c8 10     cmp   x,#$10
-09ef: d0 f3     bne   $09e4
+09ef: d0 f3     bne   $09e4             ; repeat for 16 tracks
+;
 09f1: e8 00     mov   a,#$00
 09f3: c5 ac 02  mov   $02ac,a
 09f6: 9c        dec   a
@@ -274,11 +275,13 @@
 0a1a: c4 67     mov   $67,a
 0a1c: 68 00     cmp   a,#$00
 0a1e: f0 4c     beq   $0a6c
-0a20: e5 03 02  mov   a,$0203
+;
+0a20: e5 03 02  mov   a,$0203           ; tempo
 0a23: 60        clrc
 0a24: 85 04 02  adc   a,$0204
 0a27: c5 04 02  mov   $0204,a
 0a2a: 90 40     bcc   $0a6c
+; tick
 0a2c: e8 00     mov   a,#$00
 0a2e: c4 16     mov   $16,a
 0a30: c4 6d     mov   $6d,a
@@ -315,15 +318,16 @@
 0a70: f5 25 02  mov   a,$0225+x
 0a73: f0 06     beq   $0a7b
 0a75: 9c        dec   a
-0a76: d5 25 02  mov   $0225+x,a
+0a76: d5 25 02  mov   $0225+x,a         ; decrease delta time counter
 0a79: d0 0f     bne   $0a8a
+;
 0a7b: 4d        push  x
-0a7c: 3f a5 18  call  $18a5
+0a7c: 3f a5 18  call  $18a5             ; dispatch a command
 0a7f: ce        pop   x
 0a80: f5 15 02  mov   a,$0215+x
-0a83: f0 05     beq   $0a8a
+0a83: f0 05     beq   $0a8a             ; break if the track is halted
 0a85: f5 25 02  mov   a,$0225+x
-0a88: f0 f1     beq   $0a7b
+0a88: f0 f1     beq   $0a7b             ; dispatch next if delta time is not set
 0a8a: 6f        ret
 
 0a8b: e4 00     mov   a,$00
@@ -800,14 +804,16 @@
 0dea: 8f 00 32  mov   $32,#$00
 0ded: 6f        ret
 
+; set instrument
 0dee: 28 7f     and   a,#$7f
-0df0: 3f fe 0d  call  $0dfe
+0df0: 3f fe 0d  call  $0dfe             ; get instrument
 0df3: e4 12     mov   a,$12
 0df5: d5 9f 03  mov   $039f+x,a
 0df8: e4 13     mov   a,$13
-0dfa: d5 af 03  mov   $03af+x,a
+0dfa: d5 af 03  mov   $03af+x,a         ; save the instrument address
 0dfd: 6f        ret
 
+; get instrument
 0dfe: fd        mov   y,a
 0dff: f6 e8 db  mov   a,$dbe8+y
 0e02: 68 ff     cmp   a,#$ff
@@ -1000,78 +1006,78 @@
 0f57: 5d        mov   x,a
 0f58: 1f 5b 0f  jmp   ($0f5b+x)
 
-0f5b: dw $128b  ;
-0f5d: dw $12ad  ;
-0f5f: dw $12d8  ;
-0f61: dw $12fd  ;
-0f63: dw $132d  ;
-0f65: dw $136f  ;
-0f67: dw $1391  ;
-0f69: dw $13ae  ;
-0f6b: dw $13d3  ;
-0f6d: dw $13f4  ;
-0f6f: dw $140a  ;
-0f71: dw $1419  ;
-0f73: dw $143b  ;
-0f75: dw $1449  ;
-0f77: dw $145a  ;
-0f79: dw $146e  ;
-0f7b: dw $147c  ;
-0f7d: dw $148d  ;
-0f7f: dw $1812  ;
-0f81: dw $14b2  ;
-0f83: dw $14d0  ;
-0f85: dw $14eb  ;
-0f87: dw $1510  ;
-0f89: dw $1535  ;
-0f8b: dw $1553  ;
-0f8d: dw $1588  ;
-0f8f: dw $159d  ;
-0f91: dw $15b3  ;
-0f93: dw $15c9  ;
-0f95: dw $15df  ;
-0f97: dw $15f3  ;
-0f99: dw $1607  ;
-0f9b: dw $161d  ;
-0f9d: dw $164d  ;
-0f9f: dw $167d  ;
-0fa1: dw $16a6  ;
-0fa3: dw $16e4  ;
-0fa5: dw $1709  ;
-0fa7: dw $172e  ;
-0fa9: dw $1753  ;
-0fab: dw $1766  ;
-0fad: dw $1782  ;
-0faf: dw $1792  ;
-0fb1: dw $17a2  ;
-0fb3: dw $17b2  ;
-0fb5: dw $17c2  ;
-0fb7: dw $17d2  ;
-0fb9: dw $17e2  ;
-0fbb: dw $17f5  ;
-0fbd: dw $127b  ;
-0fbf: dw $125e  ;
-0fc1: dw $111e  ;
-0fc3: dw $114b  ;
-0fc5: dw $1181  ;
-0fc7: dw $11b1  ;
-0fc9: dw $11d9  ;
-0fcb: dw $1209  ;
-0fcd: dw $1233  ;
-0fcf: dw $10e0  ;
-0fd1: dw $10f4  ;
-0fd3: dw $10ce  ;
-0fd5: dw $10b5  ;
-0fd7: dw $109b  ;
-0fd9: dw $1081  ;
-0fdb: dw $14c0  ;
-0fdd: dw $1108  ;
-0fdf: dw $1060  ;
-0fe1: dw $1045  ;
-0fe3: dw $102a  ;
-0fe5: dw $1003  ;
-0fe7: dw $0feb  ;
-0fe9: dw $0ff6  ;
+0f5b: dw $128b  ; 0
+0f5d: dw $12ad  ; 1
+0f5f: dw $12d8  ; 2
+0f61: dw $12fd  ; 3
+0f63: dw $132d  ; 4
+0f65: dw $136f  ; 5
+0f67: dw $1391  ; 6
+0f69: dw $13ae  ; 7
+0f6b: dw $13d3  ; 8
+0f6d: dw $13f4  ; 9
+0f6f: dw $140a  ; a
+0f71: dw $1419  ; b
+0f73: dw $143b  ; c
+0f75: dw $1449  ; d
+0f77: dw $145a  ; e
+0f79: dw $146e  ; f
+0f7b: dw $147c  ; 0
+0f7d: dw $148d  ; 1
+0f7f: dw $1812  ; 2
+0f81: dw $14b2  ; 3
+0f83: dw $14d0  ; 4
+0f85: dw $14eb  ; 5
+0f87: dw $1510  ; 6
+0f89: dw $1535  ; 7
+0f8b: dw $1553  ; 8
+0f8d: dw $1588  ; 9
+0f8f: dw $159d  ; a
+0f91: dw $15b3  ; b
+0f93: dw $15c9  ; c
+0f95: dw $15df  ; d
+0f97: dw $15f3  ; e
+0f99: dw $1607  ; f
+0f9b: dw $161d  ; 0
+0f9d: dw $164d  ; 1
+0f9f: dw $167d  ; 2
+0fa1: dw $16a6  ; 3
+0fa3: dw $16e4  ; 4
+0fa5: dw $1709  ; 5
+0fa7: dw $172e  ; 6
+0fa9: dw $1753  ; 7
+0fab: dw $1766  ; 8
+0fad: dw $1782  ; 9
+0faf: dw $1792  ; a
+0fb1: dw $17a2  ; b
+0fb3: dw $17b2  ; c
+0fb5: dw $17c2  ; d
+0fb7: dw $17d2  ; e
+0fb9: dw $17e2  ; f
+0fbb: dw $17f5  ; 0
+0fbd: dw $127b  ; 1
+0fbf: dw $125e  ; 2
+0fc1: dw $111e  ; 3
+0fc3: dw $114b  ; 4
+0fc5: dw $1181  ; 5
+0fc7: dw $11b1  ; 6
+0fc9: dw $11d9  ; 7
+0fcb: dw $1209  ; 8
+0fcd: dw $1233  ; 9
+0fcf: dw $10e0  ; a
+0fd1: dw $10f4  ; b
+0fd3: dw $10ce  ; c
+0fd5: dw $10b5  ; d
+0fd7: dw $109b  ; e
+0fd9: dw $1081  ; f
+0fdb: dw $14c0  ; 0
+0fdd: dw $1108  ; 1
+0fdf: dw $1060  ; 2
+0fe1: dw $1045  ; 3
+0fe3: dw $102a  ; 4
+0fe5: dw $1003  ; 5
+0fe7: dw $0feb  ; 6
+0fe9: dw $0ff6  ; 7
 
 0feb: ce        pop   x
 0fec: f5 32 21  mov   a,$2132+x         ; get channel bitmask
@@ -2373,38 +2379,40 @@
 18a8: f0 0c     beq   $18b6
 18aa: c4 00     mov   $00,a
 18ac: e8 00     mov   a,#$00
-18ae: d5 55 02  mov   $0255+x,a
-18b1: e4 00     mov   a,$00
+18ae: d5 55 02  mov   $0255+x,a         ; clear
+18b1: e4 00     mov   a,$00             ; use preserved voice byte?
 18b3: 5f bb 18  jmp   $18bb
 
 18b6: 3f 8b 1b  call  $1b8b
 18b9: c4 00     mov   $00,a
+; dispatch vcmd
 18bb: 5c        lsr   a
 18bc: 9f        xcn   a
-18bd: 28 07     and   a,#$07
+18bd: 28 07     and   a,#$07            ; take upper 3 bits from voice byte
 18bf: 1c        asl   a
 18c0: 4d        push  x
 18c1: 5d        mov   x,a
 18c2: 1f c5 18  jmp   ($18c5+x)
 
-18c5: dw $18d5  ; 00-0f
-18c7: dw $18fc  ; 10-1f
-18c9: dw $1919  ; 20-2f
-18cb: dw $1926  ; 30-3f
-18cd: dw $1935  ; 40-4f
-18cf: dw $1957  ; 50-5f
-18d1: dw $1977  ; 60-6f
-18d3: dw $1946  ; 70-7f
+18c5: dw $18d5  ; [0] 00-1f - play (relative)
+18c7: dw $18fc  ; [1] 20-3f - stop
+18c9: dw $1919  ; [2] 40-5f - pause
+18cb: dw $1926  ; [3] 60-7f - stop (absolute)
+18cd: dw $1935  ; [4] 80-9f - stop (pause)
+18cf: dw $1957  ; [5] a0-bf - bend
+18d1: dw $1977  ; [6] c0-df - single commands
+18d3: dw $1946  ; [7] e0-ff - bend (pause)
 
+; vcmd 00-1f - play (relative)
 18d5: ce        pop   x
 18d6: e4 00     mov   a,$00
-18d8: 28 1f     and   a,#$1f
+18d8: 28 1f     and   a,#$1f            ; note number (relative)
 18da: 68 10     cmp   a,#$10
 18dc: 90 02     bcc   $18e0
-18de: 08 e0     or    a,#$e0
+18de: 08 e0     or    a,#$e0            ; extend sign (-16..15)
 18e0: 60        clrc
 18e1: 95 85 02  adc   a,$0285+x
-18e4: d5 85 02  mov   $0285+x,a
+18e4: d5 85 02  mov   $0285+x,a         ; update current note
 18e7: c4 02     mov   $02,a
 18e9: f5 35 02  mov   a,$0235+x
 18ec: c4 00     mov   $00,a
@@ -2416,29 +2424,32 @@
 18f8: 3f 99 1c  call  $1c99
 18fb: 6f        ret
 
+; vcmd 20-3f - stop
 18fc: ce        pop   x
 18fd: e4 00     mov   a,$00
-18ff: 28 1f     and   a,#$1f
+18ff: 28 1f     and   a,#$1f            ; note number (relative)
 1901: 68 10     cmp   a,#$10
 1903: 90 02     bcc   $1907
-1905: 08 e0     or    a,#$e0
+1905: 08 e0     or    a,#$e0            ; extend sign (-16..15)
 1907: 60        clrc
 1908: 95 85 02  adc   a,$0285+x
-190b: d5 85 02  mov   $0285+x,a
+190b: d5 85 02  mov   $0285+x,a         ; update current note
 190e: c4 02     mov   $02,a
 1910: f5 35 02  mov   a,$0235+x
 1913: c4 00     mov   $00,a
 1915: 3f a2 1d  call  $1da2
 1918: 6f        ret
 
+; vcmd 40-5f - pause
 1919: ce        pop   x
 191a: e4 00     mov   a,$00
 191c: 28 1f     and   a,#$1f
-191e: bc        inc   a
+191e: bc        inc   a                 ; delta time = param + 1
 191f: d5 25 02  mov   $0225+x,a
 1922: d5 75 02  mov   $0275+x,a
 1925: 6f        ret
 
+; vcmd 60-7f - stop (absolute)
 1926: ce        pop   x
 1927: e4 00     mov   a,$00
 1929: 28 1f     and   a,#$1f
@@ -2448,6 +2459,7 @@
 1931: d5 55 02  mov   $0255+x,a
 1934: 6f        ret
 
+; vcmd 80-9f - stop (pause)
 1935: ce        pop   x
 1936: f5 75 02  mov   a,$0275+x
 1939: d5 25 02  mov   $0225+x,a
@@ -2457,6 +2469,7 @@
 1942: d5 55 02  mov   $0255+x,a
 1945: 6f        ret
 
+; vcmd e0-ff - bend (pause)
 1946: ce        pop   x
 1947: f5 75 02  mov   a,$0275+x
 194a: d5 25 02  mov   $0225+x,a
@@ -2466,6 +2479,7 @@
 1953: d5 55 02  mov   $0255+x,a
 1956: 6f        ret
 
+; vcmd a0-bf - bend
 1957: ce        pop   x
 1958: e4 00     mov   a,$00
 195a: 28 1f     and   a,#$1f
@@ -2493,34 +2507,37 @@
 1983: 5d        mov   x,a
 1984: 1f 87 19  jmp   ($1987+x)
 
-1987: dw $19b9  ; 60
-1989: dw $19c9  ; 61
-198b: dw $1a19  ; 62
-198d: dw $1a29  ; 63
-198f: dw $1a39  ; 64
-1991: dw $1a49  ; 65
-1993: dw $1a6f  ; 66
-1995: dw $1a6f  ; 67
-1997: dw $1a7f  ; 68
-1999: dw $1a9f  ; 69
-199b: dw $1ae8  ; 6a
-199d: dw $1af8  ; 6b
-199f: dw $1b00  ; 6c
-19a1: dw $1b02  ; 6d
-19a3: dw $1b02  ; 6e
-19a5: dw $1b0c  ; 6f
-19a7: dw $1b14  ; 70 (cannot be used?)
-19a9: dw $1b30  ; 71 (cannot be used?)
-19ab: dw $19b7  ; 72 (cannot be used?)
-19ad: dw $1b42  ; 73 (cannot be used?)
-19af: dw $1b55  ; 74 (cannot be used?)
-19b1: dw $1b68  ; 75 (cannot be used?)
-19b2: dw $1b6a  ; 76 (cannot be used?)
-19b4: dw $1b7d  ; 77 (cannot be used?)
+; vcmd dispatch table
+1987: dw $19b9  ; c0
+1989: dw $19c9  ; c1 - song
+198b: dw $1a19  ; c2 - volume
+198d: dw $1a29  ; c3 - pan
+198f: dw $1a39  ; c4
+1991: dw $1a49  ; c5
+1993: dw $1a6f  ; c6
+1995: dw $1a6f  ; c7
+1997: dw $1a7f  ; c8
+1999: dw $1a9f  ; c9
+199b: dw $1ae8  ; ca - instrument
+199d: dw $1af8  ; cb - tempo
+199f: dw $1b00  ; cc - nop
+19a1: dw $1b02  ; cd - halt
+19a3: dw $1b02  ; ce - halt (duplicated)
+19a5: dw $1b0c  ; cf - track
+19a7: dw $1b14  ; d0 - play
+19a9: dw $1b30  ; d1 - stop
+19ab: dw $19b7  ; d2
+19ad: dw $1b42  ; d3 - set note
+19af: dw $1b55  ; d4 - bend
+19b1: dw $1b68  ; d5 - nop
+19b2: dw $1b6a  ; d6
+19b4: dw $1b7d  ; d7 - pause=255
 
-19b6: ce        pop   x
+; vcmd d2
+19b7: ce        pop   x
 19b8: 6f        ret
 
+; vcmd c0
 19b9: ce        pop   x
 19ba: 3f 8b 1b  call  $1b8b
 19bd: c4 04     mov   $04,a
@@ -2530,6 +2547,7 @@
 19c5: d5 af 02  mov   $02af+x,a
 19c8: 6f        ret
 
+; vcmd c1 - song
 19c9: ce        pop   x
 19ca: 3f 8b 1b  call  $1b8b
 19cd: c4 04     mov   $04,a
@@ -2578,6 +2596,7 @@
 1a15: d5 cf 02  mov   $02cf+x,a
 1a18: 6f        ret
 
+; vcmd c2 - volume
 1a19: ce        pop   x
 1a1a: 3f 8b 1b  call  $1b8b
 1a1d: c4 04     mov   $04,a
@@ -2587,6 +2606,7 @@
 1a25: d5 ef 02  mov   $02ef+x,a
 1a28: 6f        ret
 
+; vcmd c3 - pan
 1a29: ce        pop   x
 1a2a: 3f 8b 1b  call  $1b8b
 1a2d: c4 04     mov   $04,a
@@ -2596,6 +2616,7 @@
 1a35: d5 1f 03  mov   $031f+x,a
 1a38: 6f        ret
 
+; vcmd c4
 1a39: ce        pop   x
 1a3a: 3f 8b 1b  call  $1b8b
 1a3d: c4 04     mov   $04,a
@@ -2605,6 +2626,7 @@
 1a45: d5 2f 03  mov   $032f+x,a
 1a48: 6f        ret
 
+; vcmd c5
 1a49: ce        pop   x
 1a4a: 3f 8b 1b  call  $1b8b
 1a4d: c4 04     mov   $04,a
@@ -2624,6 +2646,7 @@
 1a6b: d5 4f 03  mov   $034f+x,a
 1a6e: 6f        ret
 
+; vcmd c6,c7
 1a6f: ce        pop   x
 1a70: 3f 8b 1b  call  $1b8b
 1a73: c4 04     mov   $04,a
@@ -2633,6 +2656,7 @@
 1a7b: d5 df 02  mov   $02df+x,a
 1a7e: 6f        ret
 
+; vcmd c8
 1a7f: ce        pop   x
 1a80: f5 35 02  mov   a,$0235+x
 1a83: 5d        mov   x,a
@@ -2648,6 +2672,7 @@
 1a9b: d5 cf 02  mov   $02cf+x,a
 1a9e: 6f        ret
 
+; vcmd c9
 1a9f: ce        pop   x
 1aa0: e4 3c     mov   a,$3c
 1aa2: c4 08     mov   $08,a
@@ -2686,34 +2711,41 @@
 1ae4: d5 4f 03  mov   $034f+x,a
 1ae7: 6f        ret
 
+; vcmd ca - instrument
 1ae8: ce        pop   x
 1ae9: 3f 8b 1b  call  $1b8b
 1aec: c4 02     mov   $02,a
 1aee: f5 35 02  mov   a,$0235+x
 1af1: 5d        mov   x,a
 1af2: e4 02     mov   a,$02
-1af4: 3f ee 0d  call  $0dee
+1af4: 3f ee 0d  call  $0dee             ; set instrument
 1af7: 6f        ret
 
+; vcmd cb - tempo
 1af8: ce        pop   x
 1af9: 3f 8b 1b  call  $1b8b
 1afc: c5 03 02  mov   $0203,a
 1aff: 6f        ret
 
+; vcmd cc - nop
 1b00: ce        pop   x
 1b01: 6f        ret
 
+; vcmd cd - halt
+; vcmd ce - halt (duplicated)
 1b02: ce        pop   x
 1b03: e8 00     mov   a,#$00
 1b05: d5 15 02  mov   $0215+x,a
-1b08: d5 05 02  mov   $0205+x,a
+1b08: d5 05 02  mov   $0205+x,a         ; zero voice pointer
 1b0b: 6f        ret
 
+; vcmd cf - track
 1b0c: ce        pop   x
 1b0d: 3f 8b 1b  call  $1b8b
 1b10: d5 35 02  mov   $0235+x,a
 1b13: 6f        ret
 
+; vcmd d0 - play
 1b14: ce        pop   x
 1b15: 3f 8b 1b  call  $1b8b
 1b18: d5 85 02  mov   $0285+x,a
@@ -2728,6 +2760,7 @@
 1b2c: 3f 99 1c  call  $1c99
 1b2f: 6f        ret
 
+; vcmd d1 - stop
 1b30: ce        pop   x
 1b31: 3f 8b 1b  call  $1b8b
 1b34: d5 85 02  mov   $0285+x,a
@@ -2737,6 +2770,7 @@
 1b3e: 3f a2 1d  call  $1da2
 1b41: 6f        ret
 
+; vcmd d3 - set note
 1b42: ce        pop   x
 1b43: 3f 8b 1b  call  $1b8b
 1b46: d5 85 02  mov   $0285+x,a
@@ -2746,6 +2780,7 @@
 1b51: d5 55 02  mov   $0255+x,a
 1b54: 6f        ret
 
+; vcmd d4 - bend
 1b55: ce        pop   x
 1b56: 3f 8b 1b  call  $1b8b
 1b59: d5 95 02  mov   $0295+x,a
@@ -2755,9 +2790,11 @@
 1b64: d5 55 02  mov   $0255+x,a
 1b67: 6f        ret
 
+; vcmd d5 - nop
 1b68: ce        pop   x
 1b69: 6f        ret
 
+; vcmd d6
 1b6a: ce        pop   x
 1b6b: 3f 8b 1b  call  $1b8b
 1b6e: d5 95 02  mov   $0295+x,a
@@ -2769,16 +2806,19 @@
 1b79: d5 6f 03  mov   $036f+x,a
 1b7c: 6f        ret
 
+; vcmd d7 - pause=255
 1b7d: ce        pop   x
 1b7e: e8 ff     mov   a,#$ff
 1b80: d5 25 02  mov   $0225+x,a
 1b83: 6f        ret
 
+; vcmd d8-df - volume range
 1b84: ce        pop   x
 1b85: 28 03     and   a,#$03
 1b87: d5 65 02  mov   $0265+x,a
 1b8a: 6f        ret
 
+; read voice byte
 1b8b: 40        setp
 1b8c: f4 06     mov   a,$06+x           ; automaton state?
 1b8e: 4d        push  x
@@ -2813,7 +2853,7 @@
 1bbe: 20        clrp
 1bbf: 6f        ret
 
-1bc0: 3f 7d 1c  call  $1c7d             ; get section pointer of track X into $00/1
+1bc0: 3f 7d 1c  call  $1c7d             ; get voice pointer of track X into $00/1
 1bc3: f7 00     mov   a,($00)+y
 1bc5: fc        inc   y
 1bc6: 17 00     or    a,($00)+y
@@ -2831,15 +2871,15 @@
 1bdb: 3f 8a 1c  call  $1c8a
 1bde: 6f        ret
 
-1bdf: 3f 7d 1c  call  $1c7d             ; get section pointer of track X into $00/1
+1bdf: 3f 7d 1c  call  $1c7d             ; get voice pointer of track X into $00/1
 1be2: f7 00     mov   a,($00)+y
 1be4: fc        inc   y
 1be5: 2d        push  a
-1be6: 3f 8a 1c  call  $1c8a             ; section pointer += 1
+1be6: 3f 8a 1c  call  $1c8a             ; voice pointer += 1
 1be9: ae        pop   a
 1bea: 6f        ret
 
-1beb: 3f 7d 1c  call  $1c7d             ; get section pointer of track X into $00/1
+1beb: 3f 7d 1c  call  $1c7d             ; get voice pointer of track X into $00/1
 1bee: f4 16     mov   a,$16+x
 1bf0: d0 0e     bne   $1c00
 1bf2: f7 00     mov   a,($00)+y
@@ -2848,7 +2888,7 @@
 1bf7: d4 36     mov   $36+x,a
 1bf9: e8 08     mov   a,#$08
 1bfb: d4 16     mov   $16+x,a
-1bfd: 3f 8a 1c  call  $1c8a             ; section pointer += 1
+1bfd: 3f 8a 1c  call  $1c8a             ; voice pointer += 1
 1c00: 1b 36     asl   $36+x
 1c02: e8 00     mov   a,#$00
 1c04: 88 03     adc   a,#$03
@@ -2858,7 +2898,7 @@
 1c0c: 9b 16     dec   $16+x
 1c0e: 6f        ret
 
-1c0f: 3f 7d 1c  call  $1c7d             ; get section pointer of track X into $00/1
+1c0f: 3f 7d 1c  call  $1c7d             ; get voice pointer of track X into $00/1
 1c12: f4 26     mov   a,$26+x
 1c14: 10 18     bpl   $1c2e
 1c16: f7 00     mov   a,($00)+y
@@ -2875,7 +2915,7 @@
 1c29: 60        clrc
 1c2a: a4 02     sbc   a,$02
 1c2c: d4 46     mov   $46+x,a
-1c2e: 3f 8a 1c  call  $1c8a             ; section pointer += 1
+1c2e: 3f 8a 1c  call  $1c8a             ; voice pointer += 1
 1c31: f4 66     mov   a,$66+x
 1c33: c4 02     mov   $02,a
 1c35: f4 76     mov   a,$76+x
@@ -2899,7 +2939,7 @@
 1c57: e4 04     mov   a,$04
 1c59: 6f        ret
 
-1c5a: 3f 7d 1c  call  $1c7d             ; get section pointer of track X into $00/1
+1c5a: 3f 7d 1c  call  $1c7d             ; get voice pointer of track X into $00/1
 1c5d: e8 02     mov   a,#$02
 1c5f: d4 06     mov   $06+x,a
 1c61: f4 66     mov   a,$66+x
@@ -2909,7 +2949,7 @@
 1c69: f7 00     mov   a,($00)+y
 1c6b: fc        inc   y
 1c6c: c4 04     mov   $04,a
-1c6e: 3f 8a 1c  call  $1c8a             ; section pointer += 1
+1c6e: 3f 8a 1c  call  $1c8a             ; voice pointer += 1
 1c71: f4 56     mov   a,$56+x
 1c73: bb 56     inc   $56+x
 1c75: 28 1f     and   a,#$1f
@@ -2918,7 +2958,7 @@
 1c7a: d7 02     mov   ($02)+y,a
 1c7c: 6f        ret
 
-; get section pointer of track X into $00/1
+; get voice pointer of track X into $00/1
 1c7d: f5 05 02  mov   a,$0205+x
 1c80: c4 00     mov   $00,a
 1c82: f5 15 02  mov   a,$0215+x
@@ -2926,7 +2966,7 @@
 1c87: 8d 00     mov   y,#$00
 1c89: 6f        ret
 
-; add Y to $00/1 and $0205+x/$0215+x
+; add Y to voice pointer ($00/1 and $0205+x/$0215+x)
 1c8a: 60        clrc
 1c8b: dd        mov   a,y
 1c8c: 84 00     adc   a,$00
@@ -3188,7 +3228,7 @@
 1e71: e8 0b     mov   a,#$0b
 1e73: d5 bf 02  mov   $02bf+x,a
 1e76: e8 00     mov   a,#$00
-1e78: 3f ee 0d  call  $0dee
+1e78: 3f ee 0d  call  $0dee             ; set instrument
 1e7b: 1d        dec   x
 1e7c: 10 d4     bpl   $1e52
 1e7e: 6f        ret
