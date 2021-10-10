@@ -228,21 +228,21 @@
 03d3: 8f 4c f2  mov   $f2,#$4c
 03d6: fa 08 f3  mov   ($f3),($08)       ; set KON
 03d9: 8f 6c f2  mov   $f2,#$6c
-03dc: fa 0d f3  mov   ($f3),($0d)       ; set ESA
+03dc: fa 0d f3  mov   ($f3),($0d)       ; set FLG
 03df: 8f 2d f2  mov   $f2,#$2d
 03e2: fa 0a f3  mov   ($f3),($0a)       ; set PMON
 03e5: 8f 3d f2  mov   $f2,#$3d
 03e8: fa 0b f3  mov   ($f3),($0b)       ; set NON
 03eb: 8f 4d f2  mov   $f2,#$4d
 03ee: fa 0c f3  mov   ($f3),($0c)       ; set EON
-03f1: a3 0d 0c  bbs5  $0d,$0400
+03f1: a3 0d 0c  bbs5  $0d,$0400         ; skip if echo is disabled
 03f4: 8f 2c f2  mov   $f2,#$2c
 03f7: fa 10 f3  mov   ($f3),($10)       ; set EVOL(L)
 03fa: 8f 3c f2  mov   $f2,#$3c
 03fd: fa 10 f3  mov   ($f3),($10)       ; set EVOL(R)
 0400: 4e 19 00  tclr1 $0019
 0403: 09 08 19  or    ($19),($08)
-0406: 8f 00 08  mov   $08,#$00
+0406: 8f 00 08  mov   $08,#$00          ; clear KON shadow
 0409: 8f 00 09  mov   $09,#$00
 040c: cd 0c     mov   x,#$0c
 040e: f5 90 ed  mov   a,$ed90+x
@@ -632,7 +632,7 @@
 0723: 60        clrc
 0724: 84 00     adc   a,$00
 0726: 5d        mov   x,a
-0727: e4 0b     mov   a,$0b
+0727: e4 0b     mov   a,$0b             ; NON shadow
 0729: 24 c6     and   a,$c6
 072b: d0 09     bne   $0736
 072d: 7d        mov   a,x
@@ -640,7 +640,7 @@
 0730: 70 19     bvs   $074b
 0732: e8 00     mov   a,#$00
 0734: 2f 17     bra   $074d
-0736: 38 e0 0d  and   $0d,#$e0
+0736: 38 e0 0d  and   $0d,#$e0          ; clear noise clock frequency
 0739: 7d        mov   a,x
 073a: 30 06     bmi   $0742
 073c: 68 20     cmp   a,#$20
@@ -688,7 +688,7 @@
 0798: 6f        ret
 
 0799: f8 a1     mov   x,$a1
-079b: 09 c6 08  or    ($08),($c6)
+079b: 09 c6 08  or    ($08),($c6)       ; set KON bits (key on)
 079e: e4 a2     mov   a,$a2
 07a0: 9f        xcn   a
 07a1: 5c        lsr   a
@@ -966,7 +966,7 @@
 0988: 4f f4     pcall $f4
 098a: f8 a1     mov   x,$a1
 098c: d0 02     bne   $0990
-098e: c4 10     mov   $10,a
+098e: c4 10     mov   $10,a             ; set EVOL shadow
 0990: 6f        ret
 
 ; vcmd 03
@@ -1218,7 +1218,7 @@
 0b2b: 2f 22     bra   $0b4f
 0b2d: f6 9f ed  mov   a,$ed9f+y
 0b30: 28 1f     and   a,#$1f
-0b32: 38 e0 0d  and   $0d,#$e0
+0b32: 38 e0 0d  and   $0d,#$e0          ; clear noise clock frequency
 0b35: 0e 0d 00  tset1 $000d
 0b38: 8f ff 00  mov   $00,#$ff
 0b3b: f6 8e ed  mov   a,$ed8e+y
@@ -1251,7 +1251,7 @@
 0b6b: 15 b0 ed  or    a,$edb0+x
 0b6e: d5 b0 ed  mov   $edb0+x,a
 0b71: 8f ff 00  mov   $00,#$ff
-0b74: 8f 00 0a  mov   $0a,#$00
+0b74: 8f 00 0a  mov   $0a,#$00          ; clear PMON
 0b77: 8d 0e     mov   y,#$0e
 0b79: f6 ae ed  mov   a,$edae+y
 0b7c: 36 8e ed  and   a,$ed8e+y
@@ -1339,7 +1339,7 @@
 0c1f: 04 c6     or    a,$c6
 0c21: d5 f0 ed  mov   $edf0+x,a
 0c24: 8f ff 00  mov   $00,#$ff
-0c27: 8f 00 0c  mov   $0c,#$00
+0c27: 8f 00 0c  mov   $0c,#$00          ; zero EON shadow
 0c2a: 8d 0e     mov   y,#$0e
 0c2c: f6 ee ed  mov   a,$edee+y
 0c2f: 36 8e ed  and   a,$ed8e+y
@@ -1692,7 +1692,7 @@
 0ee4: e7 02     mov   a,($02+x)
 0ee6: c4 12     mov   $12,a
 0ee8: f0 02     beq   $0eec
-0eea: b2 0d     clr5  $0d
+0eea: b2 0d     clr5  $0d               ; echo will be enabled
 0eec: 8d 02     mov   y,#$02
 0eee: f8 a3     mov   x,$a3
 0ef0: f7 02     mov   a,($02)+y
@@ -1894,9 +1894,9 @@
 107f: d8 f3     mov   $f3,x             ; set EVOL(L)
 1081: 8f 3c f2  mov   $f2,#$3c
 1084: d8 f3     mov   $f3,x             ; set EVOL(R)
-1086: a2 0d     set5  $0d
+1086: a2 0d     set5  $0d               ; echo off
 1088: 8f 6c f2  mov   $f2,#$6c
-108b: fa 0d f3  mov   ($f3),($0d)       ; set FLG
+108b: fa 0d f3  mov   ($f3),($0d)       ; set FLG and disable echo
 108e: 3f fe 0a  call  $0afe
 1091: e4 05     mov   a,$05
 1093: d5 e0 ed  mov   $ede0+x,a
@@ -1913,21 +1913,21 @@
 10af: d0 9a     bne   $104b
 10b1: c4 1b     mov   $1b,a
 10b3: c4 1c     mov   $1c,a
-10b5: c4 0b     mov   $0b,a
-10b7: c4 0a     mov   $0a,a
-10b9: c4 08     mov   $08,a
+10b5: c4 0b     mov   $0b,a             ; NON shadow
+10b7: c4 0a     mov   $0a,a             ; PMON shadow
+10b9: c4 08     mov   $08,a             ; KON shadow
 10bb: 9c        dec   a
 10bc: c4 09     mov   $09,a
 10be: 23 13 b4  bbs1  $13,$1075
 10c1: e8 00     mov   a,#$00
 10c3: 8f 4d f2  mov   $f2,#$4d
-10c6: c4 f3     mov   $f3,a             ; set EON
+10c6: c4 f3     mov   $f3,a             ; zero EON
 10c8: 8f 2c f2  mov   $f2,#$2c
-10cb: c4 f3     mov   $f3,a             ; set EVOL(L)
+10cb: c4 f3     mov   $f3,a             ; zero EVOL(L)
 10cd: 8f 3c f2  mov   $f2,#$3c
-10d0: c4 f3     mov   $f3,a             ; set EVOL(R)
-10d2: c4 0c     mov   $0c,a
-10d4: c4 10     mov   $10,a
+10d0: c4 f3     mov   $f3,a             ; zero EVOL(R)
+10d2: c4 0c     mov   $0c,a             ; zero EON shadow
+10d4: c4 10     mov   $10,a             ; zero EVOL shadow
 10d6: e4 12     mov   a,$12
 10d8: f0 39     beq   $1113
 10da: 1c        asl   a
@@ -2166,7 +2166,7 @@
 
 1293: e4 05     mov   a,$05
 1295: d0 21     bne   $12b8
-1297: c4 10     mov   $10,a
+1297: c4 10     mov   $10,a             ; set EVOL shadow
 1299: 8d 0e     mov   y,#$0e
 129b: 5d        mov   x,a
 129c: 43 13 07  bbs2  $13,$12a6
@@ -2389,7 +2389,7 @@
 1448: e5 ae 0d  mov   a,$0dae
 144b: c4 12     mov   $12,a
 144d: f0 02     beq   $1451
-144f: b2 0d     clr5  $0d
+144f: b2 0d     clr5  $0d               ; echo will be enabled
 1451: 3f c1 10  call  $10c1
 1454: e5 80 ed  mov   a,$ed80
 1457: c4 00     mov   $00,a
