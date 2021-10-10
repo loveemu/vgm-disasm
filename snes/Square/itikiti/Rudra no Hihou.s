@@ -1947,7 +1947,7 @@
 10f5: c5 fd 10  mov   $10fd,a
 10f8: 8d 00     mov   y,#$00
 10fa: dd        mov   a,y
-10fb: d6 00 ed  mov   $ed00+y,a
+10fb: d6 00 ed  mov   $ed00+y,a         ; this line is dynamically patched ($10fd)
 10fe: fe fb     dbnz  y,$10fb
 1100: 7d        mov   a,x
 1101: f0 03     beq   $1106
@@ -3220,14 +3220,7 @@ ffb0: 10 02     bpl   $ffb4
 ffb2: 8d 7f     mov   y,#$7f
 ffb4: 6f        ret
 
-ffb5: 6f        ret
-
-ffb6: 15 d6 80  or    a,$80d6+x
-ffb9: 1f 9f d6  jmp   ($d69f+x)
-
-ffbc: 89 1f 88  adc   ($88),($1f)
-ffbf: 5f c4 15  jmp   $15c4
-
+ffc0: c4 15     mov   $15,a
 ffc2: 6e 16 0b  dbnz  $16,$ffd0
 ffc5: cd fe     mov   x,#$fe
 ffc7: 4f 8e     pcall $8e
@@ -3236,16 +3229,15 @@ ffca: c5 bf ff  mov   $ffbf,a
 ffcd: 8f 08 16  mov   $16,#$08
 ffd0: 6f        ret
 
-ffd1: 00        nop
-ffd2: 00        nop
-ffd3: 00        nop
-ffd4: 00        nop
-ffd5: 00        nop
-ffd6: 47 0c     eor   a,($0c+x)
-ffd8: 23 17 ac  bbs1  $17,$ff87
-ffdb: 17 71     or    a,($71)+y
-ffdd: 0b 1b     asl   $1b
-ffdf: 0b
+ffd1: db $00
+
+ffd2: dw $0000
+ffd4: dw $0000
+ffd6: dw $0c47
+ffd8: dw $1723
+ffda: dw $17ac
+ffdc: dw $0b71
+ffde: dw $0b1b
 
 ; pcall $e0
 ffe0: da 00     movw  $00,ya
