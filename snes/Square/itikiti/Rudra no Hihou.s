@@ -268,15 +268,16 @@
 0436: 6f        ret
 
 0437: 40        setp
-0438: f4 39     mov   a,$39+x
+0438: f4 39     mov   a,$39+x           ; current tempo ($0139+x)
 043a: fb 09     mov   y,$09+x
 043c: f0 02     beq   $0440
 043e: 4f e0     pcall $e0
 0440: 60        clrc
 0441: 94 29     adc   a,$29+x
-0443: d4 29     mov   $29+x,a
+0443: d4 29     mov   $29+x,a           ; increase tempo counter ($0129+x)
 0445: 20        clrp
-0446: 90 ee     bcc   $0436
+0446: 90 ee     bcc   $0436             ; return if not carried over
+; tick
 0448: f5 90 ed  mov   a,$ed90+x
 044b: c4 df     mov   $df,a
 044d: eb a3     mov   y,$a3
@@ -316,7 +317,8 @@
 048e: d0 22     bne   $04b2
 0490: 09 c6 09  or    ($09),($c6)
 0493: 2f c1     bra   $0456
-0495: 5f b2 05  jmp   $05b2
+; 
+0495: 5f b2 05  jmp   $05b2             ; dispatch voice byte
 
 0498: cb a3     mov   $a3,y
 049a: cb a2     mov   $a2,y
@@ -325,8 +327,8 @@
 04a1: f8 a1     mov   x,$a1
 04a3: eb a3     mov   y,$a3
 04a5: f6 00 ef  mov   a,$ef00+y
-04a8: 9c        dec   a
-04a9: f0 ea     beq   $0495
+04a8: 9c        dec   a                 ; decrease the delta-time counter
+04a9: f0 ea     beq   $0495             ; when it reaches 0, dispatch the next voice byte
 04ab: d6 00 ef  mov   $ef00+y,a
 04ae: 68 02     cmp   a,#$02
 04b0: f0 cd     beq   $047f
@@ -441,46 +443,52 @@
 05ad: eb a3     mov   y,$a3
 05af: 5f 56 04  jmp   $0456
 
+; dispatch voice byte
 05b2: f8 a3     mov   x,$a3
-05b4: e7 1f     mov   a,($1f+x)
-05b6: bb 1f     inc   $1f+x
+05b4: e7 1f     mov   a,($1f+x)         ; read voice byte
+05b6: bb 1f     inc   $1f+x             ; increase the voice pointer
 05b8: d0 02     bne   $05bc
 05ba: bb 20     inc   $20+x
 05bc: 68 30     cmp   a,#$30
-05be: b0 10     bcs   $05d0
-05c0: 4f 89     pcall $89               ; dispatch vcmd
+05be: b0 10     bcs   $05d0             ; branch if note (when >= $30)
+05c0: 4f 89     pcall $89               ; otherwise, dispatch vcmd (when $00-$2f)
 05c2: 13 13 ed  bbc0  $13,$05b2
 05c5: 12 13     clr0  $13
 05c7: f8 a1     mov   x,$a1
 05c9: 5f 56 04  jmp   $0456
 
-05cc: 4f f4     pcall $f4               ; read next byte, inc voice ptr
+; read note length from voice stream (when note length index is 7)
+05cc: 4f f4     pcall $f4               ; read next voice byte
 05ce: 2f 19     bra   $05e9
 
-05d0: c4 db     mov   $db,a             ; vbyte (30-ff)
-05d2: 28 07     and   a,#$07            ; lower 3 bit
+; vcmds 30-ff - note
+05d0: c4 db     mov   $db,a             ; save the note byte
+05d2: 28 07     and   a,#$07            ; extract the lower 3 bit (note length index)
 05d4: 68 07     cmp   a,#$07
-05d6: f0 f4     beq   $05cc             ;   if 0, take next byte
+05d6: f0 f4     beq   $05cc             ; if == 7: determine the duration from the next byte
+; determine the length from predefined note length table (when note length index is in 0-6)
 05d8: c4 02     mov   $02,a
-05da: dd        mov   a,y
+05da: dd        mov   a,y               ; Y equals to $a3 (current track number * 2)
 05db: 5c        lsr   a
 05dc: 8d 07     mov   y,#$07
-05de: cf        mul   ya
-05df: 7a 9f     addw  ya,$9f
-05e1: da 00     movw  $00,ya
+05de: cf        mul   ya                ; calcurate offset (current track * 7)
+05df: 7a 9f     addw  ya,$9f            ; add the offset and the base of the note length tables
+05e1: da 00     movw  $00,ya            ; save the determined address for the note length table of the current track
 05e3: eb 02     mov   y,$02
-05e5: f7 00     mov   a,($00)+y         ;   otherwise, read from table
+05e5: f7 00     mov   a,($00)+y         ; read the note length from table
 05e7: eb a3     mov   y,$a3
-05e9: d6 00 ef  mov   $ef00+y,a
+;
+05e9: d6 00 ef  mov   $ef00+y,a         ; set delta-time counter
 05ec: f6 1f 00  mov   a,$001f+y
 05ef: c4 00     mov   $00,a
 05f1: f6 20 00  mov   a,$0020+y
-05f4: c4 01     mov   $01,a
+05f4: c4 01     mov   $01,a             ; copy the voice pointer to $00/1
 05f6: 8d 00     mov   y,#$00
-05f8: f7 00     mov   a,($00)+y
+; readahead vcmds for slur/tie or something else
+05f8: f7 00     mov   a,($00)+y         ; read voice byte
 05fa: fc        inc   y
 05fb: 68 30     cmp   a,#$30
-05fd: b0 6d     bcs   $066c
+05fd: b0 6d     bcs   $066c             ; break if the next note is found
 05ff: 68 26     cmp   a,#$26
 0601: f0 0e     beq   $0611
 0603: 68 2c     cmp   a,#$2c
@@ -488,11 +496,13 @@
 0607: 5d        mov   x,a
 0608: f0 62     beq   $066c
 060a: dd        mov   a,y
-060b: 95 93 19  adc   a,$1993+x
+060b: 95 93 19  adc   a,$1993+x         ; skip the vcmd (using vcmd length table)
 060e: fd        mov   y,a
-060f: 2f e7     bra   $05f8
+060f: 2f e7     bra   $05f8             ; continue
+;
 0611: e2 13     set7  $13
-0613: 2f e3     bra   $05f8
+0613: 2f e3     bra   $05f8             ; continue
+;
 0615: f0 40     beq   $0657
 0617: 68 2e     cmp   a,#$2e
 0619: 90 33     bcc   $064e
@@ -505,7 +515,7 @@
 0626: f0 2f     beq   $0657
 0628: fc        inc   y
 0629: fc        inc   y
-062a: 2f cc     bra   $05f8
+062a: 2f cc     bra   $05f8             ; continue
 062c: f8 a3     mov   x,$a3
 062e: 7d        mov   a,x
 062f: 1c        asl   a
@@ -513,7 +523,7 @@
 0633: 5d        mov   x,a
 0634: f5 00 1a  mov   a,$1a00+x
 0637: 9c        dec   a
-0638: f0 be     beq   $05f8
+0638: f0 be     beq   $05f8             ; continue
 063a: 7d        mov   a,x
 063b: 1c        asl   a
 063c: c4 02     mov   $02,a
@@ -540,17 +550,21 @@
 0664: 95 c1 ed  adc   a,$edc1+x
 0667: fa 02 00  mov   ($00),($02)
 066a: 2f 88     bra   $05f4
+; continuing with note (current note: $db, next note: A)
 066c: f8 a1     mov   x,$a1
 066e: fd        mov   y,a
 066f: e4 c6     mov   a,$c6
 0671: ad f8     cmp   y,#$f8
-0673: b0 08     bcs   $067d
+0673: b0 08     bcs   $067d             ; branch if next note byte is rest
+;
 0675: e3 13 05  bbs7  $13,$067d
 0678: 15 d0 ed  or    a,$edd0+x
 067b: 2f 07     bra   $0684
+;
 067d: f2 13     clr7  $13
 067f: 48 ff     eor   a,#$ff
 0681: 35 d0 ed  and   a,$edd0+x
+;
 0684: d5 d0 ed  mov   $edd0+x,a
 0687: e4 c6     mov   a,$c6
 0689: b0 09     bcs   $0694
@@ -563,12 +577,12 @@
 0699: d5 b1 ed  mov   $edb1+x,a
 069c: eb a3     mov   y,$a3
 069e: 78 f8 db  cmp   $db,#$f8
-06a1: b0 4e     bcs   $06f1
+06a1: b0 4e     bcs   $06f1             ; branch if rest (vcmds f8-ff)
 06a3: e4 c7     mov   a,$c7
 06a5: 24 c6     and   a,$c6
 06a7: d0 48     bne   $06f1
 06a9: 78 f0 db  cmp   $db,#$f0
-06ac: b0 03     bcs   $06b1
+06ac: b0 03     bcs   $06b1             ; branch if tie (vcmds f0-f7)
 06ae: 3f f4 06  call  $06f4
 06b1: f6 01 f6  mov   a,$f601+y
 06b4: f0 3b     beq   $06f1
@@ -611,15 +625,15 @@
 06fe: e4 db     mov   a,$db
 0700: 5c        lsr   a
 0701: 5c        lsr   a
-0702: 5c        lsr   a
+0702: 5c        lsr   a                 ; extract higher 5 bits of note (key)
 0703: 80        setc
 0704: a8 06     sbc   a,#$06
 0706: 60        clrc
-0707: 96 80 f9  adc   a,$f980+y
+0707: 96 80 f9  adc   a,$f980+y         ; add note number base (vcmd 0b)
 070a: 30 3f     bmi   $074b
-070c: 96 81 ee  adc   a,$ee81+y
+070c: 96 81 ee  adc   a,$ee81+y         ; per-voice transpose (vcmd 17, 18)
 070f: 30 1f     bmi   $0730
-0711: c4 00     mov   $00,a
+0711: c4 00     mov   $00,a             ; save adjusted note number
 0713: f6 01 fa  mov   a,$fa01+y
 0716: f0 39     beq   $0751
 0718: 1c        asl   a
@@ -705,24 +719,24 @@
 07b9: c4 f3     mov   $f3,a             ; set ADSR(2)
 07bb: 6f        ret
 
-; vcmd 12
-07bc: 4f 78     pcall $78
+; vcmd 12 - attack rate
+07bc: 4f 78     pcall $78               ; read next voice byte to A and $dc
 07be: f6 00 ee  mov   a,$ee00+y
 07c1: 28 f0     and   a,#$f0
 07c3: 04 dc     or    a,$dc
 07c5: d6 00 ee  mov   $ee00+y,a
 07c8: 6f        ret
 
-; vcmd 13
-07c9: 4f f4     pcall $f4
+; vcmd 13 - decay rate
+07c9: 4f f4     pcall $f4               ; read next voice byte
 07cb: 9f        xcn   a
 07cc: c4 dc     mov   $dc,a
 07ce: f6 00 ee  mov   a,$ee00+y
 07d1: 28 8f     and   a,#$8f
 07d3: 2f ee     bra   $07c3
 
-; vcmd 14
-07d5: 4f f4     pcall $f4
+; vcmd 14 - sustain level
+07d5: 4f f4     pcall $f4               ; read next voice byte
 07d7: 9f        xcn   a
 07d8: 1c        asl   a
 07d9: c4 dc     mov   $dc,a
@@ -732,14 +746,14 @@
 07e2: d6 01 ee  mov   $ee01+y,a
 07e5: 6f        ret
 
-; vcmd 15
-07e6: 4f 78     pcall $78
+; vcmd 15 - sustain rate
+07e6: 4f 78     pcall $78               ; read next voice byte to A and $dc
 07e8: f6 01 ee  mov   a,$ee01+y
 07eb: 28 e0     and   a,#$e0
 07ed: 2f f1     bra   $07e0
 
-; vcmd 16
-07ef: f6 80 ee  mov   a,$ee80+y
+; vcmd 16 - default ADSR
+07ef: f6 80 ee  mov   a,$ee80+y         ; get current SRCN
 07f2: 1c        asl   a
 07f3: 5d        mov   x,a
 07f4: ca fc 07  mov1  $07fc,0,c
@@ -908,15 +922,15 @@
 092a: d5 d1 ed  mov   $edd1+x,a
 092d: 6f        ret
 
-; vcmd 06
-092e: 4f 78     pcall $78
-0930: d5 39 01  mov   $0139+x,a
+; vcmd 06 - tempo
+092e: 4f 78     pcall $78               ; read next voice byte to A and $dc
+0930: d5 39 01  mov   $0139+x,a         ; update tempo
 0933: e8 00     mov   a,#$00
 0935: d4 a5     mov   $a5+x,a
 0937: 6f        ret
 
-; vcmd 07
-0938: 4f 00     pcall $00
+; vcmd 07 - tempo fade
+0938: 4f 00     pcall $00               ; read next voice word to $dc/dd and A
 093a: 80        setc
 093b: b5 39 01  sbc   a,$0139+x
 093e: f0 f5     beq   $0935
@@ -932,22 +946,22 @@
 0950: e4 dc     mov   a,$dc
 0952: 2f e1     bra   $0935
 
-; vcmd 01
-0954: 4f 78     pcall $78
+; vcmd 01 - master volume
+0954: 4f 78     pcall $78               ; read next voice byte to A and $dc
 0956: d5 01 ed  mov   $ed01+x,a
 0959: e8 00     mov   a,#$00
 095b: d5 59 01  mov   $0159+x,a
 095e: 6f        ret
 
-; vcmd 0c
-095f: 4f f4     pcall $f4
+; vcmd 0c - volume
+095f: 4f f4     pcall $f4               ; read next voice byte
 0961: d6 01 f0  mov   $f001+y,a
 0964: e8 00     mov   a,#$00
 0966: d6 00 f1  mov   $f100+y,a
 0969: 6f        ret
 
-; vcmd 0d
-096a: 4f 00     pcall $00
+; vcmd 0d - volume fade
+096a: 4f 00     pcall $00               ; read next voice word to $dc/dd and A
 096c: 80        setc
 096d: b6 01 f0  sbc   a,$f001+y
 0970: f0 f4     beq   $0966
@@ -962,8 +976,8 @@
 0984: eb a3     mov   y,$a3
 0986: 2f de     bra   $0966
 
-; vcmd 02
-0988: 4f f4     pcall $f4
+; vcmd 02 - echo volume
+0988: 4f f4     pcall $f4               ; read next voice byte
 098a: f8 a1     mov   x,$a1
 098c: d0 02     bne   $0990
 098e: c4 10     mov   $10,a             ; set EVOL shadow
@@ -973,20 +987,20 @@
 0991: dd        mov   a,y
 0992: 5c        lsr   a
 0993: fd        mov   y,a
-0994: 4f f4     pcall $f4
+0994: 4f f4     pcall $f4               ; read next voice byte
 0996: d6 c0 fe  mov   $fec0+y,a
 0999: eb a3     mov   y,$a3
 099b: 6f        ret
 
-; vcmd 0e
-099c: 4f f4     pcall $f4
+; vcmd 0e - pan
+099c: 4f f4     pcall $f4               ; read next voice byte
 099e: d6 81 f1  mov   $f181+y,a
 09a1: e8 00     mov   a,#$00
 09a3: d6 01 f1  mov   $f101+y,a
 09a6: 6f        ret
 
-; vcmd 0f
-09a7: 4f 00     pcall $00
+; vcmd 0f - pan fade
+09a7: 4f 00     pcall $00               ; read next voice word to $dc/dd and A
 09a9: 80        setc
 09aa: b6 81 f1  sbc   a,$f181+y
 09ad: f0 f4     beq   $09a3
@@ -1002,14 +1016,14 @@
 09c3: 2f de     bra   $09a3
 
 ; vcmd 29
-09c5: 4f 00     pcall $00
+09c5: 4f 00     pcall $00               ; read next voice word to $dc/dd and A
 09c7: d6 01 f6  mov   $f601+y,a
 09ca: e4 dc     mov   a,$dc
 09cc: d6 00 f7  mov   $f700+y,a
 09cf: 6f        ret
 
-; vcmd 18
-09d0: 4f f4     pcall $f4
+; vcmd 18 - transpose (relative)
+09d0: 4f f4     pcall $f4               ; read next voice byte
 09d2: 60        clrc
 09d3: 96 81 ee  adc   a,$ee81+y
 09d6: 50 0c     bvc   $09e4
@@ -1019,18 +1033,18 @@
 09de: e8 80     mov   a,#$80
 09e0: 2f 02     bra   $09e4
 
-; vcmd 17
-09e2: 4f f4     pcall $f4
+; vcmd 17 - transpose (absolute)
+09e2: 4f f4     pcall $f4               ; read next voice byte
 09e4: d6 81 ee  mov   $ee81+y,a
 09e7: 6f        ret
 
-; vcmd 04
-09e8: 4f 00     pcall $00
+; vcmd 04 - echo feedback & filter
+09e8: 4f 00     pcall $00               ; read next voice word to $dc/dd and A
 09ea: d0 1c     bne   $0a08
-09ec: fa dc 0e  mov   ($0e),($dc)
+09ec: fa dc 0e  mov   ($0e),($dc)       ; set EFB shadow from arg1
 09ef: c4 11     mov   $11,a
 09f1: 9f        xcn   a
-09f2: 5c        lsr   a
+09f2: 5c        lsr   a                 ; calculate FIR offset: arg2 * 8
 09f3: 5d        mov   x,a
 09f4: 8f 0f f2  mov   $f2,#$0f
 09f7: f5 c3 19  mov   a,$19c3+x
@@ -1043,11 +1057,11 @@
 0a08: 6f        ret
 
 ; vcmd 19
-0a09: 4f 00     pcall $00
+0a09: 4f 00     pcall $00               ; read next voice word to $dc/dd and A
 0a0b: d6 80 f3  mov   $f380+y,a
 0a0e: e4 dc     mov   a,$dc
 0a10: d6 00 f3  mov   $f300+y,a
-0a13: 4f 78     pcall $78
+0a13: 4f 78     pcall $78               ; read next voice byte to A and $dc
 0a15: 28 3f     and   a,#$3f
 0a17: d6 80 f2  mov   $f280+y,a
 0a1a: e4 dc     mov   a,$dc
@@ -1063,11 +1077,11 @@
 0a2b: 6f        ret
 
 ; vcmd 1b
-0a2c: 4f 00     pcall $00
+0a2c: 4f 00     pcall $00               ; read next voice word to $dc/dd and A
 0a2e: d6 80 f5  mov   $f580+y,a
 0a31: e4 dc     mov   a,$dc
 0a33: d6 00 f5  mov   $f500+y,a
-0a36: 4f 78     pcall $78
+0a36: 4f 78     pcall $78               ; read next voice byte to A and $dc
 0a38: 28 3f     and   a,#$3f
 0a3a: d6 80 f4  mov   $f480+y,a
 0a3d: e4 dc     mov   a,$dc
@@ -1083,7 +1097,7 @@
 0a4e: 6f        ret
 
 ; vcmd 1d
-0a4f: 4f 00     pcall $00
+0a4f: 4f 00     pcall $00               ; read next voice word to $dc/dd and A
 0a51: d6 01 f7  mov   $f701+y,a
 0a54: 80        setc
 0a55: 4f 1d     pcall $1d
@@ -1107,19 +1121,19 @@
 0a79: d6 81 f8  mov   $f881+y,a
 0a7c: 6f        ret
 
-; vcmd 0b
-0a7d: 4f f4     pcall $f4
+; vcmd 0b - note number base
+0a7d: 4f f4     pcall $f4               ; read next voice byte
 0a7f: d6 80 f9  mov   $f980+y,a
 0a82: 6f        ret
 
-; vcmd 09
+; vcmd 09 - set note length pattern
 0a83: dd        mov   a,y
 0a84: 5c        lsr   a
 0a85: 8d 07     mov   y,#$07
 0a87: cf        mul   ya
 0a88: 7a 9f     addw  ya,$9f
-0a8a: da 00     movw  $00,ya
-0a8c: 4f 00     pcall $00
+0a8a: da 00     movw  $00,ya            ; $00 is set to note length table address
+0a8c: 4f 00     pcall $00               ; read next voice word to $dc/dd and A
 0a8e: 8d 00     mov   y,#$00
 0a90: cd 00     mov   x,#$00
 0a92: 3f 9f 0a  call  $0a9f
@@ -1129,27 +1143,33 @@
 0a9c: eb a3     mov   y,$a3
 0a9e: 6f        ret
 
+; @in A: bitflags
+; @in X: offset for note length table master
+; @in/out Y: offset for the note length table to be changed
+; @in/out $00/1: note length table pointer
 0a9f: c4 02     mov   $02,a
 0aa1: 08 00     or    a,#$00
 0aa3: 10 06     bpl   $0aab
+;
 0aa5: f5 1c 19  mov   a,$191c+x
 0aa8: d7 00     mov   ($00)+y,a
 0aaa: fc        inc   y
+;
 0aab: 3d        inc   x
 0aac: 0b 02     asl   $02
 0aae: d0 f3     bne   $0aa3
 0ab0: 6f        ret
 
-; vcmd 0a
+; vcmd 0a - custom note length table
 0ab1: dd        mov   a,y
 0ab2: 5c        lsr   a
-0ab3: 8d 07     mov   y,#$07
+0ab3: 8d 07     mov   y,#$07            ; argument length: 7 bytes
 0ab5: cb db     mov   $db,y
 0ab7: cf        mul   ya
 0ab8: 7a 9f     addw  ya,$9f
-0aba: da e4     movw  $e4,ya
+0aba: da e4     movw  $e4,ya            ; $e4 is set to note length table address
 0abc: 8d 00     mov   y,#$00
-0abe: 4f f4     pcall $f4
+0abe: 4f f4     pcall $f4               ; read next voice byte
 0ac0: d7 e4     mov   ($e4)+y,a
 0ac2: fc        inc   y
 0ac3: 6e db f8  dbnz  $db,$0abe
@@ -1157,7 +1177,7 @@
 0ac8: 6f        ret
 
 ; vcmd 25
-0ac9: 4f f4     pcall $f4
+0ac9: 4f f4     pcall $f4               ; read next voice byte
 0acb: 2f 02     bra   $0acf
 
 ; vcmd 26
@@ -1166,7 +1186,7 @@
 0ad2: 6f        ret
 
 ; vcmd 27
-0ad3: 4f f4     pcall $f4
+0ad3: 4f f4     pcall $f4               ; read next voice byte
 0ad5: 5d        mov   x,a
 0ad6: 30 04     bmi   $0adc
 0ad8: d6 01 fa  mov   $fa01+y,a
@@ -1241,7 +1261,7 @@
 0b5e: 2f bb     bra   $0b1b
 
 ; vcmd 08
-0b60: 4f 78     pcall $78
+0b60: 4f 78     pcall $78               ; read next voice byte to A and $dc
 0b62: d5 a1 ed  mov   $eda1+x,a
 0b65: 2f b4     bra   $0b1b
 
@@ -1272,26 +1292,26 @@
 0b99: d5 b0 ed  mov   $edb0+x,a
 0b9c: 2f d3     bra   $0b71
 
-; vcmd 10
-0b9e: 4f 78     pcall $78
+; vcmd 10 - instrument
+0b9e: 4f 78     pcall $78               ; read next voice byte to A and $dc (instrument number)
 0ba0: b3 dc 05  bbc5  $dc,$0ba8
 0ba3: 7d        mov   a,x
 0ba4: 9f        xcn   a
 0ba5: 5c        lsr   a
 0ba6: 84 dc     adc   a,$dc
-0ba8: d6 80 ee  mov   $ee80+y,a
+0ba8: d6 80 ee  mov   $ee80+y,a         ; set SRCN shadow
 0bab: 1c        asl   a
 0bac: 5d        mov   x,a
 0bad: b0 1e     bcs   $0bcd
 0baf: d0 05     bne   $0bb6
 0bb1: e8 ba     mov   a,#$ba
-0bb3: c5 b5 ff  mov   $ffb5,a
+0bb3: c5 b5 ff  mov   $ffb5,a           ; restore `pcall $b5` to `movw ya`
 0bb6: f5 40 1d  mov   a,$1d40+x
 0bb9: d6 80 ef  mov   $ef80+y,a
 0bbc: f5 41 1d  mov   a,$1d41+x
 0bbf: d6 81 ef  mov   $ef81+y,a
 0bc2: f5 60 1e  mov   a,$1e60+x
-0bc5: d6 00 ee  mov   $ee00+y,a
+0bc5: d6 00 ee  mov   $ee00+y,a         ; set ADSR(1) shadow
 0bc8: f5 61 1e  mov   a,$1e61+x
 0bcb: 2f 15     bra   $0be2
 0bcd: f5 40 1e  mov   a,$1e40+x
@@ -1299,19 +1319,19 @@
 0bd3: f5 41 1e  mov   a,$1e41+x
 0bd6: d6 81 ef  mov   $ef81+y,a
 0bd9: f5 60 1f  mov   a,$1f60+x
-0bdc: d6 00 ee  mov   $ee00+y,a
+0bdc: d6 00 ee  mov   $ee00+y,a         ; set ADSR(1) shadow
 0bdf: f5 61 1f  mov   a,$1f61+x
-0be2: d6 01 ee  mov   $ee01+y,a
+0be2: d6 01 ee  mov   $ee01+y,a         ; set ADSR(2) shadow
 0be5: 6f        ret
 
 ; vcmd 2f
-0be6: 4f 78     pcall $78
+0be6: 4f 78     pcall $78               ; read next voice byte to A and $dc
 0be8: f6 00 f9  mov   a,$f900+y
 0beb: bc        inc   a
 0bec: d6 00 f9  mov   $f900+y,a
 0bef: 2e dc 25  cbne  $dc,$0c17
 ; vcmd 2c
-0bf2: 4f 00     pcall $00
+0bf2: 4f 00     pcall $00               ; read next voice word to $dc/dd and A
 0bf4: f5 c1 ed  mov   a,$edc1+x
 0bf7: fd        mov   y,a
 0bf8: f5 c0 ed  mov   a,$edc0+x
@@ -1352,7 +1372,7 @@
 0c40: eb a3     mov   y,$a3
 0c42: 6f        ret
 
-; vcmd 00
+; vcmd 00 - end of track
 0c43: f8 a1     mov   x,$a1
 0c45: 02 13     set0  $13
 0c47: e4 c6     mov   a,$c6
@@ -1376,61 +1396,65 @@
 0c71: d5 f0 ed  mov   $edf0+x,a
 0c74: 2f ae     bra   $0c24
 
-; vcmd 2e
+; vcmd 2e - repeat end
 0c76: dd        mov   a,y
 0c77: 1c        asl   a
-0c78: 16 01 f9  or    a,$f901+y
+0c78: 16 01 f9  or    a,$f901+y         ; nesting level
 0c7b: 5d        mov   x,a
-0c7c: f5 00 1a  mov   a,$1a00+x
-0c7f: f0 06     beq   $0c87
+0c7c: f5 00 1a  mov   a,$1a00+x         ; get current repeat count
+0c7f: f0 06     beq   $0c87             ; repeat again if 0
 0c81: 9c        dec   a
-0c82: d5 00 1a  mov   $1a00+x,a
-0c85: f0 1f     beq   $0ca6
+0c82: d5 00 1a  mov   $1a00+x,a         ; otherwise, decrease the count
+0c85: f0 1f     beq   $0ca6             ; and 
+; repeat again
 0c87: 7d        mov   a,x
 0c88: 1c        asl   a
 0c89: 5d        mov   x,a
 0c8a: b0 0d     bcs   $0c99
+;
 0c8c: f5 00 fb  mov   a,$fb00+x
 0c8f: d6 1f 00  mov   $001f+y,a
 0c92: f5 01 fb  mov   a,$fb01+x
-0c95: d6 20 00  mov   $0020+y,a
+0c95: d6 20 00  mov   $0020+y,a         ; jump to repeat start address
 0c98: 6f        ret
-
+;
 0c99: f5 00 fc  mov   a,$fc00+x
 0c9c: d6 1f 00  mov   $001f+y,a
 0c9f: f5 01 fc  mov   a,$fc01+x
 0ca2: d6 20 00  mov   $0020+y,a
 0ca5: 6f        ret
-
+; repeat is over
 0ca6: f6 01 f9  mov   a,$f901+y
 0ca9: 9c        dec   a
-0caa: d6 01 f9  mov   $f901+y,a
+0caa: d6 01 f9  mov   $f901+y,a         ; decrease the nesting level
 0cad: 6f        ret
 
-; vcmd 2a
-0cae: 4f 78     pcall $78
+; vcmd 2a - repeat start
+0cae: 4f 78     pcall $78               ; read next voice byte to A and $dc (repeat count - 1)
 0cb0: f6 01 f9  mov   a,$f901+y
-0cb3: bc        inc   a
+0cb3: bc        inc   a                 ; increase the nesting level
 0cb4: 68 04     cmp   a,#$04
-0cb6: b0 8b     bcs   $0c43
-0cb8: d6 01 f9  mov   $f901+y,a
+0cb6: b0 8b     bcs   $0c43             ; halt: nesting level is too much
+0cb8: d6 01 f9  mov   $f901+y,a         ; save increased nesting level
 0cbb: dd        mov   a,y
 0cbc: 1c        asl   a
 0cbd: 16 01 f9  or    a,$f901+y
 0cc0: 5d        mov   x,a
 0cc1: e4 dc     mov   a,$dc
-0cc3: f0 01     beq   $0cc6
+0cc3: f0 01     beq   $0cc6             ; repeat count 0 = infinite loop
 0cc5: bc        inc   a
-0cc6: d5 00 1a  mov   $1a00+x,a
+0cc6: d5 00 1a  mov   $1a00+x,a         ; save repeat count
 0cc9: 7d        mov   a,x
 0cca: 1c        asl   a
 0ccb: 5d        mov   x,a
 0ccc: f6 1f 00  mov   a,$001f+y
 0ccf: b0 0b     bcs   $0cdc
-0cd1: d5 00 fb  mov   $fb00+x,a
+;
+0cd1: d5 00 fb  mov   $fb00+x,a         ; save repeat start address (lo)
 0cd4: f6 20 00  mov   a,$0020+y
-0cd7: d5 01 fb  mov   $fb01+x,a
+0cd7: d5 01 fb  mov   $fb01+x,a         ; save repeat start address (hi)
 0cda: 2f 09     bra   $0ce5
+;
 0cdc: d5 00 fc  mov   $fc00+x,a
 0cdf: f6 20 00  mov   a,$0020+y
 0ce2: d5 01 fc  mov   $fc01+x,a
@@ -1439,7 +1463,7 @@
 0cea: 6f        ret
 
 ; vcmd 11
-0ceb: 4f f4     pcall $f4
+0ceb: 4f f4     pcall $f4               ; read next voice byte
 0ced: d6 01 ef  mov   $ef01+y,a
 0cf0: 6f        ret
 
@@ -1857,7 +1881,7 @@
 1034: 9c        dec   a
 1035: d4 29     mov   $29+x,a
 1037: e8 80     mov   a,#$80
-1039: d4 39     mov   $39+x,a
+1039: d4 39     mov   $39+x,a           ; default tempo
 103b: 20        clrp
 103c: d5 31 ed  mov   $ed31+x,a
 103f: d5 61 ed  mov   $ed61+x,a
@@ -2131,7 +2155,7 @@
 1250: e4 05     mov   a,$05
 1252: d0 2c     bne   $1280
 1254: e8 6f     mov   a,#$6f
-1256: c5 b5 ff  mov   $ffb5,a
+1256: c5 b5 ff  mov   $ffb5,a           ; patch `pcall $b5` to `ret`
 1259: 8d 0e     mov   y,#$0e
 125b: f6 8e ed  mov   a,$ed8e+y
 125e: f0 0e     beq   $126e
@@ -2180,7 +2204,7 @@
 12ad: c4 ec     mov   $ec,a
 12af: c4 ed     mov   $ed,a
 12b1: e8 6f     mov   a,#$6f
-12b3: c5 b5 ff  mov   $ffb5,a
+12b3: c5 b5 ff  mov   $ffb5,a           ; patch `pcall $b5` to `ret`
 12b6: 2f 1b     bra   $12d3
 12b8: 21        tcall 2
 12b9: 10 03     bpl   $12be
@@ -2368,7 +2392,7 @@
 1422: 6f        ret
 
 ; vcmd 2b
-1423: 4f 00     pcall $00
+1423: 4f 00     pcall $00               ; read next voice word to $dc/dd and A
 1425: ab dc     inc   $dc
 1427: d0 02     bne   $142b
 1429: ab 07     inc   $07
@@ -2880,12 +2904,12 @@
 182f: 80        setc
 1830: a8 20     sbc   a,#$20
 1832: fd        mov   y,a
-1833: f6 80 ee  mov   a,$ee80+y
+1833: f6 80 ee  mov   a,$ee80+y         ; get current SRCN
 1836: 68 20     cmp   a,#$20
 1838: 90 07     bcc   $1841
 183a: 28 0f     and   a,#$0f
 183c: 04 e6     or    a,$e6
-183e: d6 80 ee  mov   $ee80+y,a
+183e: d6 80 ee  mov   $ee80+y,a         ; set SRCN shadow
 1841: fc        inc   y
 1842: fc        inc   y
 1843: 6e e7 ed  dbnz  $e7,$1833
@@ -3011,39 +3035,42 @@
 1902: 00
 1903: 00
 
+; pitch table
+; $0800,$0879,$08fa,$0983,$0a14,$0aad,$0b50,$0bfc,$0cb2,$0d74,$0e41,$0f1a
 1904: db $00,$79,$fa,$83,$14,$ad,$50,$fc,$b2,$74,$41,$1a
 1910: db $08,$08,$08,$09,$0a,$0a,$0b,$0b,$0c,$0d,$0e,$0f
 
+; note length table master
 191c: db $c0,$90,$60,$48,$40,$30,$24,$20,$18,$12,$10,$0c,$08,$06,$04,$03
 
 192c: db $c0,$60,$48,$30,$24,$18,$0c
 
 ; vcmd dispatch table
-1933: dw $0c43  ; 00
-1935: dw $0954  ; 01
-1937: dw $0988  ; 02
+1933: dw $0c43  ; 00 - end of track
+1935: dw $0954  ; 01 - master volume
+1937: dw $0988  ; 02 - echo volume
 1939: dw $0991  ; 03
-193b: dw $09e8  ; 04
+193b: dw $09e8  ; 04 - echo feedback & filter
 193d: dw $0923  ; 05
-193f: dw $092e  ; 06
-1941: dw $0938  ; 07
+193f: dw $092e  ; 06 - tempo
+1941: dw $0938  ; 07 - tempo fade
 1943: dw $0b60  ; 08
-1945: dw $0a83  ; 09
-1947: dw $0ab1  ; 0a
-1949: dw $0a7d  ; 0b
-194b: dw $095f  ; 0c
-194d: dw $096a  ; 0d
-194f: dw $099c  ; 0e
-1951: dw $09a7  ; 0f
-1953: dw $0b9e  ; 10
+1945: dw $0a83  ; 09 - set note length pattern
+1947: dw $0ab1  ; 0a - custom note length table
+1949: dw $0a7d  ; 0b - note number base
+194b: dw $095f  ; 0c - volume
+194d: dw $096a  ; 0d - volume fade
+194f: dw $099c  ; 0e - pan
+1951: dw $09a7  ; 0f - pan fade
+1953: dw $0b9e  ; 10 - instrument
 1955: dw $0ceb  ; 11
-1957: dw $07bc  ; 12
-1959: dw $07c9  ; 13
-195b: dw $07d5  ; 14
-195d: dw $07e6  ; 15
-195f: dw $07ef  ; 16
-1961: dw $09e2  ; 17
-1963: dw $09d0  ; 18
+1957: dw $07bc  ; 12 - attack rate
+1959: dw $07c9  ; 13 - decay rate
+195b: dw $07d5  ; 14 - sustain level
+195d: dw $07e6  ; 15 - sustain rate
+195f: dw $07ef  ; 16 - default ADSR
+1961: dw $09e2  ; 17 - transpose (absolute)
+1963: dw $09d0  ; 18 - transpose (relative)
 1965: dw $0a09  ; 19
 1967: dw $0a26  ; 1a
 1969: dw $0a2c  ; 1b
@@ -3061,11 +3088,11 @@
 1981: dw $0ad3  ; 27
 1983: dw $0b0d  ; 28
 1985: dw $09c5  ; 29
-1987: dw $0cae  ; 2a
+1987: dw $0cae  ; 2a - repeat start
 1989: dw $1423  ; 2b
 198b: dw $0bf2  ; 2c
 198d: dw $0c0e  ; 2d
-198f: dw $0c76  ; 2e
+198f: dw $0c76  ; 2e - repeat end
 1991: dw $0be6  ; 2f
 
 ; vcmd length table (00-2f)
@@ -3073,6 +3100,7 @@
 19a3: db $01,$01,$01,$01,$01,$01,$00,$01,$01,$03,$00,$03,$00,$02,$00,$00
 19b3: db $00,$00,$00,$00,$00,$01,$00,$01,$00,$02,$01,$02,$02,$02,$00,$03
 
+; echo FIR filter table
 19c3: db $7f,$00,$00,$00,$00,$00,$00,$00
 19cb: db $0c,$21,$2b,$2b,$13,$fe,$f3,$f9
 19d3: db $58,$bf,$db,$f0,$fe,$07,$0c,$0c
@@ -3115,9 +3143,10 @@ ff17: 2f ef     bra   $ff08
 ff19: bb 20     inc   $20+x
 ff1b: 2f f3     bra   $ff10
 
-; pcall $1d
+; pcall $1d - division
 ff1d: f8 dc     mov   x,$dc
 ff1f: 2f 02     bra   $ff23
+; pcall $21 - division
 ff21: f8 06     mov   x,$06
 ff23: fd        mov   y,a
 ff24: e8 00     mov   a,#$00
@@ -3174,7 +3203,7 @@ ff74: a8 00     sbc   a,#$00
 ff76: fd        mov   y,a
 ff77: 6f        ret
 
-; pcall $78 - get voice byte to $dc, increase voice ptr
+; pcall $78 - get voice byte to A and $dc, increase voice ptr
 ff78: f8 a3     mov   x,$a3
 ff7a: e7 1f     mov   a,($1f+x)
 ff7c: bb 1f     inc   $1f+x
@@ -3220,6 +3249,12 @@ ffb0: 10 02     bpl   $ffb4
 ffb2: 8d 7f     mov   y,#$7f
 ffb4: 6f        ret
 
+; pcall $b5
+ffb5: ba 15     movw  ya,$15            ; this line can be dynamically patched to `ret`
+ffb7: d6 80 1f  mov   $1f80+y,a
+ffba: 9f        xcn   a
+ffbb: d6 89 1f  mov   $1f89+y,a
+ffbe: 88 00     adc   a,#$00
 ffc0: c4 15     mov   $15,a
 ffc2: 6e 16 0b  dbnz  $16,$ffd0
 ffc5: cd fe     mov   x,#$fe
@@ -3256,12 +3291,11 @@ fff1: 6f        ret
 fff2: bc        inc   a
 fff3: 6f        ret
 
-; pcall $f4 - get voice byte to A, increase voice ptr
+; pcall $f4 - get voice byte to A, increase voice pointer
 fff4: f8 a3     mov   x,$a3
 fff6: e7 1f     mov   a,($1f+x)
 fff8: bb 1f     inc   $1f+x
 fffa: f0 01     beq   $fffd
 fffc: 6f        ret
-;
 fffd: bb 20     inc   $20+x
 ffff: 6f        ret
