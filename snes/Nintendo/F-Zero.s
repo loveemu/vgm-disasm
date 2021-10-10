@@ -1,4 +1,5 @@
 ; F-Zero SPC - loveemu labo
+; Bugfixes and add-on (starting at 17fe) by KungFuFurby
 ; Disassembler: spcdas v0.01
 ; Heavily based on C.Bongo's assembly, thanks.
 
@@ -1871,8 +1872,8 @@
 1754: c5 a3 3c  mov   $3ca3,a
 1757: fc        inc   y
 1758: cd 04     mov   x,#$04
-175a: aa 19 c0  mov1  c,$1803,1
-175d: 8a 19 a0  eor1  c,$1403,1
+175a: aa 19 c0  mov1  c,$0019,6
+175d: 8a 19 a0  eor1  c,$0019,5
 1760: 2b 18     rol   $18
 1762: 2b 19     rol   $19
 1764: e4 19     mov   a,$19
@@ -1952,3 +1953,882 @@
 17f7: f5 ff 17  mov   a,$17ff+x
 17fa: d6 20 02  mov   $0220+y,a
 17fd: 6f        ret
+
+17fe: db $28,$ff,$e0,$b8,$03,$90
+1804: db $28,$ff,$e0,$b8,$05,$30
+180a: db $28,$ff,$e0,$b8,$02,$00
+1810: db $0d,$ae,$a8,$b8,$04,$d4
+1816: db $04,$ff,$f2,$b8,$0f,$00
+181c: db $12,$ff,$e0,$b8,$01,$d4
+1822: db $02,$ff,$e0,$b8
+1826: db $0d,$ff,$e0,$b8,$01,$00
+182c: db $12,$ff,$e0,$b8,$02,$34
+1832: db $02,$ff,$f0,$b8,$05,$00
+1838: db $28,$ff,$e0,$b8,$03,$00
+183e: db $28,$f9,$e0,$b8,$03,$00
+
+1844: db $1c,$1d,$1e,$1f
+
+1848: db $6f,$6f,$70,$71,$72,$73,$74,$75,$76,$78,$79,$79,$79,$7a,$7a,$7b
+1858: db $7c,$7c,$7d,$7d,$7e,$7e,$7f,$7f,$7f,$7f,$7f,$7f,$7f,$6f
+
+1866: db $0b,$0b,$0b,$0b,$0c,$0c,$0c,$0d,$0d,$0d,$0d,$0d,$0d,$0d,$0d,$0e
+1876: db $0e,$0f,$0f,$0f,$10,$10,$11,$11,$11,$11,$12,$12,$13,$13,$13,$14
+1886: db $14,$18,$18,$1a,$1a,$1c,$1c,$1c,$20,$20,$20,$22,$22,$24,$26,$30
+1896: db $4a,$4c,$50,$5a,$5c,$5e,$60,$6e,$72,$74,$76,$76,$7c,$7c,$7d,$7e
+18a6: db $7f,$7f,$7f,$7f,$7f,$7f
+
+18ac: 8f 00 04  mov   $04,#$00
+18af: 8f ff 46  mov   $46,#$ff
+18b2: 18 e0 1c  or    $1c,#$e0
+18b5: e2 06     set7  $06
+18b7: 8f 8c 26  mov   $26,#$8c
+18ba: 8f 1e 4e  mov   $4e,#$1e
+18bd: e8 00     mov   a,#$00
+18bf: 3f 26 0e  call  $0e26
+18c2: 8f f0 4f  mov   $4f,#$f0
+18c5: 8f 1e 61  mov   $61,#$1e
+18c8: 8f 1e 63  mov   $63,#$1e
+18cb: cd 00     mov   x,#$00
+18cd: 8d 44     mov   y,#$44
+18cf: 3f d2 17  call  $17d2
+18d2: 8d 90     mov   y,#$90
+18d4: 82 45     set4  $45
+18d6: e8 00     mov   a,#$00
+18d8: da 10     movw  $10,ya
+18da: 92 47     clr4  $47
+18dc: cd 08     mov   x,#$08
+18de: 3f c4 09  call  $09c4
+18e1: cd 24     mov   x,#$24
+18e3: 8d 54     mov   y,#$54
+18e5: 3f d2 17  call  $17d2
+18e8: 8f 10 48  mov   $48,#$10
+18eb: a2 49     set5  $49
+18ed: cd 28     mov   x,#$28
+18ef: 8d 74     mov   y,#$74
+18f1: 3f d2 17  call  $17d2
+18f4: cd 28     mov   x,#$28
+18f6: 8d 64     mov   y,#$64
+18f8: 3f d2 17  call  $17d2
+18fb: cd 2e     mov   x,#$2e
+18fd: 8d 34     mov   y,#$34
+18ff: 3f d2 17  call  $17d2
+1902: cd 2e     mov   x,#$2e
+1904: 8d 24     mov   y,#$24
+1906: 3f d2 17  call  $17d2
+1909: 6f        ret
+
+190a: 4d        push  x
+190b: cd 0c     mov   x,#$0c
+190d: d5 21 03  mov   $0321+x,a
+1910: d2 47     clr6  $47
+1912: 3f c4 09  call  $09c4
+1915: e8 28     mov   a,#$28
+1917: d5 51 03  mov   $0351+x,a
+191a: 8f 12 11  mov   $11,#$12
+191d: 8f 00 10  mov   $10,#$00
+1920: 3f 8f 0f  call  $0f8f
+1923: 18 40 45  or    $45,#$40
+1926: ce        pop   x
+1927: 6f        ret
+
+1928: 4d        push  x
+1929: cd 0e     mov   x,#$0e
+192b: d5 21 03  mov   $0321+x,a
+192e: f2 47     clr7  $47
+1930: 3f c4 09  call  $09c4
+1933: e8 28     mov   a,#$28
+1935: d5 51 03  mov   $0351+x,a
+1938: 8f 02 11  mov   $11,#$02
+193b: 8f 00 10  mov   $10,#$00
+193e: 3f 8f 0f  call  $0f8f
+1941: 18 80 45  or    $45,#$80
+1944: ce        pop   x
+1945: 6f        ret
+
+1946: 4d        push  x
+1947: cd 04     mov   x,#$04
+1949: d5 21 03  mov   $0321+x,a
+194c: 52 47     clr2  $47
+194e: 3f c4 09  call  $09c4
+1951: e8 28     mov   a,#$28
+1953: d5 51 03  mov   $0351+x,a
+1956: 8f 09 11  mov   $11,#$09
+1959: 8f 00 10  mov   $10,#$00
+195c: 3f 8f 0f  call  $0f8f
+195f: 18 04 45  or    $45,#$04
+1962: ce        pop   x
+1963: 6f        ret
+
+1964: 4d        push  x
+1965: cd 06     mov   x,#$06
+1967: d5 21 03  mov   $0321+x,a
+196a: 72 47     clr3  $47
+196c: 3f c4 09  call  $09c4
+196f: e8 28     mov   a,#$28
+1971: d5 51 03  mov   $0351+x,a
+1974: 8f 0b 11  mov   $11,#$0b
+1977: 8f 00 10  mov   $10,#$00
+197a: 3f 8f 0f  call  $0f8f
+197d: 18 08 45  or    $45,#$08
+1980: ce        pop   x
+1981: 6f        ret
+
+1982: e4 26     mov   a,$26
+1984: 5c        lsr   a
+1985: 5d        mov   x,a
+1986: d0 03     bne   $198b
+1988: 5f 27 1a  jmp   $1a27
+
+198b: c8 46     cmp   x,#$46
+198d: d0 35     bne   $19c4
+198f: 8f 7f d8  mov   $d8,#$7f
+1992: 8d af     mov   y,#$af
+1994: e8 00     mov   a,#$00
+1996: da 10     movw  $10,ya
+1998: e8 ff     mov   a,#$ff
+199a: 3f 28 19  call  $1928
+199d: 8d a6     mov   y,#$a6
+199f: e8 00     mov   a,#$00
+19a1: da 10     movw  $10,ya
+19a3: e8 ff     mov   a,#$ff
+19a5: 3f 0a 19  call  $190a
+19a8: 8d a3     mov   y,#$a3
+19aa: e8 00     mov   a,#$00
+19ac: da 10     movw  $10,ya
+19ae: e8 ff     mov   a,#$ff
+19b0: 3f 46 19  call  $1946
+19b3: 8d a1     mov   y,#$a1
+19b5: e8 00     mov   a,#$00
+19b7: da 10     movw  $10,ya
+19b9: e8 ff     mov   a,#$ff
+19bb: 3f 64 19  call  $1964
+19be: 8f ff 46  mov   $46,#$ff
+19c1: 18 fc 45  or    $45,#$fc
+19c4: f5 65 18  mov   a,$1865+x
+19c7: 8d ff     mov   y,#$ff
+19c9: cf        mul   ya
+19ca: dd        mov   a,y
+19cb: 8d 40     mov   y,#$40
+19cd: 3f 39 0a  call  $0a39
+19d0: fc        inc   y
+19d1: 3f 39 0a  call  $0a39
+19d4: 8d ff     mov   y,#$ff
+19d6: cf        mul   ya
+19d7: dd        mov   a,y
+19d8: 8d 50     mov   y,#$50
+19da: 3f 39 0a  call  $0a39
+19dd: fc        inc   y
+19de: 3f 39 0a  call  $0a39
+19e1: c8 3a     cmp   x,#$3a
+19e3: d0 03     bne   $19e8
+19e5: 18 80 46  or    $46,#$80
+19e8: c8 37     cmp   x,#$37
+19ea: d0 0e     bne   $19fa
+19ec: 8d 98     mov   y,#$98
+19ee: e8 00     mov   a,#$00
+19f0: da 10     movw  $10,ya
+19f2: e8 ff     mov   a,#$ff
+19f4: 3f 28 19  call  $1928
+19f7: 18 40 46  or    $46,#$40
+19fa: c8 23     cmp   x,#$23
+19fc: d0 0e     bne   $1a0c
+19fe: 8d 97     mov   y,#$97
+1a00: e8 00     mov   a,#$00
+1a02: da 10     movw  $10,ya
+1a04: e8 ff     mov   a,#$ff
+1a06: 3f 0a 19  call  $190a
+1a09: 18 80 46  or    $46,#$80
+1a0c: c8 08     cmp   x,#$08
+1a0e: d0 0e     bne   $1a1e
+1a10: 8d 98     mov   y,#$98
+1a12: e8 00     mov   a,#$00
+1a14: da 10     movw  $10,ya
+1a16: e8 ff     mov   a,#$ff
+1a18: 3f 28 19  call  $1928
+1a1b: 18 40 46  or    $46,#$40
+1a1e: 8b 26     dec   $26
+1a20: d0 3d     bne   $1a5f
+1a22: 82 46     set4  $46
+1a24: 8f a0 27  mov   $27,#$a0
+1a27: f3 02 36  bbc7  $02,$1a60
+1a2a: 78 78 27  cmp   $27,#$78
+1a2d: d0 0e     bne   $1a3d
+1a2f: 8d 91     mov   y,#$91
+1a31: e8 00     mov   a,#$00
+1a33: da 10     movw  $10,ya
+1a35: e8 40     mov   a,#$40
+1a37: 3f 0a 19  call  $190a
+1a3a: 18 80 46  or    $46,#$80
+1a3d: 78 3c 27  cmp   $27,#$3c
+1a40: d0 0e     bne   $1a50
+1a42: 8d 91     mov   y,#$91
+1a44: e8 00     mov   a,#$00
+1a46: da 10     movw  $10,ya
+1a48: e8 40     mov   a,#$40
+1a4a: 3f 28 19  call  $1928
+1a4d: 18 40 46  or    $46,#$40
+1a50: e8 08     mov   a,#$08
+1a52: 8d 50     mov   y,#$50
+1a54: 3f 39 0a  call  $0a39
+1a57: fc        inc   y
+1a58: 3f 39 0a  call  $0a39
+1a5b: 8b 27     dec   $27
+1a5d: f0 c5     beq   $1a24
+1a5f: 6f        ret
+
+1a60: 8f 00 61  mov   $61,#$00
+1a63: 8f 00 63  mov   $63,#$00
+1a66: 18 fc 46  or    $46,#$fc
+1a69: 38 1f 1c  and   $1c,#$1f
+1a6c: 92 49     clr4  $49
+1a6e: a2 48     set5  $48
+1a70: cd 31     mov   x,#$31
+1a72: c9 f1 00  mov   $00f1,x
+1a75: e8 00     mov   a,#$00
+1a77: c4 06     mov   $06,a
+1a79: c4 02     mov   $02,a
+1a7b: c4 29     mov   $29,a
+1a7d: 6f        ret
+
+1a7e: 5f ac 18  jmp   $18ac
+1a81: 5f 82 19  jmp   $1982
+
+1a84: c3 01 ee  bbs6  $01,$1a75
+1a87: e3 06 f7  bbs7  $06,$1a81
+1a8a: eb 0a     mov   y,$0a
+1a8c: fa 02 0a  mov   ($0a),($02)
+1a8f: dd        mov   a,y
+1a90: 44 02     eor   a,$02
+1a92: c4 12     mov   $12,a
+1a94: 24 02     and   a,$02
+1a96: c4 13     mov   $13,a
+1a98: 30 e4     bmi   $1a7e
+1a9a: cd 0a     mov   x,#$0a
+1a9c: c3 02 38  bbs6  $02,$1ad7
+1a9f: c3 06 49  bbs6  $06,$1aeb
+1aa2: e4 12     mov   a,$12
+1aa4: 28 07     and   a,#$07
+1aa6: f0 06     beq   $1aae
+1aa8: e4 02     mov   a,$02
+1aaa: 28 03     and   a,#$03
+1aac: d0 40     bne   $1aee
+1aae: e4 06     mov   a,$06
+1ab0: 28 03     and   a,#$03
+1ab2: d0 1a     bne   $1ace
+1ab4: 63 06 1d  bbs3  $06,$1ad4
+1ab7: 63 13 17  bbs3  $13,$1ad1
+1aba: e4 d1     mov   a,$d1
+1abc: d0 0f     bne   $1acd
+1abe: 83 d6 0c  bbs4  $d6,$1acd
+1ac1: 83 02 16  bbs4  $02,$1ada
+1ac4: a3 02 13  bbs5  $02,$1ada
+1ac7: 83 06 13  bbs4  $06,$1add
+1aca: a3 06 10  bbs5  $06,$1add
+1acd: 6f        ret
+
+1ace: 5f 3a 1b  jmp   $1b3a
+1ad1: 5f 50 1c  jmp   $1c50
+1ad4: 5f 66 1c  jmp   $1c66
+1ad7: 5f 98 1c  jmp   $1c98
+1ada: 5f d8 1c  jmp   $1cd8
+
+1add: 8c aa 03  dec   $03aa
+1ae0: f0 03     beq   $1ae5
+1ae2: a2 46     set5  $46
+1ae4: 6f        ret
+
+1ae5: 8f 00 29  mov   $29,#$00
+1ae8: 3f df 15  call  $15df
+1aeb: 5f 6c 1b  jmp   $1b6c
+
+1aee: e4 02     mov   a,$02
+1af0: 28 07     and   a,#$07
+1af2: c4 06     mov   $06,a
+1af4: 43 06 0e  bbs2  $06,$1b05
+1af7: 8f 14 4e  mov   $4e,#$14
+1afa: 8f 2f 4f  mov   $4f,#$2f
+1afd: 8f 18 61  mov   $61,#$18
+1b00: 8f 18 63  mov   $63,#$18
+1b03: 2f 0c     bra   $1b11
+1b05: 8f 1e 4e  mov   $4e,#$1e
+1b08: 8f 2f 4f  mov   $4f,#$2f
+1b0b: 8f 1f 61  mov   $61,#$1f
+1b0e: 8f 1f 63  mov   $63,#$1f
+1b11: e4 06     mov   a,$06
+1b13: 28 07     and   a,#$07
+1b15: fd        mov   y,a
+1b16: f6 2a 1b  mov   a,$1b2a+y
+1b19: c4 26     mov   $26,a
+1b1b: f6 32 1b  mov   a,$1b32+y
+1b1e: 8d a3     mov   y,#$a3
+1b20: cf        mul   ya
+1b21: dd        mov   a,y
+1b22: c5 2b 03  mov   $032b,a
+1b25: a2 1c     set5  $1c
+1b27: a2 46     set5  $46
+1b29: 6f        ret
+
+1b2a: db $00,$1e,$1e,$28
+1b2e: db $00,$1e,$2c,$36
+1b32: db $00,$93,$8e,$ff
+1b36: db $00,$a8,$c8,$ff
+
+1b3a: 8b 26     dec   $26
+1b3c: f0 40     beq   $1b7e
+1b3e: 10 41     bpl   $1b81
+1b40: 78 fc 26  cmp   $26,#$fc
+1b43: d0 39     bne   $1b7e
+1b45: e5 a0 03  mov   a,$03a0
+1b48: c4 4e     mov   $4e,a
+1b4a: e5 a2 03  mov   a,$03a2
+1b4d: c4 4f     mov   $4f,a
+1b4f: e8 00     mov   a,#$00
+1b51: c4 61     mov   $61,a
+1b53: c4 63     mov   $63,a
+1b55: e8 0a     mov   a,#$0a
+1b57: c4 68     mov   $68,a
+1b59: e5 a1 03  mov   a,$03a1
+1b5c: c4 69     mov   $69,a
+1b5e: c4 6a     mov   $6a,a
+1b60: 80        setc
+1b61: a4 61     sbc   a,$61
+1b63: f8 68     mov   x,$68
+1b65: 3f cd 0e  call  $0ecd
+1b68: da 64     movw  $64,ya
+1b6a: da 66     movw  $66,ya
+1b6c: e8 00     mov   a,#$00
+1b6e: c4 d2     mov   $d2,a
+1b70: c4 d5     mov   $d5,a
+1b72: b2 1c     clr5  $1c
+1b74: e8 00     mov   a,#$00
+1b76: c4 06     mov   $06,a
+1b78: c4 d1     mov   $d1,a
+1b7a: c4 d6     mov   $d6,a
+1b7c: c4 26     mov   $26,a
+1b7e: a2 46     set5  $46
+1b80: 6f        ret
+
+1b81: 43 06 4c  bbs2  $06,$1bd0
+1b84: 33 06 4b  bbc1  $06,$1bd2
+1b87: 03 06 17  bbs0  $06,$1ba1
+1b8a: e4 26     mov   a,$26
+1b8c: 68 1a     cmp   a,#$1a
+1b8e: d0 04     bne   $1b94
+1b90: cd 18     mov   x,#$18
+1b92: 2f 55     bra   $1be9
+1b94: 68 0e     cmp   a,#$0e
+1b96: f0 59     beq   $1bf1
+1b98: 68 08     cmp   a,#$08
+1b9a: f0 5c     beq   $1bf8
+1b9c: 68 04     cmp   a,#$04
+1b9e: f0 51     beq   $1bf1
+1ba0: 6f        ret
+
+1ba1: e4 26     mov   a,$26
+1ba3: 68 24     cmp   a,#$24
+1ba5: d0 04     bne   $1bab
+1ba7: cd 1e     mov   x,#$1e
+1ba9: 2f 3e     bra   $1be9
+1bab: 68 20     cmp   a,#$20
+1bad: f0 42     beq   $1bf1
+1baf: 68 1e     cmp   a,#$1e
+1bb1: f0 3e     beq   $1bf1
+1bb3: 68 1c     cmp   a,#$1c
+1bb5: f0 3a     beq   $1bf1
+1bb7: 68 12     cmp   a,#$12
+1bb9: f0 3d     beq   $1bf8
+1bbb: 68 10     cmp   a,#$10
+1bbd: f0 39     beq   $1bf8
+1bbf: 68 0e     cmp   a,#$0e
+1bc1: f0 35     beq   $1bf8
+1bc3: 68 0c     cmp   a,#$0c
+1bc5: f0 2a     beq   $1bf1
+1bc7: 68 04     cmp   a,#$04
+1bc9: f0 2d     beq   $1bf8
+1bcb: 68 02     cmp   a,#$02
+1bcd: f0 29     beq   $1bf8
+1bcf: 6f        ret
+
+1bd0: 2f 3c     bra   $1c0e
+1bd2: e4 26     mov   a,$26
+1bd4: 68 1a     cmp   a,#$1a
+1bd6: d0 04     bne   $1bdc
+1bd8: cd 12     mov   x,#$12
+1bda: 2f 0d     bra   $1be9
+1bdc: 68 16     cmp   a,#$16
+1bde: f0 11     beq   $1bf1
+1be0: 68 0a     cmp   a,#$0a
+1be2: f0 0d     beq   $1bf1
+1be4: 68 04     cmp   a,#$04
+1be6: f0 10     beq   $1bf8
+1be8: 6f        ret
+
+1be9: 8d 54     mov   y,#$54
+1beb: 3f d2 17  call  $17d2
+1bee: 3f 42 1c  call  $1c42
+1bf1: e4 06     mov   a,$06
+1bf3: 8d 03     mov   y,#$03
+1bf5: cf        mul   ya
+1bf6: 2f 0f     bra   $1c07
+1bf8: e4 06     mov   a,$06
+1bfa: 8d 03     mov   y,#$03
+1bfc: cf        mul   ya
+1bfd: bc        inc   a
+1bfe: 2f 07     bra   $1c07
+1c00: e4 06     mov   a,$06
+1c02: 8d 03     mov   y,#$03
+1c04: cf        mul   ya
+1c05: bc        inc   a
+1c06: bc        inc   a
+1c07: fd        mov   y,a
+1c08: f6 93 1d  mov   a,$1d93+y
+1c0b: fd        mov   y,a
+1c0c: 2f 14     bra   $1c22
+1c0e: eb 06     mov   y,$06
+1c10: e4 26     mov   a,$26
+1c12: 76 2e 1c  cmp   a,$1c2e+y
+1c15: d0 1b     bne   $1c32
+1c17: e8 0c     mov   a,#$0c
+1c19: 3f 39 1c  call  $1c39
+1c1c: eb 06     mov   y,$06
+1c1e: f6 31 1c  mov   a,$1c31+y
+1c21: fd        mov   y,a
+1c22: a2 45     set5  $45
+1c24: e8 00     mov   a,#$00
+1c26: da 10     movw  $10,ya
+1c28: 38 7f 11  and   $11,#$7f
+1c2b: b2 47     clr5  $47
+1c2d: cd 0a     mov   x,#$0a
+1c2f: 3f c4 09  call  $09c4
+1c32: 6f        ret
+
+1c33: db $1a,$28,$32,$97,$91,$8e
+
+1c39: b2 49     clr5  $49
+1c3b: b2 47     clr5  $47
+1c3d: cd 0a     mov   x,#$0a
+1c3f: 3f 7c 0c  call  $0c7c
+1c42: cd 0a     mov   x,#$0a
+1c44: 8d 0a     mov   y,#$0a
+1c46: e8 00     mov   a,#$00
+1c48: da 10     movw  $10,ya
+1c4a: d5 51 03  mov   $0351+x,a
+1c4d: 5f 8f 0f  jmp   $0f8f
+
+1c50: 62 06     set3  $06
+1c52: 8f 2a 26  mov   $26,#$2a
+1c55: e5 2b 03  mov   a,$032b
+1c58: c5 a3 03  mov   $03a3,a
+1c5b: e5 5b 03  mov   a,$035b
+1c5e: c5 a4 03  mov   $03a4,a
+1c61: e8 6e     mov   a,#$6e
+1c63: 5f 22 1b  jmp   $1b22
+
+1c66: 8b 26     dec   $26
+1c68: d0 03     bne   $1c6d
+1c6a: 5f e8 1a  jmp   $1ae8
+
+1c6d: e4 26     mov   a,$26
+1c6f: 68 26     cmp   a,#$26
+1c71: f0 18     beq   $1c8b
+1c73: 68 22     cmp   a,#$22
+1c75: f0 11     beq   $1c88
+1c77: 68 20     cmp   a,#$20
+1c79: f0 19     beq   $1c94
+1c7b: 68 18     cmp   a,#$18
+1c7d: f0 09     beq   $1c88
+1c7f: 68 16     cmp   a,#$16
+1c81: f0 11     beq   $1c94
+1c83: 68 04     cmp   a,#$04
+1c85: f0 01     beq   $1c88
+1c87: 6f        ret
+
+1c88: a2 46     set5  $46
+1c8a: 6f        ret
+
+1c8b: e8 0c     mov   a,#$0c
+1c8d: 3f 39 1c  call  $1c39
+1c90: 8d 9c     mov   y,#$9c
+1c92: 2f 8e     bra   $1c22
+1c94: 8d 97     mov   y,#$97
+1c96: 2f 8a     bra   $1c22
+1c98: c3 06 0d  bbs6  $06,$1ca8
+1c9b: c2 06     set6  $06
+1c9d: 8f 00 26  mov   $26,#$00
+1ca0: 8f 00 27  mov   $27,#$00
+1ca3: e8 36     mov   a,#$36
+1ca5: 5f 22 1b  jmp   $1b22
+
+1ca8: e4 26     mov   a,$26
+1caa: d0 09     bne   $1cb5
+1cac: ab 26     inc   $26
+1cae: e8 00     mov   a,#$00
+1cb0: 3f 39 1c  call  $1c39
+1cb3: a2 45     set5  $45
+1cb5: 60        clrc
+1cb6: 98 08 27  adc   $27,#$08
+1cb9: e4 27     mov   a,$27
+1cbb: 1c        asl   a
+1cbc: 1c        asl   a
+1cbd: 90 02     bcc   $1cc1
+1cbf: 48 ff     eor   a,#$ff
+1cc1: 8d 0c     mov   y,#$0c
+1cc3: cf        mul   ya
+1cc4: da 10     movw  $10,ya
+1cc6: f3 27 06  bbc7  $27,$1ccf
+1cc9: ba 0e     movw  ya,$0e
+1ccb: 9a 10     subw  ya,$10
+1ccd: da 10     movw  $10,ya
+1ccf: 8d 9d     mov   y,#$9d
+1cd1: e8 00     mov   a,#$00
+1cd3: 7a 10     addw  ya,$10
+1cd5: 5f 26 1c  jmp   $1c26
+
+1cd8: e4 06     mov   a,$06
+1cda: 28 30     and   a,#$30
+1cdc: d0 40     bne   $1d1e
+1cde: e5 2b 03  mov   a,$032b
+1ce1: c5 a3 03  mov   $03a3,a
+1ce4: e5 5b 03  mov   a,$035b
+1ce7: c5 a4 03  mov   $03a4,a
+1cea: a2 1c     set5  $1c
+1cec: cd 0c     mov   x,#$0c
+1cee: 8d 54     mov   y,#$54
+1cf0: 3f d2 17  call  $17d2
+1cf3: a2 45     set5  $45
+1cf5: e4 02     mov   a,$02
+1cf7: 28 30     and   a,#$30
+1cf9: c4 06     mov   $06,a
+1cfb: 9f        xcn   a
+1cfc: fd        mov   y,a
+1cfd: f6 9e 1d  mov   a,$1d9e+y
+1d00: c5 2b 03  mov   $032b,a
+1d03: e4 29     mov   a,$29
+1d05: d0 11     bne   $1d18
+1d07: e8 04     mov   a,#$04
+1d09: c5 aa 03  mov   $03aa,a
+1d0c: 8f 28 29  mov   $29,#$28
+1d0f: 8f 00 28  mov   $28,#$00
+1d12: f6 a4 1d  mov   a,$1da4+y
+1d15: 5d        mov   x,a
+1d16: 2f 1a     bra   $1d32
+1d18: e4 02     mov   a,$02
+1d1a: 28 30     and   a,#$30
+1d1c: 2f 08     bra   $1d26
+1d1e: e4 02     mov   a,$02
+1d20: 28 30     and   a,#$30
+1d22: 64 06     cmp   a,$06
+1d24: f0 21     beq   $1d47
+1d26: c4 06     mov   $06,a
+1d28: 9f        xcn   a
+1d29: fd        mov   y,a
+1d2a: f6 9e 1d  mov   a,$1d9e+y
+1d2d: c5 2b 03  mov   $032b,a
+1d30: cd 32     mov   x,#$32
+1d32: d8 26     mov   $26,x
+1d34: f6 a1 1d  mov   a,$1da1+y
+1d37: 28 7f     and   a,#$7f
+1d39: 80        setc
+1d3a: a4 29     sbc   a,$29
+1d3c: 3f cd 0e  call  $0ecd
+1d3f: da 2a     movw  $2a,ya
+1d41: 3f 42 1c  call  $1c42
+1d44: 8f 00 2f  mov   $2f,#$00
+1d47: f8 26     mov   x,$26
+1d49: f0 25     beq   $1d70
+1d4b: 8b 26     dec   $26
+1d4d: f0 09     beq   $1d58
+1d4f: ba 28     movw  ya,$28
+1d51: 7a 2a     addw  ya,$2a
+1d53: da 28     movw  $28,ya
+1d55: 5f 26 1c  jmp   $1c26
+
+1d58: e4 02     mov   a,$02
+1d5a: 28 30     and   a,#$30
+1d5c: 9f        xcn   a
+1d5d: fd        mov   y,a
+1d5e: f6 a1 1d  mov   a,$1da1+y
+1d61: 28 7f     and   a,#$7f
+1d63: fd        mov   y,a
+1d64: e8 00     mov   a,#$00
+1d66: da 28     movw  $28,ya
+1d68: 3f 26 1c  call  $1c26
+1d6b: e8 14     mov   a,#$14
+1d6d: c4 2f     mov   $2f,a
+1d6f: 6f        ret
+
+1d70: 8b 2f     dec   $2f
+1d72: f0 e4     beq   $1d58
+1d74: e4 2f     mov   a,$2f
+1d76: 68 10     cmp   a,#$10
+1d78: f0 01     beq   $1d7b
+1d7a: 6f        ret
+
+1d7b: e4 02     mov   a,$02
+1d7d: 28 30     and   a,#$30
+1d7f: 9f        xcn   a
+1d80: fd        mov   y,a
+1d81: f6 a1 1d  mov   a,$1da1+y
+1d84: 28 7f     and   a,#$7f
+1d86: fd        mov   y,a
+1d87: e8 00     mov   a,#$00
+1d89: da 28     movw  $28,ya
+1d8b: 8d 01     mov   y,#$01
+1d8d: e8 00     mov   a,#$00
+1d8f: 7a 28     addw  ya,$28
+1d91: da 28     movw  $28,ya
+1d93: 5f 26 1c  jmp   $1c26
+
+1d96: db $af,$c7,$bc,$8e,$95,$95,$b0,$af,$ad
+1d9f: db $44,$63,$79,$ab,$ae,$b1
+1da5: db $1a,$34,$4e
+
+1da8: 8f 00 d1  mov   $d1,#00
+1dab: e5 2b 03  mov   a,$032b
+1dae: c5 a3 03  mov   $03a3,a
+1db1: e5 5b 03  mov   a,$035b
+1db4: c5 a4 03  mov   $03a4,a
+1db7: e8 57     mov   a,#$57
+1db9: c5 2b 03  mov   $032b,a
+1dbc: 8f 30 d6  mov   $d6,#$30
+1dbf: e8 00     mov   a,#$00
+1dc1: c4 27     mov   $27,a
+1dc3: c5 ab 03  mov   $03ab,a
+1dc6: 8f 01 26  mov   $26,#$01
+1dc9: a2 1c     set5  $1c
+1dcb: a2 46     set5  $46
+1dcd: 6f        ret
+
+1dce: e4 26     mov   a,$26
+1dd0: d0 12     bne   $1de4
+1dd2: e4 d4     mov   a,$d4
+1dd4: 28 30     and   a,#$30
+1dd6: 68 30     cmp   a,#$30
+1dd8: d0 52     bne   $1e2c
+1dda: e5 ab 03  mov   a,$03ab
+1ddd: f0 4c     beq   $1e2b
+1ddf: 3f 39 1e  call  $1e39
+1de2: 2f c4     bra   $1da8
+1de4: 68 02     cmp   a,#$02
+1de6: d0 02     bne   $1dea
+1de8: a2 46     set5  $46
+1dea: 68 0a     cmp   a,#$0a
+1dec: b0 08     bcs   $1df6
+1dee: e4 d4     mov   a,$d4
+1df0: 28 30     and   a,#$30
+1df2: 68 30     cmp   a,#$30
+1df4: d0 36     bne   $1e2c
+1df6: 8b 26     dec   $26
+1df8: d0 31     bne   $1e2b
+1dfa: f8 27     mov   x,$27
+1dfc: ab 27     inc   $27
+1dfe: f5 4a 1e  mov   a,$1e4a+x
+1e01: c4 26     mov   $26,a
+1e03: f0 26     beq   $1e2b
+1e05: a2 45     set5  $45
+1e07: b2 47     clr5  $47
+1e09: f5 54 1e  mov   a,$1e54+x
+1e0c: c4 11     mov   $11,a
+1e0e: 8f 00 10  mov   $10,#$00
+1e11: cd 34     mov   x,#$34
+1e13: 8d 54     mov   y,#$54
+1e15: 3f d2 17  call  $17d2
+1e18: cd 0a     mov   x,#$0a
+1e1a: 3f c4 09  call  $09c4
+1e1d: 8f 06 11  mov   $11,#$06
+1e20: e3 26 03  bbs7  $26,$1e26
+1e23: 8f 0e 11  mov   $11,#$0e
+1e26: 3f 8f 0f  call  $0f8f
+1e29: f2 26     clr7  $26
+1e2b: 6f        ret
+
+1e2c: 8f 00 26  mov   $26,#$00
+1e2f: ac ab 03  inc   $03ab
+1e32: e5 ab 03  mov   a,$03ab
+1e35: 68 03     cmp   a,#$03
+1e37: d0 0e     bne   $1e47
+1e39: 8f 00 d6  mov   $d6,#$00
+1e3c: 8f 00 d5  mov   $d5,#$00
+1e3f: 8f 00 06  mov   $06,#$00
+1e42: b2 1c     clr5  $1c
+1e44: 3f df 15  call  $15df
+1e47: a2 46     set5  $46
+1e49: 6f        ret
+
+1e4a: db $0e,$8a,$0a,$8a,$0a,$8a,$0a,$8a,$26,$00
+1e54: db $a2,$a9,$ad,$ae,$b2,$b5,$b9,$ba,$be
+1e5d: db $08,$03,$ab,$00
+
+1e61: fa d4 d6  mov   ($d6),($d4)
+1e64: e8 64     mov   a,#$64
+1e66: 3f 22 1b  call  $1b22
+1e69: 8f 0c 26  mov   $26,#$0c
+1e6c: 8f 00 27  mov   $27,#$00
+1e6f: 6f        ret
+
+1e70: eb 27     mov   y,$27
+1e72: f6 5d 1e  mov   a,$1e5d+y
+1e75: 64 26     cmp   a,$26
+1e77: d0 1b     bne   $1e94
+1e79: ab 27     inc   $27
+1e7b: f6 5f 1e  mov   a,$1e5f+y
+1e7e: d0 04     bne   $1e84
+1e80: a2 46     set5  $46
+1e82: 2f 10     bra   $1e94
+1e84: 78 08 26  cmp   $26,#$08
+1e87: d0 07     bne   $1e90
+1e89: 2d        push  a
+1e8a: e8 0a     mov   a,#$0a
+1e8c: 3f 39 1c  call  $1c39
+1e8f: ae        pop   a
+1e90: fd        mov   y,a
+1e91: 3f 22 1c  call  $1c22
+1e94: 8b 26     dec   $26
+1e96: d0 06     bne   $1e9e
+1e98: 3f 6c 1b  call  $1b6c
+1e9b: 8f 00 d5  mov   $d5,#$00
+1e9e: 6f        ret
+
+1e9f: fa d4 d6  mov   ($d6),($d4)
+1ea2: 8f 00 d1  mov   $d1,#$00
+1ea5: 8f 26 26  mov   $26,#$26
+1ea8: e8 2d     mov   a,#$2d
+1eaa: 5f 22 1b  jmp   $1b22
+
+1ead: 8b 26     dec   $26
+1eaf: d0 05     bne   $1eb6
+1eb1: 93 d4 e4  bbc4  $d4,$1e98
+1eb4: 2f ec     bra   $1ea2
+1eb6: f8 26     mov   x,$26
+1eb8: c8 22     cmp   x,#$22
+1eba: d0 0e     bne   $1eca
+1ebc: e8 02     mov   a,#$02
+1ebe: 3f 39 1c  call  $1c39
+1ec1: 8d b9     mov   y,#$b9
+1ec3: e8 00     mov   a,#$00
+1ec5: da 2a     movw  $2a,ya
+1ec7: 5f 22 1c  jmp   $1c22
+
+1eca: b0 d2     bcs   $1e9e
+1ecc: 8d 00     mov   y,#$00
+1ece: e8 28     mov   a,#$28
+1ed0: 7a 2a     addw  ya,$2a
+1ed2: da 2a     movw  $2a,ya
+1ed4: 5f 26 1c  jmp   $1c26
+
+1ed7: 5f 61 1e  jmp   $1e61
+1eda: 5f 70 1e  jmp   $1e70
+1edd: 5f a8 1d  jmp   $1da8
+1ee0: 5f ce 1d  jmp   $1dce
+
+1ee3: 8f 00 d6  mov   $d6,#$00
+1ee6: 8f 00 d1  mov   $d1,#$00
+1ee9: 6f        ret
+
+1eea: c3 01 f6  bbs6  $01,$1ee3
+1eed: e4 06     mov   a,$06
+1eef: 28 cb     and   a,#$cb
+1ef1: d0 3f     bne   $1f32
+1ef3: e4 d5     mov   a,$d5
+1ef5: 44 d4     eor   a,$d4
+1ef7: 24 d4     and   a,$d4
+1ef9: c4 13     mov   $13,a
+1efb: fa d4 d5  mov   ($d5),($d4)
+1efe: e4 d6     mov   a,$d6
+1f00: 68 30     cmp   a,#$30
+1f02: f0 dc     beq   $1ee0
+1f04: e4 d4     mov   a,$d4
+1f06: 28 30     and   a,#$30
+1f08: 68 30     cmp   a,#$30
+1f0a: f0 d1     beq   $1edd
+1f0c: 83 13 90  bbs4  $13,$1e9f
+1f0f: 83 d6 9b  bbs4  $d6,$1ead
+1f12: e4 d0     mov   a,$d0
+1f14: eb d2     mov   y,$d2
+1f16: c4 d2     mov   $d2,a
+1f18: 04 d1     or    a,$d1
+1f1a: d0 0b     bne   $1f27
+1f1c: e4 06     mov   a,$06
+1f1e: d0 12     bne   $1f32
+1f20: c3 13 b4  bbs6  $13,$1ed7
+1f23: c3 d6 b4  bbs6  $d6,$1eda
+1f26: 6f        ret
+
+1f27: 8f 00 47  mov   $47,#$00
+1f2a: 7e d0     cmp   y,$d0
+1f2c: d0 05     bne   $1f33
+1f2e: f8 d1     mov   x,$d1
+1f30: d0 29     bne   $1f5b
+1f32: 6f        ret
+
+1f33: e4 d0     mov   a,$d0
+1f35: f0 f7     beq   $1f2e
+1f37: c4 d1     mov   $d1,a
+1f39: 1c        asl   a
+1f3a: fd        mov   y,a
+1f3b: f6 c3 1f  mov   a,$1fc3+y
+1f3e: c4 2a     mov   $2a,a
+1f40: f6 c4 1f  mov   a,$1fc4+y
+1f43: c4 2b     mov   $2b,a
+1f45: 1a 2a     decw  $2a
+1f47: 8f 02 2c  mov   $2c,#$02
+1f4a: a2 1c     set5  $1c
+1f4c: b2 49     clr5  $49
+1f4e: a2 46     set5  $46
+1f50: 6f        ret
+
+1f51: 3f 72 1b  call  $1b72
+1f54: e8 00     mov   a,#$00
+1f56: c4 0a     mov   $0a,a
+1f58: c4 d5     mov   $d5,a
+1f5a: 6f        ret
+
+1f5b: 6e 2c 57  dbnz  $2c,$1fb5
+1f5e: 3a 2a     incw  $2a
+1f60: cd 00     mov   x,#$00
+1f62: e7 2a     mov   a,($2a+x)
+1f64: f0 eb     beq   $1f51
+1f66: 30 19     bmi   $1f81
+1f68: c4 2d     mov   $2d,a
+1f6a: 8f 02 2e  mov   $2e,#$02
+1f6d: 3a 2a     incw  $2a
+1f6f: e7 2a     mov   a,($2a+x)
+1f71: 30 0e     bmi   $1f81
+1f73: 8d 50     mov   y,#$50
+1f75: 3f 39 0a  call  $0a39
+1f78: 8d 51     mov   y,#$51
+1f7a: 3f 39 0a  call  $0a39
+1f7d: 3a 2a     incw  $2a
+1f7f: e7 2a     mov   a,($2a+x)
+1f81: 68 c9     cmp   a,#$c9
+1f83: f0 2d     beq   $1fb2
+1f85: 68 c8     cmp   a,#$c8
+1f87: f0 29     beq   $1fb2
+1f89: 68 ff     cmp   a,#$ff
+1f8b: d0 07     bne   $1f94
+1f8d: e4 d0     mov   a,$d0
+1f8f: f0 c0     beq   $1f51
+1f91: 5f 33 1f  jmp   $1f33
+1f94: 68 e0     cmp   a,#$e0
+1f96: d0 0b     bne   $1fa3
+1f98: 3a 2a     incw  $2a
+1f9a: e7 2a     mov   a,($2a+x)
+1f9c: cd 0a     mov   x,#$0a
+1f9e: 3f 7c 0c  call  $0c7c
+1fa1: 2f bb     bra   $1f5e
+1fa3: cd 0a     mov   x,#$0a
+1fa5: d5 61 03  mov   $0361+x,a
+1fa8: e8 00     mov   a,#$00
+1faa: d5 60 03  mov   $0360+x,a
+1fad: 3f ab 09  call  $09ab
+1fb0: a2 45     set5  $45
+1fb2: fa 2d 2c  mov   ($2c),($2d)
+1fb5: 69 2e 2c  cmp   ($2c),($2e)
+1fb8: d0 0a     bne   $1fc4
+1fba: 8d 01     mov   y,#$01
+1fbc: f7 2a     mov   a,($2a)+y
+1fbe: 68 c8     cmp   a,#$c8
+1fc0: f0 02     beq   $1fc4
+1fc2: a2 46     set5  $46
+1fc4: 6f        ret
