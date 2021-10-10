@@ -224,22 +224,22 @@
 03ca: 2f d9     bra   $03a5
 03cc: 8f 5c f2  mov   $f2,#$5c
 03cf: e4 09     mov   a,$09
-03d1: c4 f3     mov   $f3,a
+03d1: c4 f3     mov   $f3,a             ; set KOF
 03d3: 8f 4c f2  mov   $f2,#$4c
-03d6: fa 08 f3  mov   ($f3),($08)
+03d6: fa 08 f3  mov   ($f3),($08)       ; set KON
 03d9: 8f 6c f2  mov   $f2,#$6c
-03dc: fa 0d f3  mov   ($f3),($0d)
+03dc: fa 0d f3  mov   ($f3),($0d)       ; set ESA
 03df: 8f 2d f2  mov   $f2,#$2d
-03e2: fa 0a f3  mov   ($f3),($0a)
+03e2: fa 0a f3  mov   ($f3),($0a)       ; set PMON
 03e5: 8f 3d f2  mov   $f2,#$3d
-03e8: fa 0b f3  mov   ($f3),($0b)
+03e8: fa 0b f3  mov   ($f3),($0b)       ; set NON
 03eb: 8f 4d f2  mov   $f2,#$4d
-03ee: fa 0c f3  mov   ($f3),($0c)
+03ee: fa 0c f3  mov   ($f3),($0c)       ; set EON
 03f1: a3 0d 0c  bbs5  $0d,$0400
 03f4: 8f 2c f2  mov   $f2,#$2c
-03f7: fa 10 f3  mov   ($f3),($10)
+03f7: fa 10 f3  mov   ($f3),($10)       ; set EVOL(L)
 03fa: 8f 3c f2  mov   $f2,#$3c
-03fd: fa 10 f3  mov   ($f3),($10)
+03fd: fa 10 f3  mov   ($f3),($10)       ; set EVOL(R)
 0400: 4e 19 00  tclr1 $0019
 0403: 09 08 19  or    ($19),($08)
 0406: 8f 00 08  mov   $08,#$00
@@ -695,14 +695,14 @@
 07a2: 08 04     or    a,#$04
 07a4: c4 f2     mov   $f2,a
 07a6: f6 80 ee  mov   a,$ee80+y
-07a9: c4 f3     mov   $f3,a
+07a9: c4 f3     mov   $f3,a             ; set SRCN
 07ab: ab f2     inc   $f2
 07ad: f6 00 ee  mov   a,$ee00+y
 07b0: 08 80     or    a,#$80
-07b2: c4 f3     mov   $f3,a
+07b2: c4 f3     mov   $f3,a             ; set ADSR(1)
 07b4: ab f2     inc   $f2
 07b6: f6 01 ee  mov   a,$ee01+y
-07b9: c4 f3     mov   $f3,a
+07b9: c4 f3     mov   $f3,a             ; set ADSR(2)
 07bb: 6f        ret
 
 ; vcmd 12
@@ -1034,12 +1034,12 @@
 09f3: 5d        mov   x,a
 09f4: 8f 0f f2  mov   $f2,#$0f
 09f7: f5 c3 19  mov   a,$19c3+x
-09fa: c4 f3     mov   $f3,a
+09fa: c4 f3     mov   $f3,a             ; set FIR
 09fc: 3d        inc   x
 09fd: 98 10 f2  adc   $f2,#$10
 0a00: 10 f5     bpl   $09f7
 0a02: 8f 0d f2  mov   $f2,#$0d
-0a05: fa 0e f3  mov   ($f3),($0e)
+0a05: fa 0e f3  mov   ($f3),($0e)       ; set EFB
 0a08: 6f        ret
 
 ; vcmd 19
@@ -1194,9 +1194,9 @@
 0afe: d2 13     clr6  $13
 0b00: e8 7f     mov   a,#$7f
 0b02: 8f 0c f2  mov   $f2,#$0c
-0b05: c4 f3     mov   $f3,a
+0b05: c4 f3     mov   $f3,a             ; set MVOL(L)
 0b07: 8f 1c f2  mov   $f2,#$1c
-0b0a: c4 f3     mov   $f3,a
+0b0a: c4 f3     mov   $f3,a             ; set MVOL(R)
 0b0c: 6f        ret
 
 ; vcmd 28
@@ -1744,7 +1744,7 @@
 0f44: c4 02     mov   $02,a
 0f46: 04 09     or    a,$09
 0f48: 8f 5c f2  mov   $f2,#$5c
-0f4b: c4 f3     mov   $f3,a
+0f4b: c4 f3     mov   $f3,a             ; set KOF
 0f4d: 4e 08 00  tclr1 $0008
 0f50: 4e 19 00  tclr1 $0019
 0f53: 8f 00 09  mov   $09,#$00
@@ -1891,12 +1891,12 @@
 1079: 7d        mov   a,x
 107a: d0 15     bne   $1091
 107c: 8f 2c f2  mov   $f2,#$2c
-107f: d8 f3     mov   $f3,x
+107f: d8 f3     mov   $f3,x             ; set EVOL(L)
 1081: 8f 3c f2  mov   $f2,#$3c
-1084: d8 f3     mov   $f3,x
+1084: d8 f3     mov   $f3,x             ; set EVOL(R)
 1086: a2 0d     set5  $0d
 1088: 8f 6c f2  mov   $f2,#$6c
-108b: fa 0d f3  mov   ($f3),($0d)
+108b: fa 0d f3  mov   ($f3),($0d)       ; set FLG
 108e: 3f fe 0a  call  $0afe
 1091: e4 05     mov   a,$05
 1093: d5 e0 ed  mov   $ede0+x,a
@@ -1921,11 +1921,11 @@
 10be: 23 13 b4  bbs1  $13,$1075
 10c1: e8 00     mov   a,#$00
 10c3: 8f 4d f2  mov   $f2,#$4d
-10c6: c4 f3     mov   $f3,a
+10c6: c4 f3     mov   $f3,a             ; set EON
 10c8: 8f 2c f2  mov   $f2,#$2c
-10cb: c4 f3     mov   $f3,a
+10cb: c4 f3     mov   $f3,a             ; set EVOL(L)
 10cd: 8f 3c f2  mov   $f2,#$3c
-10d0: c4 f3     mov   $f3,a
+10d0: c4 f3     mov   $f3,a             ; set EVOL(R)
 10d2: c4 0c     mov   $0c,a
 10d4: c4 10     mov   $10,a
 10d6: e4 12     mov   a,$12
@@ -1937,9 +1937,9 @@
 10df: 48 ff     eor   a,#$ff
 10e1: 88 ee     adc   a,#$ee
 10e3: 8f 6d f2  mov   $f2,#$6d
-10e6: c4 f3     mov   $f3,a
+10e6: c4 f3     mov   $f3,a             ; set ESA
 10e8: 8f 7d f2  mov   $f2,#$7d
-10eb: fa 12 f3  mov   ($f3),($12)
+10eb: fa 12 f3  mov   ($f3),($12)       ; set EDL
 10ee: c4 18     mov   $18,a
 10f0: eb fd     mov   y,$fd
 10f2: cd 32     mov   x,#$32
@@ -2608,7 +2608,7 @@
 1615: 9f        xcn   a
 1616: 5c        lsr   a
 1617: 08 02     or    a,#$02
-1619: c4 f2     mov   $f2,a
+1619: c4 f2     mov   $f2,a             ; P(L)
 161b: f6 00 f4  mov   a,$f400+y
 161e: 94 b4     adc   a,$b4+x
 1620: c4 00     mov   $00,a
@@ -2639,9 +2639,9 @@
 164f: 8d 3f     mov   y,#$3f
 1651: 2f 02     bra   $1655
 1653: e4 00     mov   a,$00
-1655: c4 f3     mov   $f3,a
+1655: c4 f3     mov   $f3,a             ; set P(L)
 1657: ab f2     inc   $f2
-1659: cb f3     mov   $f3,y
+1659: cb f3     mov   $f3,y             ; set P(H)
 165b: 49 c6 1c  eor   ($1c),($c6)
 165e: eb a3     mov   y,$a3
 1660: e4 c6     mov   a,$c6
@@ -2695,19 +2695,19 @@
 16be: 7d        mov   a,x
 16bf: 9f        xcn   a
 16c0: 5c        lsr   a
-16c1: c4 f2     mov   $f2,a
+16c1: c4 f2     mov   $f2,a             ; VOL(L)
 16c3: e4 e6     mov   a,$e6
 16c5: 48 ff     eor   a,#$ff
 16c7: bc        inc   a
 16c8: 4f a6     pcall $a6
 16ca: db cb     mov   $cb+x,y
-16cc: cb f3     mov   $f3,y
+16cc: cb f3     mov   $f3,y             ; set VOL(L)
 16ce: ab f2     inc   $f2
 16d0: eb 00     mov   y,$00
 16d2: e4 e6     mov   a,$e6
 16d4: 4f a6     pcall $a6
 16d6: db cc     mov   $cc+x,y
-16d8: cb f3     mov   $f3,y
+16d8: cb f3     mov   $f3,y             ; set VOL(R)
 16da: 49 c6 1b  eor   ($1b),($c6)
 16dd: eb a3     mov   y,$a3
 16df: 5f 74 15  jmp   $1574
