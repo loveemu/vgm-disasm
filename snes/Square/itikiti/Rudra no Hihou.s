@@ -172,14 +172,15 @@
 0365: d8 f4     mov   $f4,x
 0367: 5f 01 02  jmp   $0201
 
-036a: 39        and   (x),(y)
-036b: 03 61 03  bbs0  $61,$0371
-036e: 5c        lsr   a
-036f: 03 57 03  bbs0  $57,$0375
-0372: 39        and   (x),(y)
-0373: 03 61 03  bbs0  $61,$0379
-0376: 5c        lsr   a
-0377: 03 57 03  bbs0  $57,$037d
+036a: dw $0339
+036c: dw $0361
+036e: dw $035c
+0370: dw $0357
+0372: dw $0339
+0374: dw $0361
+0376: dw $035c
+0378: dw $0357
+
 037a: 3f 83 03  call  $0383
 037d: cd ff     mov   x,#$ff
 037f: bd        mov   sp,x
@@ -191,22 +192,23 @@
 038a: c4 f4     mov   $f4,a
 038c: 6f        ret
 
-038d: 83 03 7a  bbs4  $03,$040a
-0390: 03 26 03  bbs0  $26,$0396
-0393: 1b 03     asl   $03+x
-0395: 66        cmp   a,(x)
-0396: 02 7c     set0  $7c
-0398: 02 ab     set0  $ab
-039a: 02 0f     set0  $0f
-039c: 02 21     set0  $21
-039e: 02 33     set0  $33
-03a0: 02 93     set0  $93
-03a2: 02 fa     set0  $fa
-03a4: 02 e4     set0  $e4
-03a6: f4 f0     mov   a,$f0+x
-03a8: 08 3f     or    a,#$3f
-03aa: f5 0c e8  mov   a,$e80c+x
-03ad: ce        pop   x
+038d: dw $0383
+038f: dw $037a
+0391: dw $0326
+0393: dw $031b
+0395: dw $0266
+0397: dw $027c
+0399: dw $02ab
+039b: dw $020f
+039d: dw $0221
+039f: dw $0233
+03a1: dw $0293
+03a3: dw $02fa
+
+03a5: e4 f4     mov   a,$f4
+03a7: f0 08     beq   $03b1
+03a9: 3f f5 0c  call  $0cf5
+03ac: e8 ce     mov   a,#$ce
 03ae: c5 80 1f  mov   $1f80,a
 03b1: eb fd     mov   y,$fd
 03b3: f0 0c     beq   $03c1
@@ -1558,12 +1560,8 @@
 0da6: 8f 00 1d  mov   $1d,#$00
 0da9: 6f        ret
 
-0daa: 00        nop
-0dab: 00        nop
-0dac: 00        nop
-0dad: 00        nop
-0dae: 00        nop
-0daf: 00        nop
+0daa: db $00,$00,$00,$00,$00,$00
+
 0db0: 32 13     clr1  $13
 0db2: e4 04     mov   a,$04
 0db4: d0 0f     bne   $0dc5
@@ -1692,15 +1690,16 @@
 0eb8: f8 a1     mov   x,$a1
 0eba: f5 80 ed  mov   a,$ed80+x
 0ebd: c4 02     mov   $02,a
-0ebf: f5 81 ed  mov   a,$ed81+x         ; song header ptr?
-0ec2: c4 03     mov   $03,a
+0ebf: f5 81 ed  mov   a,$ed81+x
+0ec2: c4 03     mov   $03,a             ; obtain song header address from $ed80+x (destructive? points to the end of the header after loading is complete...)
 0ec4: 8d 01     mov   y,#$01
 0ec6: e4 ef     mov   a,$ef
 0ec8: 77 02     cmp   a,($02)+y
 0eca: b0 01     bcs   $0ecd
 0ecc: 6f        ret
 
-0ecd: f7 02     mov   a,($02)+y
+; parse song header
+0ecd: f7 02     mov   a,($02)+y         ; offset 1: channel count
 0ecf: fd        mov   y,a
 0ed0: c4 00     mov   $00,a
 0ed2: e4 dd     mov   a,$dd
@@ -1710,48 +1709,50 @@
 0edb: 1c        asl   a
 0edc: 7c        ror   a
 0edd: fe fd     dbnz  y,$0edc
-0edf: c4 c6     mov   $c6,a
+0edf: c4 c6     mov   $c6,a             ; channel bit
 0ee1: 7d        mov   a,x
 0ee2: d0 08     bne   $0eec
+;
 0ee4: e7 02     mov   a,($02+x)
 0ee6: c4 12     mov   $12,a
 0ee8: f0 02     beq   $0eec
 0eea: b2 0d     clr5  $0d               ; echo will be enabled
+;
 0eec: 8d 02     mov   y,#$02
 0eee: f8 a3     mov   x,$a3
-0ef0: f7 02     mov   a,($02)+y
+0ef0: f7 02     mov   a,($02)+y         ; ?
 0ef2: d4 1f     mov   $1f+x,a
 0ef4: fc        inc   y
-;
-0ef5: f7 02     mov   a,($02)+y
+0ef5: f7 02     mov   a,($02)+y         ; ?
 0ef7: d4 20     mov   $20+x,a
 0ef9: dc        dec   y
 0efa: 03 c6 08  bbs0  $c6,$0f05
 0efd: e8 01     mov   a,#$01
+;
 0eff: 3d        inc   x
 0f00: 3d        inc   x                 ; next channel
 0f01: 1c        asl   a
 0f02: 2e c6 fa  cbne  $c6,$0eff
-;
-0f05: 8b 00     dec   $00
-0f07: 30 13     bmi   $0f1c
+; read voice offsets from header
+0f05: 8b 00     dec   $00               ; decrease channel count
+0f07: 30 13     bmi   $0f1c             ; repeat for each channels
+0f09: f7 02     mov   a,($02)+y         ; offset 2 + (2*channel): offset to voice bytes (lo)
 0f0b: d4 1f     mov   $1f+x,a
 0f0d: fc        inc   y
-0f0e: f7 02     mov   a,($02)+y
+0f0e: f7 02     mov   a,($02)+y         ; offset 3 + (2*channel): offset to voice bytes (hi)
 0f10: d4 20     mov   $20+x,a
 0f12: fc        inc   y
-0f13: 09 c6 01  or    ($01),($c6)       ; activate channel?
+0f13: 09 c6 01  or    ($01),($c6)       ; activate channel
 0f16: 3d        inc   x
 0f17: 3d        inc   x                 ; next channel
 0f18: 0b c6     asl   $c6
-0f1a: 2f e9     bra   $0f05
-0f09: f7 02     mov   a,($02)+y
+0f1a: 2f e9     bra   $0f05             ; continue
 ;
 0f1c: f8 a1     mov   x,$a1
 0f1e: dd        mov   a,y
 0f1f: 8d 00     mov   y,#$00
 0f21: 7a 02     addw  ya,$02
-0f23: da 02     movw  $02,ya
+0f23: da 02     movw  $02,ya            ; seek to the end of the offset list
 0f25: d5 80 ed  mov   $ed80+x,a
 0f28: dd        mov   a,y
 0f29: d5 81 ed  mov   $ed81+x,a
@@ -1762,17 +1763,17 @@
 0f34: d5 c0 ed  mov   $edc0+x,a
 0f37: e4 03     mov   a,$03
 0f39: b6 20 00  sbc   a,$0020+y
-0f3c: d5 c1 ed  mov   $edc1+x,a
+0f3c: d5 c1 ed  mov   $edc1+x,a         ; base offset ($edc0/1+x) = song header end - first voice offset
 0f3f: e4 01     mov   a,$01
 0f41: d5 90 ed  mov   $ed90+x,a
-0f44: c4 02     mov   $02,a
+0f44: c4 02     mov   $02,a             ; load channel bits
 0f46: 04 09     or    a,$09
 0f48: 8f 5c f2  mov   $f2,#$5c
 0f4b: c4 f3     mov   $f3,a             ; set KOF
 0f4d: 4e 08 00  tclr1 $0008
 0f50: 4e 19 00  tclr1 $0019
 0f53: 8f 00 09  mov   $09,#$00
-; add address base
+; convert voice data offsets to absolute address
 0f56: 13 02 16  bbc0  $02,$0f6f
 0f59: 60        clrc
 0f5a: f5 c0 ed  mov   a,$edc0+x
@@ -1780,10 +1781,10 @@
 0f60: d6 1f 00  mov   $001f+y,a
 0f63: f5 c1 ed  mov   a,$edc1+x
 0f66: 96 20 00  adc   a,$0020+y
-0f69: d6 20 00  mov   $0020+y,a
+0f69: d6 20 00  mov   $0020+y,a         ; add base offset ($edc0+x)
 0f6c: 3f 3b 17  call  $173b
 0f6f: fc        inc   y
-0f70: fc        inc   y
+0f70: fc        inc   y                 ; next channel
 0f71: 4b 02     lsr   $02
 0f73: d0 e1     bne   $0f56
 0f75: 6f        ret
@@ -1861,6 +1862,7 @@
 1003: d5 30 ed  mov   $ed30+x,a
 1006: 6f        ret
 
+; initialize sequence global variables
 1007: e8 00     mov   a,#$00
 1009: d5 58 01  mov   $0158+x,a
 100c: d5 f0 ed  mov   $edf0+x,a
@@ -1929,8 +1931,8 @@
 109b: 3f 00 02  call  $0200
 109e: f8 a1     mov   x,$a1
 10a0: 23 13 08  bbs1  $13,$10ab
-10a3: 3f 40 0e  call  $0e40
-10a6: 3f 07 10  call  $1007
+10a3: 3f 40 0e  call  $0e40             ; load the song
+10a6: 3f 07 10  call  $1007             ; initialize globals such as tempo
 10a9: 2f 03     bra   $10ae
 10ab: 3f 37 14  call  $1437
 10ae: 7d        mov   a,x
@@ -1972,13 +1974,13 @@
 10f8: 8d 00     mov   y,#$00
 10fa: dd        mov   a,y
 10fb: d6 00 ed  mov   $ed00+y,a         ; this line is dynamically patched ($10fd)
-10fe: fe fb     dbnz  y,$10fb
+10fe: fe fb     dbnz  y,$10fb           ; zero memory for 256 bytes ($xx00-xxff)
 1100: 7d        mov   a,x
 1101: f0 03     beq   $1106
 1103: a4 fd     sbc   a,$fd
 1105: 5d        mov   x,a
-1106: ac fd 10  inc   $10fd
-1109: 6e ea ee  dbnz  $ea,$10fa
+1106: ac fd 10  inc   $10fd             ; patch `mov`
+1109: 6e ea ee  dbnz  $ea,$10fa         ; clear next page if necessary
 110c: 7d        mov   a,x
 110d: f0 04     beq   $1113
 110f: a4 fd     sbc   a,$fd
@@ -2736,12 +2738,9 @@
 16dd: eb a3     mov   y,$a3
 16df: 5f 74 15  jmp   $1574
 
-16e2: 00        nop
-16e3: 32 62     clr1  $62
-16e5: 8e        pop   psw
-16e6: b5 d5 ed  sbc   a,$edd5+x
-16e9: fb c4     mov   y,$c4+x
-16eb: e6        mov   a,(x)
+16e2: db $00,$32,$62,$8e,$b5,$d5,$ed,$fb
+
+16ea: c4 e6     mov   $e6,a
 16ec: eb e8     mov   y,$e8
 16ee: 28 0f     and   a,#$0f
 16f0: 5d        mov   x,a
@@ -2785,6 +2784,7 @@
 1738: c4 c8     mov   $c8,a
 173a: 6f        ret
 
+; initialization for channel
 173b: 6d        push  y
 173c: e8 00     mov   a,#$00
 173e: d6 01 f6  mov   $f601+y,a
