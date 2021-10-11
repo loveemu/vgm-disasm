@@ -1,0 +1,44 @@
+Total number of known unique builds: 12
+(Does not count the US and European versions of Final Fight as well as Final Fight Guy as unique builds because the only difference is the number of FIR table entries)
+
+(Program starts at $0300 - using CD ?? BD 3F ?? ??)
+(Program starts at $0300 - DF 06 & A6 0C (using D5 ?? ?? FD 3F ?? ?? at $04F3 to distinguish))
+- Final Fight (Japanese Version)
+(Program starts at $0300 - DF 06 & 8E 0C (using D5 ?? ?? FD 3F ?? ?? at $04F3 to distinguish))
+- Final Fight (US & European Version)/Final Fight Guy
+(NOTE: The only difference here is the number of FIR table entries compared to the above build, thus I consider this to be completely identical code-wise)
+(Program starts at $0300 - 11 0B)
+- Area 88/U.N. Squadron
+- Chou Makaimura/Super Ghouls 'n Ghosts
+
+(Program starts at $02C0 - using D0 F8 3F ?? ??)
+(Program starts at $02C0 - 25 04 & BB 0C (using 8D ?? E8 ?? 3F ?? ?? to distinguish))
+- Aladdin
+- Final Fight 2
+- Street Fighter II Turbo
+(Program starts at $02C0 - 25 04 & C2 0C (using 8D ?? E8 ?? 3F ?? ?? to distinguish))
+- Captain Commando
+(Program starts at $02C0 - 2F 04)
+- Mickey no Magical Adventure/Magical Quest Starring Mickey Mouse
+(Program starts at $02C0 - 36 04 & D6 0C (using 8D ?? E8 ?? 3F ?? ?? to distinguish))
+- Goof Troop/Goofy to Max: Kaizoku Shima no Daibouken
+(Program starts at $02C0 - 36 04 & D9 0C (using 8D ?? E8 ?? 3F ?? ?? to distinguish))
+- Breath of Fire
+(Program starts at $02C0 - 4C 04)
+- Street Fighter II: The World Warrior
+- Super Pang/Super Buster Bros.
+(Program starts at $02C0 - 51 04 & 4A 0D (using 8D ?? E8 ?? 3F ?? ?? to distinguish))
+- Muscle Bomber - The Body Explosion/Saturday Night Slam Masters
+(Program starts at $02C0 - 51 04 & 4B 0D (using 8D ?? E8 ?? 3F ?? ?? to distinguish))
+- Super Street Fighter II: The New Challengers
+(Program starts at $02C0 - 51 04 & 64 0D (using 8D ?? E8 ?? 3F ?? ?? to distinguish))
+- Rockman X/Mega Man X
+(Program starts at $02C0 - 51 04 & 7E 0D (using 8D ?? E8 ?? 3F ?? ?? to distinguish))
+- Breath of Fire II
+- Demon's Blazon/Demon's Crest
+- Mickey to Minnie: Magical Adventure 2/Great Circus Mystery Starring Mickey & Minnie
+- Rockman 7: Shukumei no Taiketsu!/Mega Man 7
+- Rockman X2/Mega Man X2
+- Rockman X3/Mega Man X3
+- Rockman & Forte
+- X-Men: Mutant Apocalypse
