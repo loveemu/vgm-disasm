@@ -1,0 +1,19 @@
+No relation to Rebecca Heineman's sound driver, used in RPM Racing, Wolfenstein 3D and Super 3D Noah's Ark (the latter two storing the music data on the SNES side and translating them to commands for the SPC700 to execute).
+
+Build sorting notes are SPC700-side only.
+
+Total number of known unique builds: 4
+
+(Program starts at $1000 - using CD ?? BD 3F ?? ??)
+(Program starts at $1000 - 17 10)
+- Out of this World/Outer World/Another World
+
+(Program starts at $1000 - using 8F ?? ?? 3F ?? ??)
+(Program starts at $1000 - 3E 10 & BA 11 (using a second 8F ?? ?? 3F ?? ?? right next to it to distinguish))
+- Lost Vikings
+(Program starts at $1000 - 3E 10 & C3 11 (using a second 8F ?? ?? 3F ?? ?? right next to it to distinguish))
+- Blackthrone/Blackhawk
+- Claymates
+- J.R.R. Tolkien's Lord of the Rings Volume 1
+(Program starts at $1000 - 4C 10)
+- Lost Vikings 2
