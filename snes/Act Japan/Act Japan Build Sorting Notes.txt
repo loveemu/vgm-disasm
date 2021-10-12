@@ -1,8 +1,10 @@
-Total number of known unique builds: 4
+Total number of known unique builds: 5
 
 (Program starts at $0580 - using 8F ?? ?? 8F ?? ?? 3F ?? ??)
 (Program starts at $0580 - 53 0D)
-- Darius Force/Super Nova
+- Darius Force
+(Program starts at $0580 - 75 0D)
+- Super Nova
 (Program starts at $0800 - 32 11)
 - Daibakushou Jinsei Gekijou: Zukkoke Salary Man Hen
 (Program starts at $09C0 - 02 12)
