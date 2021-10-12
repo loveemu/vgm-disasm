@@ -1,0 +1,17 @@
+Total number of known unique builds: 6
+
+(Program starts at ???? - using CD ?? BD 3F ?? ??)
+(Program starts at $0310 - 70 04)
+- Derby Jockey
+(Program starts at $0380 - F4 04)
+- Derby Jockey 2
+- Pachinko Tetsujin: Shichiban Shoubu
+(Program starts at $0380 - 04 05)
+- Tamagotch Town
+(Program starts at $0380 - 20 05 & 7D 07)
+- Oraga Land Shusai: Best Farmer Shuukaku-Sai
+- Zaitaku Touhyou System - SPAT4-Wide
+(Program starts at $0380 - 20 05 & 84 07 (using 3F ?? ?? at $039C to distinguish))
+- Shinseiki Odysselya II
+(Program starts at $0380 - 7F 05)
+- Mickey no Tokyo Disneyland Daibouken
