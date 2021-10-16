@@ -1,0 +1,36 @@
+Total number of known unique build variants: 12
+
+(Program starts at $0334 - Using C4 ?? 3F ?? ??)
+(Program starts at $0334 - 5F 0A)
+- CB Chara Wars
+(Program starts at $0344 - 94 0A)
+- Combatribes
+
+(Program starts at $02DC - Using C4 ?? E8 ?? 3F ?? ??)
+(Program starts at $02DC - F5 0E)
+- Kidou Senshi Gundam - Cross Dimension 0079
+- Otoboke Ninja Colosseum
+(Program starts at $02DC - EA 0F)
+- Lennus II: Fuuin no Shito
+- Seifuku Densetsu: Pretty Fighter
+- Shounen Ninja Sasuke
+(Program starts at $02DC - EE 0F)
+- Super Black Bass 2/Bassin's Black Bass
+(Program starts at $02DC - F4 0F)
+- Bounty Sword
+- Gokinjo Boukentai
+- Koutetsu no Kishi 3: Gekitotsu Europe Sensen
+(Program starts at $02DC - 19 10)
+- Gon
+- Kidou Senshi Z Gundam: Away to the NewType
+(Program starts at $02DC - 34 10)
+- Mystic Ark
+- Wonder Project J
+(Program starts at $02E4 - DF 0F)
+- Shin Nekketsu Kouha - Kunio-tachi no Banka
+(Program starts at $02EE - 13 0F)
+- Shin SD Sengokuden: Taishou Gun Retsuden
+(Program starts at $0305 - 96 0F)
+- Shien: The Blade Chaser/Shien's Revenge
+(Program starts at $037D - DD 13)
+- Super Black Bass 3
