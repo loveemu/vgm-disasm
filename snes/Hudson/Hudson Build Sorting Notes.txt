@@ -1,0 +1,53 @@
+Total number of known unique build variants: 16
+(Does not count Super Genjin 2 as a unique build despite a unique version marker: the only differences are purely with the allocation of its memory variables, and all differences start at $20DC)
+
+(Program starts at $0800 - using 8F ?? ?? 3F ?? ??)
+(Program starts at $0800 - 37 0C)
+- Shin Momotarou Densetsu
+(Program starts at $0800 - 43 0C)
+- An American Tail: Fievel Goes West
+(Program starts at $0800 - 67 0C)
+- Super Bomberman 2
+(Program starts at $0800 - 89 0C)
+- Elfaria II: The Quest of the Meld
+(Program starts at $0800 - C2 0C)
+- Hagane: The Final Conflict
+
+(Version 1.08a - Program starts at $0800 - contains an opening branch - 74 0D)
+- Saikyou - Takada Nobuhiko
+
+(Version 1.12a - Program starts at $0800 - contains an opening branch - 17 0E)
+- Undake 30 Same Game Daisakusen - Mario Version (BS-X)
+
+(Version 1.16 - Program starts at $0800 - contains an opening branch - EA 0D & BC 20 (using C4 ?? 3F ?? ?? to distinguish))
+- Super Bomberman 3
+(Version 1.16E - Program starts at $0800 - contains an opening branch - EA 0D & BC 20 (using C4 ?? 3F ?? ?? to distinguish))
+- Super Genjin 2 (Identical to the build above minus what I suspect are variable-related memory location reference differences starting at $20DC, thus I won't count this as a unique build since this is only an allocation difference)
+
+(Version 1.17s - Program starts at $0800 - contains an opening branch - EA 0D & BF 20 (using C4 ?? 3F ?? ?? to distinguish))
+- Caravan Shooting Collection
+
+(Version 1.17b - Program starts at $0800 - contains an opening branch - FF 0D)
+- Undake 30 Same Game Daisakusen - Mario Version
+
+(Ver 2.10 - Program starts at $0800 - contains an opening jump - B6 0E)
+- Do-Re-Mi Fantasy
+
+(Ver 2.11 - Program starts at $0800 - contains an opening jump - 36 0E)
+- Daikaijuu Monogatari II
+
+(Ver 2.27b - Program starts at $0800 - contains an opening jump - using 3F ?? ?? C4 ?? C4 ??)
+(Ver 2.27b - Program starts at $0800 - contains an opening jump - 9E 12)
+- Tengai Makyou Zero
+
+(Ver 2.28 - Program starts at $0800 - contains an opening jump - C4 12)
+- Kishin Douji Zenki - Tenchi Meidou
+- Super Bomberman 4
+
+(Ver 2.30a - Program starts at $0800 - contains an opening jump - BE 12)
+- Same Game
+
+(Ver 2.32 - Program starts at $0800 - contains an opening jump - C7 12)
+- Bakukyuu Renpatsu!! Super B-Daman
+- Bomberman B-Daman
+- Super Bomberman 5
