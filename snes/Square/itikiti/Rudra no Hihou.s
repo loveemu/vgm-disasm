@@ -345,13 +345,13 @@
 04c6: fd        mov   y,a
 04c7: f5 80 f0  mov   a,$f080+x
 04ca: da 00     movw  $00,ya
-04cc: f5 01 f0  mov   a,$f001+x
+04cc: f5 01 f0  mov   a,$f001+x         ; volume
 04cf: fd        mov   y,a
 04d0: f5 00 f0  mov   a,$f000+x
 04d3: 4f 67     pcall $67
 04d5: d5 00 f0  mov   $f000+x,a
 04d8: dd        mov   a,y
-04d9: d5 01 f0  mov   $f001+x,a
+04d9: d5 01 f0  mov   $f001+x,a         ; volume
 04dc: 09 02 1b  or    ($1b),($02)
 04df: f5 01 f1  mov   a,$f101+x
 04e2: f0 20     beq   $0504
@@ -361,13 +361,13 @@
 04eb: fd        mov   y,a
 04ec: f5 00 f2  mov   a,$f200+x
 04ef: da 00     movw  $00,ya
-04f1: f5 81 f1  mov   a,$f181+x
+04f1: f5 81 f1  mov   a,$f181+x         ; pan
 04f4: fd        mov   y,a
 04f5: f5 80 f1  mov   a,$f180+x
 04f8: 4f 67     pcall $67
 04fa: d5 80 f1  mov   $f180+x,a
 04fd: dd        mov   a,y
-04fe: d5 81 f1  mov   $f181+x,a
+04fe: d5 81 f1  mov   $f181+x,a         ; pan
 0501: 09 02 1b  or    ($1b),($02)
 0504: f5 01 f7  mov   a,$f701+x
 0507: f0 3a     beq   $0543
@@ -375,13 +375,13 @@
 050c: fd        mov   y,a
 050d: f5 80 f7  mov   a,$f780+x
 0510: da 00     movw  $00,ya
-0512: f5 81 f8  mov   a,$f881+x
+0512: f5 81 f8  mov   a,$f881+x         ; pan LFO value
 0515: fd        mov   y,a
 0516: f5 80 f8  mov   a,$f880+x
 0519: 4f 67     pcall $67
 051b: d5 80 f8  mov   $f880+x,a
 051e: dd        mov   a,y
-051f: d5 81 f8  mov   $f881+x,a
+051f: d5 81 f8  mov   $f881+x,a         ; pan LFO value
 0522: 09 02 1b  or    ($1b),($02)
 0525: f5 01 f8  mov   a,$f801+x
 0528: 9c        dec   a
@@ -637,7 +637,8 @@
 070f: 30 1f     bmi   $0730
 0711: c4 00     mov   $00,a             ; save adjusted note number
 0713: f6 01 fa  mov   a,$fa01+y
-0716: f0 39     beq   $0751
+0716: f0 39     beq   $0751             ; no randomization
+; randomize note number?
 0718: 1c        asl   a
 0719: 5d        mov   x,a
 071a: 3d        inc   x
@@ -669,6 +670,7 @@
 074b: e8 7f     mov   a,#$7f
 074d: f8 a2     mov   x,$a2
 074f: 2f 02     bra   $0753
+;
 0751: e4 00     mov   a,$00
 0753: d4 a4     mov   $a4+x,a
 0755: 3f 07 08  call  $0807
@@ -790,13 +792,15 @@
 0832: da e2     movw  $e2,ya
 0834: da e0     movw  $e0,ya
 0836: f8 a3     mov   x,$a3
-0838: f5 01 ef  mov   a,$ef01+x
+0838: f5 01 ef  mov   a,$ef01+x         ; tuning
 083b: f0 1b     beq   $0858
 083d: 30 09     bmi   $0848
+; apply tuning (positive)
 083f: 3f b6 08  call  $08b6
 0842: eb e1     mov   y,$e1
 0844: 7a e2     addw  ya,$e2
 0846: 2f 0c     bra   $0854
+; apply tuning (negative)
 0848: 48 ff     eor   a,#$ff
 084a: bc        inc   a
 084b: 3f b6 08  call  $08b6
@@ -805,6 +809,7 @@
 0852: 9a e0     subw  ya,$e0
 0854: da e0     movw  $e0,ya
 0856: f8 a3     mov   x,$a3
+;
 0858: f5 81 ef  mov   a,$ef81+x
 085b: 3f af 08  call  $08af
 085e: 2d        push  a
@@ -921,7 +926,7 @@
 0923: f8 a1     mov   x,$a1
 0925: e4 c6     mov   a,$c6
 0927: 15 d1 ed  or    a,$edd1+x
-092a: d5 d1 ed  mov   $edd1+x,a
+092a: d5 d1 ed  mov   $edd1+x,a         ; not used at all?
 092d: 6f        ret
 
 ; vcmd 06 - tempo
@@ -995,14 +1000,14 @@
 099b: 6f        ret
 
 ; vcmd 0e - pan
-099c: 4f f4     pcall $f4               ; read next voice byte
-099e: d6 81 f1  mov   $f181+y,a
+099c: 4f f4     pcall $f4               ; read next voice byte (pan, 8-bit unsigned)
+099e: d6 81 f1  mov   $f181+y,a         ; set pan
 09a1: e8 00     mov   a,#$00
 09a3: d6 01 f1  mov   $f101+y,a
 09a6: 6f        ret
 
 ; vcmd 0f - pan fade
-09a7: 4f 00     pcall $00               ; read next voice word to $dc/dd and A
+09a7: 4f 00     pcall $00               ; read next voice word to $dc/dd and A (fade length, target value)
 09a9: 80        setc
 09aa: b6 81 f1  sbc   a,$f181+y
 09ad: f0 f4     beq   $09a3
@@ -1017,7 +1022,7 @@
 09c1: eb a3     mov   y,$a3
 09c3: 2f de     bra   $09a3
 
-; vcmd 29
+; vcmd 29 - pitch slide
 09c5: 4f 00     pcall $00               ; read next voice word to $dc/dd and A
 09c7: d6 01 f6  mov   $f601+y,a
 09ca: e4 dc     mov   a,$dc
@@ -1078,7 +1083,7 @@
 0a28: d6 80 f2  mov   $f280+y,a         ; set vibrato depth to 0
 0a2b: 6f        ret
 
-; vcmd 1b
+; vcmd 1b - tremolo on
 0a2c: 4f 00     pcall $00               ; read next voice word to $dc/dd and A
 0a2e: d6 80 f5  mov   $f580+y,a
 0a31: e4 dc     mov   a,$dc
@@ -1093,12 +1098,12 @@
 0a43: d6 81 f4  mov   $f481+y,a
 0a46: 5f de 08  jmp   $08de
 
-; vcmd 1c
+; vcmd 1c - tremolo off
 0a49: e8 00     mov   a,#$00
 0a4b: d6 80 f4  mov   $f480+y,a
 0a4e: 6f        ret
 
-; vcmd 1d
+; vcmd 1d - pan LFO on
 0a4f: 4f 00     pcall $00               ; read next voice word to $dc/dd and A
 0a51: d6 01 f7  mov   $f701+y,a
 0a54: 80        setc
@@ -1115,12 +1120,12 @@
 0a6b: eb a3     mov   y,$a3
 0a6d: 2f 05     bra   $0a74
 
-; vcmd 1e
+; vcmd 1e - pan LFO off
 0a6f: e8 00     mov   a,#$00
 0a71: d6 01 f7  mov   $f701+y,a
 0a74: d6 80 f8  mov   $f880+y,a
 0a77: e8 80     mov   a,#$80
-0a79: d6 81 f8  mov   $f881+y,a
+0a79: d6 81 f8  mov   $f881+y,a         ; pan LFO value
 0a7c: 6f        ret
 
 ; vcmd 0b - note number base
@@ -1178,11 +1183,11 @@
 0ac6: eb a3     mov   y,$a3
 0ac8: 6f        ret
 
-; vcmd 25
-0ac9: 4f f4     pcall $f4               ; read next voice byte
+; vcmd 25 - portamento
+0ac9: 4f f4     pcall $f4               ; read next voice byte (portamento speed in ticks)
 0acb: 2f 02     bra   $0acf
 
-; vcmd 26
+; vcmd 26 - portamento off
 0acd: e8 00     mov   a,#$00
 0acf: d6 81 f9  mov   $f981+y,a
 0ad2: 6f        ret
@@ -1191,21 +1196,24 @@
 0ad3: 4f f4     pcall $f4               ; read next voice byte
 0ad5: 5d        mov   x,a
 0ad6: 30 04     bmi   $0adc
-0ad8: d6 01 fa  mov   $fa01+y,a
+; vcmd 27, 00-7f - note randomization on
+0ad8: d6 01 fa  mov   $fa01+y,a         ; randomization range (in semitones)
 0adb: 6f        ret
-
+;
 0adc: 09 c6 1b  or    ($1b),($c6)
 0adf: 68 82     cmp   a,#$82
 0ae1: 90 0d     bcc   $0af0
+;
 0ae3: 5c        lsr   a
 0ae4: 28 01     and   a,#$01
 0ae6: f0 04     beq   $0aec
+; vcmd 27, 83 - alternate volume mode?
 0ae8: ca 13 60  mov1  $0013,3,c
 0aeb: 6f        ret
-
+; vcmd 27, 82 - global pitch LFO on?
 0aec: ca 13 80  mov1  $0013,4,c
 0aef: 6f        ret
-
+; vcmd 27, 80-81
 0af0: 78 00 a1  cmp   $a1,#$00
 0af3: d0 fa     bne   $0aef
 0af5: 5c        lsr   a
@@ -1221,28 +1229,30 @@
 0b0a: c4 f3     mov   $f3,a             ; set MVOL(R)
 0b0c: 6f        ret
 
-; vcmd 28
+; vcmd 28 - note randomization off
 0b0d: e8 00     mov   a,#$00
 0b0f: 2f c7     bra   $0ad8
 
-; vcmd 1f
+; vcmd 1f - noise on
 0b11: f8 a1     mov   x,$a1
 0b13: f5 a0 ed  mov   a,$eda0+x
 0b16: 04 c6     or    a,$c6
 0b18: d5 a0 ed  mov   $eda0+x,a
-;
+; update noise
 0b1b: 8f 00 0b  mov   $0b,#$00
 0b1e: 8d 0e     mov   y,#$0e
 0b20: f6 8e ed  mov   a,$ed8e+y
 0b23: 36 9e ed  and   a,$ed9e+y
 0b26: d0 05     bne   $0b2d
+;
 0b28: dc        dec   y
 0b29: fe f5     dbnz  y,$0b20
 0b2b: 2f 22     bra   $0b4f
-0b2d: f6 9f ed  mov   a,$ed9f+y
+;
+0b2d: f6 9f ed  mov   a,$ed9f+y         ; noise clock frequency
 0b30: 28 1f     and   a,#$1f
 0b32: 38 e0 0d  and   $0d,#$e0          ; clear noise clock frequency
-0b35: 0e 0d 00  tset1 $000d             ; set FLG shadow
+0b35: 0e 0d 00  tset1 $000d             ; set frequency to FLG shadow
 0b38: 8f ff 00  mov   $00,#$ff
 0b3b: f6 8e ed  mov   a,$ed8e+y
 0b3e: 36 9e ed  and   a,$ed9e+y
@@ -1252,27 +1262,29 @@
 0b49: 4e 00 00  tclr1 $0000
 0b4c: dc        dec   y
 0b4d: fe ec     dbnz  y,$0b3b
+;
 0b4f: eb a3     mov   y,$a3
 0b51: 6f        ret
 
-; vcmd 20
+; vcmd 20 - noise off
 0b52: f8 a1     mov   x,$a1
 0b54: e4 c6     mov   a,$c6
 0b56: 48 ff     eor   a,#$ff
 0b58: 35 a0 ed  and   a,$eda0+x
 0b5b: d5 a0 ed  mov   $eda0+x,a
-0b5e: 2f bb     bra   $0b1b
+0b5e: 2f bb     bra   $0b1b             ; update noise
 
-; vcmd 08
-0b60: 4f 78     pcall $78               ; read next voice byte to A and $dc
-0b62: d5 a1 ed  mov   $eda1+x,a
-0b65: 2f b4     bra   $0b1b
+; vcmd 08 - set noise frequency (buggy)
+0b60: 4f 78     pcall $78               ; read next voice byte to A and $dc (noise frequency)
+0b62: d5 a1 ed  mov   $eda1+x,a         ; $ed9f+x+2? (bug: manipulating the frequency of the next voice?)
+0b65: 2f b4     bra   $0b1b             ; update noise
 
 ; vcmd 21 - pitchmod on
 0b67: f8 a1     mov   x,$a1
 0b69: e4 c6     mov   a,$c6
 0b6b: 15 b0 ed  or    a,$edb0+x
 0b6e: d5 b0 ed  mov   $edb0+x,a
+; update PMON
 0b71: 8f ff 00  mov   $00,#$ff
 0b74: 8f 00 0a  mov   $0a,#$00          ; clear PMON shadow
 0b77: 8d 0e     mov   y,#$0e
@@ -1287,7 +1299,7 @@
 0b8d: eb a3     mov   y,$a3
 0b8f: 6f        ret
 
-; vcmd 22
+; vcmd 22 - pitchmod off
 0b90: f8 a1     mov   x,$a1
 0b92: e4 c6     mov   a,$c6
 0b94: 48 ff     eor   a,#$ff
@@ -1331,40 +1343,41 @@
 0be2: d6 01 ee  mov   $ee01+y,a         ; set ADSR(2) shadow
 0be5: 6f        ret
 
-; vcmd 2f
-0be6: 4f 78     pcall $78               ; read next voice byte to A and $dc
+; vcmd 2f - conditional jump in repeat (break out)
+0be6: 4f 78     pcall $78               ; read next voice byte to A and $dc (count)
 0be8: f6 00 f9  mov   a,$f900+y
 0beb: bc        inc   a
-0bec: d6 00 f9  mov   $f900+y,a
-0bef: 2e dc 25  cbne  $dc,$0c17
+0bec: d6 00 f9  mov   $f900+y,a         ; increment the counter
+0bef: 2e dc 25  cbne  $dc,$0c17         ; jump to the specified address when the value reaches the given count (fall through)
 ; vcmd 2c - goto
-0bf2: 4f 00     pcall $00               ; read next voice word to $dc/dd and A
+0bf2: 4f 00     pcall $00               ; read next voice word to $dc/dd and A (destination in virtual offset)
 0bf4: f5 c1 ed  mov   a,$edc1+x
 0bf7: fd        mov   y,a
 0bf8: f5 c0 ed  mov   a,$edc0+x
-0bfb: 7a dc     addw  ya,$dc
+0bfb: 7a dc     addw  ya,$dc            ; convert the virtual offset to RAM address
 0bfd: f8 a3     mov   x,$a3
 0bff: d4 1f     mov   $1f+x,a
 0c01: db 20     mov   $20+x,y
 0c03: eb a3     mov   y,$a3
 0c05: 6f        ret
 
-0c06: 55 58 01  eor   a,$0158+x
+0c06: 55 58 01  eor   a,$0158+x         ; clear the bit
 0c09: d5 58 01  mov   $0158+x,a
-0c0c: 2f e4     bra   $0bf2
+0c0c: 2f e4     bra   $0bf2             ; perform goto
 
 ; vcmd 2d
 0c0e: f8 a1     mov   x,$a1
 0c10: f5 58 01  mov   a,$0158+x
-0c13: 24 c6     and   a,$c6
-0c15: d0 ef     bne   $0c06
-0c17: 5f 00 ff  jmp   $ff00
+0c13: 24 c6     and   a,$c6             ; test the channel bit
+0c15: d0 ef     bne   $0c06             ; jump if the bit is on
+0c17: 5f 00 ff  jmp   $ff00             ; otherwise, skip the destination address
 
 ; vcmd 23 - echo on
 0c1a: f8 a1     mov   x,$a1
 0c1c: f5 f0 ed  mov   a,$edf0+x
 0c1f: 04 c6     or    a,$c6
 0c21: d5 f0 ed  mov   $edf0+x,a
+; update echo on bits
 0c24: 8f ff 00  mov   $00,#$ff
 0c27: 8f 00 0c  mov   $0c,#$00          ; zero EON shadow
 0c2a: 8d 0e     mov   y,#$0e
@@ -1395,7 +1408,7 @@
 0c5f: 0e 09 00  tset1 $0009             ; clear KOF shadow
 0c62: 3f 52 0b  call  $0b52
 0c65: 3f 90 0b  call  $0b90
-; vcmd 24
+; vcmd 24 - echo off
 0c68: f8 a1     mov   x,$a1
 0c6a: e4 c6     mov   a,$c6
 0c6c: 48 ff     eor   a,#$ff
@@ -1465,12 +1478,13 @@
 0cdc: d5 00 fc  mov   $fc00+x,a
 0cdf: f6 20 00  mov   a,$0020+y
 0ce2: d5 01 fc  mov   $fc01+x,a
+;
 0ce5: e8 00     mov   a,#$00
-0ce7: d6 00 f9  mov   $f900+y,a
+0ce7: d6 00 f9  mov   $f900+y,a         ; reset alternative incremental counter
 0cea: 6f        ret
 
-; vcmd 11
-0ceb: 4f f4     pcall $f4               ; read next voice byte
+; vcmd 11 - tuning
+0ceb: 4f f4     pcall $f4               ; read next voice byte (tuning, signed, 1 semitone at maximum)
 0ced: d6 01 ef  mov   $ef01+y,a
 0cf0: 6f        ret
 
@@ -1890,11 +1904,11 @@
 1037: e8 80     mov   a,#$80
 1039: d4 39     mov   $39+x,a           ; default tempo
 103b: 20        clrp
-103c: d5 31 ed  mov   $ed31+x,a
+103c: d5 31 ed  mov   $ed31+x,a         ; default master pan = 0x80 (center)
 103f: d5 61 ed  mov   $ed61+x,a
 1042: d5 59 01  mov   $0159+x,a
 1045: e8 18     mov   a,#$18
-1047: d5 01 ed  mov   $ed01+x,a         ; default master volume
+1047: d5 01 ed  mov   $ed01+x,a         ; default master volume = 0x18
 104a: 6f        ret
 
 104b: f5 90 ed  mov   a,$ed90+x
@@ -2493,13 +2507,13 @@
 14e5: fd        mov   y,a
 14e6: f5 40 ed  mov   a,$ed40+x
 14e9: da 00     movw  $00,ya
-14eb: f5 31 ed  mov   a,$ed31+x
+14eb: f5 31 ed  mov   a,$ed31+x         ; master pan
 14ee: fd        mov   y,a
 14ef: f5 30 ed  mov   a,$ed30+x
 14f2: 4f 67     pcall $67
 14f4: d5 30 ed  mov   $ed30+x,a
 14f7: dd        mov   a,y
-14f8: d5 31 ed  mov   $ed31+x,a
+14f8: d5 31 ed  mov   $ed31+x,a         ; master pan
 14fb: e4 c8     mov   a,$c8
 14fd: 35 90 ed  and   a,$ed90+x
 1500: 0e 1b 00  tset1 $001b
@@ -2683,10 +2697,10 @@
 166b: d0 4f     bne   $16bc
 166d: 60        clrc
 166e: f8 a1     mov   x,$a1
-1670: f5 31 ed  mov   a,$ed31+x
-1673: 96 81 f1  adc   a,$f181+y
+1670: f5 31 ed  mov   a,$ed31+x         ; master pan
+1673: 96 81 f1  adc   a,$f181+y         ; pan
 1676: 2b e6     rol   $e6
-1678: 96 81 f8  adc   a,$f881+y
+1678: 96 81 f8  adc   a,$f881+y         ; pan LFO value
 167b: 98 00 e6  adc   $e6,#$00
 167e: f0 07     beq   $1687
 1680: 6e e6 08  dbnz  $e6,$168b
@@ -2810,8 +2824,8 @@
 1769: d6 01 f0  mov   $f001+y,a         ; default volume = 0xff (maximum)
 176c: d6 01 f9  mov   $f901+y,a
 176f: e8 80     mov   a,#$80
-1771: d6 81 f8  mov   $f881+y,a
-1774: d6 81 f1  mov   $f181+y,a
+1771: d6 81 f8  mov   $f881+y,a         ; reset pan LFO value
+1774: d6 81 f1  mov   $f181+y,a         ; default pan = 0x80 (center)
 1777: e8 03     mov   a,#$03
 1779: d6 00 ef  mov   $ef00+y,a
 177c: 8f ff 00  mov   $00,#$ff
@@ -3057,10 +3071,10 @@
 1937: dw $0988  ; 02 - echo volume
 1939: dw $0991  ; 03 - channel master volume
 193b: dw $09e8  ; 04 - echo feedback & filter
-193d: dw $0923  ; 05
+193d: dw $0923  ; 05 - (no effect?)
 193f: dw $092e  ; 06 - tempo
 1941: dw $0938  ; 07 - tempo fade
-1943: dw $0b60  ; 08
+1943: dw $0b60  ; 08 - set noise frequency (buggy)
 1945: dw $0a83  ; 09 - set note length pattern
 1947: dw $0ab1  ; 0a - custom note length pattern
 1949: dw $0a7d  ; 0b - note number base
@@ -3069,7 +3083,7 @@
 194f: dw $099c  ; 0e - pan
 1951: dw $09a7  ; 0f - pan fade
 1953: dw $0b9e  ; 10 - instrument
-1955: dw $0ceb  ; 11
+1955: dw $0ceb  ; 11 - tuning
 1957: dw $07bc  ; 12 - attack rate
 1959: dw $07c9  ; 13 - decay rate
 195b: dw $07d5  ; 14 - sustain level
@@ -3079,27 +3093,27 @@
 1963: dw $09d0  ; 18 - transpose (relative)
 1965: dw $0a09  ; 19 - vibrato on
 1967: dw $0a26  ; 1a - vibrato off
-1969: dw $0a2c  ; 1b
-196b: dw $0a49  ; 1c
-196d: dw $0a4f  ; 1d
-196f: dw $0a6f  ; 1e
-1971: dw $0b11  ; 1f
-1973: dw $0b52  ; 20
-1975: dw $0b67  ; 21
-1977: dw $0b90  ; 22
+1969: dw $0a2c  ; 1b - tremolo on
+196b: dw $0a49  ; 1c - tremolo off
+196d: dw $0a4f  ; 1d - pan LFO on
+196f: dw $0a6f  ; 1e - pan LFO off
+1971: dw $0b11  ; 1f - noise on
+1973: dw $0b52  ; 20 - noise off
+1975: dw $0b67  ; 21 - pitchmod on
+1977: dw $0b90  ; 22 - pitchmod off
 1979: dw $0c1a  ; 23 - echo on
-197b: dw $0c68  ; 24
-197d: dw $0ac9  ; 25
-197f: dw $0acd  ; 26
-1981: dw $0ad3  ; 27
-1983: dw $0b0d  ; 28
-1985: dw $09c5  ; 29
+197b: dw $0c68  ; 24 - echo off
+197d: dw $0ac9  ; 25 - portamento
+197f: dw $0acd  ; 26 - portamento off
+1981: dw $0ad3  ; 27 - note randomization on, etc.
+1983: dw $0b0d  ; 28 - note randomization off
+1985: dw $09c5  ; 29 - pitch slide
 1987: dw $0cae  ; 2a - repeat start
-1989: dw $1423  ; 2b
+1989: dw $1423  ; 2b - (command for output to main CPU?)
 198b: dw $0bf2  ; 2c - goto
 198d: dw $0c0e  ; 2d
 198f: dw $0c76  ; 2e - repeat end
-1991: dw $0be6  ; 2f
+1991: dw $0be6  ; 2f - conditional jump in repeat (break out)
 
 ; vcmd length table (00-2f)
 1993: db $00,$01,$01,$01,$02,$00,$01,$02,$01,$02,$07,$01,$01,$02,$01,$02
