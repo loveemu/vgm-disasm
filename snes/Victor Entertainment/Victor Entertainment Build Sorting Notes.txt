@@ -1,0 +1,9 @@
+Total number of known unique builds: 3
+
+(Program starts at $0800 - using BD 3F ?? ?? 3F ?? ?? 3F ?? ?? 3F ?? ??)
+(Program starts at $0800 - 12 08, 19 0B, 31 17)
+- Sansara Naga 2
+(Program starts at $0800 - 12 08, 19 0B, 5D 17)
+- Sougou Kakutougi: Astral Bout
+(Program starts at $0800 - 12 08, 19 0B, 60 17)
+- Dungeon Master
