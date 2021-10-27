@@ -1,0 +1,30 @@
+Total number of known unique builds: 9
+
+(Program starts at $FF98 (code goes as far back as $0300) - using 8D ?? 3F ?? ??)
+(Program starts at $FF98 (code goes as far back as $0300) - BC 0D)
+- Battletoads in Battlemaniacs (Beta)
+(Program starts at $0300 - BE 0D)
+- Battletoads in Battlemaniacs
+
+(Program starts at $FF98 (code goes as far back as $0408) - using D0 F7 3F ?? ??)
+(Program starts at $FF98 (code goes as far back as $0408) - DB 0C)
+- Battletoads and Double Dragon
+
+(Program starts at $04B8 - using C4 ?? 3F ?? ??)
+(Program starts at $04B8 - 71 10)
+- Donkey Kong Country (earlier versions)
+(Program starts at $04B8 - 76 10)
+- Donkey Kong Country (US Rev 2, EU Rev 1, Competition Cartridge)/Super Donkey Kong (NOTE: Not counting the starting memory location, there's literally only a single opcode added on here... and a slight memory location allocation adjustment.)
+
+(Program starts at $04D8 - using C4 ?? 5F ?? ??)
+(Program starts at $04D8 - 5C 06)
+- Killer Instinct (beta)
+
+(Program starts at $04D8 - using 1A ?? 10 ?? 5F ?? ??)
+(Program starts at $04D8 - F9 04)
+- Ken Griffey Jr.'s Winning Run
+(Program starts at $04D8 - 09 05)
+- Killer Instinct
+(Program starts at $04D8 - 0A 05)
+- Donkey Kong Country 2: Diddy Kong's Quest/Super Donkey Kong 2: Dixie & Diddy
+- Donkey Kong Country 3: Dixie Kong's Double Trouble!/Super Donkey Kong 3 - Nazo no Kremis-tou
