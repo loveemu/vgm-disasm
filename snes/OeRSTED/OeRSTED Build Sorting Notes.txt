@@ -1,0 +1,40 @@
+Total number of known unique builds: 11
+
+(Program starts at $0600 - using E8 ?? 3F ?? ??)
+(Program starts at $0600 - BE 06)
+- Pachinko Wars
+
+(Program starts at $0800 - DC 08)
+- Super F1 Hero
+(Program starts at $0800 - 77 09)
+- Kachou Shima Kousaku: Super Business Adventure
+
+
+(Program starts at $0700 - using C5 ?? ?? 3F ?? ?? 3F ?? ??)
+(Program starts at $0700 - 3C 08 & 18 0C)
+- Pachinko Challenger
+(Program starts at $0700 - 3C 08 & 4E 0C & 7A 0D (using E4 ?? 5F ?? ?? at $1931 to distinguish))
+- Block Kuzushi
+- Princess Maker: Legend of Another World
+- Super Okumanchouja Game
+(Program starts at $0700 - 3C 08 & 4E 0C & 7D 0D (using E4 ?? 5F ?? ?? at $1931 to distinguish))
+- Nishijin Pachinko Monogatari
+(Program starts at $0700 - 3C 08 & 54 0C)
+- Bishoujo Wrestler Retsuden
+- Final Fight Tough/Final Fight 3
+- Ippatsu Gyakuten
+(Program starts at $0700 - 3E 08 & E7 0B)
+- Kikuni Masahiko no Jantoushi Dora Ou 2
+- Nakajima Satoru Kanshuu - F-1 Hero '94
+- Pachinko Wars II
+- Pachi-Slot Love Story
+(Program starts at $0700 - 41 08 & 1D 0C)
+- Miyaji Shachou no Pachinko Fan - Shouri Sengen 2
+(Program starts at $0700 - 42 08 & EE 0B)
+- Crystal Beans from Dungeon Explorer
+- Ganso Pachinko Ou
+- Ganso Pachi-Slot Nihonichi
+- Honkaku Shougi - Fuuunji Ryuuou
+- Pachinko Fan: Shouri Sengen
+(Program starts at $0700 - 42 08 & EE 0B (code difference at $1808))
+- Super Casino 2
