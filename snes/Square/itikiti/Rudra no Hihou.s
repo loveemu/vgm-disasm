@@ -770,29 +770,31 @@
 
 0807: f4 a4     mov   a,$a4+x
 0809: 68 60     cmp   a,#$60
-080b: b0 64     bcs   $0871
+080b: b0 64     bcs   $0871             ; if not (note number < 96) then pitch = 0x3fff
 080d: 8d 00     mov   y,#$00
 080f: cd 0c     mov   x,#$0c
-0811: 9e        div   ya,x
+0811: 9e        div   ya,x              ; (a, y) = (octave, key)
 0812: 1c        asl   a
-0813: c4 00     mov   $00,a
+0813: c4 00     mov   $00,a             ; $00 = octave * 2
 0815: f6 04 19  mov   a,$1904+y         ; read pitch table (lo)
 0818: c4 e2     mov   $e2,a
 081a: f6 10 19  mov   a,$1910+y         ; read pitch table (hi)
-081d: c4 e3     mov   $e3,a
+081d: c4 e3     mov   $e3,a             ; word($e2) = base pitch
 081f: fd        mov   y,a
 0820: f8 a3     mov   x,$a3
-0822: f5 80 ef  mov   a,$ef80+x
+0822: f5 80 ef  mov   a,$ef80+x         ; per-instrument coarse tuning (-128 => 0.5, 127 => approx 2.0)
 0825: 3f a8 08  call  $08a8
 0828: c8 80     cmp   x,#$80
 082a: b0 06     bcs   $0832
+; when tuning is positive
 082c: da e0     movw  $e0,ya
-082e: 7a e0     addw  ya,$e0
-0830: 7a e2     addw  ya,$e2
+082e: 7a e0     addw  ya,$e0            ; [0.0, 0.5) => [0.0, 1.0)
+0830: 7a e2     addw  ya,$e2            ; +1.0
+;
 0832: da e2     movw  $e2,ya
 0834: da e0     movw  $e0,ya
 0836: f8 a3     mov   x,$a3
-0838: f5 01 ef  mov   a,$ef01+x         ; tuning
+0838: f5 01 ef  mov   a,$ef01+x         ; tuning (vcmd)
 083b: f0 1b     beq   $0858
 083d: 30 09     bmi   $0848
 ; apply tuning (positive)
@@ -810,15 +812,17 @@
 0854: da e0     movw  $e0,ya
 0856: f8 a3     mov   x,$a3
 ;
-0858: f5 81 ef  mov   a,$ef81+x
+0858: f5 81 ef  mov   a,$ef81+x         ; per-instrument fine tuning (fractional part, 1/256)
 085b: 3f af 08  call  $08af
 085e: 2d        push  a
-085f: f5 00 ee  mov   a,$ee00+x
+085f: f5 00 ee  mov   a,$ee00+x         ; ?
 0862: ae        pop   a
 0863: 30 05     bmi   $086a
+;
 0865: 84 e1     adc   a,$e1
 0867: 90 01     bcc   $086a
 0869: fc        inc   y
+;
 086a: f8 00     mov   x,$00
 086c: cb e1     mov   $e1,y
 086e: 1f 98 08  jmp   ($0898+x)
@@ -859,11 +863,18 @@
 08a4: dw $0879
 08a6: dw $0876
 
+; apply tuning
+; @in make_word(high: $e2, low: Y): original pitch
+; @in A: 8-bit frequency ratio (unsigned)
+; @out YA: make_word(high: $e2, low: Y) * A / 256
+; @out word($e0): Y * A (i.e. fractional output)
+; @out X: input frequency ratio (=A)
 08a8: 5d        mov   x,a
 08a9: cf        mul   ya
 08aa: da e0     movw  $e0,ya
 08ac: 7d        mov   a,x
 08ad: eb e2     mov   y,$e2
+; ya = (y * a / 256) + word($e0)
 08af: cf        mul   ya
 08b0: dd        mov   a,y
 08b1: 8d 00     mov   y,#$00
@@ -1324,16 +1335,16 @@
 0bb1: e8 ba     mov   a,#$ba
 0bb3: c5 b5 ff  mov   $ffb5,a           ; restore `pcall $b5` to `movw ya`
 ;
-0bb6: f5 40 1d  mov   a,$1d40+x         ; $1d40/1+x: ADSR for instruments
-0bb9: d6 80 ef  mov   $ef80+y,a
+0bb6: f5 40 1d  mov   a,$1d40+x         ; $1d40/1+x: tuning
+0bb9: d6 80 ef  mov   $ef80+y,a         ; set per-instrument coarse tuning
 0bbc: f5 41 1d  mov   a,$1d41+x
-0bbf: d6 81 ef  mov   $ef81+y,a
-0bc2: f5 60 1e  mov   a,$1e60+x
-0bc5: d6 00 ee  mov   $ee00+y,a         ; set ADSR(1) shadow
+0bbf: d6 81 ef  mov   $ef81+y,a         ; set per-instrument fine tuning
+0bc2: f5 60 1e  mov   a,$1e60+x         ; $1e60/1+x: ADSR for instruments
+0bc5: d6 00 ee  mov   $ee00+y,a         ; set ADSR(1) shadow (actual value |= 0x80)
 0bc8: f5 61 1e  mov   a,$1e61+x
 0bcb: 2f 15     bra   $0be2
 ;
-0bcd: f5 40 1e  mov   a,$1e40+x         ; $1e40/1+x: ADSR for instruments
+0bcd: f5 40 1e  mov   a,$1e40+x
 0bd0: d6 80 ef  mov   $ef80+y,a
 0bd3: f5 41 1e  mov   a,$1e41+x
 0bd6: d6 81 ef  mov   $ef81+y,a
