@@ -1,0 +1,34 @@
+Total number of known unique builds: 13
+
+(Program starts at $0800 - using 8D ?? 3F ?? ??)
+(Program starts at $0800 - FE 0A)
+- 46 Okunen Monogatari - Harukanaru Eden e/E.V.O - Search for Eden
+(Program starts at $0800 - 2F 0B)
+- America Oudan Ultra Quiz
+(Program starts at $0800 - 43 0B)
+- Hakunetsu Pro Yakyuu '93 - Ganba League
+(Program starts at $0800 - 53 0B)
+- Super Black Bass
+(Program starts at $0800 - 55 0B)
+- Ancient Magic: Bazoe! Mahou Sekai
+
+(Program starts at $0800 - using D0 F8 3F ?? ??)
+(Program starts at $0800 - 2B 10)
+- Kousoku Shikou Shougi Ou
+(Program starts at $0800 - 36 10)
+- Habu Meijin no Omoshiro Shougi
+(Program starts at $0800 - 37 10)
+- Kakinoki Shougi
+
+(Program starts at $0400 - using CD 00 3F ?? ??)
+(Program starts at $0400 - E9 11)
+- Sgt. Saunders' Combat!
+- Super Hanafuda
+(Program starts at $0400 - 10 12)
+- Ys IV
+(Program starts at $0400 - 25 12)
+- Monster Maker III
+(Program starts at $0400 - F2 12)
+- Power of the Hired
+(Program starts at $0418 - 26 12)
+- Wizap!
