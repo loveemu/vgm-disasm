@@ -1,0 +1,32 @@
+Total number of known unique builds: 11
+
+(Program starts at $0800 - Using D0 FB BC 3F ?? ??)
+(Program starts at $0800 - CB 0C)
+- Kirby no Kirakira Kids (one of two builds, seems to be the main build used)
+(Program starts at $0800 - CF 0C)
+- Hoshi no Kirby 3/Kirby's Dream Land 3
+- Hoshi no Kirby Super Deluxe/Kirby Super Star/Kirby Fun Pak
+(Program starts at $0800 - A4 0E)
+- Shodan Morita Shougi
+- Super Stadium/Nolan Ryan's Baseball
+(Program starts at $0800 - B0 0E)
+- Card Master/Arcana
+(Program starts at $0800 - CA 0E)
+- Jumbo Ozaki no Hole in One/Hal's Hole In One Golf
+(Program starts at $0800 - 12 0F)
+- Othello World
+(Program starts at $0800 - 66 0F)
+- Hyper Zone
+
+(*Ver S1.20*)
+(*Ver S1.20* - Program starts at $0800 - Using D0 FB BC 3F ?? ??)
+(Program starts at $0800 - 7A 0D)
+- Alcahest
+- Kirby Bowl/Kirby's Dream Course
+(Program starts at $0800 - 7E 0D)
+- Kirby no Kirakira Kids (one of two builds, TODO identify where this is used)
+- Super Famicom Box 4S Attraction
+(Program starts at $0800 - 99 0D)
+- Las Vegas Dream in Golden Paradise/Vegas Steaks
+(Program starts at $0800 - A3 0D)
+- Itoi Shigesato no Bass Tsuri No. 1
