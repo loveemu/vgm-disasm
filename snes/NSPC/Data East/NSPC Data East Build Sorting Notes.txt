@@ -1,0 +1,32 @@
+Total number of known unique builds: 13
+
+(Program starts at $0600 - using BC C5 ?? ?? 3F ?? ??)
+(Program starts at $0600 - 5A 11)
+- Joe and Mac: Tatakae Genshijin/Joe and Mac: Caveman Ninja
+(Program starts at $0600 - 66 11)
+- Super Birdie Rush
+(Program starts at $0600 - 52 12)
+- Heracles no Eikou III
+(Program starts at $0600 - B1 12)
+- Tatakae Genshijin 2: Rookie no Bouken/Congo's Caper
+(Program starts at $0600 - FA 13)
+- ABC Monday Night Football
+(Program starts at $0580 - 28 14)
+- Metal Max 2
+(Program starts at $0600 - using D0 FB 3F ?? ??)
+(Program starts at $0600 - 69 14)
+- Tatakae Genshijin 3: Shuyaku wa Yappari Joe & Mac/Joe & Mac 2/3: Lost in the Tropics
+(Program starts at $0600 - C8 14)
+- Fighter's History
+(Program starts at $0600 - CD 14)
+- Fighter's History: Mizoguchi Kiki Ippatsu!!
+(Program starts at $0600 - using D0 FB BC 3F ?? ??)
+(Program starts at $0600 - 81 0F)
+- Metal Max Returns
+(Program starts at $0600 - 87 0F)
+- Motteke Oh! Dorobou
+(Program starts at $0600 - A2 0F)
+- Heracles no Eikou IV
+(Program starts at $0600 - 4C 10)
+- Magical Drop
+- Magical Drop 2
