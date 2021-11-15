@@ -1,0 +1,57 @@
+Total number of known unique builds: 21
+
+(Program starts at $0400 - contains an opening branch - using BD 3F ?? ??)
+(Program starts at $0400 - contains an opening branch - 61 0E)
+- Pro Soccer/World League Soccer
+(Program starts at $0400 - contains an opening branch - 7C 0E)
+- SimEarth
+
+(Program starts at $0345 - using BD 3F ?? ??)
+(Program starts at $0345 - BB 0D)
+- Death Brade
+
+(Program starts at $0400 - contains an opening branch - using BD E8 ?? C4 ?? 3F ?? ??)
+(Program starts at $0400 - contains an opening branch - 5F 0E)
+- Ultimate Football/Football Fury
+(Program starts at $0400 - contains an opening branch - 62 0E & 6E 0E (using E8 ?? 3F ?? ?? at $05AB to distinguish))
+- Battle Blaze
+(Program starts at $0400 - contains an opening branch - 62 0E & 72 0E (using E8 ?? 3F ?? ?? at $05AB to distinguish))
+- Kikou Keisatsu Metal Jack
+- Super Dunk Star
+(Program starts at $0400 - contains an opening branch - 7F 0E)
+- Action Pachio
+(Program starts at $0400 - contains an opening branch - 84 0E)
+- Kikuni Masahiko no Jantoushi Dora Ou
+(Program starts at $0400 - contains an opening branch - 96 0E)
+- Keiba Eight Special 2
+(Program starts at $0400 - contains an opening branch - 96 0E (code difference at $0830))
+- Love Quest (NOTE: Compared to Keiba Eight Special 2, the only difference mainly lies in not overwriting a value loaded by one memory location by another by doing an opcode swap)
+(Program starts at $0400 - contains an opening branch - 9C 0E)
+- Yadamon: Wonderland Dreams
+(Program starts at $0400 - contains an opening branch - 9F 0E)
+- Higashio Osamu Kanshuu Super Pro Yakyuu Stadium
+(Program starts at $0400 - contains an opening branch - A2 0E)
+- Keiba Eight Special
+(Program starts at $0400 - contains an opening branch - B5 0E & 79 0F (using CD ?? 3F ?? ?? at $0690 to distinguish))
+- Nakano Koichi Kanshuu: Keirin-Ou
+(Program starts at $0400 - contains an opening branch - B5 0E & 81 0F (using CD ?? 3F ?? ?? at $0690 to distinguish))
+- Galaxy Wars
+- Hanafuda Ou
+(Program starts at $0400 - contains an opening branch - D8 0E)
+- Populous II
+(Program starts at $0400 - contains an opening branch - 09 0F)
+- Ultima VI - The False Prophet
+(Program starts at $0400 - contains an opening branch - 48 0F)
+- Sugoro Quest++ - Dicenics
+(Program starts at $0400 - contains an opening branch - 7A 0F)
+- Bishoujo Senshi Sailor Moon S - Kurukkurin
+(Program starts at $0400 - contains an opening branch - 9B 0F)
+- 4-nin Shougi
+- Chinhai
+- Dun Quest: Majin Fuuin no Densetsu
+- New Yatterman: Nandai Kandai Yajirobee
+- Ultra League: Moero! Soccer Daikessen!!
+
+(Program starts at $0400 - contains an opening branch - using 78 ?? ?? D0 F4 3F ?? ??)
+(Program starts at $0400 - contains an opening branch - AD 0E)
+- Dekitate High School
