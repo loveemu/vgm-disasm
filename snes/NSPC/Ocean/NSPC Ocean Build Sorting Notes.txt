@@ -1,0 +1,29 @@
+Total number of known unique builds: 10
+
+(Program starts at $0400 - using D0 E8 BC 3F ?? ??)
+(Program starts at $0400 - CA 0F)
+- Addams Family
+
+(Program starts at $0400 - using D0 F4 BC 3F ?? ??)
+(Program starts at $0400 - 02 0D)
+- RoboCop 3 (Title Screen)
+(Program starts at $0400 - 67 0D)
+- RoboCop 3 (In-Game)
+(Program starts at $0400 - AC 0D)
+- Push-Over
+(Program starts at $0440 - 18 0E)
+- Lethal Weapon
+
+(Program starts at $0440 - using E8 ?? 3F ?? ??)
+(Program starts at $0440 - 03 0E)
+- Addams Family: Pugsley's Scavenger Hunt
+(Program starts at $0440 - A7 0E)
+- Cool World (In-Game)
+(Program starts at $0440 - B1 0E)
+- Cool World (Title Screen)
+(Program starts at $0440 - 1A 0F)
+- Super James Pond II (European version only)
+
+(Program starts at $0500 - using D0 FB 3F ?? ??)
+(Program starts at $0500 - A7 12)
+- Jurassic Park
