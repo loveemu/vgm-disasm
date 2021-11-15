@@ -1,5 +1,5 @@
 Total number of known unique builds: Unknown
-An opcode-based comparison methodology would be required due to game-specific sound data being stored beforehand. In addition, the vast majority of the builds start at $0200, which is overwritten relatively early on. The maximum possible count is currently 35 going by the number of builds that I have not matched to anything else in terms of opcode comparisons.
+An opcode-based comparison methodology would be required due to game-specific sound data being stored beforehand. In addition, the vast majority of the builds start at $0200, which is overwritten relatively early on. The maximum possible count is currently 39 going by the number of builds that I have not matched to anything else in terms of opcode comparisons.
 
 (Program starts at ???? - Using E8 ?? 3F ?? ??)
 (Program starts at $0896 - A1 11)
@@ -13,72 +13,80 @@ An opcode-based comparison methodology would be required due to game-specific so
 (Program starts at $08F7 - 1C 12)
 - Batman Returns
 
-(Program starts at ???? - Sorting method TODO)
-(NOTE: Except for Pop 'n Twinbee, which starts at $0BE5, all of these would normally start at $0200. However, they get overwritten AND there is game-specific sound data beyond this point resulting in massive differences prior to the code, where the code may or may not be subject to additional differences)
-(Program starts at $0980 - Array of pointers to code at start - Sorting method TODO - TODO)
+(Program starts at $0200 (with most code starting at ???? - Sorting method TODO)
+(NOTE: All of these would normally start at $0200. For Pop 'n Twinbee, it only contains a JMP opcode, and for all others, they contain initialization code in general. However, they get overwritten AND there is game-specific sound data beyond this point resulting in massive differences prior to the code, where the code may or may not be subject to additional differences.)
+(Program starts at $0200 (with most code starting at $0980) - Program starts with a JMP opcode - Array of pointers to code at start - Sorting method TODO - TODO)
 - Pop'n Twinbee
-(Program starts at $0A12 - Array of pointers to code at start - Sorting method TODO - TODO)
-- Teenage Mutant Ninja Turtles: Mutant Warriors
-(Program starts at $0A0F - Array of pointers to code at start - Sorting method TODO - TODO)
-(NOTE: Identical to Teenage Mutant Ninja Turtles: Mutant Warriors minus pointer differences)
+(Program starts at $0200 (with most code starting at $0980) - Program starts with a JMP opcode - Array of pointers to code at start - Sorting method TODO - TODO)
+- Pop'n Twinbee (Putative Sample)
+(Program starts at $0200 (with most code starting at $08D4) - Array of pointers to code at start - Sorting method TODO - TODO)
+- Teenage Mutant Ninja Turtles: Tournament Fighters (Beta)
+(Program starts at $0200 (with most code starting at $0A0F) - Array of pointers to code at start - Sorting method TODO - TODO)
 - Teenage Mutant Ninja Turtles: Tournament Fighters
-(Program starts at $0C49 - Array of pointers to code at start - Sorting method TODO - TODO)
+(Program starts at $0200 (with most code starting at $0A12) - Array of pointers to code at start - Sorting method TODO - TODO)
+(NOTE: Identical to Teenage Mutant Ninja Turtles: Tournament Fighters minus pointer differences)
+- Teenage Mutant Ninja Turtles: Mutant Warriors
+(Program starts at $0200 (with most code starting at $0C49) - Array of pointers to code at start - Sorting method TODO - TODO)
 - Ganbare Goemon 2
-(Program starts at $099E - Array of pointers to code at start - Sorting method TODO - TODO)
+(Program starts at $0200 (with most code starting at $099E) - Array of pointers to code at start - Sorting method TODO - TODO)
 - TwinBee - Rainbow Bell Adventure/Pop'n TwinBee: Rainbow Bell Adventures
-(Program starts at $083D - Array of pointers to code at start - Sorting method TODO - TODO)
+(Program starts at $0200 (with most code starting at $083D) - Array of pointers to code at start - Sorting method TODO - TODO)
 - Lethal Enforcers
-(Program starts at $0E6B - Array of pointers to code at start - Sorting method TODO - TODO)
+(Program starts at $0200 (with most code starting at $0E6B) - Array of pointers to code at start - Sorting method TODO - TODO)
 - Jikkyou Powerful Pro Yakyuu '94
-(Program starts at $073E - Array of pointers to code at start - Sorting method TODO - TODO)
+(Program starts at $0200 (with most code starting at $073E) - Array of pointers to code at start - Sorting method TODO - TODO)
 - Shin Mahjong
-(Program starts at $075C - Array of pointers to code at start - Sorting method TODO - TODO)
+(Program starts at $0200 (with most code starting at $075C) - Array of pointers to code at start - Sorting method TODO - TODO)
 - Animaniacs
-(Program starts at $09FF - Array of pointers to code at start - Sorting method TODO - TODO)
+(Program starts at $0200 (with most code starting at $09FF) - Array of pointers to code at start - Sorting method TODO - TODO)
 - Tiny Toon Adventures: Dotabata Daiundoukai/Wacky Sports Challenge/Wild & Wacky Sports
-(Program starts at $0989 - Array of pointers to code at start - Sorting method TODO - TODO)
+(Program starts at $0200 (with most code starting at $0989) - Array of pointers to code at start - Sorting method TODO - TODO)
 - Sparkster
-(Program starts at $0CFB - Array of pointers to code at start - Sorting method TODO - TODO)
+(Program starts at $0200 (with most code starting at $0CFB) - Array of pointers to code at start - Sorting method TODO - TODO)
 - Jikkyou World Soccer: Perfect Eleven
-(Program starts at $0794 - Array of pointers to code at start - Sorting method TODO - TODO)
+(Program starts at $0200 (with most code starting at $0794) - Array of pointers to code at start - Sorting method TODO - TODO)
 - International Superstar Soccer
-(Program starts at $0CA9 - Array of pointers to code at start - Sorting method TODO - TODO)
+(Program starts at $0200 (with most code starting at $0CA9) - Array of pointers to code at start - Sorting method TODO - TODO)
 - Tsuyoshi Shikkari Shinasai: Taisen Puzzle-dama
-(Program starts at $0978 - Array of pointers to code at start - Sorting method TODO - TODO)
+(Program starts at $0200 (with most code starting at $086E) - Array of pointers to code at start - Sorting method TODO - TODO)
+- Gokujou Parodius! ～Kako no Eiko o Motomete～ (Sample)
+(Program starts at $0200 (with most code starting at $0978) - Array of pointers to code at start - Sorting method TODO - TODO)
 - Gokujou Parodius! ～Kako no Eiko o Motomete～
-(Program starts at $0B0C - Array of pointers to code at start - Sorting method TODO - TODO)
+(Program starts at $0200 (with most code starting at $0B0C) - Array of pointers to code at start - Sorting method TODO - TODO)
 - Adventures of Batman and Robin
-(Program starts at $0829 - Array of pointers to code at start - Sorting method TODO - TODO)
+(Program starts at $0200 (with most code starting at $0829) - Array of pointers to code at start - Sorting method TODO - TODO)
 - Biker Mice from Mars
-(Program starts at $0CA2 - Array of pointers to code at start - Sorting method TODO - TODO)
+(Program starts at $0200 (with most code starting at $0CA2) - Array of pointers to code at start - Sorting method TODO - TODO)
 - Ganbare Goemon 3
-(Program starts at $0EC1 - Array of pointers to code at start - Sorting method TODO - TODO)
+(Program starts at $0200 (with most code starting at $0EC1) - Array of pointers to code at start - Sorting method TODO - TODO)
 - Jikkyou Powerful Pro Yakyuu 2
-(Program starts at $0D28 - Array of pointers to code at start - Sorting method TODO - TODO)
+(Program starts at $0200 (with most code starting at $0EE9) - Array of pointers to code at start - Sorting method TODO - TODO)
+- Jikkyou World Soccer 2: Fighting Eleven (Beta)
+(Program starts at $0200 (with most code starting at $0D28) - Array of pointers to code at start - Sorting method TODO - TODO)
 - Jikkyou World Soccer 2: Fighting Eleven
-(Program starts at $08D6 - Array of pointers to code at start - Sorting method TODO - TODO)
+(Program starts at $0200 (with most code starting at $08D6) - Array of pointers to code at start - Sorting method TODO - TODO)
 - International Superstar Soccer Deluxe
-(Program starts at $0BC7 - Array of pointers to code at start - Sorting method TODO - TODO)
+(Program starts at $0200 (with most code starting at $0BC7) - Array of pointers to code at start - Sorting method TODO - TODO)
 - NBA Jikkyou Basket: Winning Dunk
-(Program starts at $0887 - Array of pointers to code at start - Sorting method TODO - TODO)
+(Program starts at $0200 (with most code starting at $0887) - Array of pointers to code at start - Sorting method TODO - TODO)
 - NBA Give 'n Go
-(Program starts at $0C27 - Array of pointers to code at start - Sorting method TODO - TODO)
+(Program starts at $0200 (with most code starting at $0C27) - Array of pointers to code at start - Sorting method TODO - TODO)
 - Jikkyou Oshaberi Parodius
-(Program starts at $10CD - Array of pointers to code at start - Sorting method TODO - TODO)
+(Program starts at $0200 (with most code starting at $10CD) - Array of pointers to code at start - Sorting method TODO - TODO)
 - Ganbare Goemon Kirakira Douchuu - Boku ga Dancer ni Natta Wake
-(Program starts at $0945 - Array of pointers to code at start - Sorting method TODO - TODO)
+(Program starts at $0200 (with most code starting at $0945) - Array of pointers to code at start - Sorting method TODO - TODO)
 - Tokimeki Memorial: Densetsu no Ki no Shita de
-(Program starts at $100E - Array of pointers to code at start - Sorting method TODO - TODO)
+(Program starts at $0200 (with most code starting at $100E) - Array of pointers to code at start - Sorting method TODO - TODO)
 - Jikkyou Powerful Pro Yakyuu 3
-(Program starts at $0D7C - Array of pointers to code at start - Sorting method TODO - TODO)
+(Program starts at $0200 (with most code starting at $0D7C) - Array of pointers to code at start - Sorting method TODO - TODO)
 - Stable Star: Kyuusha Monogatari
-(Program starts at $08CF - Array of pointers to code at start - Sorting method TODO - TODO)
+(Program starts at $0200 (with most code starting at $08CF) - Array of pointers to code at start - Sorting method TODO - TODO)
 - Soreyuke Ebisumaru Karakuri Meiro: Kieta Goemon no Nazo!!
-(Program starts at $0E11 - Array of pointers to code at start - Sorting method TODO - TODO)
+(Program starts at $0200 (with most code starting at $0E11) - Array of pointers to code at start - Sorting method TODO - TODO)
 - Jikkyou Power Pro Wrestling '96 - Max Voltage
-(Program starts at $1032 - Array of pointers to code at start - Sorting method TODO - TODO)
+(Program starts at $0200 (with most code starting at $1032) - Array of pointers to code at start - Sorting method TODO - TODO)
 - Jikkyou Powerful Pro Yakyuu '96 Kaimaku Han
-(Program starts at $1036 - Array of pointers to code at start - Sorting method TODO - TODO)
+(Program starts at $0200 (with most code starting at $1036) - Array of pointers to code at start - Sorting method TODO - TODO)
 (NOTE: Identical to Jikkyou Powerful Pro Yakyuu '96 Kaimaku Han minus pointer differences)
 - Jikkyou Powerful Pro Yakyuu 3 - '97 Haru
 - Jikkyou Powerful Pro Yakyuu - Basic Ban '98
