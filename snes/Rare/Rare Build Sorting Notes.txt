@@ -3,7 +3,7 @@ Total number of known unique builds: 9
 (Program starts at $FF98 (code goes as far back as $0300) - using 8D ?? 3F ?? ??)
 (Program starts at $FF98 (code goes as far back as $0300) - BC 0D)
 - Battletoads in Battlemaniacs (Beta)
-(Program starts at $0300 - BE 0D)
+(Program starts at $FF98 (code goes as far back as $0300) - BE 0D)
 - Battletoads in Battlemaniacs
 
 (Program starts at $FF98 (code goes as far back as $0408) - using D0 F7 3F ?? ??)
