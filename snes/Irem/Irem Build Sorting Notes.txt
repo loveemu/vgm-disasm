@@ -12,7 +12,7 @@ Total number of known unique build variants: 8
 - Nitro Punks - Might Heads/Rocky Rodent (European Version)
 (Program starts at $0C84 (code starts at $0630) - loading program at beginning - 55 07 (code difference at $08F4) & 0C 0E (using 8F ?? ?? 3F ?? ?? at $0CE0 to distinguish))
 - Rocky Rodent (US version)
-(Program starts at $0C84 - loading program at beginning - 55 07 (code difference at $08F4) & 40 0E (using 8F ?? ?? 3F ?? ?? at $0CE0 to distinguish))
+(Program starts at $0C84 (code starts at $0630) - loading program at beginning - 55 07 (code difference at $08F4) & 40 0E (using 8F ?? ?? 3F ?? ?? at $0CE0 to distinguish))
 - Ganbare! Daiku no Gen-san
 
 (Program starts at $05B0 - contains a JMP opcode at the beginning - loading program at beginning - 24 07)
