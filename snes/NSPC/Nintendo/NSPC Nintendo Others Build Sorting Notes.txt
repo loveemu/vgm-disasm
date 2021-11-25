@@ -3,9 +3,9 @@ Total number of known unique builds: 11
 NOTE: These builds mostly don't have shared SFX code due to their hardcoded nature for the most part, and VCMD sets are not guaranteed to be an exact match, either. The only other special note is that Super Scope 6 (Blastris) has a shared VCMD set with Super Scope 6 (LazerBlazer), but the latter is under Akito Nakatsuka due to its shared SFX programming with later games.
 
 (Program starts at $0800 - Using D0 FB BC 3F ?? ??)
-(Nintendo 2 - Program starts at $0800 - 3D 0E)
+(Program starts at $0800 - 3D 0E)
 - F-Zero
-(Nintendo 2 - Program starts at $0800 - 3A 11)
+(Program starts at $0800 - 3A 11)
 - Aging Cassette
 - SNES Burn-In Test Cartridge (one of three different builds used, used for the Sound Module and Burn-In test)
 
