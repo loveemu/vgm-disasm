@@ -1,5 +1,4 @@
-Total number of known unique builds: Unknown
-An opcode-based comparison methodology would be required due to game-specific sound data being stored beforehand. In addition, the vast majority of the builds start at $0200, which is overwritten relatively early on. The maximum possible count is currently 39 going by the number of builds that I have not matched to anything else in terms of opcode comparisons.
+Total number of known unique builds: 39
 
 (Program starts at ???? - Using E8 ?? 3F ?? ??)
 (Program starts at $0896 - A1 11)
@@ -13,11 +12,13 @@ An opcode-based comparison methodology would be required due to game-specific so
 (Program starts at $08F7 - 1C 12)
 - Batman Returns
 
+NOTE: For the following cases, please see Konami Build Sorting Notes Expert Edition. The previous cases somewhat required an opcode-based comparison methodology because of game-specific sound data being stored beforehand, but the pointer differences become more massive beyond this point. The starting location is actually consistent, namely $0200: however under almost all conditions it gets overwritten after execution.
+
 (Program starts at $0200 (with most code starting at ???? - Sorting method TODO)
 (NOTE: All of these would normally start at $0200. For Pop 'n Twinbee, it only contains a JMP opcode, and for all others, they contain initialization code in general. However, they get overwritten AND there is game-specific sound data beyond this point resulting in massive differences prior to the code, where the code may or may not be subject to additional differences.)
 (Program starts at $0200 (with most code starting at $0980) - Program starts with a JMP opcode - Array of pointers to code at start - Sorting method TODO - TODO)
 - Pop'n Twinbee
-(Program starts at $0200 (with most code starting at $0980) - Program starts with a JMP opcode - Array of pointers to code at start - Sorting method TODO - TODO)
+(Program starts at $0200 (with most code starting at $0985) - Program starts with a JMP opcode - Array of pointers to code at start - Sorting method TODO - TODO)
 - Pop'n Twinbee (Putative Sample)
 (Program starts at $0200 (with most code starting at $08D4) - Array of pointers to code at start - Sorting method TODO - TODO)
 - Teenage Mutant Ninja Turtles: Tournament Fighters (Beta)
