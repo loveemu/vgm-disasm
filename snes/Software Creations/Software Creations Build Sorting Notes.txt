@@ -1,4 +1,4 @@
-Total number of known unique builds: 17
+Total number of known unique builds: 18
 
 (Program starts at $0400 - using 8F ?? ?? 3F ?? ??)
 (Program starts at $0400 - 9A 0C)
@@ -33,6 +33,8 @@ Total number of known unique builds: 17
 (Program starts at $0400 - 71 13)
 - Tom vs. Jerry - The Chase is On!
 - Wile E's Revenge
+(Program starts at $0400 - 7D 13)
+- Uniracers/Unirally
 (Program starts at $0400 - 96 13)
 - Pocahontas (NOTE: Analyzed from DRIVER.MEM)
 (Program starts at $0400 - C4 13)
