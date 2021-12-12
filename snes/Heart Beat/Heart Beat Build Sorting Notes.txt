@@ -1,0 +1,9 @@
+NOTE: See NSPC/Hect for this sound driver's predecessor (due to the music format more closely matching N-SPC's)
+
+Total number of known unique builds: 2
+
+(Program starts at $0B00 - using CD ?? BD 3F ?? ??)
+(Program starts at $0B00 - EC 12)
+- Dragon Quest VI: Maboroshi no Daichi
+(Program starts at $0B00 - 13 19)
+- Dragon Quest III: Soshite Densetsu e...

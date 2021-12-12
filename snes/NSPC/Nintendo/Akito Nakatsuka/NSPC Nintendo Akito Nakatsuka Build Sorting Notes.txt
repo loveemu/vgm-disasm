@@ -1,0 +1,32 @@
+Total number of known unique builds: 9
+
+(Program starts at $0500 - Using D0 F3 BC 3F ?? ??)
+(Program starts at $0500 - 37 0B)
+- Super Scope 6 (Europe and Japanese versions) (one of two different builds used, used for Lazerblazer)
+(Program starts at $0500 - 33 0B)
+- Super Scope 6 (US version) (one of two different builds used, used for Lazerblaser)
+
+(*Ver S1.20*)
+(Program starts at $0400 - Using D0 F3 BC 3F ?? ??)
+(Program starts at $0400 - 5D 0A)
+- Super Game Boy
+- Super Game Boy 2
+(Program starts at $0400 - 23 0B)
+- SA-1 Demo
+(Program starts at $0400 - C5 0B)
+- Marvelous - Mouhitotsu no Takara-jima
+
+(Program starts at $0370 - Using 8F ?? ?? 8F ?? ?? 3F ?? ??)
+(Program starts at $0370 - AB 04)
+- BS-X BIOS
+- Cassette Kensaki - NUS-you S Cassette
+(Program starts at $06E0 - 39 07)
+- JRA PAT
+- JRA PAT - Wide Taiouban
+(Program starts at $06E0 - 4C 07)
+- Sutte Hakkun
+
+(Program starts at $0400 - Using D0 F3 8F ?? ?? BC 3F ?? ??)
+(Program starts at $0400 - 8D 0C)
+- Heisei Shin Onigashima - Kouhen
+- Heisei Shin Onigashima - Zenpen

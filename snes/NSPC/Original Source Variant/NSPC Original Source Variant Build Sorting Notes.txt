@@ -1,0 +1,25 @@
+Total number of known unique builds: 6
+
+NOTE: These record the closest matches to the original source variant that would have been compiled from the code found in the IS-SPC SDK component. Of the ones listed, the exact matches are the ones that include Hong Kong '97 among the collection (they are the first entry under *Ver S1.20*).
+
+(Program starts at $0800 - Using D0 FB BC 3F ?? ??)
+(Program starts at $0800 - 35 0D & D7 0F (using F0 03 3F ?? ?? as a differentiator))
+- Controller Test Cassette
+- SNES Burn-In Test Cartridge (one of three different builds used, used for the Controller Test)
+- World Class Service Super Nintendo Tester (one of the unused builds)
+
+(*Ver S1.20*)
+(Program starts at $0800 - Using D0 FB BC 3F ?? ??)
+(Program starts at $0800 - 35 0D & 04 10 (using F0 03 3F ?? ?? as a differentiator) & 15 11 (using 3F ?? ?? at $09C8 to distinguish))
+- Hong Kong '97
+- SM Choukyoushi Hitomi - Bangai Hen
+- SM Choukyoushi Hitomi Vol. 2
+- SM Choukyoushi Hitomi Vol. 2 Remix
+(Program starts at $0800 - 35 0D & 04 10 (using F0 03 3F ?? ?? as a differentiator) & 00 07 (using 3F ?? ?? at $09C8 to distinguish))
+- Wheel of Fortune - Deluxe Edition (not used by the game)
+(Program starts at $0800 - 35 0D & D9 0F (using F0 03 3F ?? ??) as a differentiator))
+- World Class Service Super Nintendo Tester (only build actually in use: there are two other unused builds)
+(Program starts at $0800 - 39 0D)
+- SM Choukyoushi Hitomi Vol. 3 (Alt 1)
+(Program starts at $0800 - 40 0D)
+- Shijou Saikyou no Quiz Ou Ketteisen Super

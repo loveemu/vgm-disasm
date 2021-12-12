@@ -1,0 +1,28 @@
+Total number of known unique builds: 10
+
+(Program starts at $0400 - using BD 3F ?? ?? 3F ?? ??)
+(Program starts at $0400 - 89 0D & 8A 05)
+- Populous
+(Program starts at $0800 - using BD 3F ?? ?? 3F ?? ??)
+(Program starts at $0800 - 96 11 & A2 09)
+- Hat Trick Hero/Super Soccer Champ
+(Program starts at $0800 - BE 11 & 9C 09)
+- Darius Twin (Japanese Version)
+(Program starts at $0800 - C0 11 & 97 09)
+- Darius Twin (US and European version)
+(Program starts at $0800 - E1 11 & A2 09)
+- Cameltry/On the Ball
+(Program starts at $0800 - 12 12 & AF 09)
+- Choukou Gasshin Xardion
+(Program starts at $0800 - 14 12 & B1 09)
+- Gousou Jinrai Densetsu Musha/Musya
+(Program starts at $0800 - 24 12 & C1 09)
+- Super Shanghai: Dragon's Eye/Shanghai II: Dragon's Eye
+
+(*Ver S1.20*)
+(Program starts at $0800 - using BD 3F ?? ?? 3F ?? ??)
+(Program starts at $0800 - 24 12 & DB 09)
+- King of the Monsters
+- Sonic Blast Man
+(Program starts at $0800 - 42 12 & DB 09)
+- Hit the Ice

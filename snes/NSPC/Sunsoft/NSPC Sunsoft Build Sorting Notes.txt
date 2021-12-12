@@ -1,0 +1,32 @@
+Total number of known unique builds: 10
+
+(Program starts at $0800 - Using E8 ?? 8D ?? 3F ?? ??)
+(Program starts at $0800 - 2E 0C & 25 1D (using $08D9 to distinguish))
+- Game no Tetsujin - The Shanghai
+- O-chan no Oekaki Logic
+- Shanghai III
+(Program starts at $0800 - 2E 0C & 3D 1D (using $08D9 to distinguish))
+- Hebereke no Popoon/Hebereke's Popoon
+(Program starts at $0800 - 35 0C)
+- Albert Odyssey 2
+- Hissatsu Pachinko Collection 4
+
+(*Ver S1.20*)
+(Program starts at $0800 - Using D0 FB BC 3F ?? ??)
+(Program starts at $0800 - 40 11)
+- Benkei Gaiden: Suna no Shou
+- Xak - The Art of Visual Stage
+(Program starts at $0800 - Using E8 ?? 8D ?? 3F ?? ??)
+(Program starts at $0800 - 2E 0C)
+- Albert Odyssey
+(Program starts at $0800 - EA 0D)
+- Hissatsu Pachinko Collection 3
+(Program starts at $0800 - D1 0F)
+- Pirates of Dark Water
+(Program starts at $0800 - CE 0F)
+- Hissatsu Pachinko Collection
+- Hissatsu Pachinko Collection 2
+(Program starts at $0400 - E8 09)
+- Hashire Hebereke
+(Program starts at $0400 - EB 09)
+- Sugoi Hebereke

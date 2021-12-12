@@ -1,0 +1,8 @@
+Total number of known unique builds: 2
+
+(Program starts at $0500 - using 8F ?? ?? 8F ?? ?? 3F ?? ??)
+(Program starts at $0500 - 92 16)
+- Densetsu no Ogre Battle: The March of the Black Queen
+(Program starts at $0600 - using DA ?? DA ?? 3F ?? ??)
+(Program starts at $0600 - D3 18)
+- Tactics Ogre: Let Us Cling Together

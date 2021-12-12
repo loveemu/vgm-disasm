@@ -1,0 +1,63 @@
+Total number of known unique builds: 21
+(Does not count Oozumou Spirits and AIII S.V. - A Ressha de Ikou 3 - Super Version as unique builds because all of the differences are purely non-code based)
+
+(Program starts at $0800 - using E8 ?? 8D ?? 3F ?? ??)
+(Program starts at $0800 - 5A 0F)
+- Battle Commander
+(Program starts at $0800 - B5 11)
+- Aguri Suzuki F-1 Super Driving/Redline F1 Racer
+(Program starts at $0800 - EA 11)
+- Honoo no Toukyuuji Dodge Danpei
+(Program starts at $0800 - EC 11)
+- Oozumou Spirits
+(NOTE: This is actually identical to Honoo no Toukyuuji Dodge Danpei minus a drumkit difference that causes different memory locations to be output)
+(Program starts at $0800 - 2A 12)
+- Shinseiki GPX Cyber Formula/Cyber Spin
+(Program starts at $0800 - 29 13)
+- Great Battle 3
+(Program starts at $0800 - 6D 13)
+- Bishoujo Senshi Sailor Moon R
+(Program starts at $0800 - 82 13)
+- Kawa no Nushi Tsuri 2
+(Program starts at $0800 - B1 13)
+- Crayon Shin-chan - Arashi o Yobu Enji
+- Kamen Rider
+- Kenyuu Densetsu Yaiba (prototype version)
+(Program starts at $0800 - CF 13)
+- Crayon Shin-chan 2 - Daimaou no Gyakushuu
+- Heisei Inu Monogatari Bow - Pop'n Smash!!
+- Kenyuu Densetsu Yaiba (final version)
+- Space Invaders
+(Program starts at $0800 - D1 13)
+- Bishoujo Senshi Sailor Moon
+(Program starts at $0800 - F4 13)
+- Tetsuwan Atom
+(Program starts at $0800 - FD 13)
+- Suzuka 8 Hours
+(Program starts at $0800 - FF 13)
+- Tsuri Tarou
+(Program starts at $0800 - 35 14)
+- Bonkers
+
+(Program starts at $0800 - has two jumps at the beginning)
+(Program starts at $0800 - has two jumps at the beginning - 3F 13)
+- Zero 4 Champ RR
+(Program starts at $0800 - has two jumps at the beginning - 56 13)
+- Bishoujo Senshi Sailor Moon S - Jougai Rantou! Shuyaku Soudatsusen
+(Program starts at $0800 - has two jumps at the beginning - 73 13)
+- Youchien Senki Madara (NOTE: Minus a few FIR table references, this is actually nearly identical to Asahi Shinbun Rensai - Katou Hifumi Kudan Shougi - Shingiryuu, Saikousoku Shikou Shougi Mahjong, and Wedding Peach: the only differences are two unused routines turned into a single RET opcode, making this a borderline case)
+(Program starts at $0800 - has two jumps at the beginning - 82 13)
+- Kawa no Nushi Tsuri 2
+(Program starts at $0800 - has two jumps at the beginning - 93 13)
+- Asahi Shinbun Rensai - Katou Hifumi Kudan Shougi - Shingiryuu
+- Saikousoku Shikou Shougi Mahjong
+- Wedding Peach
+(Program starts at $0800 - has two jumps at the beginning - 9F 13)
+- Go Go Ackman 2
+- Go Go Ackman 3
+(Program starts at $0800 - has two jumps at the beginning - A5 13)
+- Battle Racers
+(Program starts at $0800 - has two jumps at the beginning - A9 13)
+- AIII S.V. - A Ressha de Ikou 3 - Super Version (NOTE: This is actually identical to Battle Racers minus a drumkit difference that causes different memory locations to be output)
+(Program starts at $0800 - has two jumps at the beginning - 51 14)
+- Akagawa Jirou: Majo-tachi no Nemuri

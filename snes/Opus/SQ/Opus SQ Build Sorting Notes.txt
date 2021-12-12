@@ -1,0 +1,266 @@
+Total number of known unique builds: 52
+
+Build counts sorted by SQ version (NOTE: there are a few cases where the SNES-side ROM text doesn't match up with the internal SPC700 ROM text: the SPC700 side gains priority in these cases)...
+No version identifier: 15
+V108: 14
+SQV1228: 2
+V110: 4
+V111: 1
+SQ(1.16): 1
+SQ(1.23): 1 (NOTE: There are three other cases that weren't counted because they matched an earlier build instead or the internal markings were wrong: one build matched an earlier textless SPC700-side build, a second one had an internal marking of V110, and a third one had an internal marking of 1.28. The only one that was counted was also textless SPC700-side, but was a unique build)
+SQ(1.27): 1 (NOTE: The internal marking was 1.28, but the build was unique, thus it was counted for 1.27.)
+SQ(1.28): 1 (NOTE: There are two other cases that are not included: one had a SNES-side marking of 1.27 but an internal marking of 1.28: since it was a unique build, it was counted for 1.27. The other one matched an earlier textless SPC700-side build.)
+V109: 3
+VT2V: 1
+V104: 1
+V105: 2
+V105DD: 2
+V100: 2
+SHVC Sound Driver ver 1.00: 1
+
+NOTE: Both SNES-side and SPC700-side version text are included. However, only the internal SPC700 builds actually matter when it comes to sorting them out. The SNES side versions usually refer to DBOOT, but the versioning may be different. The SPC700-side versions refer to SQ, and sometimes they also show up on the internal SPC700 build: the ones that show up on the internal SPC700 build are noted as an internal marking.
+
+(No text - Program starts at $0800 - using D0 E8 3F ?? ??)
+(No text (uses custom handler) - Program starts at $0800 - 1F 0F)
+- Mahjong Gokuu Tenjiku
+
+(No text - Program starts at $0812 - 25 1E)
+- First Queen
+
+(VER1.03 - Program starts at $0812 - using D0 E8 3F ?? ??)
+(VER1.03 - Program starts at $0812 - E7 1D)
+- Koushien 2
+(VER1.03 - Program starts at $0812 - 23 1E)
+- Hakunetsu Pro Yakyuu '94 - Ganba League 3
+(VER1.03 - Program starts at $0812 - 29 1E)
+- Bishoujo Senshi Sailor Moon S - Kondo wa Puzzle de Oshioki yo!
+
+(VER1.03 - Program starts at $0812 - 2B 1E)
+- Atlas
+- Golf Daisuki! O.B. Club
+- Laser Birdie: Get in the Hole
+- Might and Magic II - Gates to Another World (Japanese version)
+- Pokonyan! - Henpokorin Adventure
+- Sotsugyou Bangai Hen: Nee Mahjong Shiyo!
+- Super Bomberman
+- Yokozuna Monogatari
+(No text (uses custom handler) - Program starts at $0812 - 2B 1E)
+- SD Gundam GX (Matches the above VER1.03 builds)
+(--DB(1.81) SQ(1.23)by AIM01 - Program starts at $0812 - 2B 1E)
+- Doraemon 3: Nobita to Toki no Hougyoku (Matches the above VER1.03 builds)
+- SWAT Kats (Matches the above VER1.03 builds)
+
+(VER1.03 - Program starts at $0812 - 2E 1E)
+- Chou Makai Taisen! Dorabocchan/The Twisted Tales of Spike McFang
+(XXX Driver.DB(1.23) SQ(1.28) - Program starts at $0812 - 2E 1E)
+- Mizuki Shigeru no Youkai Hyakkiyakou (Matches the above VER1.03 build)
+
+(VER1.03 - Program starts at $0812 - 30 1E)
+- Hayazashi Nidan Morita Shougi
+- Hayazashi Nidan Morita Shougi 2
+- Makeruna! Makendou/Kendo Rage
+- Verne World
+(VER1.03 - Program starts at $0812 - 31 1E)
+- Cacoma Knight in Bizyland
+(VER1.03 - Program starts at $0812 - 33 1E)
+- Ranma 1/2: Chounai Gekitouhen
+(VER1.03 - Program starts at $0812 - 49 1E)
+- GP-1
+
+(VER1.03 - Program starts at $0812 - 4E 1E)
+- Araiguma Rascal
+- Drift King Shutokou Battle '94
+- Hebereke no Oishii Puzzle: ha Irimasen ka
+(VER1228 - Program starts at $0812 - 4E 1E)
+- Popoitto Hebereke/Hebereke's Popoitto (Matches the above VER1.03 builds)
+(MT V1.0 - Program starts at $0812 - 4E 1E)
+- Super Real Mahjong PV Paradise (Matches the above VER1.03 builds)
+- Yuujin Janjuu Gakuen 2 (Matches the above VER1.03 builds)
+
+(VER1.03 - Program starts at $0812 - 74 1E)
+- Accelebrid
+- Assault Suits Valken/Cybernator/Juusou Kihei Valken
+- Bastard!!: Ankoku no Hakai-shin
+- Brain Lord
+- Desert Fighter: Suna no Arashi Sakusen/A.S.P. Air Strike Patrol
+- Gambler Jiko Chuushinha 2: Dorapon Quest
+- Sword Maniac
+- Wally wo Sagase!
+(VER1.03 - Program starts at $0812 - 90 1E)
+- Battle Pinball
+(VER1.03 - Program starts at $0812 - FB 1E)
+- Exhaust Heat/F1 ROC: Race of Champions
+
+(VER1.03 - internal marking V108 - Program starts at $0816 - 63 15)
+- Mr. Do!
+(VER1.03 - internal marking V108 - Program starts at $0816 - 20 17)
+- Dynamic Stadium
+(VER1.03 - internal marking V108 - Program starts at $0816 - 2C 17)
+- Tower Dream
+(VER1.03 - internal marking V108 - Program starts at $0816 - 3F 17)
+- Jissen Pachi-slot Hisshouhou
+(VER1.03 - internal marking V108 - Program starts at $0816 - 6B 17)
+- Jissen Pachi-Slot Hisshouhou! Twin
+- Pachi-Slot Kanzen Kouryaku: Universal Shindai Nyuuka Volume 1
+(VER1.03 - internal marking V108 - Program starts at $0816 - 8C 17)
+- Jissen! Pachi-Slot Hisshouhou! 2
+(VER1.03 - internal marking V108 - Program starts at $0816 - E4 17)
+- Jissen! Pachi-Slot Hisshouhou! Yamasa Densetsu
+(VER1.03 - internal marking V108 - Program starts at $0816 - 9E 18)
+- Jissen Pachi-Slot Hisshouhou! Classic
+(VER1.03 - internal marking V108 - Program starts at $0816 - C7 18)
+- Gindama Oyakata no Jissen Pachinko Hisshouhou
+
+
+(VER1.03 - internal marking V108 - Program starts at $0816 - 31 1E)
+- Advanced Dungeons & Dragons - Eye of the Beholder
+- Cooly Skunk
+- Gekitou Burning Pro Wrestling
+- Karuraou/Skyblazer
+- Tarot Mystery
+- Tottemo! Lucky Man - Lucky Cookie Roulette de Totsugekii
+(VER1.03 - internal marking V108 - Program starts at $0816 - 32 1E)
+- Exhaust Heat II: F-1 Driver no Kiseki/F1 ROC II: Race of Champions
+(VER1.03 - internal marking V108 - Program starts at $0816 - 34 1E)
+- Monopoly (Japanese version)
+(VER1.03 - internal marking V108 - Program starts at $0816 - 48 1E)
+- Asameshimae Nyanko
+- Date Kimiko no Virtual Tennis
+- Final Stretch
+- Keeper
+- Kessen! Dokapon Oukoku IV - Densetsu no Yuusha-tachi
+- Märchen Adventure Cotton 100%
+- Silva Saga II
+- Super Back to the Future II
+- X-Kaliber 2097
+
+(VER1.03 - internal marking V108 - Program starts at $0816 - 4C 1E)
+- Holy Umbrella: Dondera no Mubo
+- Honkaku Mahjong: Tetsuman
+- Super Fishing: Big Fight
+- Super Naxat Open: Golf de Shoubu da! Dorabocchan
+(SOUND MANAGER ver 1.00 - internal marking V108 - Program starts at $0816 - 4C 1E)
+- Honkaku Mahjong: Tetsuman II (Matches the above VER1.03 builds)
+- Shodani Nintei - Shodan Pro Mahjong (Matches the above VER1.03 builds)
+(GAPS SOUND 1.02 - internal marking V108 - Program starts at $0816 - 4C 1E)
+- Larry Nixon's Super Bass Fishing/TNN Bass Tournament of Champions (Matches the above VER1.03 builds)
+
+(VER1.03 - internal marking V110 - Program starts at $0816 - 62 1E)
+- Panic in Nakayoshi World
+- Spriggan Powered
+- Shinri Game 3
+- Todd McFarlane's Spawn
+- Zenkoku Juudan: Ultra Shinri Game
+(VER1.03 - internal marking V110 - Program starts at $0816 - 92 1E)
+- Mario no Super Picross
+- Picross NP Vol. 1
+- Picross NP Vol. 2
+- Picross NP Vol. 3
+- Picross NP Vol. 4
+- Picross NP Vol. 5
+- Picross NP Vol. 6
+- Picross NP Vol. 7
+- Picross NP Vol. 8
+
+(VER1.04 - internal marking V111 - Program starts at $0818 - using D0 E8 3F ?? ??)
+(VER1.04 - internal marking V111 - Program starts at $0818 - 55 1E)
+- Daikaijuu Monogatari
+
+(VER1.05 - internal marking V110 - Program starts at $0816 - using D0 E8 3F ?? ??)
+(VER1.05 - internal marking V110 - Program starts at $0816 - 4C 1E)
+- Great Battle Gaiden 2: Matsuri da Wasshoi
+
+(VER1228 - internal marking SQV1228 - Program starts at $081D - using 20 3F ?? ?? C0 20)
+(VER1228 - internal marking SQV1228 - Program starts at $081D - E2 1F)
+- Bike Daisuki!
+- Deae Tonosama - Appare Ichiban
+- Drift King Shutokou Battle 2
+- Nekketsu Tairiku Burning Heroes
+- Nosferatu
+- Shin Ikkakusenkin
+- Sprinter Monogatari
+(MT V1.0 - internal marking SQV1228 - Program starts at $081D - E2 1F)
+- Makeruna! Makendou 2 (Matches the above VER1228 builds)
+
+(VER1228 - internal marking SQV1228 - Program starts at $081D - using D0 E8 3F ?? ??)
+(VER1228 - internal marking SQV1228 - Program starts at $081D - 66 1E)
+- Game no Tatsujin
+- Super Real Mahjong PIV
+- Zenkoku Koukou Soccer
+
+
+(DB(1.12) SQ(1.16)by BPS - Program starts at $0812 - using E8 ?? C5 ?? ?? 3F ?? ??)
+(DB(1.12) SQ(1.16)by BPS - Program starts at $0812 - 8C 1E)
+- Michael Andretti's IndyCar Challenge (BPS Logo Only, although it malfunctions and never executes due to a bad pointer)
+- Super Tetris 2 + Bombliss (Genteiban) (BPS Logo Only)
+- Tetris 2/Tetris Flash (BPS Logo Only - exists in all versions, but used in Japan only)
+
+(--DB(1.18) SQ(1.23)by BPS-- - Program starts at $0812 - using E8 ?? C5 ?? ?? 3F ?? ??)
+(--DB(1.18) SQ(1.23)by BPS-- - Program starts at $0812 - A9 1E)
+- Bakutou Dochers (BPS Logo Only)
+- Dekitate High School (BPS Logo Only)
+- Drift King Shutokou Battle 2 (BPS Logo Only)
+- Drift King Shutokou Battle '94 (BPS Logo Only)
+- GT Racing (leftover from one of these games)
+- Seijuu Maden Beasts & Blades (BPS Logo Only)
+- Taikyoku Igo - Idaten (BPS Logo Only)
+- Tetris Battle Gaiden
+- Touge Densetsu - Saisoku Battle (BPS Logo Only)
+
+(--DB(1.81) SQ(1.23)by T's 01 - internal marking V110 - Program starts at $0816 - 76 1E)
+- Hi no Ouji - Yamato Takeru
+
+(BPS Driver.DB(1.23) SQ(1.27) - internal marking 1.28 - Program starts at $0816 - using E8 ?? C5 ?? ?? 3F ?? ??)
+(BPS Driver.DB(1.23) SQ(1.27) - internal marking 1.28 - Program starts at $0816 - A9 1A)
+- Gekitou Burning Pro Wres (BPS Logo Only)
+
+(BPS Driver.DB(1.23) SQ(1.28) - internal marking 1.28 - Program starts at $0816 - using E8 ?? C5 ?? ?? 3F ?? ??)
+(BPS Driver.DB(1.23) SQ(1.28) - internal marking 1.28 - Program starts at $0816 - AB 1A)
+- Chou Mahou Tairiku Wozz
+(XXX Driver.DB(1.23) SQ(1.28) - internal marking 1.28 - Program starts at $0816 - AB 1A)
+- G.O.D - Mezame yo to Yobu Koe ga Kikoe (Matches the above BPS Driver.DB(1.23) SQ(1.28) build)
+(--DB(1.8) SQ(1.23)by - internal marking 1.28 - Program starts at $0816 - AB 1A)
+- Dark Half (Matches the above BPS Driver.DB(1.23) SQ(1.28) build)
+- Shounin yo, Taishi o Idake!! (Matches the above BPS Driver.DB(1.23) SQ(1.28) build)
+
+(VER1.00 - Program starts at $081A - using D0 E8 3F ?? ??)
+(VER1.00 - Program starts at $081A - internal marking V104 - 1E 1F)
+- Daikoukai Jidai II/Uncharted Waters: New Horizons
+(VER1.00 - Program starts at $081A - internal marking V105 - 19 19)
+- Angelique
+(VER1.00 - Program starts at $081A - internal marking V105 - 3C 19)
+- Brandish
+- Lord of Darkness (US version only: does not apply to Super Nobunaga no Yabou - Bushou Fuuunroku)
+- Super Sangokushi
+(VER1.00 - Program starts at $081E - internal marking V105DD - 54 19)
+- Kouryuuki/Rise of the Phoenix
+(VER1.00 - Program starts at $081A - internal marking V109 - 02 1F)
+- Super Nobunaga no Yabou - Zenkoku Ban/Nobunaga's Ambition
+(VER1.00 - Program starts at $081A - internal marking V109 - 02 1F (code difference at $0F54))
+- Dokuritsu Sensou: Liberty or Death
+- Winning Post
+(VER1.00 - Program starts at $081A - internal marking V109 - 04 1F)
+- Nobunaga no Yabou: Haouden
+(VER1.00 - Program starts at $081A - internal marking VT2V - D6 1E)
+- Top Management II
+
+(1.0.0 - Program starts at $083E - internal marking V100 - using D0 F8 3F ?? ??)
+(1.0.0 - Program starts at $083E - internal marking V100 - AC 21)
+- Sangokushi IV/Romance of the Three Kingdoms IV - Wall of Fire
+(1.2.1 - Program starts at $083E - internal marking V100 - AC 21)
+- Teitoku no Ketsudan II/P.T.O. II: Pacific Theater of Operations (Matches the above 1.0.0 build)
+
+(1.0.3 - Program starts at $083E - internal marking V100 - using D0 F8 3F ?? ??)
+(1.0.3 - Program starts at $083E - internal marking V100 - A0 21)
+- Brandish 2
+(1.2.1 - Program starts at $083E - internal marking V100 - A0 21)
+- Nobunaga no Yabou - Tenshouki (Matches the above 1.0.3 build)
+- Sangokushi Eiketsuden (Matches the above 1.0.3 build)
+- Winning Post 2 (Matches the above 1.0.3 build)
+
+(1.11 - Program starts at $0820 - internal marking V105DD - 42 19)
+- Mahjong Taikai II
+
+(SHVC Sound Manager ver 1.00 - internal marking SHVC Sound Driver ver 1.00 - Program starts at $0BCD - using CD ?? BD 3F ?? ??)
+(SHVC Sound Manager ver 1.00 - internal marking SHVC Sound Driver ver 1.00 - F6 0B)
+- Sougou Kakutougi: Astral Bout 2: The Total Fighters

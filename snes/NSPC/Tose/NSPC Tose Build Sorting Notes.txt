@@ -1,0 +1,104 @@
+Total number of known unique builds: 38
+
+(Program starts at $0800 - using DC DC 10 F9 3F ?? ??)
+(Program starts at $0800 - 46 0F & 26 14 (using 3F ?? ?? CD ?? at $08FB to distinguish))
+- Jaleco Rally Big Run
+(Program starts at $0800 - 46 0F & 28 14 (using 3F ?? ?? CD ?? at $08FB to distinguish))
+- Super Professional Baseball
+(Program starts at $0800 - 46 0F & 56 14 (using 3F ?? ?? CD ?? at $08FB to distinguish))
+- Super Earth Defense Force
+(Program starts at $0800 - 5C 0F)
+- Super Bases Loaded
+(Program starts at $0800 - using 1D 1D 10 F2 E8 ?? 3F ?? ?? and 8F ?? ?? 3F ?? ?? as needed)
+(Program starts at $0800 - 10 10)
+- Pipe Dream
+(Program starts at $0800 - 13 10)
+- Super Tennis: World Circuit
+(Program starts at $0800 - 1A 10)
+- Super Play Action Football
+(Program starts at $0800 - 1E 10)
+- SD Kidou Senshi Gundam - V Sakusen Shidou
+(Program starts at $0800 - 3B 10 & 91 15 (using 8F ?? ?? 3F ?? ?? to distinguish))
+- SD Gundam Gaiden - Knight Gundam Monogatari - Ooinaru Isan
+- Super Cup Soccer/Super Goal!
+- Yokoyama Mitsuteru: Sangokushi
+(Program starts at $0800 - 3B 10 & 93 15 (using 8F ?? ?? 3F ?? ?? to distinguish))
+- Dragon Ball Z: Super Saiya Densetsu
+(Program starts at $0800 - 4D 10 & AC 15 (using 8F ?? ?? 3F ?? ?? to distinguish))
+- Bazooka Blitzkrieg/Destructive
+- Dragon Ball Z: Super Butouden
+- Namcot Open
+- SD Gundam Gaiden 2: Entaku no Kishi
+- Super Professional Baseball II
+- Super Tetris 2 + Bombliss
+- Yoshi's Cookie (beta only)
+- Yume Maboroshi no Gotoku
+(Program starts at $0800 - 4D 10 & C4 15 (using 8F ?? ?? 3F ?? ?? to distinguish))
+- Oda Nobunaga: Haou no Gundan
+- USA Ice Hockey/Pro Sport Hockey
+- Volleyball Twin/Dig and Spike Volleyball
+- Yoshi's Cookie (final version only)
+- Yoshi no Kuruppon: Oven de Cookie
+
+(Program starts at $0800 - using 8D ?? E8 ?? 3F ?? ??)
+(Program starts at $0800 - 24 0F)
+- Takeda Nobuhiro no Super League Soccer
+(Program starts at $0800 - 41 0F)
+- Hana no Keiji: Kumo no Kanata ni
+(Program starts at $0800 - 4D 0F)
+- Super Bombliss
+(Program starts at $0800 - 4F 0F)
+- Super Moero!! Pro Yakyuu/Super Bases Loaded 3: License to Steal
+(Program starts at $0800 - 56 0F)
+- From TV Animation Slam Dunk - SD Heat Up!!
+(Program starts at $0800 - 57 0F)
+- Dragon Ball Z - Super Butouden 3/Dragon Ball Z - Ultime Menace/Dragon Ball Z - Chomutujeon
+(Program starts at $0800 - 61 0F)
+- From TV Animation Slam Dunk 2 - IH Yosen Kanzen Ban!!
+(Program starts at $0800 - 86 0F)
+- Take Yutaka GI Memory
+(Program starts at $0800 - 89 0F)
+- JB The Super Bass
+(Program starts at $0800 - 8E 0F)
+- Koushien 4
+- Shougi Saikyou II - Jissen Taikyoku Hen
+- Zenkoku Koukou Soccer Senshuken '96
+(Program starts at $0800 - A4 0F)
+- Dragon Ball Z - Super Gokuu Den - Kakusei Hen
+- Dragon Ball Z - Super Gokuu Den - Totsugeki Hen
+- Jissen Pachi-Slot Hisshouhou! Twin Vol. 2
+- Sterling Sharpe: End 2 End
+(Program starts at $0800 - A9 0F & A6 16 (using E5 ?? ?? D0 05 3F ?? ?? to distinguish))
+- Dragon Ball Z - Hyper Dimension
+(Program starts at $0800 - A9 0F & C0 16 (using E5 ?? ?? D0 05 3F ?? ?? to distinguish))
+- Yuu Yuu Hakusho Final - Makai Saikyou Retsuden
+(Program starts at $0800 - B9 0F)
+- Super Tetris 3
+(Program starts at $0800 - BE 0F)
+- Natsuki Crisis Battle
+(Program starts at $0800 - C3 0F)
+- Ruin Arm
+(Program starts at $0800 - 99 10)
+- Yoshi no Road Hunting/Yoshi's Safari
+(Program starts at $0800 - 9B 10)
+- SD Kidou Senshi Gundam 2
+(Program starts at $0800 - CF 10)
+- Super 3D Baseball
+(Program starts at $0800 - ED 10)
+- Super Tetris 2 + Bombliss (Genteiban)
+- Yuu Yuu Hakusho 2 - Kakutou no Shou
+(Program starts at $0800 - ED 10 (opcode difference at $120C))
+- Takeda Nobuhiro no Super Cup Soccer/Super Goal! 2 (NOTE: only difference from Super Tetris 2 + Bombliss Genteiban is a sub-routine call instead of a storage at $120C)
+(Program starts at $0800 - 4F 11)
+- Hanguk Pro Yagu/Super Bases Loaded II
+- Rokudenashi Blues - Taiketsu! Tokyo Shitennou
+(Program starts at $0800 - 50 11)
+- Kidou Senshi V Gundam
+- Super Rugby
+(Program starts at $0800 - 54 11)
+- Dragon Ball Z - Super Butouden 2/Dragon Ball Z - La Legende Saien
+(Program starts at $0800 - 86 11)
+- From TV Animation Slam Dunk: Yonkyo Taiketsu!!
+- Yokoyama Mitsuteru: Sangokushi 2
+(Program starts at $0800 - 19 12)
+- Tetris Flash/Tetris 2

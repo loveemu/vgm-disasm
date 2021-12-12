@@ -1,0 +1,22 @@
+Total number of known unique builds: 7
+
+(Program starts at $0400 - using E8 ?? 8D ?? 3F ?? ??)
+(Program starts at $0400 - 44 11)
+- Daibakushou Jinsei Gekijou
+(Program starts at $0400 - 79 11)
+- Flying Hero: Bugyuru no Daibouken
+(Program starts at $0400 - using D0 03 5F ?? ??)
+(Program starts at $0400 - 6E 05)
+- Onizuka Katsuya Super Virtual Boxing - Shin Kentou Ou Densetsu
+(Program starts at $0400 - 7B 05)
+- Jetsons: Invasion of the Planet Pirates
+- Melfand Stories
+(Program starts at $0800 - using E8 ?? 8D ?? 3F ?? ??)
+(Program starts at $0800 - 04 16)
+- Dossun! Ganseki Battle
+- Super Kokou Yakyuu - Ichikyuu Jikkon
+- Youkai Buster: Ruka no Daibouken
+(Program starts at $0800 - 7A 16)
+- Treasure Hunter G
+(Program starts at $0800 - 7C 16)
+- Solid Runner

@@ -1,0 +1,9 @@
+NOTE: These two sound driver builds do not share a music format at all between them (and are also probably completely different overall)
+
+(Program starts at $0300 - using 10 F1 BC 3F ?? ??)
+(Program starts at $0300 - 44 0C)
+- Popful Mail
+
+(Program starts at $0700 - using 8F ?? ?? C4 ?? 3F ?? ??)
+(Program starts at $0700 - 2C 0B)
+- Ys V - Ushinawareta Suna no Miyako Kefin

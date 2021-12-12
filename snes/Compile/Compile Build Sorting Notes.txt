@@ -1,0 +1,19 @@
+Total number of known unique builds: 5
+
+(Program starts at $0400 - code prior to $0600 is overwritten after initialization - using 8F ?? ?? 3F ?? ?? 3F ?? ??)
+(Program starts at $0400 - code prior to $0600 is overwritten after initialization - 42 04 & A7 09)
+- Jaki Crush
+(Program starts at $0400 - code prior to $0600 is overwritten after initialization - 3A 04 & 42 0A)
+- Super Aleste/Space Megaforce
+
+(Program starts at $0400 - code prior to $0550 is overwritten after initialization - using 3F ?? ?? 3F ?? ??)
+(Program starts at $0400 - code prior to $0550 is overwritten after initialization - CA 08 & 86 08)
+- Super Nazo Puyo: Ruruu no Ruu
+(Program starts at $0400 - code prior to $0550 is overwritten after initialization - DA 08 & 96 08)
+- Madou Monogatari - Hanamaru Daiyouchienji
+- Super Nazo Puyo Tsuu - Rulue no Tetsuwan Hanjouki
+- Super Puyo Puyo Tsuu
+- Super Puyo Puyo Tsuu Remix
+(Program starts at $0400 - code prior to $0550 is overwritten after initialization - 3A 09 & 8F 08)
+- Kirby's Avalanche/Kirby's Ghost Trap
+- Super Puyo Puyo

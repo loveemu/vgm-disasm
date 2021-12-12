@@ -1,0 +1,40 @@
+Total number of known unique builds: 9
+
+(Program starts at $0800 - Using 2F ?? BC 3F ?? ??)
+(Program starts at $0800 - 3D 0E)
+- Super Mario Kart (1992-01-21 build)
+(Refers to a sound.bin file with this timestamp that was not embedded in a known prototype build.)
+
+(*Ver S1.20*)
+(Program starts at $0800 - Using D0 FB BC 3F ?? ??)
+(Program starts at $0675 with *Ver S1.20* right at the beginning of the code, otherwise starts at $0800 - 73 0D)
+- Wild Trax/Stunt Race FX
+
+(Program starts at $0800 - using E8 ?? BC 3F ?? ??)
+(Program starts at $0800 - 79 0D)
+- Super Mario Kart (beta version) (mkart)
+(Refers to a prototype from April 13, 1992.)
+
+(Program starts at $0800 - using C5 ?? ?? E8 ?? 3F ?? ??)
+(Program starts at $0800 - 65 0D)
+- Super Mario Kart (beta version) (mario_kart-01)
+(Refers to what is known as the Enigma prototype build.)
+
+(Program starts at $0800 - Using E8 ?? C4 ?? 3F ?? ??)
+(Program starts at $0800 - 6A 0D & 98 15 (using C4 ?? 90 0A 3F ?? ?? to distinguish))
+- Super Mario Kart (beta version) (kar4t)
+(Refers to a prototype from late June 1992, created after mario_kart.)
+
+(Program starts at $0800 - 6A 0D & 64 16 (using C4 ?? 90 0A 3F ?? ?? to distinguish) & B4 19 (using 7D C4 ?? 5F ?? ?? to distinguish))
+- Super Mario Kart (US version)
+(Program starts at $0800 - 6A 0D & 64 16 (using C4 ?? 90 0A 3F ?? ?? to distinguish) & BA 19 (using 7D C4 ?? 5F ?? ?? to distinguish))
+- Super Mario Kart (Japanese and European version)
+
+(Program starts at $0800 - Using E8 ?? C5 ?? ?? 3F ?? ??)
+(Program starts at $0800 - 74 0D)
+- Super Mario Kart (beta version) (mario_kart)
+(Refers to a prototype from late June 1992, created before kar4t.)
+
+(Program starts at $0400 - Using D0 F7 E8 ?? 3F ?? ??)
+(Program starts at $0400 - 61 0D)
+- FX Trax (Stunt Race FX/Wild Trax Prototype)

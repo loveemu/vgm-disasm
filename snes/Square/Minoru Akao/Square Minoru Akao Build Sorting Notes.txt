@@ -1,0 +1,36 @@
+Total number of known unique builds: 13
+
+(Square/Minoru Akao)
+(Program starts at $0800 - using 8F ?? ?? 3F ?? ??)
+(Program starts at $0800 - 82 10)
+- Final Fantasy IV/II
+(Program starts at $0800 - using E8 ?? 8D ?? 3F ?? ??)
+(Program starts at $0800 - ED 0C)
+- Romancing SaGa
+(Program starts at $0200 - 14 06)
+- Live A Live
+(Program starts at $0200 - 1B 06)
+- Seiken Densetsu 2/Secret of Mana
+(Program starts at $0200 - 38 06)
+- Final Fantasy Mystic Quest/Final Fantasy USA/Mystic Quest Legend
+(Program starts at $0200 - 48 06)
+- Final Fantasy VI/III
+(Program starts at $0200 - 55 06)
+- Final Fantasy V
+- Hanjuku Hero
+(Program starts at $0200 - 5C 06)
+- Romancing SaGa 2
+(Program starts at $0200 - 05 07)
+- Front Mission
+(Program starts at $0200 - using 1A ?? 8D ?? 3F ?? ??)
+(Program starts at $0200 - 40 07)
+- Front Mission - Gun Hazard
+(Program starts at $0200 - 97 07)
+- Romancing SaGa 3
+(Program starts at $0200 - A3 07)
+- Chrono Trigger
+(Program starts at $0200 - 1F 08)
+- Dynami Tracer
+- Koi wa Balance - Tatoeba K-kun no Tabou na Ichinichi Hen
+- Radical Dreamers - Nusume Nai Houseki
+- Treasure Conflix

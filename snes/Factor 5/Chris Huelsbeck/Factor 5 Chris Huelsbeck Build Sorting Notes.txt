@@ -1,0 +1,11 @@
+Total number of known unique builds: 3
+
+(Program starts at $F000 - starting section of code is cleared out and overwritten, rest of the code starts at $0200 - using 8F ?? ?? 8F ?? ?? 3F ?? ??)
+(Program starts at $F000 - starting section of code is cleared out and overwritten, rest of the code starts at $0200 - C9 09)
+- Super Turrican
+(Program starts at $F000 - starting section of code is cleared out and overwritten, rest of the code starts at $0200 - D0 09)
+- Jim Power: The Lost Dimension in 3-D (European Version)
+
+(Program starts at $F000 - starting section of code is cleared out and overwritten, rest of the code starts at $0200 - using 3F ?? ?? at $0200)
+(Program starts at $F000 - starting section of code is cleared out and overwritten, rest of the code starts at $0200 - DA 09)
+- Jim Power: The Lost Dimension in 3-D (US Version)

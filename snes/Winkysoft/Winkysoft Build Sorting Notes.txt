@@ -1,0 +1,32 @@
+Total number of known unique builds: 10
+
+(Program starts at $F600 - using CB ?? CB ?? 3F ?? ??)
+(Program starts at $F600 - 36 FA)
+- Kouryuu Densetsu Villgust
+(Program starts at $F600 - 4A FA)
+- Hero Senki: Project Olympus
+(Program starts at $F600 - 54 FA)
+- Mazinger Z
+
+(Program starts at $F600 - using CB ?? CB ?? AB ?? 3F ?? ??)
+(Program starts at $F600 - 4E FA)
+- Jojo no Kimyou na Bouken
+
+(Program starts at $F500 - using 8F ?? ?? 3F ?? ??)
+(Program starts at $F500 - C3 FA)
+- Dai-3-ji Super Robot Taisen
+
+(Program starts at $F300 - using FA ?? ?? A3 ?? 06 3F ?? ??)
+(Program starts at $F300 - 0F F9)
+- Choujikuu Yousai Macross: Scrambled Valkyrie
+(Program starts at $F400 - 0F FA (code difference at $FAAE))
+- Super Robot Taisen EX
+(Program starts at $F300 - 2E F9)
+- Ghost Chaser Densei
+
+(Program starts at $F180 - using 1F ?? ?? 3F ?? ??)
+(Program starts at $F180 - C9 FA)
+- Super Robot Taisen Gaiden - Masou Kishin - The Lord of Elemental
+(Program starts at $F180 - DC FA)
+- Battle Robot Retsuden
+- Dai-4-ji Super Robot Taisen

@@ -1,0 +1,19 @@
+Total number of known unique builds: 6
+
+NOTE: Except for Estpolis Denki and Lufia and the Fortress of Doom (which have identical game-specific data between the code), all of the others don't use the first pointer reference due to game-specific data being inserted in between them, as well as a difference occurring prior to the game-specific data being encountered.
+
+(Program starts at $0400 - using C5 ?? ?? 3F ?? ??)
+(Program starts at $0400 - 59 05 & 90 1E (using 90 03 3F ?? ?? to distinguish))
+- Estpolis Denki
+(Program starts at $0400 - 59 05 & A2 1E (using 90 03 3F ?? ?? to distinguish))
+- Lufia and the Fortress of Doom
+
+(Program starts at $0300 - using 8F ?? ?? 8F ?? ?? 3F ?? ??)
+(Program starts at $0300 - C4 05)
+- Hat Trick Hero 2
+(Program starts at $0300 - CA 05)
+- Energy Breaker
+(Program starts at $0300 - D5 05)
+- Estpolis Denki II
+(Program starts at $0300 - EE 05)
+- Lufia II: Rise of the Sinistrals

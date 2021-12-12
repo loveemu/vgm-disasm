@@ -1,0 +1,41 @@
+Total number of known unique builds: 18
+
+(Program starts at $0400 - using 8F ?? ?? 3F ?? ??)
+(Program starts at $0400 - 9A 0C)
+- Super Off Road
+(Program starts at $0400 - 62 10)
+- Plok!
+(Program starts at $0400 - A5 10)
+- Troddlers
+(Program starts at $0400 - D0 11)
+- Spider-Man and the X-Men in Arcade's Revenge
+(Program starts at $0400 - 03 12)
+- Equinox/Solstice 2
+(Program starts at $0400 - 45 12)
+- Rock 'n Roll Racing
+(Program starts at $0400 - 57 12)
+- Tin Star
+(Program starts at $0400 - 6C 12)
+- Thomas the Tank Engine & Friends
+(Program starts at $0400 - 86 12)
+- Venom/Spider-Man: Separation Anxiety
+(Program starts at $0400 - 99 12)
+- Foreman for Real
+(Program starts at $0400 - D8 12)
+- Spider-Man and Venom: Maximum Carnage
+(Program starts at $0400 - F6 12)
+- Cutthroat Island
+(Program starts at $0400 - 25 13)
+- Ken Griffey Jr. Presents Major League Baseball
+(Program starts at $0400 - 37 13)
+- Barbie Vacation Adventure
+- Tick
+(Program starts at $0400 - 71 13)
+- Tom vs. Jerry - The Chase is On!
+- Wile E's Revenge
+(Program starts at $0400 - 7D 13)
+- Uniracers/Unirally
+(Program starts at $0400 - 96 13)
+- Pocahontas (NOTE: Analyzed from DRIVER.MEM)
+(Program starts at $0400 - C4 13)
+- Winter Gold

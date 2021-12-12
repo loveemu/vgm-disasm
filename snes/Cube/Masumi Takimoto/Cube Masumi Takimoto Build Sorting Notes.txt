@@ -1,0 +1,31 @@
+Total number of known unique builds: 12
+
+NOTE: Houkago in Beppin Jogakuin, Monster Maker Kids: Ousama ni Naritai and Feda - The Emblem of Justice are subject to data loss at the beginning of the program due to them being recycled for memory location usage afterwards. They also store their music on the SNES side and translate them to commands for the SPC700 to execute. Their relationship to the other games have not been examined yet music format-wise.
+
+(Program starts at $0280 - using 05 ?? ?? 8D ?? 3F ?? ??)
+(Program starts at $0280 - D1 09)
+- Houkago in Beppin Jogakuin
+(Program starts at $0280 - 16 0A)
+- Monster Maker Kids: Ousama ni Naritai
+(Program starts at $0280 - 1D 0A)
+- Feda - The Emblem of Justice
+
+(Program starts at $0300 - using 8F ?? ?? 00 8F ?? ?? 00 3F ?? ??)
+(Program starts at $0300 - 09 06)
+- Majuu Ou
+(Program starts at $0300 - 2E 06)
+- Kishin Douji Zenki - Battle Raiden
+(Program starts at $0300 - 2E 06 (code difference at $0402) & 1D 10 (using 8F ?? ?? 3F ?? ?? at $048C to distinguish))
+- Heiwa Pachinko World 2
+(Program starts at $0300 - 2E 06 (code difference at $0402) & 26 10 (using 8F ?? ?? 3F ?? ?? at $048C to distinguish))
+- Heiwa Pachinko World 3
+(Program starts at $0300 - 2F 06 & CD 07 (using 80 A8 ?? C5 ?? ?? 5F ?? ?? to distinguish))
+- Light Fantasy II
+(Program starts at $0300 - 2F 06 & DA 07 (using 80 A8 ?? C5 ?? ?? 5F ?? ?? to distinguish))
+- Super Hanafuda 2
+(Program starts at $0300 - 3C 06)
+- Getsumen no Anubis
+(Program starts at $0300 - 6C 06)
+- Pikiinya!
+(Program starts at $0300 - 76 06)
+- Super Yakyuudou

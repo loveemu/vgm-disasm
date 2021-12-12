@@ -1,0 +1,48 @@
+Total number of known unique builds: 15
+
+(Program starts at $0700 - using 8D ?? E8 ?? CB ?? C4 ??)
+(Program starts at $0700 - 75 07 & FC 12 (using C4 ?? D0 05 3F ?? ?? to distinguish))
+- Arcus Spirits
+(Program starts at $0700 - 75 07 & 02 13 (using C4 ?? D0 05 3F ?? ?? to distinguish) & B0 14 (at $146B for distinguishing))
+- Neugier
+(Program starts at $0700 - 75 07 & 02 13 (using C4 ?? D0 05 3F ?? ?? to distinguish) & B3 14 (at $146B for distinguishing))
+- Sangokushi Seishi - Tenbu Spirits
+
+(Program starts at $0B00 - has a loading program earlier in the code - using D7 ?? 3F ?? ??)
+(Program starts at $0B00 - has a loading program earlier in the code - B1 19)
+- Ace o Nerae!
+(Program starts at $0B00 - has a loading program earlier in the code - 24 1A)
+- Dark Kingdom
+(Program starts at $0B00 - has a loading program earlier in the code - 29 1A)
+- Hiouden - Mamono-tachi to no Chikai
+(Program starts at $0B00 - has a loading program earlier in the code - 9D 1F)
+- Zan III Spirits
+
+(Program starts at $0500 - using 58 ?? ?? FA ?? ?? 3F ?? ??)
+(Program starts at $0500 - 28 05)
+- Leading Jockey
+- Leading Jockey 2
+(Program starts at $0840 - 90 19)
+- Parlor! Parlor!
+(Program starts at $0840 - 9F 19 & F1 22 (using E4 ?? F0 09 3F ?? ?? to distinguish))
+- Heiwa Parlor! Mini 8 - Pachinko Jikki Simulation Game
+- Parlor! Mini: Pachinko Jikki Simulation Game
+- Parlor! Mini 2: Pachinko Jikki Simulation Game
+- Parlor! Mini 3: Pachinko Jikki Simulation Game
+- Parlor! Mini 4: Pachinko Jikki Simulation Game
+- Parlor! Mini 5: Pachinko Jikki Simulation Game
+- Parlor! Mini 6: Pachinko Jikki Simulation Game
+- Parlor! Mini 7: Pachinko Jikki Simulation Game
+- Parlor! Parlor! 2
+- Parlor! Parlor! 3
+- Parlor! Parlor! IV CR
+(Program starts at $0840 - 9F 19 & 0D 23 (using E4 ?? F0 09 3F ?? ?? to distinguish))
+- Tales of Phantasia
+(Program starts at $0840 - AF 19)
+- Sankyo Fever! Fever!
+(Program starts at $0840 - B2 19)
+- Parlor! Parlor! 5
+(Program starts at $0840 - F2 19)
+- Star Ocean
+(Program starts at $0840 - 0B 1B)
+- Tenshi no Uta: Shiroki Tsubasa no Inori

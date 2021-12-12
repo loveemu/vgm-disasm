@@ -1,0 +1,56 @@
+Total number of known unique builds: 16
+
+NOTE: Some ROM text is noted as following as a partial versioning marker (earlier ones do not have this present):
+(C) 1992 Basement Boys Software
+
+Years may vary between builds, and are noted below.
+
+(No signature - Program starts at $0400 - Using D0 FB BC 3F ?? ??)
+(No signature - Program starts at $0400 - 4F 0C)
+- Mickey's Ultimate Challenge
+(No signature - Program starts at $0400 - 59 0C)
+- Road Riot 4WD (outside of a race)
+(No signature - Program starts at $0400 - 73 0C)
+- Capcom's MVP Football (outside of playing a football game)
+
+(No signature - Program starts at $0460 - 70 0C)
+- Bebe's Kids
+- Cal Ripken Jr. Baseball
+- Hunt for Red October
+- Tom and Jerry
+(No signature - Program starts at $0460 - using D0 FB BC 3F ?? ??)
+(No signature - Program starts at $0460 - 8D 0C)
+- Kawasaki Caribbean Challenge (outside of a race)
+(1992 - Program starts at $0460 - using D0 FB BC 3F ?? ??)
+(1992 - Program starts at $0460 - 12 0D)
+- Bubsy in Claws Encounters of the Furred Kind
+- Kawasaki Caribbean Challenge (during a race)
+- Urban Strike
+(1992 - Program starts at $0460 - B9 0D)
+- Cool Spot
+- Young Merlin
+(1992 - Program starts at $0460 - E2 0D & 66 11 (Using F0 03 3F ?? ?? to distinguish))
+- Super Off Road: The Baja/Super 4WD: The Baja
+(1992 - Program starts at $0460 - E2 0D & 7A 11 (Using F0 03 3F ?? ?? to distinguish))
+- Troy Aikman NFL Football
+(1992 - Program starts at $0460 - F0 0D)
+- Beethoven's 2nd
+- Steven Seagal Is The Final Option
+(1992 - Program starts at $0460 - F0 0D (Code difference at $047F))
+- Double Dragon V - The Shadow Falls
+- Fun 'N Games
+(1992 - Program starts at $0460 - FA 0D)
+- Champions - World Class Soccer
+- ESPN Baseball Tonight
+(1992 - Program starts at $0460 - FD 0D)
+- Kyle Petty's No Fear Racing/Circuit USA
+(1992, 1993 - Program starts at $0460 - using D0 FB 8F ?? ?? 3F ?? ??)
+(1992, 1993 - Program starts at $0460 - F1 0D)
+- Jammit
+- Street Hockey '95
+(1992, 1993 - Program starts at $0290 - BA 09)
+- PGA European Tour
+- PGA Tour '96
+(1992-1994 - Program starts at $0460 - using D0 FB 8F ?? ?? 3F ?? ??)
+(1992-1994 - Program starts at $0460 - F9 0D)
+- Death and Return of Superman

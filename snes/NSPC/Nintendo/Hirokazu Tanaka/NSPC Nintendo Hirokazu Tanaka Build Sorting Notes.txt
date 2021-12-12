@@ -1,0 +1,7 @@
+Total number of known unique builds: 2
+
+(Program starts at $0500 - Using D0 FB 3F ?? ??)
+(Program starts at $0500 - A5 16)
+- Mother 2/Earthbound
+(Program starts at $0500 - EB 16)
+- Snoopy Concert

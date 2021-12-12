@@ -1,0 +1,44 @@
+Total number of known unique builds: 11
+
+NOTE: These builds mostly don't have shared SFX code due to their hardcoded nature for the most part, and VCMD sets are not guaranteed to be an exact match, either. The only other special note is that Super Scope 6 (Blastris) has a shared VCMD set with Super Scope 6 (LazerBlazer), but the latter is under Akito Nakatsuka due to its shared SFX programming with later games.
+
+(Program starts at $0800 - Using D0 FB BC 3F ?? ??)
+(Program starts at $0800 - 3D 0E)
+- F-Zero
+(Program starts at $0800 - 3A 11)
+- Aging Cassette
+- SNES Burn-In Test Cartridge (one of three different builds used, used for the Sound Module and Burn-In test)
+
+(Program starts at $0800 - Using D0 F8 BC 3F ?? ??)
+(Program starts at $0800 - 6D 0D)
+- SNES Burn-In Test Cartridge (one of three different builds used, used for the Super Scope Test)
+- World Class Service Super Nintendo Tester (one of the unused builds)
+
+(Program starts at $0800 - Using 90 F8 BC 3F ?? ??)
+(Program starts at $0800 - 89 0D)
+- Super Scope 6 (one of two different builds used, used for Blastris: builds are identical between all versions)
+
+(*Ver S1.20*)
+(Program starts at $0800 - Using D0 FB 3F ?? ??)
+(Program starts at $0800 - 30 14)
+- Mario Paint
+
+(Program starts at $0800 - Using E8 ?? C4 ?? C4 ?? 3F ?? ??)
+(Program starts at $0800 - 25 26)
+- Mario Paint (Beta)
+
+(Program starts at $0800 - Using C5 ?? ?? C5 ?? ?? BC 3F ?? ?? and 84 ?? C4 ?? 90 19 3F ?? ??)
+(Program starts at $0800 - 5C 0D & 8F 11)
+- Tetris & Dr. Mario (Mixed Match)
+(Program starts at $0800 - 5C 0D & 99 11)
+- Tetris & Dr. Mario (Dr. Mario)
+(Program starts at $0800 - 5C 0D & A1 11)
+- Tetris & Dr. Mario (Tetris)
+
+(Program starts at $0800 - Using D0 F8 BC 3F ?? ??)
+(Program starts at $0800 - CB 0D)
+- Nintendo Power Menu Program
+
+(Program starts at $1500 - Using E8 ?? C5 ?? ?? 3F ?? ??)
+(Program starts at $1500 - D7 1E)
+- Super Metroid

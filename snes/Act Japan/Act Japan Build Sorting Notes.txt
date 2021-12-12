@@ -1,0 +1,15 @@
+Total number of known unique builds: 6
+
+(Program starts at $0580 - using 8F ?? ?? 8F ?? ?? 3F ?? ??)
+(Program starts at $0580 - 53 0D)
+- Darius Force
+(Program starts at $0580 - 75 0D)
+- Super Nova
+(Program starts at $0800 - 32 11)
+- Daibakushou Jinsei Gekijou: Zukkoke Salary Man Hen
+(Program starts at $0800 - 33 11)
+- Daibakushou Jinsei Gekijou: Zukkoke Salary Man Hen (NP)
+(Program starts at $09C0 - 02 12)
+- Daibakushou Jinsei Gekijou: Ooedo Nikki
+(Program starts at $0B00 - FD 12)
+- Daibakushou Jinsei Gekijou: Dokidoki Seishun

@@ -1,0 +1,38 @@
+Total number of known unique builds: 13
+
+(Program starts at $0200 - using D5 ?? ?? 3D D0 FA 3F ?? ??)
+(Program starts at $0200 - 41 0D)
+- Dragon Quest I & II
+(Program starts at $0200 - 9F 0D)
+- Joushou Mahjong Tenpai
+(Program starts at $0200 - AF 0D)
+- Der Langrisser
+(Program starts at $0200 - C1 0D)
+- Sengoku no Hasha
+(Program starts at $0200 - C2 0D)
+- Gegege no Kitarou: Youkai Donjara
+(Program starts at $0200 - CC 0D)
+- Shin Nihon Pro Wrestling Kounin - '94
+- Super Wrestle Angels
+(Program starts at $0200 - CC 0D (code difference at $05FA))
+- Kaizou Chounin Shubibinman Zero
+(Program starts at $0200 - D1 0D)
+- Bishoujo Senshi Sailor Moon Sailor Stars: Fuwa Fuwa Panic 2
+- Crayon Shin-chan: Nagagutsu Dobon!!
+- Poi Poi Ninja World
+- SD Gundam Generation A - Ichinen Sensouki
+- SD Gundam Generation B - Gryps Senki
+- SD Gundam Generation C - Axis Senki
+- SD Gundam Generation D - Babylonia Kenkoku Senki
+- SD Gundam Generation E - Zansukaaru Senki
+- SD Gundam Generation F - Colony Kakutouki
+(Program starts at $0200 - D4 0D)
+- Ring ni Kakero
+(Program starts at $0200 - E0 0D)
+- Monstania
+(Program starts at $0200 - E3 0D)
+- Bishoujo Senshi Sailor Moon SuperS: Fuwa Fuwa Panic
+(Program starts at $0200 - E3 0D (code difference at $04A2))
+- Chou Aniki - Bakuretsu Rantou Hen
+(Program starts at $0200 - 0C 0E)
+- Sufami Turbo BIOS

@@ -1,0 +1,36 @@
+NOTE: See Heart Beat for this sound driver's successor (due to the music format diverging VCMD-wise, but still keeping the velocity/quantization of N-SPC)
+
+Total number of known unique builds: 8
+
+(*Ver S0.07*)
+(Program starts at $0700 - Using D0 E9 BC 3F ?? ??)
+(Program starts at $0700 - 77 0D)
+- Stealth
+(Program starts at $0700 - 8A 0D)
+- Classic Road
+- Super Hockey '94/Super Ice Hockey
+(Program starts at $0700 - B6 0D)
+- Ihatov Monogatari
+- Thoroughbred Breeder
+(Program starts at $0700 - Contains an opening branch - AC 0D)
+- Hourai Gakuen no Bouken!
+
+(*Ver S0.90*)
+(Program starts at $0700 - Using D0 E9 BC 3F ?? ??)
+(Program starts at $0700 - B2 0D)
+- Thoroughbred Breeder II
+(Program starts at $0700 - Contains an opening branch - BD 0D)
+- Furuta Atsuya no Simulation Pro Yakyuu 2
+- Igo Club
+- Katou Hifumi Kudan - Shougi Club
+- Mahjong Club
+- Shin Shougi Club
+- Shougi Club
+- Simulation Pro Yakyuu
+- Thoroughbred Breeder III
+(Program starts at $0700 - Using D0 F8 BC 3F ?? ??)
+(Program starts at $0700 - Contains an opening branch - 9D 0D)
+- Classic Road II
+- Super Bomber Man - Panic Bomber W
+(Program starts at $0700 - Contains an opening branch - A6 0D)
+- Kyuuyaku Megami Tensei

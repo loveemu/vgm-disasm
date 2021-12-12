@@ -1,0 +1,18 @@
+Total number of known unique builds: 7
+
+(Program starts at $0400 - Using E8 ?? 8D ?? 3F ?? ?? 3F ?? ??)
+(Program starts at $0400 - 05 07 & 54 07)
+- Ganbare Goemon - Yuki Hime Kyuushutsu Emaki/Legend of the Mystical Ninja
+(Program starts at $0400 - 1D 07 & 6C 07)
+- Gradius 3
+(Program starts at $0400 - 1D 07 & 6F 07)
+- Akumajou Dracula/Super Castlevania IV
+(Program starts at $0400 - 39 07 & 88 07)
+- Akumajou Dracula (1991-06-13 Prototype)
+(Program starts at $0400 - Using E4 ?? 8D ?? 3F ?? ??)
+(Program starts at $0400 - 4F 07 & 7C 09 (using 90 08 3F ?? ?? to distinguish))
+- Teenage Mutant Ninja Turtles - Turtles in Time (Beta)
+(Program starts at $0400 - 4F 07 & A0 09 (using 90 08 3F ?? ?? to distinguish))
+- Teenage Mutant Ninja Turtles - Turtles in Time
+(Program starts at $0400 - 7E 07)
+- Parodius Da! - Shinwa kara Owarai e/Parodius: Non-Sense Fantasy

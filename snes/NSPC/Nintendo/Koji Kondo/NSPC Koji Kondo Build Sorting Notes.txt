@@ -1,0 +1,22 @@
+Total number of known unique builds: 8
+
+(Program starts at $0800 - using D0 FA BC 3F ?? ??)
+(Program starts at $0800 - 5D 17)
+- Sim-City
+(Program starts at $0800 - C9 1D)
+- Super Donkey 1 (Prototype)
+
+(*Ver S1.20*)
+(Nintendo/Koji Kondo - Program starts at $0800 - Using D0 FA BC 3F ?? ??)
+(Nintendo/Koji Kondo - Program starts at $0400 - 96 0A)
+- Super Mario: Yoshi Island/Super Mario World 2: Yoshi's Island
+(Nintendo/Koji Kondo - Program starts at $0400 - 08 0B)
+- Super Mario: Yoshi Island/Super Mario World 2: Yoshi's Island (Prototype version)
+(Nintendo/Koji Kondo - Program starts at $0500 - 14 0B)
+- Star Fox/Star Wing
+(Nintendo/Koji Kondo - Program starts at $0500 - 11 0C)
+- Super Mario All-Stars/Super Mario Collection
+(Nintendo/Koji Kondo - Program starts at $0800 - 22 0E)
+- Legend of Zelda - A Link to the Past/Zelda no Densetsu - Kamigami no Triforce
+(Nintendo/Koji Kondo - Program starts at $0800 - 97 0E)
+- Star Glider (Prototype of Star Fox)
