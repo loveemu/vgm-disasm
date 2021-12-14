@@ -1030,7 +1030,7 @@
 0d93: 0d        push  psw
 0d94: e4 39     mov   a,$39             ;; note number?
 0d96: d5 b3 04  mov   $04b3+x,a
-0d99: f0 2c     beq   $0dc7             ;; jump if ($0540+X == 0) (rest)
+0d99: f0 2c     beq   $0dc7             ;; jump if ($04b3+X == 0) (rest)
 0d9b: 2d        push  a
 0d9c: f4 9e     mov   a,$9e+x
 0d9e: 28 08     and   a,#$08
@@ -1088,7 +1088,7 @@
 0e02: e8 00     mov   a,#$00
 0e04: d5 f0 03  mov   $03f0+x,a         ; zero duration counter
 0e07: 8e        pop   psw
-0e08: f0 2c     beq   $0e36             ;; jump if ($0540+X == 0) (rest)
+0e08: f0 2c     beq   $0e36             ;; jump if ($04b3+X == 0) (rest)
 0e0a: f4 80     mov   a,$80+x
 0e0c: 28 10     and   a,#$10
 0e0e: f0 14     beq   $0e24
