@@ -1070,7 +1070,7 @@
 0e17: 08 10     or    a,#$10
 0e19: d4 80     mov   $80+x,a
 0e1b: 2f f0     bra   $0e0d
-; vcmd A1 - slur off
+; vcmd A2 - slur off
 0e1d: f4 80     mov   a,$80+x
 0e1f: 28 ef     and   a,#$ef
 0e21: d4 80     mov   $80+x,a
@@ -1314,7 +1314,7 @@
 0fb9: 0d        push  psw
 0fba: e4 39     mov   a,$39             ;; note number?
 0fbc: d5 b3 04  mov   $04b3+x,a
-0fbf: f0 2c     beq   $0fed             ;; jump if ($0540+X == 0) (rest)
+0fbf: f0 2c     beq   $0fed             ;; jump if ($04b3+X == 0) (rest)
 0fc1: 2d        push  a
 0fc2: f4 9e     mov   a,$9e+x
 0fc4: 28 08     and   a,#$08
@@ -1372,7 +1372,7 @@
 1028: e8 00     mov   a,#$00
 102a: d5 f0 03  mov   $03f0+x,a         ; zero duration counter
 102d: 8e        pop   psw
-102e: f0 1a     beq   $104a             ;; jump if ($0540+X == 0) (rest)
+102e: f0 1a     beq   $104a             ;; jump if ($04b3+X == 0) (rest)
 1030: f4 80     mov   a,$80+x
 1032: 28 10     and   a,#$10
 1034: f0 14     beq   $104a
