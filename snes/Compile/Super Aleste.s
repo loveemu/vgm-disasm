@@ -582,7 +582,7 @@
 0aa0: e5 0e 18  mov   a,$180e
 0aa3: c4 f3     mov   $f3,a             ; set sample dir from $180E
 0aa5: e5 0f 18  mov   a,$180f
-0aa8: c4 47     mov   $47,a             ; set $3D to $180F
+0aa8: c4 47     mov   $47,a             ; set $47 to $180F
 0aaa: e5 12 18  mov   a,$1812
 0aad: c4 60     mov   $60,a
 0aaf: e5 13 18  mov   a,$1813
@@ -1478,7 +1478,7 @@
 10ec: d4 bc     mov   $bc+x,a
 10ee: d4 cb     mov   $cb+x,a
 10f0: 6f        ret
-; read ADSR from $5c[$03a5+x] to $3b/c
+; read ADSR from $5c[$03a5+x] to $42/3
 10f1: f5 a5 03  mov   a,$03a5+x
 10f4: 1c        asl   a
 10f5: b0 0b     bcs   $1102
