@@ -47,10 +47,12 @@ Years may vary between builds, and are noted below.
 (1992, 1993 - Program starts at $0460 - using D0 FB 8F ?? ?? 3F ?? ??)
 (1992, 1993 - Program starts at $0460 - F1 0D)
 - Jammit
+- PGA European Tour (during a golf game)
+- PGA Tour '96 (during a golf game)
 - Street Hockey '95
 (1992, 1993 - Program starts at $0290 - BA 09)
-- PGA European Tour
-- PGA Tour '96
+- PGA European Tour (outside of a golf game)
+- PGA Tour '96 (outside of a golf game)
 (1992-1994 - Program starts at $0460 - using D0 FB 8F ?? ?? 3F ?? ??)
 (1992-1994 - Program starts at $0460 - F9 0D)
 - Death and Return of Superman
