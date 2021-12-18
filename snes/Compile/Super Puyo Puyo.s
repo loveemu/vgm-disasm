@@ -767,7 +767,7 @@
 0b60: dw $0bc4  ; 80 - goto
 0b62: dw $0bcf  ; 81 - loop end
 0b64: dw $0c1b  ; 82 - halt
-0b66: dw $0c26  ; 83 - set vibrato
+0b66: dw $0c26  ; 83 - set pitch envelope id
 0b68: dw $0c54  ; 84
 0b6a: dw $0c6c  ; 85
 0b6c: dw $0c16  ; 86
@@ -882,7 +882,7 @@
 0c21: ae        pop   a
 0c22: ae        pop   a
 0c23: 5f 2e 08  jmp   $082e
-; vcmd 83 - set vibrato
+; vcmd 83 - set pitch envelope id
 0c26: d5 40 03  mov   $0340+x,a
 0c29: 6f        ret
 ; vcmd 88 - set software volume envelope
@@ -1749,7 +1749,7 @@
 1239: f5 40 03  mov   a,$0340+x
 123c: d0 01     bne   $123f
 123e: 6f        ret
-; read vibrato params
+; read pitch envelope
 123f: 1c        asl   a
 1240: fd        mov   y,a
 1241: f7 58     mov   a,($58)+y

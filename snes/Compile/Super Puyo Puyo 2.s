@@ -488,7 +488,7 @@
 090d: e5 06 18  mov   a,$1806
 0910: c4 58     mov   $58,a
 0912: e5 07 18  mov   a,$1807
-0915: c4 59     mov   $59,a             ; set vibrato table address to $58/9
+0915: c4 59     mov   $59,a             ; set pitch envelope table address to $58/9
 0917: e5 08 18  mov   a,$1808
 091a: c4 5a     mov   $5a,a
 091c: e5 09 18  mov   a,$1809
@@ -560,7 +560,7 @@
 09a5: dw $0a09  ; 80 - jump
 09a7: dw $0a14  ; 81 - loop end
 09a9: dw $0a60  ; 82 - halt
-09ab: dw $0a6b  ; 83 - set vibrato
+09ab: dw $0a6b  ; 83 - set pitch envelope id
 09ad: dw $0a99  ; 84
 09af: dw $0ab1  ; 85
 09b1: dw $0a5b  ; 86
@@ -681,7 +681,7 @@
 0a66: ae        pop   a
 0a67: ae        pop   a
 0a68: 5f 35 08  jmp   $0835
-; vcmd 83 - set vibrato
+; vcmd 83 - set pitch envelope id
 0a6b: d5 40 03  mov   $0340+x,a
 0a6e: 6f        ret
 
@@ -1564,7 +1564,7 @@
 1042: d0 01     bne   $1045
 1044: 6f        ret
 
-; read vibrato params
+; read pitch envelope
 1045: 1c        asl   a
 1046: fd        mov   y,a
 1047: f7 58     mov   a,($58)+y
@@ -2005,7 +2005,7 @@
 137d: d5 30 03  mov   $0330+x,a         ; +03 volume envelope #
 1380: fc        inc   y
 1381: f7 36     mov   a,($36)+y
-1383: d5 40 03  mov   $0340+x,a         ; +04 vibrato
+1383: d5 40 03  mov   $0340+x,a         ; +04 pitch envelope #
 1386: fc        inc   y
 1387: f7 36     mov   a,($36)+y
 1389: 60        clrc
