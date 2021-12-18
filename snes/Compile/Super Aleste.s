@@ -497,7 +497,7 @@
 09e5: c4 f3     mov   $f3,a
 09e7: fc        inc   y
 09e8: 1d        dec   x
-09e9: d0 f5     bne   $09e0             ; copy $0200+Y to DSP voice regs 00-07
+09e9: d0 f5     bne   $09e0             ; copy $0280+Y to DSP voice regs 00-07
 09eb: ee        pop   y
 09ec: dd        mov   a,y
 09ed: 60        clrc
