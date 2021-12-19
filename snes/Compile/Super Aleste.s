@@ -823,7 +823,7 @@
 0c7d: dw $0dab  ; 9c
 0c7f: dw $0e29  ; 9d
 0c81: dw $0da3  ; 9e
-0c83: dw $0e31  ; 9f - set ADSR
+0c83: dw $0e31  ; 9f - set ADSR/GAIN
 0c85: dw $0e2d  ; a0 - set sample
 0c87: dw $0e15  ; a1 - slur on
 0c89: dw $0e1d  ; a2 - slur off
@@ -1089,7 +1089,7 @@
 ; vcmd A0 - set sample
 0e2d: d5 96 03  mov   $0396+x,a
 0e30: 6f        ret
-; vcmd 9F - set ADSR
+; vcmd 9F - set ADSR/GAIN
 0e31: d5 a5 03  mov   $03a5+x,a
 0e34: 6f        ret
 ; vcmd 97
@@ -1478,7 +1478,7 @@
 10ec: d4 bc     mov   $bc+x,a
 10ee: d4 cb     mov   $cb+x,a
 10f0: 6f        ret
-; read ADSR from $5c[$03a5+x] to $42/3
+; read ADSR/GAIN from $5c[$03a5+x] to $42/3
 10f1: f5 a5 03  mov   a,$03a5+x
 10f4: 1c        asl   a
 10f5: b0 0b     bcs   $1102
@@ -1486,10 +1486,10 @@
 10f8: f7 5c     mov   a,($5c)+y
 10fa: c4 42     mov   $42,a
 10fc: fc        inc   y
-10fd: f7 5c     mov   a,($5c)+y
+10fd: f7 5c     mov   a,($5c)+y ;used for both ADSR(2) and GAIN
 10ff: c4 43     mov   $43,a
 1101: 6f        ret
-; reset ADSR if the index >= 0x80
+; reset ADSR/GAIN if the index = 0x80
 1102: 8f 00 42  mov   $42,#$00
 1105: d0 04     bne   $110b
 1107: 8f 7f 43  mov   $43,#$7f
