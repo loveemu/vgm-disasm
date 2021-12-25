@@ -1,22 +1,32 @@
-Total number of known unique builds: 18
+Total number of known unique builds: 23
 
 (Program starts at $0400 - using 8F ?? ?? 3F ?? ??)
 (Program starts at $0400 - 9A 0C)
-- Super Off Road
+- Super Off Road (US version)
+(Program starts at $0400 - 4F 10)
+- Super Off Road (European and Japanese versions)
 (Program starts at $0400 - 62 10)
 - Plok!
 (Program starts at $0400 - A5 10)
 - Troddlers
 (Program starts at $0400 - D0 11)
 - Spider-Man and the X-Men in Arcade's Revenge
+(Program starts at $0400 - E3 11)
+- Troddlers (Beta)
 (Program starts at $0400 - 03 12)
 - Equinox/Solstice 2
 (Program starts at $0400 - 45 12)
-- Rock 'n Roll Racing
+- Rock 'n Roll Racing (US and Japanese versions)
+(Program starts at $0400 - 47 12)
+- Rock 'n Roll Racing (European version)
 (Program starts at $0400 - 57 12)
 - Tin Star
+(Program starts at $0400 - 63 12)
+- Rock 'n Roll Racing (US Beta)
 (Program starts at $0400 - 6C 12)
 - Thomas the Tank Engine & Friends
+(Program starts at $0400 - 6D 12)
+- Equinox/Solstice 2 (Beta)
 (Program starts at $0400 - 86 12)
 - Venom/Spider-Man: Separation Anxiety
 (Program starts at $0400 - 99 12)
