@@ -1,6 +1,5 @@
 Total number of known unique builds: 15
 
-(Square/Minoru Akao)
 (Program starts at $0800 - using 8F ?? ?? 3F ?? ??)
 (Program starts at $0800 - 82 10)
 - Final Fantasy IV/II
