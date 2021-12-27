@@ -1,4 +1,4 @@
-Total number of known unique builds: 16
+Total number of known unique builds: 17
 
 NOTE: Some ROM text is noted as following as a partial versioning marker (earlier ones do not have this present):
 (C) 1992 Basement Boys Software
@@ -26,6 +26,8 @@ Years may vary between builds, and are noted below.
 - Bubsy in Claws Encounters of the Furred Kind
 - Kawasaki Caribbean Challenge (during a race)
 - Urban Strike
+(1992 - Program starts at $0460 - 13 0D)
+- Super Off Road: The Baja (Beta)
 (1992 - Program starts at $0460 - B9 0D)
 - Cool Spot
 - Young Merlin
