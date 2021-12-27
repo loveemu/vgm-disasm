@@ -1,9 +1,11 @@
-Total number of known unique builds: 21
+Total number of known unique builds: 22
 (Does not count Oozumou Spirits and AIII S.V. - A Ressha de Ikou 3 - Super Version as unique builds because all of the differences are purely non-code based)
 
 (Program starts at $0800 - using E8 ?? 8D ?? 3F ?? ??)
 (Program starts at $0800 - 5A 0F)
 - Battle Commander
+(Program starts at $0800 - 85 11)
+- Cyber Spin
 (Program starts at $0800 - B5 11)
 - Aguri Suzuki F-1 Super Driving/Redline F1 Racer
 (Program starts at $0800 - EA 11)
@@ -12,13 +14,11 @@ Total number of known unique builds: 21
 - Oozumou Spirits
 (NOTE: This is actually identical to Honoo no Toukyuuji Dodge Danpei minus a drumkit difference that causes different memory locations to be output)
 (Program starts at $0800 - 2A 12)
-- Shinseiki GPX Cyber Formula/Cyber Spin
+- Shinseiki GPX Cyber Formula
 (Program starts at $0800 - 29 13)
 - Great Battle 3
 (Program starts at $0800 - 6D 13)
 - Bishoujo Senshi Sailor Moon R
-(Program starts at $0800 - 82 13)
-- Kawa no Nushi Tsuri 2
 (Program starts at $0800 - B1 13)
 - Crayon Shin-chan - Arashi o Yobu Enji
 - Kamen Rider
