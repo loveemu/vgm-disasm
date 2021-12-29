@@ -24,6 +24,7 @@ Total number of known unique builds: 14
 - Captain Commando
 (Program starts at $02C0 - 2F 04)
 - Mickey no Magical Adventure/Magical Quest Starring Mickey Mouse/Magical Quest Con Topolino
+- Super Pang/Super Buster Bros. (US Version only, not revision 1)
 (Program starts at $02C0 - 36 04 & D6 0C (using 8D ?? E8 ?? 3F ?? ?? to distinguish))
 - Goof Troop/Goofy to Max: Kaizoku Shima no Daibouken
 (Program starts at $02C0 - 36 04 & D9 0C (using 8D ?? E8 ?? 3F ?? ?? to distinguish))
@@ -32,7 +33,6 @@ Total number of known unique builds: 14
 - Super Pang (European version and US Version Revision 1)
 (Program starts at $02C0 - 4C 04)
 - Street Fighter II: The World Warrior
-- Super Pang/Super Buster Bros. (US Version only, not revision 1)
 (Program starts at $02C0 - 51 04 & 4A 0D (using 8D ?? E8 ?? 3F ?? ?? to distinguish))
 - Muscle Bomber - The Body Explosion
 - Super Street Fighter II: The New Challengers (US and European versions)
