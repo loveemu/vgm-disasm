@@ -41,4 +41,6 @@ NOTE: These builds mostly don't have shared SFX code due to their hardcoded natu
 
 (Program starts at $1500 - Using E8 ?? C5 ?? ?? 3F ?? ??)
 (Program starts at $1500 - D7 1E)
-- Super Metroid
+- Super Metroid (US & Japanese versions)
+- Super Metroid (European version)
+(NOTE: These builds are identical to each other minus pointers placed after the SFX data.)
