@@ -5,17 +5,20 @@ Total number of known unique builds: 7
 - Super Fire Pro Wrestling
 - Super Formation Soccer/Super Soccer
 (Program starts at $0380 - contains an opening jump - 74 0E)
-- Human Grand Prix/F1 Pole Position
+- Human Grand Prix/F1 Pole Position (Beta)
 (Program starts at $0380 - contains an opening jump - 76 0E)
 - Dragon's Earth
 - Super Fire Pro Wrestling 2
 - Super Fire Pro Wrestling 3 Final Bout
 (Program starts at $0380 - contains an opening jump - 77 0E)
 - Human Baseball
-- Septentrion/SOS
+- Septentrion
+- Super Fire Pro Wrestling 3 Final Bout (Sample)
 - Super Formation Soccer 2
 (Program starts at $0380 - contains an opening jump - 79 0E)
+- F1 Pole Position
 - Human Grand Prix II/F1 Pole Position 2
+- SOS
 (Program starts at $0500 - contains an opening jump - A0 10)
 - Dream Basketball: Dunk & Hoop
 - Firemen
