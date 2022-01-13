@@ -1,29 +1,32 @@
-Total number of known unique builds: 9
+Total number of known unique builds: 10
 
-(Program starts at $0800 - using D0 F4 BC 3F ?? ??)
-(Program starts at $0800 - 06 0B)
-- Battle Clash/Space Bazooka
-(Program starts at $0800 - 0A 0B)
+(Program starts at $0400 - using D0 F4 BC 3F ?? ??)
+(Program starts at $0480 - 06 0B)
+- Battle Clash
+(Program starts at $0400 - code before $0480 is overwritten after initialization - 06 0B)
+- Space Bazooka
+(NOTE: The only difference between this and Battle Clash is the presence of the initialization code snippet.)
+(Program starts at $0300 - code before $0400 is overwritten after initialization - 0A 0B)
 - Metal Combat: Falcon's Revenge
-(Program starts at $0800 - 2D 0B)
+(Program starts at $0300 - code before $0400 is overwritten after initialization - 2D 0B)
 - Fire Emblem: Monshou no Nazo
 
-(Program starts at $0800 - using D0 F1 BC 3F ?? ??)
-(Program starts at $0800 - AD 0B)
+(Program starts at $0500 - using D0 F1 BC 3F ?? ??)
+(Program starts at $0500 - AD 0B)
 - Shinri Game: Akuma no Kokoroji
 
-(Program starts at $0800 - using D0 E8 BC 3F ?? ??)
-(Program starts at $0800 - 68 0F)
+(Program starts at $0200 - using D0 E8 BC 3F ?? ??)
+(Program starts at $0200 - code before $0400 is overwritten after initialization - 68 0F)
 - Panel de Pon
 
-(Program starts at $0700 - using D0 EB BC 3F ?? ??)
+(Program starts at $0200 - code before $0700 is overwritten after initialization - using D0 EB BC 3F ?? ??)
 (Program starts at $0700 - 56 0E)
 - Tetris Attack
 
-(Program starts at $0660 - using 10 FA BC C4 ?? 3F ?? ?? (using 78 ?? ?? B0 03 3F ?? ?? at $119A to distinguish))
-(Program starts at $0660 - 92 0C & C3 19)
+(Program starts at $0200 - code before $0660 is overwritten after initialization - using 10 FA BC C4 ?? 3F ?? ?? (using 78 ?? ?? B0 03 3F ?? ?? at $119A to distinguish))
+(Program starts at $0200 - code before $0660 is overwritten after initialization - 92 0C & C3 19)
 - Super Famicom Wars
-(Program starts at $0660 - 92 0C & C7 19)
+(Program starts at $0200 - code before $0660 is overwritten after initialization - 92 0C & C7 19)
 - Fire Emblem: Seisen no Keifu
-(Program starts at $0660 - 92 0C & CC 18)
+(Program starts at $0200 - code before $0660 is overwritten after initialization - 92 0C & CC 18)
 - Fire Emblem: Thracia 776
