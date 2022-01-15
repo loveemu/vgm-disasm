@@ -1,4 +1,4 @@
-Total number of known unique builds: 9
+Total number of known unique builds: 10
 
 (Program starts at $0800 - Using 2F ?? BC 3F ?? ??)
 (Program starts at $0800 - 3D 0E)
@@ -7,8 +7,12 @@ Total number of known unique builds: 9
 
 (*Ver S1.20*)
 (Program starts at $0800 - Using D0 FB BC 3F ?? ??)
-(Program starts at $0675 with *Ver S1.20* right at the beginning of the code, otherwise starts at $0800 - 73 0D)
-- Wild Trax/Stunt Race FX
+(Program starts at $0675 with *Ver S1.20* right at the beginning of the code, otherwise starts at $0800 - 73 0D & EB 10 & 7B 1A (using 33 ?? 04 12 ?? 32 ?? 3F ?? ?? 3F ?? ?? to distinguish))
+- Wild Trax/Stunt Race FX (US version)
+
+(Program starts at $0800 - 73 0D & 1B 11 & C4 15 using 33 ?? 04 12 ?? 32 ?? 3F ?? ?? 3F ?? ?? to distinguish))
+- Stunt Race FX (European version)
+(NOTE: There is a non-code related relocation prior to the first opcode that is actually different. Said signature is located after this difference.)
 
 (Program starts at $0800 - using E8 ?? BC 3F ?? ??)
 (Program starts at $0800 - 79 0D)
