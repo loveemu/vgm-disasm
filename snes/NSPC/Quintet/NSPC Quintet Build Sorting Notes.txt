@@ -11,10 +11,11 @@ Total number of known unique builds: 8
 - Actraiser (Japanese version)
 (Program starts at $0400 - using C2 ?? BC 3F ?? ??)
 (Program starts at $0400 - 6F 0A & 30 0E (using E4 ?? F0 03 3F ?? ?? to distinguish))
-- Actraiser 2
+- Actraiser 2 (US and Japanese versions)
 (Program starts at $0400 - 6F 0A & 80 0E (using E4 ?? F0 03 3F ?? ?? to distinguish))
 - Slap Stick/Robotrek
 (Program starts at $0400 - 76 0A)
+- Actraiser 2 (European version)
 - Illusion of Gaia/Illusion of Time
 - Miracle Casino Paradise
 (Program starts at $0400 - using D0 FB BC 3F ?? ??)
