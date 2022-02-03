@@ -60,13 +60,13 @@
 08d2: 2f f2     bra   $08c6
 08d4: e5 03 08  mov   a,$0803
 08d7: ec 04 08  mov   y,$0804
-08da: da 15     movw  $15,ya            ; set music structure address from $0803/4 to $15/6
+08da: da 15     movw  $15,ya            ; read music structure address from $0803/4 to $15/6 = $3000
 08dc: e5 05 08  mov   a,$0805
 08df: ec 06 08  mov   y,$0806
 08e2: da 17     movw  $17,ya
 08e4: e5 07 08  mov   a,$0807
 08e7: ec 08 08  mov   y,$0808
-08ea: da 19     movw  $19,ya
+08ea: da 19     movw  $19,ya            ; read per-instrument tuning table address from $0807/0808 to $19/1a = $fe00
 08ec: e5 09 08  mov   a,$0809
 08ef: c5 5b 01  mov   $015b,a
 08f2: e5 0a 08  mov   a,$080a
@@ -1039,27 +1039,34 @@
 106c: 10 f2     bpl   $1060
 106e: 60        clrc
 106f: 6f        ret
-
+;
 1070: ab 09     inc   $09
 1072: 2f ec     bra   $1060
+
+; get the pointer to per-instrument tuning values for SRCN in A
 1074: 8d 04     mov   y,#$04
 1076: cf        mul   ya
 1077: 7a 19     addw  ya,$19
 1079: 6f        ret
 
+; @in $00 note number (expected that per-instrument course tuning has already been applied)
+; @in $04/5 per-instrument tuning struct address
+; @in $06/7 fine tuning (in 1/256 semitones, signed)
 107a: 8d 03     mov   y,#$03
-107c: f7 04     mov   a,($04)+y
+107c: f7 04     mov   a,($04)+y         ; read offset 3: per-instrument fine tuning (in 1/256 semitones)
 107e: 8d 00     mov   y,#$00
 1080: 5d        mov   x,a
 1081: 10 01     bpl   $1084
-1083: dc        dec   y
-1084: 7a 06     addw  ya,$06
+1083: dc        dec   y                 ; sign-extend
+1084: 7a 06     addw  ya,$06            ; add fine tunings
 1086: 30 08     bmi   $1090
+; if the tuning is positive
 1088: da 06     movw  $06,ya
 108a: dd        mov   a,y
 108b: 60        clrc
-108c: 84 00     adc   a,$00
+108c: 84 00     adc   a,$00             ; note number + integer part of fine tuning
 108e: 2f 17     bra   $10a7
+; else (negative)
 1090: 48 ff     eor   a,#$ff
 1092: c4 06     mov   $06,a
 1094: dd        mov   a,y
@@ -1072,22 +1079,25 @@
 10a0: 8f ff 07  mov   $07,#$ff
 10a3: 10 02     bpl   $10a7
 10a5: e8 00     mov   a,#$00
+; (note number in A)
 10a7: 8d 00     mov   y,#$00
 10a9: cd 0c     mov   x,#$0c
-10ab: 9e        div   ya,x
-10ac: da 00     movw  $00,ya
+10ab: 9e        div   ya,x              ; calculate (octave, key) to (A, Y)
+10ac: da 00     movw  $00,ya            ; $00: octave, $01: key as well
 10ae: 68 05     cmp   a,#$05
 10b0: 90 03     bcc   $10b5
-10b2: 8f 05 00  mov   $00,#$05
+10b2: 8f 05 00  mov   $00,#$05          ; set max note number (60) if exceeded
 10b5: f8 01     mov   x,$01
 10b7: e4 07     mov   a,$07
 10b9: 30 0b     bmi   $10c6
+; if the tuning is positive
 10bb: f5 32 12  mov   a,$1232+x
-10be: eb 06     mov   y,$06
-10c0: cf        mul   ya
+10be: eb 06     mov   y,$06             ; fractional part of fine tuning
+10c0: cf        mul   ya                ; convert to S-DSP pitch frequency diff
 10c1: dd        mov   a,y
 10c2: 8d 00     mov   y,#$00
 10c4: 2f 0e     bra   $10d4
+; else (negative)
 10c6: f5 31 12  mov   a,$1231+x
 10c9: eb 06     mov   y,$06
 10cb: cf        mul   ya
@@ -1096,24 +1106,26 @@
 10cf: 48 ff     eor   a,#$ff
 10d1: bc        inc   a
 10d2: 8d ff     mov   y,#$ff
-10d4: da 06     movw  $06,ya
+;
+10d4: da 06     movw  $06,ya            ; update $06 by final fine tuning in S-DSP pitch frequency diff
 10d6: f8 01     mov   x,$01
-10d8: f5 25 12  mov   a,$1225+x
+10d8: f5 25 12  mov   a,$1225+x         ; read pitch table (hi)
 10db: fd        mov   y,a
-10dc: f5 19 12  mov   a,$1219+x
-10df: 7a 06     addw  ya,$06
-10e1: cb 07     mov   $07,y
+10dc: f5 19 12  mov   a,$1219+x         ; read pitch table (lo)
+10df: 7a 06     addw  ya,$06            ; base pitch + fine tuning
+10e1: cb 07     mov   $07,y             ; $06/7 = note pitch without octave correction
 10e3: 0b 00     asl   $00
 10e5: f8 00     mov   x,$00
 10e7: 1f ea 10  jmp   ($10ea+x)
 
-10ea: dw $10f6  ;
-10ec: dw $10f9  ;
-10ee: dw $10fc  ;
-10f0: dw $10ff  ;
-10f2: dw $1102  ;
-10f4: dw $1105  ;
+10ea: dw $10f6  ; o0
+10ec: dw $10f9  ; o1
+10ee: dw $10fc  ; o2
+10f0: dw $10ff  ; o3
+10f2: dw $1102  ; o4
+10f4: dw $1105  ; o5 (as-is)
 
+; apply octave correction
 10f6: 4b 07     lsr   $07
 10f8: 7c        ror   a
 10f9: 4b 07     lsr   $07
@@ -1124,13 +1136,13 @@
 1101: 7c        ror   a
 1102: 4b 07     lsr   $07
 1104: 7c        ror   a
-1105: c4 06     mov   $06,a
+1105: c4 06     mov   $06,a             ; $06/7 = note pitch with octave correction
 1107: 8d 00     mov   y,#$00
-1109: f7 04     mov   a,($04)+y
+1109: f7 04     mov   a,($04)+y         ; read offset 0: pitch scale (integer)
 110b: c4 01     mov   $01,a
 110d: fc        inc   y
-110e: f7 04     mov   a,($04)+y
-1110: c4 00     mov   $00,a
+110e: f7 04     mov   a,($04)+y         ; read offset 1: pitch scale (fractional)
+1110: c4 00     mov   $00,a             ; note number will be multiplied by pitch scale (Q8)
 1112: eb 07     mov   y,$07
 1114: cf        mul   ya
 1115: da 04     movw  $04,ya
@@ -1222,10 +1234,15 @@
 1209: db $48,$26,$0a,$dd,$08,$0d,$f9,$00
 1211: db $38,$48,$14,$e6,$01,$0a,$fe,$fe
 
+; pitch table
+;          c  c+   d  d+   e   f  f+   g  g+   a  a+   b
 1219: db $5f,$de,$65,$f4,$8c,$2c,$d6,$8b,$4a,$14,$ea,$cd
 1225: db $08,$08,$09,$09,$0a,$0b,$0b,$0c,$0d,$0e,$0e,$0f
 
-1231: db $79,$7f,$87,$8f,$98,$a0,$aa,$b5,$bf,$ca,$d6,$e3,$f1
+; pitch diff table (for fine tuning)
+; Stores the difference in pitch between adjacent keys.
+1231: db $79
+1232: db $7f,$87,$8f,$98,$a0,$aa,$b5,$bf,$ca,$d6,$e3,$f1
 
 ; panpot - volume balance table
 123e: db $00,$07,$0d,$14,$1a,$21,$27,$2e
@@ -1414,7 +1431,7 @@
 13eb: d5 6e 03  mov   $036e+x,a
 13ee: d5 93 02  mov   $0293+x,a
 13f1: d5 39 02  mov   $0239+x,a
-13f4: d5 11 02  mov   $0211+x,a
+13f4: d5 11 02  mov   $0211+x,a         ; note number
 13f7: d4 9e     mov   $9e+x,a
 13f9: d4 a6     mov   $a6+x,a
 13fb: d4 8e     mov   $8e+x,a
@@ -2045,8 +2062,8 @@
 18bd: 84 01     adc   a,$01             ; note number (octave corrected, 0-71)
 18bf: 73 00 02  bbc3  $00,$18c4
 18c2: 08 80     or    a,#$80            ; set bit 7, if note bit 3 (tie) is set
-18c4: c4 02     mov   $02,a
-18c6: f5 21 02  mov   a,$0221+x         ; set note number to $0211+x
+18c4: c4 02     mov   $02,a             ; save note number
+18c6: f5 21 02  mov   a,$0221+x
 18c9: 63 00 2b  bbs3  $00,$18f7
 ; calc duration, if bit 3 (tie) is not set
 18cc: fd        mov   y,a
@@ -2084,10 +2101,10 @@
 1902: 1c        asl   a
 1903: 1c        asl   a
 1904: fd        mov   y,a               ; y = note number * 4
-1905: f7 42     mov   a,($42)+y
+1905: f7 42     mov   a,($42)+y         ; read voice attributes from rhythm kit table ($42/3)
 1907: 75 5a 02  cmp   a,$025a+x
 190a: f0 09     beq   $1915
-190c: d5 5a 02  mov   $025a+x,a         ; instrument #
+190c: d5 5a 02  mov   $025a+x,a         ; instrument # (SRCN)
 190f: f4 ae     mov   a,$ae+x
 1911: 08 04     or    a,#$04
 1913: d4 ae     mov   $ae+x,a
@@ -2095,7 +2112,7 @@
 1916: f7 42     mov   a,($42)+y
 1918: 73 00 02  bbc3  $00,$191d
 191b: 08 80     or    a,#$80
-191d: c4 02     mov   $02,a             ; pitch (note number)
+191d: c4 02     mov   $02,a             ; note number
 191f: fc        inc   y
 1920: f7 42     mov   a,($42)+y
 1922: d5 73 02  mov   $0273+x,a         ; volume
@@ -2145,7 +2162,7 @@
 1981: e2 02     set7  $02
 1983: f8 4a     mov   x,$4a
 1985: e4 02     mov   a,$02
-1987: d5 11 02  mov   $0211+x,a
+1987: d5 11 02  mov   $0211+x,a         ; save note number
 198a: 6f        ret
 
 198b: 68 fe     cmp   a,#$fe
@@ -2347,7 +2364,7 @@
 ; vcmd e1 - detune
 1adc: f8 4a     mov   x,$4a
 1ade: f7 04     mov   a,($04)+y
-1ae0: d5 93 02  mov   $0293+x,a
+1ae0: d5 93 02  mov   $0293+x,a         ; 1/256 semitones (signed)
 1ae3: 5f c1 17  jmp   $17c1
 
 ; vcmd e2 - set vibrato
@@ -2869,11 +2886,11 @@
 1e83: d4 73     mov   $73+x,a
 1e85: dc        dec   y
 1e86: f7 04     mov   a,($04)+y
-1e88: d4 6b     mov   $6b+x,a
-1e8a: 3f 74 10  call  $1074
+1e88: d4 6b     mov   $6b+x,a           ; SRCN
+1e8a: 3f 74 10  call  $1074             ; get per-instrument tuning struct address
 1e8d: d5 62 02  mov   $0262+x,a
 1e90: dd        mov   a,y
-1e91: d5 6a 02  mov   $026a+x,a
+1e91: d5 6a 02  mov   $026a+x,a         ; save the pointer
 1e94: 6f        ret
 
 1e95: 8d 03     mov   y,#$03
@@ -2949,10 +2966,10 @@
 1f25: fc        inc   y
 1f26: f7 48     mov   a,($48)+y
 1f28: c4 05     mov   $05,a
-1f2a: f5 11 02  mov   a,$0211+x
+1f2a: f5 11 02  mov   a,$0211+x         ; note number
 1f2d: 28 7f     and   a,#$7f
 1f2f: fd        mov   y,a
-1f30: f5 73 02  mov   a,$0273+x
+1f30: f5 73 02  mov   a,$0273+x         ; volume
 1f33: 28 7f     and   a,#$7f
 1f35: 60        clrc
 1f36: 97 04     adc   a,($04)+y
@@ -3008,23 +3025,23 @@
 1f99: 3f 55 20  call  $2055
 1f9c: f5 62 02  mov   a,$0262+x
 1f9f: c4 04     mov   $04,a
-1fa1: f5 6a 02  mov   a,$026a+x
+1fa1: f5 6a 02  mov   a,$026a+x         ; set per-instrument tuning struct address to $04/5
 1fa4: c4 05     mov   $05,a
-1fa6: f5 11 02  mov   a,$0211+x
+1fa6: f5 11 02  mov   a,$0211+x         ; note number
 1fa9: 28 7f     and   a,#$7f
 1fab: 8d 02     mov   y,#$02
 1fad: 60        clrc
-1fae: 97 04     adc   a,($04)+y
+1fae: 97 04     adc   a,($04)+y         ; offset 2: coarse tuning (in semitones, signed)
 1fb0: 60        clrc
-1fb1: 95 39 02  adc   a,$0239+x
+1fb1: 95 39 02  adc   a,$0239+x         ; apply transpose vcmd
 1fb4: 60        clrc
-1fb5: 85 41 02  adc   a,$0241
-1fb8: c4 00     mov   $00,a
+1fb5: 85 41 02  adc   a,$0241           ; global transpose?
+1fb8: c4 00     mov   $00,a             ; save transposed note number
 1fba: 8d 00     mov   y,#$00
 1fbc: f5 93 02  mov   a,$0293+x
 1fbf: 10 01     bpl   $1fc2
 1fc1: dc        dec   y
-1fc2: da 06     movw  $06,ya
+1fc2: da 06     movw  $06,ya            ; $06 = $0293+x (detune vcmd value, sign-extended)
 1fc4: 3f 7a 10  call  $107a
 1fc7: f8 4a     mov   x,$4a
 1fc9: d4 9e     mov   $9e+x,a
@@ -3434,7 +3451,7 @@
 230e: f5 21 02  mov   a,$0221+x
 2311: 9c        dec   a
 2312: d0 0b     bne   $231f
-2314: f5 11 02  mov   a,$0211+x
+2314: f5 11 02  mov   a,$0211+x         ; note number
 2317: 30 06     bmi   $231f
 2319: f5 79 11  mov   a,$1179+x
 231c: 0e 8c 00  tset1 $008c
@@ -4882,10 +4899,10 @@
 2de5: dc        dec   y
 2de6: f7 04     mov   a,($04)+y
 2de8: d5 89 06  mov   $0689+x,a
-2deb: 3f 74 10  call  $1074
+2deb: 3f 74 10  call  $1074             ; get per-instrument tuning struct address
 2dee: d5 c7 06  mov   $06c7+x,a
 2df1: dd        mov   a,y
-2df2: d5 cb 06  mov   $06cb+x,a
+2df2: d5 cb 06  mov   $06cb+x,a         ; save the pointer
 2df5: 6f        ret
 
 2df6: 8d 03     mov   y,#$03
@@ -4958,7 +4975,7 @@
 2e82: f5 c7 06  mov   a,$06c7+x
 2e85: c4 04     mov   $04,a
 2e87: f5 cb 06  mov   a,$06cb+x
-2e8a: c4 05     mov   $05,a
+2e8a: c4 05     mov   $05,a            ; set per-instrument tuning struct address to $04/5
 2e8c: f5 b3 06  mov   a,$06b3+x
 2e8f: 28 07     and   a,#$07
 2e91: 8d 0c     mov   y,#$0c
