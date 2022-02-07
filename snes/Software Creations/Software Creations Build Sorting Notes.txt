@@ -1,4 +1,4 @@
-Total number of known unique builds: 23
+Total number of known unique builds: 24
 
 (Program starts at $0400 - using 8F ?? ?? 3F ?? ??)
 (Program starts at $0400 - 9A 0C)
@@ -11,6 +11,8 @@ Total number of known unique builds: 23
 - Troddlers
 (Program starts at $0400 - D0 11)
 - Spider-Man and the X-Men in Arcade's Revenge
+(Program starts at $0400 - DA 11)
+- Spider-Man and the X-Men in Arcade's Revenge (Beta)
 (Program starts at $0400 - E3 11)
 - Troddlers (Beta)
 (Program starts at $0400 - 03 12)
