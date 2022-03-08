@@ -1,9 +1,14 @@
 Total number of known unique builds: 7
 
+NOTE: Does not count Hook as a unique build because of three unknown strips that aren't code being the only differences
+
 (Program starts at $0400 - contains an opening jump - using 5F ?? ??)
 (Program starts at $0400 - contains an opening jump - 4A 0E)
+- Little Magic
 - Super Fire Pro Wrestling
 - Super Formation Soccer/Super Soccer
+(Program starts at $0400 - contains an opening jump - 80 0E)
+- Hook (NOTE: Identical to the above build except that it contains three extra unknown strips of non-code data)
 (Program starts at $0380 - contains an opening jump - 74 0E)
 - Human Grand Prix/F1 Pole Position (Beta)
 (Program starts at $0380 - contains an opening jump - 76 0E)
@@ -11,6 +16,7 @@ Total number of known unique builds: 7
 - Super Fire Pro Wrestling 2
 - Super Fire Pro Wrestling 3 Final Bout
 (Program starts at $0380 - contains an opening jump - 77 0E)
+- F-1 Grand Prix Part 2
 - Human Baseball
 - Septentrion
 - Super Fire Pro Wrestling 3 Final Bout (Sample)
