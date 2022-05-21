@@ -1,4 +1,4 @@
-Total number of known unique build variants: 3
+Total number of known unique build variants: 4
 
 (Program starts at $0800 - using D0 F7 3F ?? ??)
 (Program starts at $0800 - 0D 0B)
@@ -6,6 +6,8 @@ Total number of known unique build variants: 3
 - Super Momotarou Dentetsu II
 - Super Momotarou Dentetsu III
 (Program starts at $0600 - using D0 F1 3F ?? ??)
+(Program starts at $0600 - 67 09)
+- Super Adventure Island II (Beta)
 (Program starts at $0600 - 7E 09)
 - Takahashi Meijin no Daibouken-jima II/Super Adventure Island II
 (Program starts at $0470 - using CD ?? BD 3F ?? ??)
