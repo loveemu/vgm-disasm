@@ -1,4 +1,4 @@
-Total number of known unique builds: 9
+Total number of known unique builds: 10
 
 NOTE: These builds mostly don't have shared SFX code due to their hardcoded nature for the most part, and VCMD sets are not guaranteed to be an exact match, either. The only other special note is that Super Scope 6 (Blastris) has a shared VCMD set with Super Scope 6 (LazerBlazer), but the latter is under Akito Nakatsuka due to its shared SFX programming with later games.
 
