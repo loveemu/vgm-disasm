@@ -1,0 +1,121 @@
+Total number of known unique builds: 38
+
+(Program starts at $0700 - using 8F ?? ?? 3F ?? ??)
+(Program starts at $0700 - D3 0D)
+- Jack Nicklaus Golf
+- Monopoly
+- WWF Super WrestleMania
+(Program starts at $0700 - EF 0D)
+- Faceball 2000
+- Super Conflict
+(Program starts at $0700 - F0 0D)
+- Clue
+- NCAA Basketball/World League Basketball/Super Dunk Shot
+(Program starts at $0700 - F1 0D)
+- Simpsons: Bart's Nightmare/Simpsons: Bart no Fushigi na Yume no Daibouken
+(Program starts at $0700 - F7 0D & 6F 15 (with D0 ?? 3F ?? ?? as a differentiator))
+- Tecmo Super NBA Basketball
+(Program starts at $0700 - F7 0D & 86 15 (with D0 ?? 3F ?? ?? as a differentiator))
+- Alfred Chicken
+- Andre Agassi Tennis
+- Captain Novolin
+- Daffy Duck: The Marvin Missions
+- M.A.C.S. Basic Rifle Marksmanship
+- Mario is Missing!
+- Mario's Time Machine
+- Outlander
+- Out to Lunch
+- Pink Panther in Pink Goes to Hollywood
+- Pro Quarterback
+- Road Runner's Death Valley Rally/Looney Tunes: Road Runner/Road Runner vs. Wile E. Coyote
+- SpellCraft
+- Super Star Wars
+- Total Carnage
+- Wing Commander
+- Wing Commander: The Secret Missions
+- Wizard of Oz
+(Program starts at $0700 - FB 0D)
+- Roger Clemens' MVP Baseball
+(Program starts at $0700 - 7E 0E)
+- Robocop vs. The Terminator
+- Tony Meola's Sidekicks Soccer/World Soccer (Beta)
+- WWF Royal Rumble
+(Program starts at $0700 - AD 0E)
+- Rex Ronan: Experimental Surgeon
+(Program starts at $0700 - AF 0E & 39 18 (with D0 ?? 3F ?? ?? as a differentiator))
+- Boxing Legends of the Ring/Final Knockout
+(Program starts at $0700 - AF 0E & 3C 18 (with D0 ?? 3F ?? ?? as a differentiator))
+- Bugs Bunny: Rabbit Rampage/Bugs Bunny - Hachamecha Daibouken
+- Super Battleship
+(Program starts at $0700 - C4 0E)
+- Barbie: Super Model
+- Cliffhanger
+- Tarzan
+- Wild Snake/Super Snakey
+(Program starts at $0700 - CA 0E)
+- Sports Illustrated Championship Football & Baseball/All-American Championship Football
+- Super Star Wars: The Empire Strikes Back/Teikoku no Gyakushuu
+- Tony Meola's Sidekicks Soccer/World Soccer
+(Program starts at $0700 - CF 0E)
+- Super Strike Eagle
+(Program starts at $0700 - D3 0E)
+- Rocko's Modern Life: Spunky's Dangerous Day
+(Program starts at $0700 - D5 0E)
+- NHL Stanley Cup/Super Hockey
+(Program starts at $0700 - D7 0E)
+- Bronkie
+- Falcon
+- Mer Wars
+- Packy and Marlon
+- Spectre
+(Program starts at $0700 - DF 0E & 51 0C (using 8F ?? ?? 8D ?? to distinguish))
+- Mortal Kombat
+(Program starts at $0700 - DF 0E & 52 0C (using 8F ?? ?? 8D ?? to distinguish))
+- Mortal Kombat - Shinken Kourin Densetsu
+(Program starts at $0700 - 66 0F)
+- Ramos' World Wide Soccer
+(Program starts at $0700 - 73 10)
+- Secret of Evermore (US version)
+(Program starts at $0700 - 7B 10 & D1 10 (using 3F ?? ?? at $0789 to distinguish))
+- Mortal Kombat 2 (European version)
+- Virtual Bart (European version)
+(Program starts at $0700 - 7B 10 & D8 10 (using 3F ?? ?? at $0789 to distinguish))
+- Boogerman
+(Program starts at $0700 - 80 10)
+- Chavez II
+- Ren and Stimpy: Time Warp
+- Super Star Wars: Return of the Jedi/Jedi no Fukushuu
+(Program starts at $0700 - 80 10 (different at $1900 due to rearranged code))
+- Seaquest DSV
+- WWF Raw
+(Program starts at $0700 - 83 10)
+- Doom
+(Program starts at $0700 - 86 10)
+- Air Calvary
+- Carrier Aces
+- Untitled NFL Football Game
+(Program starts at $0700 - 95 10 & 7F 0B (using 8F ?? ?? F6 ?? ?? 3F ?? ?? to distinguish))
+- Mortal Kombat 2 - Kyuukyoku Shinken (US and Japanese versions)
+(Program starts at $0700 - 95 10 & EA 0B (using 8F ?? ?? F6 ?? ?? 3F ?? ?? to distinguish))
+- Mortal Kombat 3 (Beta 1)
+(Program starts at $0700 - 9A 10)
+- War 2410
+- War 3010
+(Program starts at $0700 - 9C 10)
+- Dirt Trax FX
+- Looney Tunes B-Ball
+(Program starts at $0700 - 9F 10 & 91 1C (using 3F ?? ?? at $0D1C as a differentiator))
+- Secret of Evermore (European version)
+- WWF WrestleMania: The Arcade Game
+(Program starts at $0700 - 9F 10 & 93 1C (using 3F ?? ?? at $0D1C as a differentiator))
+- Mortal Kombat 3
+(Program starts at $0700 - C0 10)
+- Jungle Book
+(Program starts at $0700 - E4 10)
+- Super Copa
+(Program starts at $0700 - E9 10)
+- King Arthur and the Knights of Justice
+- Pitfall: The Mayan Adventure
+(Program starts at $0700 - FD 10)
+- Tecmo Super Baseball
+- Virtual Bart
