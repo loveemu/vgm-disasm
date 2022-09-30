@@ -1,10 +1,10 @@
-Total number of known unique builds: 54
+Total number of known unique builds: 55
 
 Build counts sorted by SQ version (NOTE: there are a few cases where the SNES-side ROM text doesn't match up with the internal SPC700 ROM text: the SPC700 side gains priority in these cases)...
 No version identifier: 17
 V108: 14
 SQV1228: 2
-V110: 4
+V110: 5
 V111: 1
 SQ(1.16): 1
 SQ(1.23): 1 (NOTE: There are three other cases that weren't counted because they matched an earlier build instead or the internal markings were wrong: one build matched an earlier textless SPC700-side build, a second one had an internal marking of V110, and a third one had an internal marking of 1.28. The only one that was counted was also textless SPC700-side, but was a unique build)
@@ -152,6 +152,8 @@ NOTE: Both SNES-side and SPC700-side version text are included. However, only th
 (GAPS SOUND 1.02 - internal marking V108 - Program starts at $0816 - 4C 1E)
 - Larry Nixon's Super Bass Fishing/TNN Bass Tournament of Champions (Matches the above VER1.03 builds)
 
+(VER1.03 - internal marking V110 - Program starts at $0816 - 4A 1E)
+- Go Go Ackman
 (VER1.03 - internal marking V110 - Program starts at $0816 - 62 1E)
 - Panic in Nakayoshi World
 - Spriggan Powered
