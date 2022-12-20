@@ -28,7 +28,7 @@
 0536: 8f 7f bc  mov   $bc,#$7f
 0539: e5 fd 00  mov   a,$00fd
 053c: f0 03     beq   $0541
-053e: 3f 1c 07  call  $071c
+053e: 3f 1c 07  call  $071c             ; on timer 0 tick
 0541: e5 fe 00  mov   a,$00fe
 0544: f0 03     beq   $0549
 0546: 3f 50 07  call  $0750
@@ -115,10 +115,10 @@
 05eb: c4 03     mov   $03,a
 05ed: fc        inc   y
 05ee: f7 00     mov   a,($00)+y
-05f0: d5 20 02  mov   $0220+x,a
+05f0: d5 20 02  mov   $0220+x,a         ; read voice pointer (lo)
 05f3: fc        inc   y
 05f4: f7 00     mov   a,($00)+y
-05f6: d5 30 02  mov   $0230+x,a
+05f6: d5 30 02  mov   $0230+x,a         ; read voice pointer (hi)
 05f9: e8 00     mov   a,#$00
 05fb: d5 00 02  mov   $0200+x,a
 05fe: d5 10 02  mov   $0210+x,a
@@ -137,24 +137,25 @@
 061e: 5d        mov   x,a
 061f: 1f 22 06  jmp   ($0622+x)
 
-0622: dw $0645
-0624: dw $064d
-0626: dw $0665
-0628: dw $066d
-062a: dw $0642
-062c: dw $0642
-062e: dw $0642
-0630: dw $0642
-0632: dw $0642
-0634: dw $0642
-0636: dw $0642
-0638: dw $0642
-063a: dw $0642
-063c: dw $0642
-063e: dw $0642
-0640: dw $0683
+0622: dw $0645  ; _0
+0624: dw $064d  ; _1
+0626: dw $0665  ; _2
+0628: dw $066d  ; _3
+062a: dw $0642  ; _4 - nop
+062c: dw $0642  ; _5 - nop
+062e: dw $0642  ; _6 - nop
+0630: dw $0642  ; _7 - nop
+0632: dw $0642  ; _8 - nop
+0634: dw $0642  ; _9 - nop
+0636: dw $0642  ; _a - nop
+0638: dw $0642  ; _b - nop
+063a: dw $0642  ; _c - nop
+063c: dw $0642  ; _d - nop
+063e: dw $0642  ; _e - nop
+0640: dw $0683  ; _f
 
 0642: 5f d6 05  jmp   $05d6
+
 0645: 6d        push  y
 0646: 3f 84 06  call  $0684
 0649: ee        pop   y
@@ -166,8 +167,8 @@
 0653: f7 00     mov   a,($00)+y
 0655: 60        clrc
 0656: 88 80     adc   a,#$80
-0658: c5 fa 00  mov   $00fa,a
-065b: c4 c4     mov   $c4,a
+0658: c5 fa 00  mov   $00fa,a           ; set timer 0 frequency
+065b: c4 c4     mov   $c4,a             ; set timer 0 frequency shadow
 065d: e8 03     mov   a,#$03
 065f: c5 f1 00  mov   $00f1,a
 0662: 5f d6 05  jmp   $05d6
@@ -193,7 +194,7 @@
 0684: 8d 6c     mov   y,#$6c
 0686: cc f2 00  mov   $00f2,y
 0689: e8 e0     mov   a,#$e0
-068b: c5 f3 00  mov   $00f3,a
+068b: c5 f3 00  mov   $00f3,a           ; set FLG
 068e: e8 00     mov   a,#$00
 0690: c4 02     mov   $02,a
 0692: c4 03     mov   $03,a
@@ -202,56 +203,57 @@
 0699: c5 f7 00  mov   $00f7,a
 069c: 8d 4d     mov   y,#$4d
 069e: cc f2 00  mov   $00f2,y
-06a1: c5 f3 00  mov   $00f3,a
+06a1: c5 f3 00  mov   $00f3,a           ; set EON
 06a4: 8d 2c     mov   y,#$2c
 06a6: cc f2 00  mov   $00f2,y
-06a9: c5 f3 00  mov   $00f3,a
+06a9: c5 f3 00  mov   $00f3,a           ; set EVOL(L)
 06ac: 8d 7d     mov   y,#$7d
 06ae: cc f2 00  mov   $00f2,y
-06b1: c5 f3 00  mov   $00f3,a
+06b1: c5 f3 00  mov   $00f3,a           ; set EDL
 06b4: 8d 6d     mov   y,#$6d
 06b6: cc f2 00  mov   $00f2,y
 06b9: 9c        dec   a
-06ba: c5 f3 00  mov   $00f3,a
+06ba: c5 f3 00  mov   $00f3,a           ; set ESA
 06bd: 8d 3c     mov   y,#$3c
 06bf: cc f2 00  mov   $00f2,y
 06c2: bc        inc   a
-06c3: c5 f3 00  mov   $00f3,a
+06c3: c5 f3 00  mov   $00f3,a           ; set EVOL(R)
 06c6: 8d 0d     mov   y,#$0d
 06c8: cc f2 00  mov   $00f2,y
-06cb: c5 f3 00  mov   $00f3,a
+06cb: c5 f3 00  mov   $00f3,a           ; set EFB
 06ce: 8d 2d     mov   y,#$2d
 06d0: cc f2 00  mov   $00f2,y
-06d3: c5 f3 00  mov   $00f3,a
+06d3: c5 f3 00  mov   $00f3,a           ; set PMON
 06d6: 8d 3d     mov   y,#$3d
 06d8: cc f2 00  mov   $00f2,y
-06db: c5 f3 00  mov   $00f3,a
+06db: c5 f3 00  mov   $00f3,a           ; set NON
 06de: 8d 0c     mov   y,#$0c
 06e0: cc f2 00  mov   $00f2,y
 06e3: e8 60     mov   a,#$60
-06e5: c5 f3 00  mov   $00f3,a
+06e5: c5 f3 00  mov   $00f3,a           ; set MVOL(L)
 06e8: 8d 1c     mov   y,#$1c
 06ea: cc f2 00  mov   $00f2,y
-06ed: c5 f3 00  mov   $00f3,a
+06ed: c5 f3 00  mov   $00f3,a           ; set MVOL(R)
 06f0: 8d 5d     mov   y,#$5d
 06f2: cc f2 00  mov   $00f2,y
 06f5: e8 34     mov   a,#$34
-06f7: c5 f3 00  mov   $00f3,a
+06f7: c5 f3 00  mov   $00f3,a           ; set DIR ($3400)
 06fa: 8d 6c     mov   y,#$6c
 06fc: cc f2 00  mov   $00f2,y
 06ff: e8 14     mov   a,#$14
-0701: c5 f3 00  mov   $00f3,a
+0701: c5 f3 00  mov   $00f3,a           ; set FLG
 0704: e8 80     mov   a,#$80
-0706: c5 fa 00  mov   $00fa,a
-0709: c5 fb 00  mov   $00fb,a
+0706: c5 fa 00  mov   $00fa,a           ; set timer 0 frequency (16 ms)
+0709: c5 fb 00  mov   $00fb,a           ; set timer 1 frequency (16 ms)
 070c: e8 33     mov   a,#$33
-070e: c5 f1 00  mov   $00f1,a
+070e: c5 f1 00  mov   $00f1,a           ; start timers
 0711: e8 5c     mov   a,#$5c
 0713: c5 f2 00  mov   $00f2,a
 0716: e8 00     mov   a,#$00
-0718: c5 f3 00  mov   $00f3,a
+0718: c5 f3 00  mov   $00f3,a           ; set KOF
 071b: 6f        ret
 
+; timer 0 callback
 071c: fa 02 06  mov   ($06),($02)
 071f: fa c1 c2  mov   ($c2),($c1)
 0722: 8f ff 08  mov   $08,#$ff
@@ -260,6 +262,7 @@
 0729: ab 08     inc   $08
 072b: 4b 06     lsr   $06
 072d: 90 1e     bcc   $074d
+;
 072f: 0d        push  psw
 0730: f8 08     mov   x,$08
 0732: 8f 01 b1  mov   $b1,#$01
@@ -269,7 +272,7 @@
 073c: 8f 03 b1  mov   $b1,#$03
 073f: f5 00 02  mov   a,$0200+x
 0742: c4 b2     mov   $b2,a
-0744: 3f 8d 07  call  $078d
+0744: 3f 8d 07  call  $078d             ; tick
 0747: e4 b2     mov   a,$b2
 0749: d5 00 02  mov   $0200+x,a
 074c: 8e        pop   psw
@@ -285,6 +288,7 @@
 0760: ab 08     inc   $08
 0762: 4b 06     lsr   $06
 0764: 90 1e     bcc   $0784
+;
 0766: 0d        push  psw
 0767: 8f 00 b1  mov   $b1,#$00
 076a: f8 08     mov   x,$08
@@ -294,18 +298,19 @@
 0773: 8f 04 b1  mov   $b1,#$04
 0776: f5 00 02  mov   a,$0200+x
 0779: c4 b2     mov   $b2,a
-077b: 3f 8d 07  call  $078d
+077b: 3f 8d 07  call  $078d             ; tick
 077e: e4 b2     mov   a,$b2
 0780: d5 00 02  mov   $0200+x,a
 0783: 8e        pop   psw
+;
 0784: d0 d8     bne   $075e
 0786: 53 b0 03  bbc2  $b0,$078c
 0789: 3f f0 0d  call  $0df0
 078c: 6f        ret
 
-078d: 9b 10     dec   $10+x
+078d: 9b 10     dec   $10+x             ; decrease delta-time
 078f: d0 03     bne   $0794
-0791: 5f c2 07  jmp   $07c2
+0791: 5f c2 07  jmp   $07c2             ; dispatch next vcmd
 
 0794: a3 b2 2a  bbs5  $b2,$07c1
 0797: 13 b2 03  bbc0  $b2,$079d
@@ -324,22 +329,23 @@
 07b6: c5 f2 00  mov   $00f2,a
 07b9: e5 f3 00  mov   a,$00f3
 07bc: 28 7f     and   a,#$7f
-07be: c5 f3 00  mov   $00f3,a
+07be: c5 f3 00  mov   $00f3,a           ; set ADSR(1)
 07c1: 6f        ret
 
+; dispatch next vcmd
 07c2: f5 20 02  mov   a,$0220+x
 07c5: c4 00     mov   $00,a
 07c7: f5 30 02  mov   a,$0230+x
-07ca: c4 01     mov   $01,a
+07ca: c4 01     mov   $01,a             ; use $00/1 as voice pointer
 07cc: 2f 02     bra   $07d0
 07ce: 3a 00     incw  $00
 07d0: f8 08     mov   x,$08
 07d2: 8d 00     mov   y,#$00
-07d4: f7 00     mov   a,($00)+y
-07d6: 30 33     bmi   $080b
+07d4: f7 00     mov   a,($00)+y         ; read voice byte
+07d6: 30 33     bmi   $080b             ; case $80-$ff
 07d8: 68 60     cmp   a,#$60
-07da: b0 03     bcs   $07df
-07dc: 5f 8c 08  jmp   $088c
+07da: b0 03     bcs   $07df             ; case $6f-$7f
+07dc: 5f 8c 08  jmp   $088c             ; case $00-$5f
 
 07df: 28 1f     and   a,#$1f
 07e1: fd        mov   y,a
@@ -352,7 +358,7 @@
 07f2: 9f        xcn   a
 07f3: 3f fb 07  call  $07fb
 07f6: d5 60 00  mov   $0060+x,a
-07f9: 2f d3     bra   $07ce
+07f9: 2f d3     bra   $07ce             ; next vcmd
 07fb: 28 0f     and   a,#$0f
 07fd: 1c        asl   a
 07fe: 60        clrc
@@ -364,7 +370,7 @@
 080a: 6f        ret
 
 080b: 68 c0     cmp   a,#$c0
-080d: 90 07     bcc   $0816
+080d: 90 07     bcc   $0816             ; case $80-$bf
 080f: 28 3f     and   a,#$3f
 0811: 1c        asl   a
 0812: 5d        mov   x,a
@@ -386,7 +392,7 @@
 0831: b0 02     bcs   $0835
 0833: e8 01     mov   a,#$01
 0835: d5 20 01  mov   $0120+x,a
-0838: 2f 94     bra   $07ce
+0838: 2f 94     bra   $07ce             ; next vcmd
 083a: dd        mov   a,y
 083b: 28 1f     and   a,#$1f
 083d: 23 b0 02  bbs1  $b0,$0842
@@ -403,10 +409,10 @@
 0859: 45 f3 00  eor   a,$00f3
 085c: d0 11     bne   $086f
 085e: f5 d8 16  mov   a,$16d8+x
-0861: c5 f3 00  mov   $00f3,a
+0861: c5 f3 00  mov   $00f3,a           ; set NON
 0864: e8 6c     mov   a,#$6c
 0866: c5 f2 00  mov   $00f2,a
-0869: cc f3 00  mov   $00f3,y
+0869: cc f3 00  mov   $00f3,y           ; set FLG
 086c: 5f 34 09  jmp   $0934
 
 086f: 13 b1 ec  bbc0  $b1,$085e
@@ -420,7 +426,7 @@
 0880: c5 f2 00  mov   $00f2,a
 0883: e5 f3 00  mov   a,$00f3
 0886: 28 7f     and   a,#$7f
-0888: c5 f3 00  mov   $00f3,a
+0888: c5 f3 00  mov   $00f3,a           ; set ADSR(1)
 088b: 6f        ret
 
 088c: 3a 00     incw  $00
@@ -451,7 +457,7 @@
 08bf: c5 f2 00  mov   $00f2,a
 08c2: e5 f3 00  mov   a,$00f3
 08c5: 08 80     or    a,#$80
-08c7: c5 f3 00  mov   $00f3,a
+08c7: c5 f3 00  mov   $00f3,a           ; set ADSR(1)
 08ca: ad 3e     cmp   y,#$3e
 08cc: d0 03     bne   $08d1
 08ce: 5f 58 09  jmp   $0958
@@ -464,7 +470,7 @@
 08dd: c5 f2 00  mov   $00f2,a
 08e0: f5 e8 16  mov   a,$16e8+x
 08e3: 25 f3 00  and   a,$00f3
-08e6: c5 f3 00  mov   $00f3,a
+08e6: c5 f3 00  mov   $00f3,a           ; set NON
 08e9: dd        mov   a,y
 08ea: 60        clrc
 08eb: 95 10 02  adc   a,$0210+x
@@ -491,10 +497,10 @@
 0919: 9f        xcn   a
 091a: 08 02     or    a,#$02
 091c: c5 f2 00  mov   $00f2,a
-091f: c9 f3 00  mov   $00f3,x
+091f: c9 f3 00  mov   $00f3,x           ; set P(L)
 0922: bc        inc   a
 0923: c5 f2 00  mov   $00f2,a
-0926: cc f3 00  mov   $00f3,y
+0926: cc f3 00  mov   $00f3,y           ; set P(H)
 0929: dd        mov   a,y
 092a: f8 08     mov   x,$08
 092c: d5 50 02  mov   $0250+x,a
@@ -508,11 +514,11 @@
 093e: fd        mov   y,a
 093f: f5 50 00  mov   a,$0050+x
 0942: cc f2 00  mov   $00f2,y
-0945: c5 f3 00  mov   $00f3,a
+0945: c5 f3 00  mov   $00f3,a           ; set VOL(L)
 0948: fc        inc   y
 0949: f5 60 00  mov   a,$0060+x
 094c: cc f2 00  mov   $00f2,y
-094f: c5 f3 00  mov   $00f3,a
+094f: c5 f3 00  mov   $00f3,a           ; set VOL(R)
 0952: e3 b0 14  bbs7  $b0,$0969
 0955: 43 b2 11  bbs2  $b2,$0969
 0958: 23 b1 0e  bbs1  $b1,$0969
@@ -520,86 +526,92 @@
 095e: e8 4c     mov   a,#$4c
 0960: c5 f2 00  mov   $00f2,a
 0963: f5 d8 16  mov   a,$16d8+x
-0966: c5 f3 00  mov   $00f3,a
+0966: c5 f3 00  mov   $00f3,a           ; set KON
 0969: f2 b0     clr7  $b0
 096b: 6f        ret
 
-096c: dw $0bd3
-096e: dw $0bd7
-0970: dw $09ec
-0972: dw $09ec
-0974: dw $09ec
-0976: dw $09ec
-0978: dw $09ec
-097a: dw $09ec
-097c: dw $09ec
-097e: dw $09ec
-0980: dw $09ec
-0982: dw $09ec
-0984: dw $09ec
-0986: dw $09ec
-0988: dw $09ec
-098a: dw $0b90
-098c: dw $09ef
-098e: dw $09f9
-0990: dw $0a61
-0992: dw $09ec
-0994: dw $09ec
-0996: dw $09ec
-0998: dw $0a03
-099a: dw $0a22
-099c: dw $0a31
-099e: dw $0a49
-09a0: dw $0b50
-09a2: dw $09ec
-09a4: dw $09ec
-09a6: dw $09ec
-09a8: dw $09ec
-09aa: dw $09ec
-09ac: dw $0a7a
-09ae: dw $0a95
-09b0: dw $0a98
-09b2: dw $0a9d
-09b4: dw $0aab
-09b6: dw $0ac0
-09b8: dw $0add
-09ba: dw $0afc
-09bc: dw $0b0b
-09be: dw $0b29
-09c0: dw $0b2e
-09c2: dw $0b44
-09c4: dw $0b62
-09c6: dw $0b7c
-09c8: dw $0b86
-09ca: dw $0b8b
-09cc: dw $0b94
-09ce: dw $0bdb
-09d0: dw $0bfd
-09d2: dw $0c0c
-09d4: dw $0c18
-09d6: dw $0c2d
-09d8: dw $0c4a
-09da: dw $0c69
-09dc: dw $0c78
-09de: dw $0c88
-09e0: dw $0c94
-09e2: dw $0ca0
-09e4: dw $0cac
-09e6: dw $0cb1
-09e8: dw $0cb6
-09ea: dw $0cbf
+; vcmd dispatch table
+096c: dw $0bd3  ; c0
+096e: dw $0bd7  ; c1
+0970: dw $09ec  ; c2 - nop
+0972: dw $09ec  ; c3 - nop
+0974: dw $09ec  ; c4 - nop
+0976: dw $09ec  ; c5 - nop
+0978: dw $09ec  ; c6 - nop
+097a: dw $09ec  ; c7 - nop
+097c: dw $09ec  ; c8 - nop
+097e: dw $09ec  ; c9 - nop
+0980: dw $09ec  ; ca - nop
+0982: dw $09ec  ; cb - nop
+0984: dw $09ec  ; cc - nop
+0986: dw $09ec  ; cd - nop
+0988: dw $09ec  ; ce - nop
+098a: dw $0b90  ; cf
+098c: dw $09ef  ; d0
+098e: dw $09f9  ; d1
+0990: dw $0a61  ; d2
+0992: dw $09ec  ; d3 - nop
+0994: dw $09ec  ; d4 - nop
+0996: dw $09ec  ; d5 - nop
+0998: dw $0a03  ; d6
+099a: dw $0a22  ; d7
+099c: dw $0a31  ; d8
+099e: dw $0a49  ; d9
+09a0: dw $0b50  ; da
+09a2: dw $09ec  ; db - nop
+09a4: dw $09ec  ; dc - nop
+09a6: dw $09ec  ; dd - nop
+09a8: dw $09ec  ; de - nop
+09aa: dw $09ec  ; df - nop
+09ac: dw $0a7a  ; e0
+09ae: dw $0a95  ; e1
+09b0: dw $0a98  ; e2
+09b2: dw $0a9d  ; e3
+09b4: dw $0aab  ; e4
+09b6: dw $0ac0  ; e5
+09b8: dw $0add  ; e6
+09ba: dw $0afc  ; e7
+09bc: dw $0b0b  ; e8
+09be: dw $0b29  ; e9
+09c0: dw $0b2e  ; ea
+09c2: dw $0b44  ; eb
+09c4: dw $0b62  ; ec
+09c6: dw $0b7c  ; ed
+09c8: dw $0b86  ; ee
+09ca: dw $0b8b  ; ef
+09cc: dw $0b94  ; f0 - ADSR
+09ce: dw $0bdb  ; f1 - instrument
+09d0: dw $0bfd  ; f2
+09d2: dw $0c0c  ; f3
+09d4: dw $0c18  ; f4
+09d6: dw $0c2d  ; f5
+09d8: dw $0c4a  ; f6
+09da: dw $0c69  ; f7
+09dc: dw $0c78  ; f8
+09de: dw $0c88  ; f9
+09e0: dw $0c94  ; fa
+09e2: dw $0ca0  ; fb
+09e4: dw $0cac  ; fc
+09e6: dw $0cb1  ; fd
+09e8: dw $0cb6  ; fe
+09ea: dw $0cbf  ; ff
 
-09ec: 5f ce 07  jmp   $07ce
+; vcmd c2-ce, vcmd d3-d5, vcmd db-df - nop
+09ec: 5f ce 07  jmp   $07ce             ; next vcmd
+
+; vcmd d0
 09ef: f8 08     mov   x,$08
 09f1: e8 01     mov   a,#$01
 09f3: d5 30 01  mov   $0130+x,a
-09f6: 5f ce 07  jmp   $07ce
+09f6: 5f ce 07  jmp   $07ce             ; next vcmd
 
+; vcmd d1
 09f9: f8 08     mov   x,$08
 09fb: e8 00     mov   a,#$00
 09fd: d5 30 01  mov   $0130+x,a
-0a00: 5f ce 07  jmp   $07ce
+0a00: 5f ce 07  jmp   $07ce             ; next vcmd
 
+; vcmd d6
 0a03: f8 08     mov   x,$08
 0a05: 3a 00     incw  $00
 0a07: f7 00     mov   a,($00)+y
@@ -615,37 +627,41 @@
 0a1d: cb 01     mov   $01,y
 0a1f: 5f d0 07  jmp   $07d0
 
+; vcmd d7
 0a22: f8 08     mov   x,$08
 0a24: f5 40 03  mov   a,$0340+x
 0a27: c4 00     mov   $00,a
 0a29: f5 50 03  mov   a,$0350+x
 0a2c: c4 01     mov   $01,a
-0a2e: 5f ce 07  jmp   $07ce
+0a2e: 5f ce 07  jmp   $07ce             ; next vcmd
 
+; vcmd d8
 0a31: f8 08     mov   x,$08
 0a33: 9b 30     dec   $30+x
 0a35: f0 05     beq   $0a3c
 0a37: bb 30     inc   $30+x
-0a39: 5f ce 07  jmp   $07ce
+0a39: 5f ce 07  jmp   $07ce             ; next vcmd
 
 0a3c: f5 00 03  mov   a,$0300+x
 0a3f: c4 00     mov   $00,a
 0a41: f5 10 03  mov   a,$0310+x
 0a44: c4 01     mov   $01,a
-0a46: 5f ce 07  jmp   $07ce
+0a46: 5f ce 07  jmp   $07ce             ; next vcmd
 
+; vcmd d9
 0a49: f8 08     mov   x,$08
 0a4b: 9b 20     dec   $20+x
 0a4d: f0 05     beq   $0a54
 0a4f: bb 20     inc   $20+x
-0a51: 5f ce 07  jmp   $07ce
+0a51: 5f ce 07  jmp   $07ce             ; next vcmd
 
 0a54: f5 20 03  mov   a,$0320+x
 0a57: c4 00     mov   $00,a
 0a59: f5 30 03  mov   a,$0330+x
 0a5c: c4 01     mov   $01,a
-0a5e: 5f ce 07  jmp   $07ce
+0a5e: 5f ce 07  jmp   $07ce             ; next vcmd
 
+; vcmd d2
 0a61: 3a 00     incw  $00
 0a63: f7 00     mov   a,($00)+y
 0a65: 60        clrc
@@ -657,8 +673,9 @@
 0a6f: c5 fa 00  mov   $00fa,a
 0a72: e8 33     mov   a,#$33
 0a74: c5 f1 00  mov   $00f1,a
-0a77: 5f ce 07  jmp   $07ce
+0a77: 5f ce 07  jmp   $07ce             ; next vcmd
 
+; vcmd e0
 0a7a: 3a 00     incw  $00
 0a7c: f7 00     mov   a,($00)+y
 0a7e: 60        clrc
@@ -667,24 +684,28 @@
 0a82: c5 f1 00  mov   $00f1,a
 0a85: ae        pop   a
 0a86: 88 80     adc   a,#$80
-0a88: c5 fa 00  mov   $00fa,a
-0a8b: c4 c4     mov   $c4,a
+0a88: c5 fa 00  mov   $00fa,a           ; set timer 0 frequency
+0a8b: c4 c4     mov   $c4,a             ; set timer 0 frequency shadow
 0a8d: e8 33     mov   a,#$33
 0a8f: c5 f1 00  mov   $00f1,a
-0a92: 5f ce 07  jmp   $07ce
+0a92: 5f ce 07  jmp   $07ce             ; next vcmd
 
-0a95: 5f ce 07  jmp   $07ce
+; vcmd e1
+0a95: 5f ce 07  jmp   $07ce             ; next vcmd
 
+; vcmd e2
 0a98: 12 b2     clr0  $b2
-0a9a: 5f ce 07  jmp   $07ce
+0a9a: 5f ce 07  jmp   $07ce             ; next vcmd
 
+; vcmd e3
 0a9d: 02 b2     set0  $b2
 0a9f: 3a 00     incw  $00
 0aa1: f7 00     mov   a,($00)+y
 0aa3: f8 08     mov   x,$08
 0aa5: d5 b0 02  mov   $02b0+x,a
-0aa8: 5f ce 07  jmp   $07ce
+0aa8: 5f ce 07  jmp   $07ce             ; next vcmd
 
+; vcmd e4
 0aab: 3a 00     incw  $00
 0aad: f7 00     mov   a,($00)+y
 0aaf: f8 08     mov   x,$08
@@ -693,8 +714,9 @@
 0ab5: d5 70 00  mov   $0070+x,a
 0ab8: e4 01     mov   a,$01
 0aba: d5 80 00  mov   $0080+x,a
-0abd: 5f ce 07  jmp   $07ce
+0abd: 5f ce 07  jmp   $07ce             ; next vcmd
 
+; vcmd e5
 0ac0: f8 08     mov   x,$08
 0ac2: e4 00     mov   a,$00
 0ac4: d5 20 03  mov   $0320+x,a
@@ -706,8 +728,9 @@
 0ad3: c4 00     mov   $00,a
 0ad5: f5 80 00  mov   a,$0080+x
 0ad8: c4 01     mov   $01,a
-0ada: 5f ce 07  jmp   $07ce
+0ada: 5f ce 07  jmp   $07ce             ; next vcmd
 
+; vcmd e6
 0add: f8 08     mov   x,$08
 0adf: 3a 00     incw  $00
 0ae1: f7 00     mov   a,($00)+y
@@ -723,13 +746,15 @@
 0af7: cb 01     mov   $01,y
 0af9: 5f d0 07  jmp   $07d0
 
+; vcmd e7
 0afc: f8 08     mov   x,$08
 0afe: f5 e0 02  mov   a,$02e0+x
 0b01: c4 00     mov   $00,a
 0b03: f5 f0 02  mov   a,$02f0+x
 0b06: c4 01     mov   $01,a
-0b08: 5f ce 07  jmp   $07ce
+0b08: 5f ce 07  jmp   $07ce             ; next vcmd
 
+; vcmd e8
 0b0b: c2 b2     set6  $b2
 0b0d: f8 08     mov   x,$08
 0b0f: 3a 00     incw  $00
@@ -742,33 +767,38 @@
 0b1e: d5 88 01  mov   $0188+x,a
 0b21: e8 00     mov   a,#$00
 0b23: d5 68 01  mov   $0168+x,a
-0b26: 5f ce 07  jmp   $07ce
+0b26: 5f ce 07  jmp   $07ce             ; next vcmd
 
+; vcmd e9
 0b29: d2 b2     clr6  $b2
-0b2b: 5f ce 07  jmp   $07ce
+0b2b: 5f ce 07  jmp   $07ce             ; next vcmd
 
+; vcmd ea
 0b2e: f8 08     mov   x,$08
 0b30: f5 d8 16  mov   a,$16d8+x
 0b33: 23 b1 0b  bbs1  $b1,$0b41
 0b36: 23 c2 08  bbs1  $c2,$0b41
 0b39: 8d 5c     mov   y,#$5c
 0b3b: cc f2 00  mov   $00f2,y
-0b3e: c5 f3 00  mov   $00f3,a
-0b41: 5f ce 07  jmp   $07ce
+0b3e: c5 f3 00  mov   $00f3,a           ; set KOF
+0b41: 5f ce 07  jmp   $07ce             ; next vcmd
 
+; vcmd eb
 0b44: f8 08     mov   x,$08
 0b46: 3a 00     incw  $00
 0b48: f7 00     mov   a,($00)+y
 0b4a: d5 30 01  mov   $0130+x,a
-0b4d: 5f ce 07  jmp   $07ce
+0b4d: 5f ce 07  jmp   $07ce             ; next vcmd
 
+; vcmd da
 0b50: e8 00     mov   a,#$00
 0b52: cd 0c     mov   x,#$0c
 0b54: c9 f2 00  mov   $00f2,x
-0b57: c5 f3 00  mov   $00f3,a
+0b57: c5 f3 00  mov   $00f3,a           ; set MVOL(L)
 0b5a: cd 1c     mov   x,#$1c
 0b5c: c9 f2 00  mov   $00f2,x
-0b5f: c5 f3 00  mov   $00f3,a
+0b5f: c5 f3 00  mov   $00f3,a           ; set MVOL(R)
+; vcmd ec
 0b62: f8 08     mov   x,$08
 0b64: 3a 00     incw  $00
 0b66: f7 00     mov   a,($00)+y
@@ -780,27 +810,32 @@
 0b72: 42 b0     set2  $b0
 0b74: e8 fe     mov   a,#$fe
 0b76: c5 f5 00  mov   $00f5,a
-0b79: 5f ce 07  jmp   $07ce
+0b79: 5f ce 07  jmp   $07ce             ; next vcmd
 
+; vcmd ed
 0b7c: 3a 00     incw  $00
 0b7e: f7 00     mov   a,($00)+y
 0b80: c5 f7 00  mov   $00f7,a
-0b83: 5f ce 07  jmp   $07ce
+0b83: 5f ce 07  jmp   $07ce             ; next vcmd
 
+; vcmd ee
 0b86: 02 b0     set0  $b0
-0b88: 5f ce 07  jmp   $07ce
+0b88: 5f ce 07  jmp   $07ce             ; next vcmd
 
+; vcmd ef
 0b8b: 12 b0     clr0  $b0
-0b8d: 5f ce 07  jmp   $07ce
+0b8d: 5f ce 07  jmp   $07ce             ; next vcmd
 
+; vcmd cf
 0b90: e8 ff     mov   a,#$ff
 0b92: 2f 04     bra   $0b98
+; vcmd f0 - ADSR
 0b94: 3a 00     incw  $00
-0b96: f7 00     mov   a,($00)+y
+0b96: f7 00     mov   a,($00)+y         ; arg1: ADSR(2)
 0b98: f8 08     mov   x,$08
 0b9a: 2d        push  a
 0b9b: 3a 00     incw  $00
-0b9d: f7 00     mov   a,($00)+y
+0b9d: f7 00     mov   a,($00)+y         ; arg2: ADSR(1)
 0b9f: ee        pop   y
 0ba0: 13 b1 0f  bbc0  $b1,$0bb2
 0ba3: d5 48 01  mov   $0148+x,a
@@ -816,25 +851,29 @@
 0bb7: 9f        xcn   a
 0bb8: 08 05     or    a,#$05
 0bba: c5 f2 00  mov   $00f2,a
-0bbd: cc f3 00  mov   $00f3,y
+0bbd: cc f3 00  mov   $00f3,y           ; set ADSR(1)
 0bc0: bc        inc   a
 0bc1: c5 f2 00  mov   $00f2,a
-0bc4: c9 f3 00  mov   $00f3,x
+0bc4: c9 f3 00  mov   $00f3,x           ; set ADSR(2)
 0bc7: bc        inc   a
 0bc8: c5 f2 00  mov   $00f2,a
 0bcb: e8 9f     mov   a,#$9f
-0bcd: c5 f3 00  mov   $00f3,a
-0bd0: 5f ce 07  jmp   $07ce
+0bcd: c5 f3 00  mov   $00f3,a           ; set GAIN
+0bd0: 5f ce 07  jmp   $07ce             ; next vcmd
 
+; vcmd c0
 0bd3: e8 00     mov   a,#$00
-0bd5: 2f 08     bra   $0bdf
+0bd5: 2f 08     bra   $0bdf             ; set instrument to 0
+; vcmd c1
 0bd7: e8 01     mov   a,#$01
-0bd9: 2f 04     bra   $0bdf
+0bd9: 2f 04     bra   $0bdf             ; set instrument to 1
+; vcmd f1 - instrument
 0bdb: 3a 00     incw  $00
 0bdd: f7 00     mov   a,($00)+y
+;
 0bdf: f8 08     mov   x,$08
 0be1: 43 b1 03  bbs2  $b1,$0be7
-0be4: d5 50 01  mov   $0150+x,a
+0be4: d5 50 01  mov   $0150+x,a         ; arg1: instrument (SRCN)
 0be7: 23 b1 10  bbs1  $b1,$0bfa
 0bea: 03 c2 0d  bbs0  $c2,$0bfa
 0bed: fd        mov   y,a
@@ -843,9 +882,10 @@
 0bf1: 9f        xcn   a
 0bf2: 08 04     or    a,#$04
 0bf4: c5 f2 00  mov   $00f2,a
-0bf7: cc f3 00  mov   $00f3,y
-0bfa: 5f ce 07  jmp   $07ce
+0bf7: cc f3 00  mov   $00f3,y           ; set ADSR(1)
+0bfa: 5f ce 07  jmp   $07ce             ; next vcmd
 
+; vcmd f2
 0bfd: f8 08     mov   x,$08
 0bff: 3a 00     incw  $00
 0c01: f7 00     mov   a,($00)+y
@@ -853,12 +893,14 @@
 0c06: f5 90 02  mov   a,$0290+x
 0c09: 5f e8 07  jmp   $07e8
 
+; vcmd f3
 0c0c: f8 08     mov   x,$08
 0c0e: 3a 00     incw  $00
 0c10: f7 00     mov   a,($00)+y
 0c12: d5 10 02  mov   $0210+x,a
-0c15: 5f ce 07  jmp   $07ce
+0c15: 5f ce 07  jmp   $07ce             ; next vcmd
 
+; vcmd f4
 0c18: 3a 00     incw  $00
 0c1a: f7 00     mov   a,($00)+y
 0c1c: f8 08     mov   x,$08
@@ -867,8 +909,9 @@
 0c22: d5 90 00  mov   $0090+x,a
 0c25: e4 01     mov   a,$01
 0c27: d5 a0 00  mov   $00a0+x,a
-0c2a: 5f ce 07  jmp   $07ce
+0c2a: 5f ce 07  jmp   $07ce             ; next vcmd
 
+; vcmd f5
 0c2d: f8 08     mov   x,$08
 0c2f: e4 00     mov   a,$00
 0c31: d5 00 03  mov   $0300+x,a
@@ -880,8 +923,9 @@
 0c40: c4 00     mov   $00,a
 0c42: f5 a0 00  mov   a,$00a0+x
 0c45: c4 01     mov   $01,a
-0c47: 5f ce 07  jmp   $07ce
+0c47: 5f ce 07  jmp   $07ce             ; next vcmd
 
+; vcmd f6
 0c4a: f8 08     mov   x,$08
 0c4c: 3a 00     incw  $00
 0c4e: f7 00     mov   a,($00)+y
@@ -897,13 +941,15 @@
 0c64: cb 01     mov   $01,y
 0c66: 5f d0 07  jmp   $07d0
 
+; vcmd f7
 0c69: f8 08     mov   x,$08
 0c6b: f5 c0 02  mov   a,$02c0+x
 0c6e: c4 00     mov   $00,a
 0c70: f5 d0 02  mov   a,$02d0+x
 0c73: c4 01     mov   $01,a
-0c75: 5f ce 07  jmp   $07ce
+0c75: 5f ce 07  jmp   $07ce             ; next vcmd
 
+; vcmd f8
 0c78: 3a 00     incw  $00
 0c7a: f7 00     mov   a,($00)+y
 0c7c: 5d        mov   x,a
@@ -913,35 +959,42 @@
 0c83: c4 01     mov   $01,a
 0c85: 5f d0 07  jmp   $07d0
 
+; vcmd f9
 0c88: f8 08     mov   x,$08
 0c8a: 3a 00     incw  $00
 0c8c: f7 00     mov   a,($00)+y
 0c8e: d5 a0 02  mov   $02a0+x,a
-0c91: 5f ce 07  jmp   $07ce
+0c91: 5f ce 07  jmp   $07ce             ; next vcmd
 
+; vcmd fa
 0c94: f8 08     mov   x,$08
 0c96: 3a 00     incw  $00
 0c98: f7 00     mov   a,($00)+y
 0c9a: d5 00 01  mov   $0100+x,a
-0c9d: 5f ce 07  jmp   $07ce
+0c9d: 5f ce 07  jmp   $07ce             ; next vcmd
 
+; vcmd fb
 0ca0: f8 08     mov   x,$08
 0ca2: 3a 00     incw  $00
 0ca4: f7 00     mov   a,($00)+y
 0ca6: d5 80 02  mov   $0280+x,a
-0ca9: 5f ce 07  jmp   $07ce
+0ca9: 5f ce 07  jmp   $07ce             ; next vcmd
 
+; vcmd fc
 0cac: 42 b2     set2  $b2
-0cae: 5f ce 07  jmp   $07ce
+0cae: 5f ce 07  jmp   $07ce             ; next vcmd
 
+; vcmd fd
 0cb1: 52 b2     clr2  $b2
-0cb3: 5f ce 07  jmp   $07ce
+0cb3: 5f ce 07  jmp   $07ce             ; next vcmd
 
+; vcmd fe
 0cb6: 3a 00     incw  $00
 0cb8: f7 00     mov   a,($00)+y
 0cba: c4 b8     mov   $b8,a
-0cbc: 5f ce 07  jmp   $07ce
+0cbc: 5f ce 07  jmp   $07ce             ; next vcmd
 
+; vcmd ff
 0cbf: f8 08     mov   x,$08
 0cc1: cb b2     mov   $b2,y
 0cc3: f5 e8 16  mov   a,$16e8+x
@@ -961,7 +1014,7 @@
 0ce3: 25 f3 00  and   a,$00f3
 0ce6: f0 05     beq   $0ced
 0ce8: e8 00     mov   a,#$00
-0cea: c5 f3 00  mov   $00f3,a
+0cea: c5 f3 00  mov   $00f3,a           ; set NON
 0ced: 7d        mov   a,x
 0cee: 28 07     and   a,#$07
 0cf0: 9f        xcn   a
@@ -972,7 +1025,7 @@
 0cf7: c5 f2 00  mov   $00f2,a
 0cfa: e5 f3 00  mov   a,$00f3
 0cfd: 28 7f     and   a,#$7f
-0cff: c5 f3 00  mov   $00f3,a
+0cff: c5 f3 00  mov   $00f3,a           ; set ADSR(1)
 0d02: 6f        ret
 
 0d03: 7d        mov   a,x
@@ -982,38 +1035,38 @@
 0d09: c5 f2 00  mov   $00f2,a
 0d0c: e5 f3 00  mov   a,$00f3
 0d0f: 28 7f     and   a,#$7f
-0d11: c5 f3 00  mov   $00f3,a
+0d11: c5 f3 00  mov   $00f3,a           ; set ADSR(1)
 0d14: 7d        mov   a,x
 0d15: 28 07     and   a,#$07
 0d17: 5d        mov   x,a
 0d18: 9f        xcn   a
 0d19: 8d 00     mov   y,#$00
 0d1b: c5 f2 00  mov   $00f2,a
-0d1e: cc f3 00  mov   $00f3,y
+0d1e: cc f3 00  mov   $00f3,y           ; set VOL(L)
 0d21: bc        inc   a
 0d22: c5 f2 00  mov   $00f2,a
-0d25: cc f3 00  mov   $00f3,y
+0d25: cc f3 00  mov   $00f3,y           ; set VOL(R)
 0d28: fd        mov   y,a
 0d29: fc        inc   y
 0d2a: cc f2 00  mov   $00f2,y
 0d2d: f5 40 02  mov   a,$0240+x
-0d30: c5 f3 00  mov   $00f3,a
+0d30: c5 f3 00  mov   $00f3,a           ; set P(L)
 0d33: fc        inc   y
 0d34: cc f2 00  mov   $00f2,y
 0d37: f5 50 02  mov   a,$0250+x
-0d3a: c5 f3 00  mov   $00f3,a
+0d3a: c5 f3 00  mov   $00f3,a           ; set P(H)
 0d3d: fc        inc   y
 0d3e: cc f2 00  mov   $00f2,y
 0d41: f5 50 01  mov   a,$0150+x
-0d44: c5 f3 00  mov   $00f3,a
+0d44: c5 f3 00  mov   $00f3,a           ; set SRCN
 0d47: fc        inc   y
 0d48: cc f2 00  mov   $00f2,y
 0d4b: f5 40 01  mov   a,$0140+x
-0d4e: c5 f3 00  mov   $00f3,a
+0d4e: c5 f3 00  mov   $00f3,a           ; set ADSR(1)
 0d51: fc        inc   y
 0d52: cc f2 00  mov   $00f2,y
 0d55: f5 48 01  mov   a,$0148+x
-0d58: c5 f3 00  mov   $00f3,a
+0d58: c5 f3 00  mov   $00f3,a           ; set ADSR(2)
 0d5b: f5 d8 16  mov   a,$16d8+x
 0d5e: fd        mov   y,a
 0d5f: e8 3d     mov   a,#$3d
@@ -1022,7 +1075,7 @@
 0d65: 25 f3 00  and   a,$00f3
 0d68: f0 83     beq   $0ced
 0d6a: e8 00     mov   a,#$00
-0d6c: c5 f3 00  mov   $00f3,a
+0d6c: c5 f3 00  mov   $00f3,a           ; set NON
 0d6f: 6f        ret
 
 0d70: f5 40 02  mov   a,$0240+x
@@ -1045,10 +1098,10 @@
 0d96: 9f        xcn   a
 0d97: 08 02     or    a,#$02
 0d99: c5 f2 00  mov   $00f2,a
-0d9c: c9 f3 00  mov   $00f3,x
+0d9c: c9 f3 00  mov   $00f3,x           ; set P(L)
 0d9f: bc        inc   a
 0da0: c5 f2 00  mov   $00f2,a
-0da3: cc f3 00  mov   $00f3,y
+0da3: cc f3 00  mov   $00f3,y           ; set P(H)
 0da6: f8 08     mov   x,$08
 0da8: dd        mov   a,y
 0da9: d5 50 02  mov   $0250+x,a
@@ -1101,10 +1154,10 @@
 0e03: 30 10     bmi   $0e15
 0e05: 68 60     cmp   a,#$60
 0e07: b0 17     bcs   $0e20
-0e09: c5 f3 00  mov   $00f3,a
+0e09: c5 f3 00  mov   $00f3,a           ; set MVOL(L)
 0e0c: 8d 1c     mov   y,#$1c
 0e0e: cc f2 00  mov   $00f2,y
-0e11: c5 f3 00  mov   $00f3,a
+0e11: c5 f3 00  mov   $00f3,a           ; set MVOL(R)
 0e14: 6f        ret
 
 0e15: 3f 84 06  call  $0684
@@ -1116,10 +1169,10 @@
 0e20: e8 60     mov   a,#$60
 0e22: 8d 1c     mov   y,#$1c
 0e24: cc f2 00  mov   $00f2,y
-0e27: c5 f3 00  mov   $00f3,a
+0e27: c5 f3 00  mov   $00f3,a           ; set MVOL(R)
 0e2a: 8d 1c     mov   y,#$1c
 0e2c: cc f2 00  mov   $00f2,y
-0e2f: c5 f3 00  mov   $00f3,a
+0e2f: c5 f3 00  mov   $00f3,a           ; set MVOL(R)
 0e32: 2f e4     bra   $0e18
 0e34: bc        inc   a
 0e35: d0 03     bne   $0e3a
@@ -1183,28 +1236,28 @@
 0e99: e8 00     mov   a,#$00
 0e9b: 8d 0c     mov   y,#$0c
 0e9d: cc f2 00  mov   $00f2,y
-0ea0: c5 f3 00  mov   $00f3,a
+0ea0: c5 f3 00  mov   $00f3,a           ; set MVOL(L)
 0ea3: 8d 1c     mov   y,#$1c
 0ea5: cc f2 00  mov   $00f2,y
-0ea8: c5 f3 00  mov   $00f3,a
+0ea8: c5 f3 00  mov   $00f3,a           ; set MVOL(R)
 0eab: e8 ff     mov   a,#$ff
 0ead: 8d 5c     mov   y,#$5c
 0eaf: cc f2 00  mov   $00f2,y
-0eb2: c5 f3 00  mov   $00f3,a
+0eb2: c5 f3 00  mov   $00f3,a           ; set KOF
 0eb5: e8 00     mov   a,#$00
-0eb7: c5 f3 00  mov   $00f3,a
+0eb7: c5 f3 00  mov   $00f3,a           ; set KOF
 0eba: 3f 4d 13  call  $134d
 0ebd: e4 02     mov   a,$02
 0ebf: 8d 4c     mov   y,#$4c
 0ec1: cc f2 00  mov   $00f2,y
-0ec4: c5 f3 00  mov   $00f3,a
+0ec4: c5 f3 00  mov   $00f3,a           ; set KON
 0ec7: e4 c5     mov   a,$c5
 0ec9: f0 04     beq   $0ecf
 0ecb: e8 1f     mov   a,#$1f
 0ecd: c4 b8     mov   $b8,a
 0ecf: 42 b0     set2  $b0
 0ed1: e5 fa 04  mov   a,$04fa
-0ed4: c5 fa 00  mov   $00fa,a
+0ed4: c5 fa 00  mov   $00fa,a           ; set timer 0 frequency
 0ed7: e8 01     mov   a,#$01
 0ed9: c4 be     mov   $be,a
 0edb: c4 bf     mov   $bf,a
@@ -1217,14 +1270,14 @@
 0ee7: e8 00     mov   a,#$00
 0ee9: 8d 0c     mov   y,#$0c
 0eeb: cc f2 00  mov   $00f2,y
-0eee: c5 f3 00  mov   $00f3,a
+0eee: c5 f3 00  mov   $00f3,a           ; set MVOL(L)
 0ef1: 8d 1c     mov   y,#$1c
 0ef3: cc f2 00  mov   $00f2,y
-0ef6: c5 f3 00  mov   $00f3,a
+0ef6: c5 f3 00  mov   $00f3,a           ; set MVOL(R)
 0ef9: 2f d4     bra   $0ecf
 0efb: 3f 73 10  call  $1073
 0efe: e4 c4     mov   a,$c4
-0f00: c5 fa 04  mov   $04fa,a
+0f00: c5 fa 04  mov   $04fa,a           ; set timer 0 frequency shadow
 0f03: 42 b0     set2  $b0
 0f05: e8 01     mov   a,#$01
 0f07: c4 be     mov   $be,a
@@ -1631,7 +1684,8 @@
 1336: 3f 3a 13  call  $133a
 1339: 6f        ret
 
-133a: cd 08     mov   x,#$08
+; read per-voice DSP register values
+133a: cd 08     mov   x,#$08            ; 8 registers (VOL(L), VOL(R), P(L), P(H), SRCN, ADSR(1), ADSR(2), GAIN)
 133c: e4 0a     mov   a,$0a
 133e: c5 f2 00  mov   $00f2,a
 1341: e5 f3 00  mov   a,$00f3
@@ -1880,7 +1934,8 @@
 160c: 3f 10 16  call  $1610
 160f: 6f        ret
 
-1610: cd 08     mov   x,#$08
+; write per-voice DSP register values
+1610: cd 08     mov   x,#$08            ; 8 registers (VOL(L), VOL(R), P(L), P(H), SRCN, ADSR(1), ADSR(2), GAIN)
 1612: e4 0a     mov   a,$0a
 1614: c5 f2 00  mov   $00f2,a
 1617: f7 08     mov   a,($08)+y

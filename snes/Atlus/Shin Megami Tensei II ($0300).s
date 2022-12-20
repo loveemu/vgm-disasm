@@ -7,7 +7,7 @@
 0309: c5 f5 00  mov   $00f5,a
 030c: c5 f6 00  mov   $00f6,a
 030f: c5 f7 00  mov   $00f7,a
-0312: 3f 17 04  call  $0417
+0312: 3f 17 04  call  $0417             ; initialize DSP registers
 0315: e8 00     mov   a,#$00
 0317: c5 f4 00  mov   $00f4,a
 031a: c5 f5 00  mov   $00f5,a
@@ -62,6 +62,7 @@
 0395: 7d        mov   a,x
 0396: fd        mov   y,a
 0397: cd 00     mov   x,#$00
+;
 0399: e5 f6 00  mov   a,$00f6
 039c: c7 00     mov   ($00+x),a
 039e: e7 00     mov   a,($00+x)
@@ -72,6 +73,7 @@
 03aa: 1a 08     decw  $08
 03ac: d0 02     bne   $03b0
 03ae: ab 08     inc   $08
+;
 03b0: e5 f7 00  mov   a,$00f7
 03b3: c7 00     mov   ($00+x),a
 03b5: e7 00     mov   a,($00+x)
@@ -82,6 +84,7 @@
 03c1: e8 30     mov   a,#$30
 03c3: c5 f1 00  mov   $00f1,a
 03c6: cc f4 00  mov   $00f4,y
+;
 03c9: ec f4 00  mov   y,$00f4
 03cc: f0 fb     beq   $03c9
 03ce: e5 f5 00  mov   a,$00f5
@@ -118,10 +121,11 @@
 0411: c5 f5 00  mov   $00f5,a
 0414: 5f 00 05  jmp   $0500
 
+; initialize DSP registers
 0417: 8d 6c     mov   y,#$6c
 0419: cc f2 00  mov   $00f2,y
 041c: e8 a0     mov   a,#$a0
-041e: c5 f3 00  mov   $00f3,a
+041e: c5 f3 00  mov   $00f3,a           ; set EVOL(L)
 0421: e8 00     mov   a,#$00
 0423: c4 02     mov   $02,a
 0425: c4 03     mov   $03,a
@@ -129,45 +133,45 @@
 042a: c5 f7 00  mov   $00f7,a
 042d: 8d 2c     mov   y,#$2c
 042f: cc f2 00  mov   $00f2,y
-0432: c5 f3 00  mov   $00f3,a
+0432: c5 f3 00  mov   $00f3,a           ; set EVOL(R)
 0435: 8d 3c     mov   y,#$3c
 0437: cc f2 00  mov   $00f2,y
 043a: c5 f3 00  mov   $00f3,a
 043d: 8d 0d     mov   y,#$0d
 043f: cc f2 00  mov   $00f2,y
-0442: c5 f3 00  mov   $00f3,a
+0442: c5 f3 00  mov   $00f3,a           ; set EFB
 0445: 8d 2d     mov   y,#$2d
 0447: cc f2 00  mov   $00f2,y
-044a: c5 f3 00  mov   $00f3,a
+044a: c5 f3 00  mov   $00f3,a           ; set PMON
 044d: 8d 3d     mov   y,#$3d
 044f: cc f2 00  mov   $00f2,y
-0452: c5 f3 00  mov   $00f3,a
+0452: c5 f3 00  mov   $00f3,a           ; set NON
 0455: 8d 4d     mov   y,#$4d
 0457: cc f2 00  mov   $00f2,y
-045a: c5 f3 00  mov   $00f3,a
+045a: c5 f3 00  mov   $00f3,a           ; set EON
 045d: 8d 7d     mov   y,#$7d
 045f: cc f2 00  mov   $00f2,y
 0462: e8 00     mov   a,#$00
-0464: c5 f3 00  mov   $00f3,a
+0464: c5 f3 00  mov   $00f3,a           ; set EDL
 0467: 8d 6d     mov   y,#$6d
 0469: cc f2 00  mov   $00f2,y
 046c: e8 80     mov   a,#$80
-046e: c5 f3 00  mov   $00f3,a
+046e: c5 f3 00  mov   $00f3,a           ; set ESA ($8000)
 0471: 8d 0c     mov   y,#$0c
 0473: cc f2 00  mov   $00f2,y
 0476: e8 60     mov   a,#$60
-0478: c5 f3 00  mov   $00f3,a
+0478: c5 f3 00  mov   $00f3,a           ; set MVOL(L)
 047b: 8d 1c     mov   y,#$1c
 047d: cc f2 00  mov   $00f2,y
-0480: c5 f3 00  mov   $00f3,a
+0480: c5 f3 00  mov   $00f3,a           ; set MVOL(R)
 0483: 8d 5d     mov   y,#$5d
 0485: cc f2 00  mov   $00f2,y
 0488: e8 20     mov   a,#$20
-048a: c5 f3 00  mov   $00f3,a
+048a: c5 f3 00  mov   $00f3,a           ; set DIR ($2000)
 048d: 8d 6c     mov   y,#$6c
 048f: cc f2 00  mov   $00f2,y
 0492: e8 14     mov   a,#$14
-0494: c5 f3 00  mov   $00f3,a
+0494: c5 f3 00  mov   $00f3,a           ; set FLG
 0497: e8 30     mov   a,#$30
 0499: c5 f1 00  mov   $00f1,a
 049c: 6f        ret
