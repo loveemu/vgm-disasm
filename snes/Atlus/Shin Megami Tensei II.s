@@ -17,15 +17,16 @@
 051b: d5 00 04  mov   $0400+x,a
 051e: 3d        inc   x
 051f: d0 f4     bne   $0515
-0521: 3f 84 06  call  $0684
+0521: 3f 84 06  call  $0684             ; stop and reset sound
 0524: e8 00     mov   a,#$00
 0526: c5 f4 00  mov   $00f4,a
 0529: bc        inc   a
-052a: c5 f5 00  mov   $00f5,a
+052a: c5 f5 00  mov   $00f5,a           ; initialize CPUIO1/CPUIO2
 052d: 8f 40 b9  mov   $b9,#$40
 0530: 8f 34 ba  mov   $ba,#$34
 0533: 8f f2 bb  mov   $bb,#$f2
 0536: 8f 7f bc  mov   $bc,#$7f
+; main loop
 0539: e5 fd 00  mov   a,$00fd
 053c: f0 03     beq   $0541
 053e: 3f 1c 07  call  $071c             ; on timer 0 tick
@@ -37,18 +38,18 @@
 054e: 8d 04     mov   y,#$04
 0550: fe fe     dbnz  y,$0550
 0552: e5 f4 00  mov   a,$00f4
-0555: c4 b4     mov   $b4,a
+0555: c4 b4     mov   $b4,a             ; CPUIO1 from CPU
 0557: e5 f5 00  mov   a,$00f5
-055a: c4 b5     mov   $b5,a
+055a: c4 b5     mov   $b5,a             ; CPUIO2 from CPU
 055c: e5 f6 00  mov   a,$00f6
-055f: c4 b6     mov   $b6,a
+055f: c4 b6     mov   $b6,a             ; CPUIO3 from CPU
 0561: e5 f7 00  mov   a,$00f7
-0564: c4 b7     mov   $b7,a
+0564: c4 b7     mov   $b7,a             ; CPUIO4 from CPU
 0566: e8 33     mov   a,#$33
-0568: c5 f1 00  mov   $00f1,a
-056b: ab bd     inc   $bd
+0568: c5 f1 00  mov   $00f1,a           ; start timers
+056b: ab bd     inc   $bd               ; increment counter
 056d: e4 bd     mov   a,$bd
-056f: c5 f4 00  mov   $00f4,a
+056f: c5 f4 00  mov   $00f4,a           ; write counter value to CPUIO1 (APU)
 0572: 43 b0 05  bbs2  $b0,$057a
 0575: e8 00     mov   a,#$00
 0577: c5 f5 00  mov   $00f5,a
@@ -56,25 +57,29 @@
 057c: 3d        inc   x
 057d: c8 05     cmp   x,#$05
 057f: f0 b8     beq   $0539
-0581: f4 b4     mov   a,$b4+x
-0583: f0 f7     beq   $057c
+0581: f4 b4     mov   a,$b4+x           ; CPUIOx
+0583: f0 f7     beq   $057c             ; continue if zero, try CPUIOx+1
 0585: 68 f0     cmp   a,#$f0
 0587: 90 07     bcc   $0590
+; cpucmd f0-ff
 0589: 4d        push  x
-058a: 3f 34 0e  call  $0e34
+058a: 3f 34 0e  call  $0e34             ; dispatch cpucmd
 058d: ce        pop   x
 058e: 2f 10     bra   $05a0
+; else if...
 0590: 68 e0     cmp   a,#$e0
 0592: b0 12     bcs   $05a6
+; cpucmd 00-df (command byte is a song number)
 0594: 68 1f     cmp   a,#$1f
 0596: f0 03     beq   $059b
 0598: 43 b0 05  bbs2  $b0,$05a0
 059b: 4d        push  x
-059c: 3f b1 05  call  $05b1
+059c: 3f b1 05  call  $05b1             ; load a song
 059f: ce        pop   x
 05a0: e8 00     mov   a,#$00
 05a2: d4 b4     mov   $b4+x,a
 05a4: 2f d6     bra   $057c
+; cpucmd e0-ef
 05a6: 28 07     and   a,#$07
 05a8: 5d        mov   x,a
 05a9: f5 e8 16  mov   a,$16e8+x
@@ -84,8 +89,11 @@
 05b1: 13 b0 01  bbc0  $b0,$05b5
 05b4: 6f        ret
 
+; load a song
+; A: song number
 05b5: 5d        mov   x,a
-05b6: 10 10     bpl   $05c8
+05b6: 10 10     bpl   $05c8             ; a branch is required because 9-bit offsets cannot simply be handled
+; 80-df
 05b8: 28 7f     and   a,#$7f
 05ba: 1c        asl   a
 05bb: 5d        mov   x,a
@@ -94,31 +102,37 @@
 05c1: f5 67 19  mov   a,$1967+x
 05c4: c4 01     mov   $01,a
 05c6: 2f 0c     bra   $05d4
+; 00-7f
 05c8: 1c        asl   a
 05c9: 5d        mov   x,a
 05ca: f5 66 18  mov   a,$1866+x
 05cd: c4 00     mov   $00,a
 05cf: f5 67 18  mov   a,$1867+x
 05d2: c4 01     mov   $01,a
+;
 05d4: 8d ff     mov   y,#$ff
+; initialize for each channels
 05d6: fc        inc   y
-05d7: f7 00     mov   a,($00)+y
+05d7: f7 00     mov   a,($00)+y         ; offset 0: channel number
 05d9: 30 40     bmi   $061b
 05db: 5d        mov   x,a
 05dc: f5 d8 16  mov   a,$16d8+x
 05df: c8 08     cmp   x,#$08
 05e1: b0 06     bcs   $05e9
+;
 05e3: 04 02     or    a,$02
 05e5: c4 02     mov   $02,a
 05e7: 2f 04     bra   $05ed
+;
 05e9: 04 03     or    a,$03
 05eb: c4 03     mov   $03,a
+;
 05ed: fc        inc   y
-05ee: f7 00     mov   a,($00)+y
-05f0: d5 20 02  mov   $0220+x,a         ; read voice pointer (lo)
+05ee: f7 00     mov   a,($00)+y         ; offset 1: voice pointer (lo)
+05f0: d5 20 02  mov   $0220+x,a         ; set voice pointer (lo)
 05f3: fc        inc   y
-05f4: f7 00     mov   a,($00)+y
-05f6: d5 30 02  mov   $0230+x,a         ; read voice pointer (hi)
+05f4: f7 00     mov   a,($00)+y         ; offset 2: voice pointer (hi)
+05f6: d5 30 02  mov   $0230+x,a         ; set voice pointer (hi)
 05f9: e8 00     mov   a,#$00
 05fb: d5 00 02  mov   $0200+x,a
 05fe: d5 10 02  mov   $0210+x,a
@@ -132,6 +146,7 @@
 0616: bc        inc   a
 0617: d4 10     mov   $10+x,a
 0619: 2f bb     bra   $05d6
+;
 061b: 28 0f     and   a,#$0f
 061d: 1c        asl   a
 061e: 5d        mov   x,a
@@ -157,7 +172,7 @@
 0642: 5f d6 05  jmp   $05d6
 
 0645: 6d        push  y
-0646: 3f 84 06  call  $0684
+0646: 3f 84 06  call  $0684             ; stop and reset sound
 0649: ee        pop   y
 064a: 5f d6 05  jmp   $05d6
 
@@ -191,6 +206,7 @@
 
 0683: 6f        ret
 
+; stop sound and reset DSP registers
 0684: 8d 6c     mov   y,#$6c
 0686: cc f2 00  mov   $00f2,y
 0689: e8 e0     mov   a,#$e0
@@ -1160,7 +1176,7 @@
 0e11: c5 f3 00  mov   $00f3,a           ; set MVOL(R)
 0e14: 6f        ret
 
-0e15: 3f 84 06  call  $0684
+0e15: 3f 84 06  call  $0684             ; stop and reset sound
 0e18: 52 b0     clr2  $b0
 0e1a: e8 00     mov   a,#$00
 0e1c: c5 f5 00  mov   $00f5,a
@@ -1174,45 +1190,53 @@
 0e2c: cc f2 00  mov   $00f2,y
 0e2f: c5 f3 00  mov   $00f3,a           ; set MVOL(R)
 0e32: 2f e4     bra   $0e18
+;
 0e34: bc        inc   a
-0e35: d0 03     bne   $0e3a
-0e37: 5f 84 06  jmp   $0684
+0e35: d0 03     bne   $0e3a             ; branch if $f0-$fe
+0e37: 5f 84 06  jmp   $0684             ; cpucmd ff: stop and reset sound
 
 0e3a: 53 b0 01  bbc2  $b0,$0e3e
 0e3d: 6f        ret
 
+; dispatch cpucmd f0-fe (A=cpucmd+1)
 0e3e: 9c        dec   a
 0e3f: 28 0f     and   a,#$0f
 0e41: 1c        asl   a
 0e42: 5d        mov   x,a
 0e43: 1f 46 0e  jmp   ($0e46+x)
 
-0e46: dw $0e65
-0e48: dw $0e69
-0e4a: dw $0e6d
-0e4c: dw $0e71
-0e4e: dw $0e75
-0e50: dw $0e64
-0e52: dw $0e64
-0e54: dw $0e64
-0e56: dw $0e83
-0e58: dw $0e8e
-0e5a: dw $0efb
-0e5c: dw $0e99
-0e5e: dw $0ee7
-0e60: dw $0f03
-0e62: dw $0f15
+0e46: dw $0e65  ; f0
+0e48: dw $0e69  ; f1
+0e4a: dw $0e6d  ; f2
+0e4c: dw $0e71  ; f3
+0e4e: dw $0e75  ; f4
+0e50: dw $0e64  ; f5 - nop
+0e52: dw $0e64  ; f6 - nop
+0e54: dw $0e64  ; f7 - nop
+0e56: dw $0e83  ; f8
+0e58: dw $0e8e  ; f9
+0e5a: dw $0efb  ; fa
+0e5c: dw $0e99  ; fb
+0e5e: dw $0ee7  ; fc
+0e60: dw $0f03  ; fd
+0e62: dw $0f15  ; fe
 
+; cpucmd f5-f7 - nop
 0e64: 6f        ret
 
+; cpucmd f0
 0e65: e8 40     mov   a,#$40
 0e67: 2f 0e     bra   $0e77
+; cpucmd f1
 0e69: e8 18     mov   a,#$18
 0e6b: 2f 0a     bra   $0e77
+; cpucmd f2
 0e6d: e8 00     mov   a,#$00
 0e6f: 2f 06     bra   $0e77
+; cpucmd f3
 0e71: e8 f4     mov   a,#$f4
 0e73: 2f 02     bra   $0e77
+; cpucmd f4
 0e75: e8 e8     mov   a,#$e8
 0e77: 60        clrc
 0e78: 88 80     adc   a,#$80
@@ -1221,18 +1245,21 @@
 0e7f: c5 f1 00  mov   $00f1,a
 0e82: 6f        ret
 
+; cpucmd f8
 0e83: 8d 20     mov   y,#$20
 0e85: f6 97 16  mov   a,$1697+y
 0e88: d6 77 16  mov   $1677+y,a
 0e8b: fe f8     dbnz  y,$0e85
 0e8d: 6f        ret
 
+; cpucmd f9
 0e8e: 8d 20     mov   y,#$20
 0e90: f6 b7 16  mov   a,$16b7+y
 0e93: d6 77 16  mov   $1677+y,a
 0e96: fe f8     dbnz  y,$0e90
 0e98: 6f        ret
 
+; cpucmd fb
 0e99: e8 00     mov   a,#$00
 0e9b: 8d 0c     mov   y,#$0c
 0e9d: cc f2 00  mov   $00f2,y
@@ -1267,6 +1294,7 @@
 0ee3: c5 f5 00  mov   $00f5,a
 0ee6: 6f        ret
 
+; cpucmd fc
 0ee7: e8 00     mov   a,#$00
 0ee9: 8d 0c     mov   y,#$0c
 0eeb: cc f2 00  mov   $00f2,y
@@ -1275,9 +1303,11 @@
 0ef3: cc f2 00  mov   $00f2,y
 0ef6: c5 f3 00  mov   $00f3,a           ; set MVOL(R)
 0ef9: 2f d4     bra   $0ecf
+; cpucmd fa
 0efb: 3f 73 10  call  $1073
 0efe: e4 c4     mov   a,$c4
 0f00: c5 fa 04  mov   $04fa,a           ; set timer 0 frequency shadow
+; cpucmd fd
 0f03: 42 b0     set2  $b0
 0f05: e8 01     mov   a,#$01
 0f07: c4 be     mov   $be,a
@@ -1288,19 +1318,21 @@
 0f11: c5 f5 00  mov   $00f5,a
 0f14: 6f        ret
 
-0f15: 3f 84 06  call  $0684
-0f18: 3f 21 0f  call  $0f21
+; cpucmd fe
+0f15: 3f 84 06  call  $0684             ; stop and reset sound
+0f18: 3f 21 0f  call  $0f21             ; data transfer from S-CPU
 0f1b: ce        pop   x
 0f1c: ce        pop   x
 0f1d: ce        pop   x
 0f1e: 5f 39 05  jmp   $0539
 
+; data transfer from S-CPU
 0f21: e8 30     mov   a,#$30
 0f23: c5 f1 00  mov   $00f1,a
 0f26: e8 00     mov   a,#$00
 0f28: c5 f4 00  mov   $00f4,a
 0f2b: e8 ee     mov   a,#$ee
-0f2d: c5 f5 00  mov   $00f5,a
+0f2d: c5 f5 00  mov   $00f5,a           ; corresponding to SNES $3c811e
 0f30: e9 f4 00  mov   x,$00f4
 0f33: f0 fb     beq   $0f30
 0f35: e8 00     mov   a,#$00
@@ -1330,8 +1362,8 @@
 0f6e: c5 f6 00  mov   $00f6,a
 0f71: e5 f7 00  mov   a,$00f7
 0f74: c4 01     mov   $01,a
-0f76: e4 01     mov   a,$01
-0f78: c5 f7 00  mov   $00f7,a
+0f76: e4 01     mov   a,$01             ; set destination address to $00/1
+0f78: c5 f7 00  mov   $00f7,a           ; write it back to CPUIO3/CPUIO4
 0f7b: e8 30     mov   a,#$30
 0f7d: c5 f1 00  mov   $00f1,a
 0f80: c9 f4 00  mov   $00f4,x
@@ -1339,6 +1371,7 @@
 0f86: f0 fb     beq   $0f83
 0f88: e5 f5 00  mov   a,$00f5
 0f8b: d0 da     bne   $0f67
+;
 0f8d: 7d        mov   a,x
 0f8e: fd        mov   y,a
 0f8f: cd 00     mov   x,#$00
