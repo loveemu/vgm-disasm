@@ -643,7 +643,7 @@
 0b10: cd 0f     mov   x,#$0f            ; +6 voice bits to force echo on
 0b12: f7 36     mov   a,($36)+y         ; +7 %??????xy
 0b14: d8 f2     mov   $f2,x             ;; %x - invert EVOL(L)
-0b16: c4 f3     mov   $f3,a             ;; %x - invert EVOL(R)
+0b16: c4 f3     mov   $f3,a             ;; %y - invert EVOL(R)
 0b18: fc        inc   y                 ; +8-f - FIR
 0b19: 7d        mov   a,x
 0b1a: 60        clrc
