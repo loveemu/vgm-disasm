@@ -514,7 +514,7 @@
 09f7: f0 0c     beq   $0a05
 09f9: e4 44     mov   a,$44
 09fb: 68 04     cmp   a,#$04
-09fd: f0 20     beq   $0a1f
+09fd: f0 20     beq   $0a1f             ; if echo has been set up already...
 09ff: e4 3e     mov   a,$3e
 0a01: 28 1f     and   a,#$1f
 0a03: 2f 06     bra   $0a0b
@@ -699,7 +699,7 @@
 0b72: c4 38     mov   $38,a
 0b74: e4 44     mov   a,$44
 0b76: d0 2f     bne   $0ba7
-0b78: 8f 0f 45  mov   $45,#$0f
+0b78: 8f 0f 45  mov   $45,#$0f          ;$44 == $00
 0b7b: 8f 0f 2d  mov   $2d,#$0f
 0b7e: e4 70     mov   a,$70
 0b80: 8f 6d f2  mov   $f2,#$6d          ;; DSP reg ESA
@@ -719,7 +719,7 @@
 0ba0: 8f 02 44  mov   $44,#$02
 0ba3: 6f        ret
 0ba4: 5f 2c 0c  jmp   $0c2c
-0ba7: e4 38     mov   a,$38
+0ba7: e4 38     mov   a,$38              ;$44 != $00
 0ba9: 64 70     cmp   a,$70
 0bab: d0 07     bne   $0bb4
 0bad: e4 39     mov   a,$39
@@ -738,13 +738,13 @@
 0bc5: b0 0d     bcs   $0bd4
 0bc7: 9c        dec   a
 0bc8: f0 28     beq   $0bf2
-0bca: e4 01     mov   a,$01
+0bca: e4 01     mov   a,$01             ;$44 == $03
 0bcc: 28 08     and   a,#$08
 0bce: d0 03     bne   $0bd3
 0bd0: 8f 02 44  mov   $44,#$02
 0bd3: 6f        ret
 0bd4: d0 3e     bne   $0c14
-0bd6: e4 fe     mov   a,$fe
+0bd6: e4 fe     mov   a,$fe             ;$44 == $01
 0bd8: f0 39     beq   $0c13
 0bda: c4 38     mov   $38,a
 0bdc: e4 2d     mov   a,$2d
@@ -758,7 +758,7 @@
 0beb: e4 f3     mov   a,$f3
 0bed: c4 45     mov   $45,a
 0bef: 8f 02 44  mov   $44,#$02
-0bf2: e4 01     mov   a,$01
+0bf2: e4 01     mov   a,$01             ;$44 == $02 or $04
 0bf4: 28 08     and   a,#$08
 0bf6: f0 1b     beq   $0c13
 0bf8: e4 45     mov   a,$45
@@ -772,7 +772,7 @@
 0c0d: 8f 02 f1  mov   $f1,#$02
 0c10: 8f 03 44  mov   $44,#$03
 0c13: 6f        ret
-0c14: e4 01     mov   a,$01
+0c14: e4 01     mov   a,$01             ;$44 == $03
 0c16: 28 08     and   a,#$08
 0c18: f0 b6     beq   $0bd0
 0c1a: e4 fe     mov   a,$fe
