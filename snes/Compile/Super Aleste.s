@@ -815,19 +815,19 @@
 0c63: dw $0dcf  ; 8f - relative noise clock rate
 0c65: dw $0d05  ; 90 - set flag
 0c67: dw $0d51  ; 91 - set output flag bits
-0c69: dw $0d56  ; 92
-0c6b: dw $0d69  ; 93
+0c69: dw $0d56  ; 92 - invert volume phase flag
+0c6b: dw $0d69  ; 93 - volume fade
 0c6d: dw $0de5  ; 94 - pitch bend
-0c6f: dw $0d96  ; 95
+0c6f: dw $0d96  ; 95 - jump if volume fade complete
 0c71: dw $0dc7  ; 96 - set tempo
 0c73: dw $0e35  ; 97 - tuning
 0c75: dw $0e25  ; 98 - voice id for track
-0c77: dw $0e03  ; 99
+0c77: dw $0e03  ; 99 - slur toggle + restart envelopes on key on
 0c79: dw $0e3f  ; 9a - subroutine jump
 0c7b: dw $0e52  ; 9b - exit subroutine
 0c7d: dw $0dab  ; 9c - relative transposition by counter
 0c7f: dw $0e29  ; 9d - key off on duration
-0c81: dw $0da3  ; 9e
+0c81: dw $0da3  ; 9e - jump on retrigger for current sound
 0c83: dw $0e31  ; 9f - set ADSR/GAIN
 0c85: dw $0e2d  ; a0 - set sample
 0c87: dw $0e15  ; a1 - slur on
@@ -972,7 +972,7 @@
 0d51: 04 00     or    a,$00
 0d53: c4 00     mov   $00,a
 0d55: 6f        ret
-; vcmd 92
+; vcmd 92 - invert volume phase flag
 0d56: 28 03     and   a,#$03
 0d58: c4 38     mov   $38,a
 0d5a: e4 01     mov   a,$01
@@ -983,7 +983,7 @@
 0d64: 04 38     or    a,$38
 0d66: d4 ad     mov   $ad+x,a
 0d68: 6f        ret
-; vcmd 93
+; vcmd 93 - volume fade
 0d69: c4 36     mov   $36,a
 0d6b: 28 1f     and   a,#$1f
 0d6d: d5 76 05  mov   $0576+x,a
@@ -1006,7 +1006,7 @@
 0d91: 28 df     and   a,#$df
 0d93: d4 8f     mov   $8f+x,a
 0d95: 6f        ret
-; vcmd 95
+; vcmd 95 - jump if volume fade complete
 0d96: f4 8f     mov   a,$8f+x
 0d98: 28 02     and   a,#$02
 0d9a: d0 05     bne   $0da1
@@ -1014,7 +1014,7 @@
 0d9e: 5f a7 0c  jmp   $0ca7
 0da1: fc        inc   y
 0da2: 6f        ret
-; vcmd 9E
+; vcmd 9E - jump on retrigger for current sound
 0da3: f4 9e     mov   a,$9e+x
 0da5: 28 20     and   a,#$20
 0da7: d0 f3     bne   $0d9c
@@ -1058,7 +1058,7 @@
 0ddf: f7 34     mov   a,($34)+y
 0de1: d5 2c 04  mov   $042c+x,a
 0de4: 6f        ret
-; vcmd 94
+; vcmd 94 - pitch bend
 0de5: 30 0c     bmi   $0df3
 0de7: f0 16     beq   $0dff
 0de9: d5 d1 04  mov   $04d1+x,a
@@ -1074,7 +1074,7 @@
 0dfe: 6f        ret
 0dff: d5 d1 04  mov   $04d1+x,a
 0e02: 6f        ret
-; vcmd 99
+; vcmd 99 - slur toggle + restart envelopes on key on
 0e03: f4 80     mov   a,$80+x
 0e05: 48 10     eor   a,#$10
 0e07: d4 80     mov   $80+x,a
@@ -1100,7 +1100,7 @@
 ; vcmd 98 - voice id for track
 0e25: d5 69 03  mov   $0369+x,a
 0e28: 6f        ret
-; vcmd 9D
+; vcmd 9D - key off on duration
 0e29: d5 a3 05  mov   $05a3+x,a
 0e2c: 6f        ret
 ; vcmd A0 - set sample
@@ -1782,7 +1782,7 @@
 1309: fc        inc   y                 ; step
 130a: f7 36     mov   a,($36)+y         ; read new value
 130c: 30 02     bmi   $1310
-; 00-$7F - delay x clock pulses
+; 00-7f - delay x clock pulses
 130e: fc        inc   y
 130f: 6f        ret
 1310: 68 81     cmp   a,#$81
