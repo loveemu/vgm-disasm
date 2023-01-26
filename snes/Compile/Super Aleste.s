@@ -254,13 +254,13 @@
 07e4: 28 1f     and   a,#$1f
 07e6: b0 02     bcs   $07ea
 07e8: 08 20     or    a,#$20
-07ea: 8f 6c f2  mov   $f2,#$6c
+07ea: 8f 6c f2  mov   $f2,#$6c          ;; DSP reg FLG
 07ed: c4 f3     mov   $f3,a
 ; CPU cmds E6-ED - nop
 07ef: 5f 19 06  jmp   $0619
 ; CPU cmd FE - reset
 07f2: 8f b0 f1  mov   $f1,#$b0          ; clear ports
-07f5: 8f 6c f2  mov   $f2,#$6c
+07f5: 8f 6c f2  mov   $f2,#$6c          ;; DSP reg FLG
 07f8: 8f e0 f3  mov   $f3,#$e0          ; do soft reset
 07fb: 8f 80 f1  mov   $f1,#$80
 07fe: cd 00     mov   x,#$00
@@ -312,7 +312,7 @@
 ;
 084f: 3f 67 06  call  $0667
 0852: 3f c2 0b  call  $0bc2
-0855: 8f 5c f2  mov   $f2,#$5c
+0855: 8f 5c f2  mov   $f2,#$5c          ;; DSP reg KOFF
 0858: 8f 00 f3  mov   $f3,#$00          ; key off all voices
 085b: 3f c3 13  call  $13c3
 085e: e4 01     mov   a,$01
@@ -459,8 +459,8 @@
 098a: 3f 90 09  call  $0990
 098d: 5f 15 06  jmp   $0615
 0990: e4 3d     mov   a,$3d
-0992: 8f 5c f2  mov   $f2,#$5c
-0995: c4 f3     mov   $f3,a             ;; DSP reg KOF
+0992: 8f 5c f2  mov   $f2,#$5c          ;; DSP reg KOFF
+0995: c4 f3     mov   $f3,a
 0997: e4 40     mov   a,$40
 0999: f0 29     beq   $09c4
 099b: 4b 40     lsr   $40
@@ -483,15 +483,15 @@
 09bf: fd        mov   y,a
 09c0: 10 dd     bpl   $099f
 09c2: e4 38     mov   a,$38
-09c4: 8f 2d f2  mov   $f2,#$2d
-09c7: c4 f3     mov   $f3,a             ;; DSP reg PMON
+09c4: 8f 2d f2  mov   $f2,#$2d          ;; DSP reg PMON
+09c7: c4 f3     mov   $f3,a
 09c9: 8d 00     mov   y,#$00
 09cb: 4b 3b     lsr   $3b
 09cd: b0 0e     bcs   $09dd
-09cf: cb f2     mov   $f2,y
+09cf: cb f2     mov   $f2,y             ;; DSP reg VxVOL(L)
 09d1: 8f 00 f3  mov   $f3,#$00          ; zero voice vol L
 09d4: fc        inc   y
-09d5: cb f2     mov   $f2,y
+09d5: cb f2     mov   $f2,y             ;; DSP reg VxVOL(R)
 09d7: 8f 00 f3  mov   $f3,#$00          ; zero voice vol R
 09da: dc        dec   y
 09db: 2f 0f     bra   $09ec
@@ -521,22 +521,22 @@
 0a05: e4 3e     mov   a,$3e
 0a07: 28 1f     and   a,#$1f
 0a09: 08 20     or    a,#$20
-0a0b: 8f 4d f2  mov   $f2,#$4d
-0a0e: 8f 00 f3  mov   $f3,#$00          ;; DSP reg EON
-0a11: 8f 2c f2  mov   $f2,#$2c
-0a14: 8f 00 f3  mov   $f3,#$00          ;; DSP reg EVOL(L)
-0a17: 8f 3c f2  mov   $f2,#$3c
-0a1a: 8f 00 f3  mov   $f3,#$00          ;; DSP reg EVOL(R)
+0a0b: 8f 4d f2  mov   $f2,#$4d          ;; DSP reg EON
+0a0e: 8f 00 f3  mov   $f3,#$00
+0a11: 8f 2c f2  mov   $f2,#$2c          ;; DSP reg EVOL(L)
+0a14: 8f 00 f3  mov   $f3,#$00
+0a17: 8f 3c f2  mov   $f2,#$3c          ;; DSP reg EVOL(R)
+0a1a: 8f 00 f3  mov   $f3,#$00
 0a1d: 2f 0f     bra   $0a2e
 0a1f: e4 41     mov   a,$41
 0a21: 04 76     or    a,$76
 0a23: 24 75     and   a,$75
-0a25: 8f 4d f2  mov   $f2,#$4d
-0a28: c4 f3     mov   $f3,a             ;; DSP reg EON
+0a25: 8f 4d f2  mov   $f2,#$4d          ;; DSP reg EON
+0a28: c4 f3     mov   $f3,a
 0a2a: e4 3e     mov   a,$3e
 0a2c: 28 1f     and   a,#$1f
-0a2e: 8f 6c f2  mov   $f2,#$6c
-0a31: c4 f3     mov   $f3,a             ;; DSP reg FLG
+0a2e: 8f 6c f2  mov   $f2,#$6c          ;; DSP reg FLG
+0a31: c4 f3     mov   $f3,a
 0a33: e4 3f     mov   a,$3f
 0a35: 8f 3d f2  mov   $f2,#$3d
 0a38: c4 f3     mov   $f3,a             ;; DSP reg NON
@@ -548,8 +548,8 @@
 0a42: e4 01     mov   a,$01
 0a44: 28 0c     and   a,#$0c
 0a46: c4 01     mov   $01,a
-0a48: 8f 6c f2  mov   $f2,#$6c
-0a4b: 8f e0 f3  mov   $f3,#$e0          ;; DSP reg FLG
+0a48: 8f 6c f2  mov   $f2,#$6c          ;; DSP reg FLG
+0a4b: 8f e0 f3  mov   $f3,#$e0
 0a4e: e5 00 18  mov   a,$1800
 0a51: c4 4e     mov   $4e,a
 0a53: e5 01 18  mov   a,$1801
@@ -583,7 +583,7 @@
 0a96: c4 5c     mov   $5c,a
 0a98: e5 0d 18  mov   a,$180d
 0a9b: c4 5d     mov   $5d,a             ; set $5C/D to $180C/D
-0a9d: 8f 5d f2  mov   $f2,#$5d
+0a9d: 8f 5d f2  mov   $f2,#$5d          ;; DSP reg DIR
 0aa0: e5 0e 18  mov   a,$180e
 0aa3: c4 f3     mov   $f3,a             ; set sample dir from $180E
 0aa5: e5 0f 18  mov   a,$180f
@@ -691,10 +691,10 @@
 0b61: 48 ff     eor   a,#$ff
 0b63: bc        inc   a
 0b64: cb 73     mov   $73,y
-0b66: 8f 7d f2  mov   $f2,#$7d
+0b66: 8f 7d f2  mov   $f2,#$7d          ;; DSP reg EDL
 0b69: e4 f3     mov   a,$f3
 0b6b: c4 39     mov   $39,a
-0b6d: 8f 6d f2  mov   $f2,#$6d
+0b6d: 8f 6d f2  mov   $f2,#$6d          ;; DSP reg ESA
 0b70: e4 f3     mov   a,$f3
 0b72: c4 38     mov   $38,a
 0b74: e4 44     mov   a,$44
@@ -702,10 +702,10 @@
 0b78: 8f 0f 45  mov   $45,#$0f
 0b7b: 8f 0f 2d  mov   $2d,#$0f
 0b7e: e4 70     mov   a,$70
-0b80: 8f 6d f2  mov   $f2,#$6d
+0b80: 8f 6d f2  mov   $f2,#$6d          ;; DSP reg ESA
 0b83: c4 f3     mov   $f3,a
 0b85: e4 71     mov   a,$71
-0b87: 8f 7d f2  mov   $f2,#$7d
+0b87: 8f 7d f2  mov   $f2,#$7d          ;; DSP reg EDL
 0b8a: c4 f3     mov   $f3,a
 0b8c: 8f 00 f1  mov   $f1,#$00
 0b8f: 8f 02 f1  mov   $f1,#$02
@@ -754,7 +754,7 @@
 0be3: f0 03     beq   $0be8
 0be5: c4 2d     mov   $2d,a
 0be7: 6f        ret
-0be8: 8f 7d f2  mov   $f2,#$7d
+0be8: 8f 7d f2  mov   $f2,#$7d          ;; DSP reg EDL
 0beb: e4 f3     mov   a,$f3
 0bed: c4 45     mov   $45,a
 0bef: 8f 02 44  mov   $44,#$02
@@ -764,9 +764,9 @@
 0bf8: e4 45     mov   a,$45
 0bfa: f0 30     beq   $0c2c
 0bfc: c4 2d     mov   $2d,a
-0bfe: 8f 0d f2  mov   $f2,#$0d
+0bfe: 8f 0d f2  mov   $f2,#$0d          ;; DSP reg EFB
 0c01: 8f 00 f3  mov   $f3,#$00
-0c04: 8f 4d f2  mov   $f2,#$4d
+0c04: 8f 4d f2  mov   $f2,#$4d          ;; DSP reg EON
 0c07: 8f 00 f3  mov   $f3,#$00
 0c0a: 8f 00 f1  mov   $f1,#$00
 0c0d: 8f 02 f1  mov   $f1,#$02
@@ -786,13 +786,13 @@
 0c29: c4 2d     mov   $2d,a
 0c2b: 6f        ret
 0c2c: e4 72     mov   a,$72
-0c2e: 8f 2c f2  mov   $f2,#$2c
+0c2e: 8f 2c f2  mov   $f2,#$2c          ;; DSP reg EVOL(L)
 0c31: c4 f3     mov   $f3,a
 0c33: e4 73     mov   a,$73
-0c35: 8f 3c f2  mov   $f2,#$3c
+0c35: 8f 3c f2  mov   $f2,#$3c          ;; DSP reg EVOL(R)
 0c38: c4 f3     mov   $f3,a
 0c3a: e4 74     mov   a,$74
-0c3c: 8f 0d f2  mov   $f2,#$0d
+0c3c: 8f 0d f2  mov   $f2,#$0d          ;; DSP reg EFB
 0c3f: c4 f3     mov   $f3,a
 0c41: 8f 04 44  mov   $44,#$04
 0c44: 6f        ret
@@ -1217,7 +1217,7 @@
 0ee7: e4 3e     mov   a,$3e
 0ee9: 28 1f     and   a,#$1f
 0eeb: 04 38     or    a,$38
-0eed: 8f 6c f2  mov   $f2,#$6c
+0eed: 8f 6c f2  mov   $f2,#$6c          ;; DSP reg FLG
 0ef0: c4 f3     mov   $f3,a
 0ef2: 6f        ret
 ; vcmd AE - enable fixed panpot for percussion
