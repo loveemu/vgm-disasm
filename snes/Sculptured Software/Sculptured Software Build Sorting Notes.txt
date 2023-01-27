@@ -1,4 +1,4 @@
-Total number of known unique builds: 38
+Total number of known unique builds: 39
 
 (Program starts at $0700 - using 8F ?? ?? 3F ?? ??)
 (Program starts at $0700 - D3 0D)
@@ -111,6 +111,8 @@ Total number of known unique builds: 38
 - Mortal Kombat 3
 (Program starts at $0700 - C0 10)
 - Jungle Book
+(Program starts at $0700 - DA 10)
+- Super Copa (Beta)
 (Program starts at $0700 - E4 10)
 - Super Copa
 (Program starts at $0700 - E9 10)
