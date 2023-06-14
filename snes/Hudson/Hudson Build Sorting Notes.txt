@@ -1,5 +1,6 @@
-Total number of known unique build variants: 17
+Total number of known unique build variants: 16
 (Does not count Super Genjin 2 as a unique build despite a unique version marker: the only differences are purely with the allocation of its memory variables, and all differences start at $20DC)
+(Does not count Daikaijuu Monogatari II as a unique build because the only thing that happened was the code being pushed back by $80 bytes)
 
 (Program starts at $0800 - using 8F ?? ?? 3F ?? ??)
 (Program starts at $0800 - 37 0C)
@@ -37,7 +38,7 @@ Total number of known unique build variants: 17
 - Do-Re-Mi Fantasy
 
 (Ver 2.11 - Program starts at $0800 - contains an opening jump - 36 0E)
-- Daikaijuu Monogatari II
+- Daikaijuu Monogatari II (identical to Do-Re-Mi Fantasy except for the code being located $80 bytes earlier for the most part not counting the opening jump and $FF00 and up)
 
 (Ver 2.27b - Program starts at $0800 - contains an opening jump - using 3F ?? ?? C4 ?? C4 ??)
 (Ver 2.27b - Program starts at $0800 - contains an opening jump - 9E 12)
