@@ -1,4 +1,4 @@
-Total number of known unique builds: 31
+Total number of known unique builds: 32
 
 (Program starts at $0800 - using D0 E8 E8 ?? 3F ?? ??)
 (Program starts at $0800 - F4 0B)
@@ -18,7 +18,7 @@ Total number of known unique builds: 31
 (Program starts at $0200 - 0D 09)
 - Gods (Title Screen & In-Game)
 (Program starts at $0200 - 15 09)
-- World Class Rugby
+- World Class Rugby (outside a game)
 (Program starts at $0200 - 1F 09 & E4 05)
 - Batman: Revenge of the Joker
 (Program starts at $0200 - 1F 09 & EB 05)
@@ -29,6 +29,8 @@ Total number of known unique builds: 31
 - Lemmings 2: The Tribes (Cavelem Tribe)
 
 (Program starts at $0200 - using D0 FA 3F ?? ??)
+(Program starts at $0200 - 1C 05)
+- World Class Rugby (during a game)
 (Program starts at $0200 - BC 08)
 - Super SWIV/Firepower 2000
 (Program starts at $0200 - F0 08)
