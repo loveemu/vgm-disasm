@@ -1,4 +1,4 @@
-Total number of known unique builds: 10
+Total number of known unique builds: 11
 
 (Program starts at $0400 - using D0 F4 BC 3F ?? ??)
 (Program starts at $0480 - 06 0B)
@@ -6,8 +6,10 @@ Total number of known unique builds: 10
 (Program starts at $0400 - code before $0480 is overwritten after initialization - 06 0B)
 - Space Bazooka
 (NOTE: The only difference between this and Battle Clash is the presence of the initialization code snippet.)
-(Program starts at $0300 - code before $0400 is overwritten after initialization - 0A 0B)
-- Metal Combat: Falcon's Revenge
+(Program starts at $0300 - code before $0400 is overwritten after initialization - 0A 0B & 45 FF (using E5 ?? ?? D0 01 6F 5F ?? ?? to distinguish))
+- Metal Combat: Falcon's Revenge (US version)
+(Program starts at $0300 - code before $0400 is overwritten after initialization - 0A 0B & 48 FF (using E5 ?? ?? D0 01 6F 5F ?? ?? to distinguish))
+- Metal Combat: Falcon's Revenge (European version)
 (Program starts at $0300 - code before $0400 is overwritten after initialization - 2D 0B)
 - Fire Emblem: Monshou no Nazo
 
