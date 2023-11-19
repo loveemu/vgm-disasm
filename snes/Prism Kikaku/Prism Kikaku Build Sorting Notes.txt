@@ -1,8 +1,10 @@
-Total number of known unique builds: 5
+Total number of known unique builds: 6
 
 (Program starts at $0800 - using 8F ?? ?? 3F ?? ??)
 (Program starts at $0800 - F0 13)
 - Cosmo Gang - The Video
+(Program starts at $0800 - 84 15)
+- Dual Orb (Beta)
 (Program starts at $0800 - 8C 15)
 - Jigsaw Party/Pieces
 - King of Dragons (Japanese version)
