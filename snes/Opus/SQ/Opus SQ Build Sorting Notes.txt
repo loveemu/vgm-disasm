@@ -204,6 +204,7 @@ NOTE: Both SNES-side and SPC700-side version text are included. However, only th
 - Michael Andretti's IndyCar Challenge (BPS Logo Only, although it malfunctions and never executes due to a bad pointer)
 - Super Tetris 2 + Bombliss (Genteiban) (BPS Logo Only)
 - Tetris 2/Tetris Flash (BPS Logo Only - exists in all versions, but used in Japan only)
+- Tetris Battle Gaiden (Beta)
 
 (--DB(1.18) SQ(1.23)by BPS-- - Program starts at $0812 - using E8 ?? C5 ?? ?? 3F ?? ??)
 (--DB(1.18) SQ(1.23)by BPS-- - Program starts at $0812 - A9 1E)
