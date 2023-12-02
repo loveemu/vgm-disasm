@@ -1,6 +1,10 @@
-Total number of known unique builds: 3
+Total number of known unique builds: 4
 
 (Program starts at $F000 - starting section of code is cleared out and overwritten, rest of the code starts at $0200 - using 8F ?? ?? 8F ?? ?? 3F ?? ??)
+(Program starts at $F000 - starting section of code is cleared out and overwritten, rest of the code starts at $0200 - FA 08)
+- Legend (US version) (Seika Logo)
+- The Super Aquatic Games Starring the Aquabats (Seika Logo)
+- Troddlers (US version) (Seika Logo)
 (Program starts at $F000 - starting section of code is cleared out and overwritten, rest of the code starts at $0200 - C9 09)
 - Super Turrican
 (Program starts at $F000 - starting section of code is cleared out and overwritten, rest of the code starts at $0200 - D0 09)

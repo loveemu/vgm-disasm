@@ -1,4 +1,4 @@
-Total number of known unique builds: 9
+Total number of known unique builds: 14
 
 (Program starts at $0800 - Using 2F ?? BC 3F ?? ??)
 (Program starts at $0800 - 3D 0E)
@@ -7,8 +7,27 @@ Total number of known unique builds: 9
 
 (*Ver S1.20*)
 (Program starts at $0800 - Using D0 FB BC 3F ?? ??)
-(Program starts at $0675 with *Ver S1.20* right at the beginning of the code, otherwise starts at $0800 - 73 0D)
-- Wild Trax/Stunt Race FX
+(Program starts at $0675 with *Ver S1.20* right at the beginning of the code, otherwise starts at $0800 - 73 0D & 1B 11 & C4 15 (using 33 ?? 04 12 ?? 32 ?? 3F ?? ?? 3F ?? ?? to distinguish))
+- Wild Trax/Stunt Race FX (US version)
+
+(Program starts at $0675 with *Ver S1.20* right at the beginning of the code, otherwise starts at $0800 - 73 0D & 15 11 & BC 19 (using 33 ?? 04 12 ?? 32 ?? 3F ?? ?? 3F ?? ?? to distinguish))
+- Wild Trax/Stunt Race FX (US version) (During certain races)
+
+(Program starts at $0675 with *Ver S1.20* right at the beginning of the code, otherwise starts at $0800 - 73 0D & EB 10 & 7B 1A (using 33 ?? 04 12 ?? 32 ?? 3F ?? ?? 3F ?? ?? to distinguish))
+- Stunt Race FX (European version)
+(NOTE: There is a non-code related relocation prior to the first opcode that is actually different. Said signature is located after this difference.)
+
+(Program starts at $0675 with *Ver S1.20* right at the beginning of the code, otherwise starts at $0800 - 73 0D & E5 10 & A5 19 (using 33 ?? 04 12 ?? 32 ?? 3F ?? ?? 3F ?? ?? to distinguish))
+- Stunt Race FX (European version) (During certain races)
+(NOTE: There is a non-code related relocation prior to the first opcode that is actually different. Said signature is located after this difference.)
+
+(Program starts at $06AA with *Ver S1.20* right at the beginning of the code, otherwise starts at $0800 - 6E 0D)
+- Stunt Race FX (Beta)
+(Refers to xlsound.bin)
+
+(Program starts at $06AA with *Ver S1.20* right at the beginning of the code, otherwise starts at $0800 - 6E 0D (opcode difference at $1092))
+- Stunt Race FX (Beta) (During certain races)
+(Refers to xlsound.bin, with xlsound2.bin overwriting some of the code)
 
 (Program starts at $0800 - using E8 ?? BC 3F ?? ??)
 (Program starts at $0800 - 79 0D)
@@ -35,6 +54,6 @@ Total number of known unique builds: 9
 - Super Mario Kart (beta version) (mario_kart)
 (Refers to a prototype from late June 1992, created before kar4t.)
 
-(Program starts at $0400 - Using D0 F7 E8 ?? 3F ?? ??)
-(Program starts at $0400 - 61 0D)
+(Program starts at $0800 - Using D0 F7 E8 ?? 3F ?? ??)
+(Program starts at $0800 - 61 0D)
 - FX Trax (Stunt Race FX/Wild Trax Prototype)

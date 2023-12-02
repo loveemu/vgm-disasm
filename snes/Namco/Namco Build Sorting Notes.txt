@@ -1,8 +1,4 @@
-Total number of known unique builds: 8
-
-(Program starts at $0200 - using 8F ?? ?? 8F ?? ?? 3F ?? ??)
-(Program starts at $0200 - 77 04)
-- Super Family Circuit
+Total number of known unique builds: 7
 
 (Program starts at $0800 - has code preceding it starting at $0548 - using E8 ?? 8D ?? 3F ?? ??)
 (Program starts at $0800 - has code preceding it starting at $0548 - 65 0C)

@@ -1,6 +1,12 @@
-Total number of known unique builds: 2
+Total number of known unique builds: 4
+
+(Program starts at $0800 - Using E8 ?? C4 ?? C4 ?? 3F ?? ??)
+(Program starts at $0800 - 25 26)
+- Mario Paint (Beta)
 
 (Program starts at $0500 - Using D0 FB 3F ?? ??)
+(Program starts at $0800 - 30 14)
+- Mario Paint
 (Program starts at $0500 - A5 16)
 - Mother 2/Earthbound
 (Program starts at $0500 - EB 16)
