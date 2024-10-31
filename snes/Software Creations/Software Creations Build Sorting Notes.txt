@@ -1,4 +1,4 @@
-Total number of known unique builds: 24
+Total number of known unique builds: 25
 
 (Program starts at $0400 - using 8F ?? ?? 3F ?? ??)
 (Program starts at $0400 - 9A 0C)
@@ -25,6 +25,8 @@ Total number of known unique builds: 24
 - Tin Star
 (Program starts at $0400 - 63 12)
 - Rock 'n Roll Racing (US Beta)
+(Program starts at $0400 - 65 12)
+- Moto-X
 (Program starts at $0400 - 6C 12)
 - Thomas the Tank Engine & Friends
 (Program starts at $0400 - 6D 12)
