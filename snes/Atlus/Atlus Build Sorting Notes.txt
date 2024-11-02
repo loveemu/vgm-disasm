@@ -1,0 +1,46 @@
+Total number of known unique builds: 12
+
+(Program starts at $0300 - using 3D D0 FA 3F ?? ??)
+(Program starts at $0300 - 5B 04)
+- Shin Megami Tensei
+(Program starts at $0300 - 68 04)
+- Uchuu no Kishi Tekkaman Blade (Beta)
+(Program starts at $0300 - 73 04)
+- Uchuu no Kishi Tekkaman Blade
+
+(Program starts at $0500 - using 3D D0 F4 3F ?? ??)
+(Program starts at $0500 - 32 06)
+- BlaZeon
+(Program starts at $0500 - 70 06)
+- Jammes
+(Program starts at $0500 - 80 06)
+- Gouketsuji Ichizoku/Power Instinct
+- Majin Tensei
+(Program starts at $0500 - 81 06)
+- Shin Megami Tensei if...
+(Program starts at $0500 - 84 06)
+- Shin Megami Tensei II
+(Program starts at $0500 - 88 06)
+- Last Bible III
+- Majin Tensei II: Spiral Nemesis
+(Program starts at $0500 - 8B 06)
+- Nontan to Issho: Kurukuru Puzzle
+(Program starts at $0500 - 92 06)
+- Kabuki Rocks
+(Program starts at $0500 - 9A 06)
+- Seijuu Maden: Beasts & Blades
+
+Except for BlaZeon, Shin Megami Tensei and Uchuu no Kishi Tekkaman Blade, there is an initialization build as following (though it never changes between games, regions and versions):
+
+(Program starts at $0300 - using C5 ?? ?? 3F ?? ??)
+(Program starts at $0300 - 17 04)
+- Gouketsuji Ichizoku/Power Instinct
+- Jammes
+- Kabuki Rocks
+- Last Bible III
+- Majin Tensei
+- Majin Tensei II: Spiral Nemesis
+- Nontan to Issho: Kurukuru Puzzle
+- Seijuu Maden: Beasts & Blades
+- Shin Megami Tensei if...
+- Shin Megami Tensei II
