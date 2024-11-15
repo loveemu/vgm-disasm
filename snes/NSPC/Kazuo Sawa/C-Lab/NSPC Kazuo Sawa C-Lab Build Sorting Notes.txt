@@ -1,4 +1,4 @@
-Total number of known unique builds: 21
+Total number of known unique builds: 22
 
 (Program starts at $0400 - contains an opening branch - using BD 3F ?? ??)
 (Program starts at $0400 - contains an opening branch - 61 0E)
@@ -38,10 +38,12 @@ Total number of known unique builds: 21
 - Galaxy Wars
 - Hanafuda Ou
 (Program starts at $0400 - contains an opening branch - D8 0E)
-- Populous II
+- Populous II (Outside of a game)
 (Program starts at $0400 - contains an opening branch - 09 0F)
 - Ultima VI - The False Prophet
-(Program starts at $0400 - contains an opening branch - 48 0F)
+(Program starts at $0400 - contains an opening branch - 48 0F & EF 06 (using 3F ?? ?? right next to the preceding one to distinguish))
+- Populous II (During a game)
+(Program starts at $0400 - contains an opening branch - 48 0F & F2 06 (using 3F ?? ?? right next to the preceding one to distinguish))
 - Sugoro Quest++ - Dicenics
 (Program starts at $0400 - contains an opening branch - 7A 0F)
 - Bishoujo Senshi Sailor Moon S - Kurukkurin

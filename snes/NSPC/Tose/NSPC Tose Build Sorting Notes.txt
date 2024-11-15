@@ -83,14 +83,14 @@ Total number of known unique builds: 38
 (Program starts at $0800 - 9B 10)
 - SD Kidou Senshi Gundam 2
 (Program starts at $0800 - CF 10)
-- Super 3D Baseball
+- Super 3D Baseball/Hanguk Pro Yagu
 (Program starts at $0800 - ED 10)
 - Super Tetris 2 + Bombliss (Genteiban)
 - Yuu Yuu Hakusho 2 - Kakutou no Shou
 (Program starts at $0800 - ED 10 (opcode difference at $120C))
 - Takeda Nobuhiro no Super Cup Soccer/Super Goal! 2 (NOTE: only difference from Super Tetris 2 + Bombliss Genteiban is a sub-routine call instead of a storage at $120C)
 (Program starts at $0800 - 4F 11)
-- Hanguk Pro Yagu/Super Bases Loaded II
+- Super Bases Loaded II
 - Rokudenashi Blues - Taiketsu! Tokyo Shitennou
 (Program starts at $0800 - 50 11)
 - Kidou Senshi V Gundam

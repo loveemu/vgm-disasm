@@ -1,5 +1,6 @@
 Total number of known unique build variants: 16
 (Does not count Super Genjin 2 as a unique build despite a unique version marker: the only differences are purely with the allocation of its memory variables, and all differences start at $20DC)
+(Does not count Daikaijuu Monogatari II as a unique build because the only thing that happened was the code being pushed back by $80 bytes)
 
 (Program starts at $0800 - using 8F ?? ?? 3F ?? ??)
 (Program starts at $0800 - 37 0C)
@@ -24,8 +25,11 @@ Total number of known unique build variants: 16
 (Version 1.16E - Program starts at $0800 - contains an opening branch - EA 0D & BC 20 (using C4 ?? 3F ?? ?? to distinguish))
 - Super Genjin 2 (Identical to the build above minus what I suspect are variable-related memory location reference differences starting at $20DC, thus I won't count this as a unique build since this is only an allocation difference)
 
-(Version 1.17s - Program starts at $0800 - contains an opening branch - EA 0D & BF 20 (using C4 ?? 3F ?? ?? to distinguish))
+(Version 1.17s - Program starts at $0800 - contains an opening branch - EA 0D & BF 20 (using C4 ?? 3F ?? ?? to distinguish) & 04 21 (using 90 09 3F ?? ?? to distinguish))
 - Caravan Shooting Collection
+
+(Version 1.17 - Program starts at $0800 - contains an opening branch - EA 0D & BF 20 (using C4 ?? 3F ?? ?? to distinguish) & 02 21 (using 90 09 3F ?? ?? to distinguish))
+- Undake 30 Ura Game Daisakusen
 
 (Version 1.17b - Program starts at $0800 - contains an opening branch - FF 0D)
 - Undake 30 Same Game Daisakusen - Mario Version
@@ -34,7 +38,7 @@ Total number of known unique build variants: 16
 - Do-Re-Mi Fantasy
 
 (Ver 2.11 - Program starts at $0800 - contains an opening jump - 36 0E)
-- Daikaijuu Monogatari II
+- Daikaijuu Monogatari II (identical to Do-Re-Mi Fantasy except for the code being located $80 bytes earlier for the most part not counting the opening jump and $FF00 and up)
 
 (Ver 2.27b - Program starts at $0800 - contains an opening jump - using 3F ?? ?? C4 ?? C4 ??)
 (Ver 2.27b - Program starts at $0800 - contains an opening jump - 9E 12)

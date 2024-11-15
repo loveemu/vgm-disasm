@@ -1,0 +1,11 @@
+Total number of known unique builds: 3
+
+(Program starts at $0300 - using 8D ?? E8 ?? DA ?? 3F ?? ??)
+(Program starts at $0300 - 70 08 & B3 0E (using 8F ?? ?? 3F ?? ?? to distinguish))
+- Kamen Rider SD
+(Program starts at $0300 - 70 08 & DF 0E (using 8F ?? ?? 3F ?? ?? to distinguish))
+- Hisshou Pachi-Slot Fan
+- Honkakuha Igo - Gosei
+- Janyuuki Gokuu Randa
+(Program starts at $0300 - 72 08)
+- Yuujin no Furi Furi Girls (NOTE: The only difference compared to Kamen Rider SD is a single opcode addition that's a mere overwrite and a drumkit difference, thus barely qualifying if at all as a build variant.)

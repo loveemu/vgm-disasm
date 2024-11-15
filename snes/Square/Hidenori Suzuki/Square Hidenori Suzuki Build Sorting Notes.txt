@@ -1,4 +1,4 @@
-Total number of known unique builds: 3
+Total number of known unique builds: 4
 
 (Program starts at $0200 - Using D0 FB CD ?? BD 3F ?? ??)
 (Program starts at $0200 - 0A 03)
@@ -7,3 +7,5 @@ Total number of known unique builds: 3
 - Bahamut Lagoon
 (Program starts at $0200 - 1A 03)
 - Super Mario RPG: Legend of the Seven Stars
+(Program starts at $0200 - 30 03)
+- Seiken Densetsu 3 (Sample)

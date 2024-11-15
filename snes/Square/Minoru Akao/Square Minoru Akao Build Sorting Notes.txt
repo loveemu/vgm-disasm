@@ -1,6 +1,5 @@
-Total number of known unique builds: 13
+Total number of known unique builds: 15
 
-(Square/Minoru Akao)
 (Program starts at $0800 - using 8F ?? ?? 3F ?? ??)
 (Program starts at $0800 - 82 10)
 - Final Fantasy IV/II
@@ -22,9 +21,13 @@ Total number of known unique builds: 13
 - Romancing SaGa 2
 (Program starts at $0200 - 05 07)
 - Front Mission
+(Program starts at $0200 - 40 07)
+- Chrono Trigger (Sample)
 (Program starts at $0200 - using 1A ?? 8D ?? 3F ?? ??)
 (Program starts at $0200 - 40 07)
 - Front Mission - Gun Hazard
+(Program starts at $0200 - 94 07)
+- Romancing SaGa 3 (Sample)
 (Program starts at $0200 - 97 07)
 - Romancing SaGa 3
 (Program starts at $0200 - A3 07)

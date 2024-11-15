@@ -1,8 +1,10 @@
-Total number of known unique builds: 12
+Total number of known unique builds: 13
 
-NOTE: Houkago in Beppin Jogakuin, Monster Maker Kids: Ousama ni Naritai and Feda - The Emblem of Justice are subject to data loss at the beginning of the program due to them being recycled for memory location usage afterwards. They also store their music on the SNES side and translate them to commands for the SPC700 to execute. Their relationship to the other games have not been examined yet music format-wise.
+NOTE: Houkago in Beppin Jogakuin, Monster Maker Kids: Ousama ni Naritai and Feda - The Emblem of Justice are subject to data loss at the beginning of the program due to them being recycled for memory location usage afterwards. They also store their music on the SNES side and translate them to commands for the SPC700 to execute. The music format is known to carry over between the two.
 
-(Program starts at $0280 - using 05 ?? ?? 8D ?? 3F ?? ??)
+(Program starts at $0300 - using 05 ?? ?? 8D ?? 3F ?? ??)
+(Program starts at $0300 - 9E 09)
+- Feda - The Emblem of Justice (Beta)
 (Program starts at $0280 - D1 09)
 - Houkago in Beppin Jogakuin
 (Program starts at $0280 - 16 0A)

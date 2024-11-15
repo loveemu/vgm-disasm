@@ -1,0 +1,19 @@
+Total number of known unique build variants: 6
+NOTE: The beta version of Dragon's Lair is not known to have actually used the build in question.
+
+(Program starts at $0600 - using D8 ?? 3F ?? ??)
+(No signature - Program starts at $0600 - D9 0D)
+- Dragon's Lair (Beta)
+(1992 - Program starts at $0600 - 4D 0E)
+- Dragon's Lair/Dragon's Magic
+(1993 - Program starts at $0600 - 3F 0E)
+- Adventures of Dr. Franken (European version)
+(1993 - Program starts at $0600 - 44 0E)
+- Adventures of Dr. Franken (US version)
+- Power Slide
+
+(1994 - Program starts at $0570 - using D0 FC 3F ?? ??)
+(1994 - Program starts at $0570 - 07 10)
+- Dirt Racer
+(1994 - Program starts at $0570 - A3 10)
+- Micro Machines
