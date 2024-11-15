@@ -1,0 +1,7 @@
+Total number of known unique builds: 1
+
+NOTE: Fushigi no Dungeon 2 - Fuurai no Shiren stores its music on the SNES side and translates them to commands for the SPC700 to execute. The music format is not related to the earlier Chunsoft games.
+
+(Program starts at $8000 (code goes as far back as $05B0) - using 8F ?? ?? C4 ?? 3F ?? ??)
+(Program starts at $8000 (code goes as far back as $05B0) - 95 80)
+- Fushigi no Dungeon 2 - Fuurai no Shiren
