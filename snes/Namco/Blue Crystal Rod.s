@@ -69,7 +69,7 @@
 05b4: e5 00 f0  mov   a,$f000
 05b7: c4 42     mov   $42,a
 05b9: e5 01 f0  mov   a,$f001
-05bc: c4 43     mov   $43,a             ; ADSR envelope pointer table 
+05bc: c4 43     mov   $43,a             ; ADSR envelope pointer table ($f000/1)
 05be: f5 40 03  mov   a,$0340+x         ; envelope index
 05c1: 1c        asl   a
 05c2: fd        mov   y,a
@@ -450,14 +450,14 @@
 08aa: 8d 03     mov   y,#$03
 08ac: cf        mul   ya
 08ad: fd        mov   y,a
-08ae: f6 08 f0  mov   a,$f008+y
+08ae: f6 08 f0  mov   a,$f008+y         ; offset 0: slot number?
 08b1: 1c        asl   a
 08b2: 5d        mov   x,a
 08b3: e4 38     mov   a,$38
 08b5: d4 49     mov   $49+x,a           ; song number
 08b7: f6 09 f0  mov   a,$f009+y
 08ba: d4 00     mov   $00+x,a
-08bc: f6 0a f0  mov   a,$f00a+y
+08bc: f6 0a f0  mov   a,$f00a+y         ; offset 1-2: song start address?
 08bf: d4 01     mov   $01+x,a           ; set vcmd read ptr from song list (starting from $f009)
 08c1: e8 00     mov   a,#$00
 08c3: d4 19     mov   $19+x,a
@@ -821,7 +821,7 @@
 
 ; vcmd 12 - set echo filter
 0b53: ec 07 f0  mov   y,$f007
-0b56: e5 06 f0  mov   a,$f006
+0b56: e5 06 f0  mov   a,$f006           ; FIR table address ($f006/7)
 0b59: da 3a     movw  $3a,ya
 0b5b: 3f 59 0c  call  $0c59             ; arg1
 0b5e: cd 0f     mov   x,#$0f
