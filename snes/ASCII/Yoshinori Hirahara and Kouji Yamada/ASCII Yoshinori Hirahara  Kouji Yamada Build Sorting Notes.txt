@@ -1,0 +1,13 @@
+Total number of known unique builds: 5
+
+(Program starts at $0400 - Using CD ?? BD 3F ?? ?? 3F ?? ?? 3F ?? ??)
+(Program starts at $0400 - 00 30, 9E 30, A4 30)
+- Spindizzy Worlds (US and European versions)
+(Program starts at $0400 - 00 30, A0 30, A6 30)
+- Spindizzy Worlds (Japanese version)
+(Program starts at $0400 - 00 30, A7 30, AD 30)
+- Daisenryaku Expert
+(Program starts at $0400 - 00 30, A8 30, AE 30)
+- Daisenryaku Expert WWII: War in Europe
+(Program starts at $0400 - 00 30, AA 30, B0 30)
+- Wizardry V: Heart of the Maelstrom

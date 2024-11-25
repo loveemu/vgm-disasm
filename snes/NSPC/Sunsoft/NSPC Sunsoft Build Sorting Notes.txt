@@ -1,4 +1,4 @@
-Total number of known unique builds: 10
+Total number of known unique builds: 11
 
 (Program starts at $0800 - Using E8 ?? 8D ?? 3F ?? ??)
 (Program starts at $0800 - 2E 0C & 25 1D (using $08D9 to distinguish))
@@ -21,6 +21,8 @@ Total number of known unique builds: 10
 - Albert Odyssey
 (Program starts at $0800 - EA 0D)
 - Hissatsu Pachinko Collection 3
+(Program starts at $0800 - 30 0F)
+- Pirates of Dark Water (Beta)
 (Program starts at $0800 - D1 0F)
 - Pirates of Dark Water
 (Program starts at $0800 - CE 0F)

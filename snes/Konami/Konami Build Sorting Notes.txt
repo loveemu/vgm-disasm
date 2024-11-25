@@ -1,4 +1,4 @@
-Total number of known unique builds: 39
+Total number of known unique builds: 42
 
 (Program starts at ???? - Using E8 ?? 3F ?? ??)
 (Program starts at $0896 - A1 11)
@@ -61,6 +61,11 @@ NOTE: For the following cases, please see Konami Build Sorting Notes Expert Edit
 - Ganbare Goemon 3
 (Program starts at $0200 (with most code starting at $0EC1) - Array of pointers to code at start - Sorting method TODO - TODO)
 - Jikkyou Powerful Pro Yakyuu 2
+(Program starts at $0200 (with most code starting at $0E18) - Array of pointers to code at start - Sorting method TODO - TODO)
+- Akumajou Dracula XX
+(Program starts at $0200 (with most code starting at $0E19) - Array of pointers to code at start - Sorting method TODO - TODO)
+(NOTE: Identical to Akumajou Dracula XX minus pointer differences)
+- Castlevania: Dracula X/Castlevania: Vampire's Kiss
 (Program starts at $0200 (with most code starting at $0EE9) - Array of pointers to code at start - Sorting method TODO - TODO)
 - Jikkyou World Soccer 2: Fighting Eleven (Beta)
 (Program starts at $0200 (with most code starting at $0D28) - Array of pointers to code at start - Sorting method TODO - TODO)
@@ -71,6 +76,10 @@ NOTE: For the following cases, please see Konami Build Sorting Notes Expert Edit
 - NBA Jikkyou Basket: Winning Dunk
 (Program starts at $0200 (with most code starting at $0887) - Array of pointers to code at start - Sorting method TODO - TODO)
 - NBA Give 'n Go
+(Program starts at $0200 (with most code starting at $0870) - Array of pointers to code at start - Sorting method TODO - TODO)
+- Chibi Maruko-chan: Mezase! Minami no Island!! (Sample)
+(Program starts at $0200 (with most code starting at $0A81) - Array of pointers to code at start - Sorting method TODO - TODO)
+- Chibi Maruko-chan: Mezase! Minami no Island!!
 (Program starts at $0200 (with most code starting at $0C27) - Array of pointers to code at start - Sorting method TODO - TODO)
 - Jikkyou Oshaberi Parodius
 (Program starts at $0200 (with most code starting at $10CD) - Array of pointers to code at start - Sorting method TODO - TODO)

@@ -1,4 +1,4 @@
-Total number of known unique builds: 10
+Total number of known unique builds: 11
 
 (Program starts at $F600 - using CB ?? CB ?? 3F ?? ??)
 (Program starts at $F600 - 36 FA)
@@ -6,6 +6,8 @@ Total number of known unique builds: 10
 (Program starts at $F600 - 4A FA)
 - Hero Senki: Project Olympus
 (Program starts at $F600 - 54 FA)
+- Mazinger Z (Putative Beta)
+(Program starts at $F600 - 54 FA (code difference at $FC70))
 - Mazinger Z
 
 (Program starts at $F600 - using CB ?? CB ?? AB ?? 3F ?? ??)

@@ -1,4 +1,4 @@
-Total number of known unique builds: 39
+Total number of known unique builds: 42
 
 The following unique builds are not included in this set, and instead are in the standard pointer-based comparison set:
 - Contra Spirits/Contra III: The Alien Wars/Super Probotector: Alien Rebels
@@ -29,11 +29,19 @@ Between Lethal Enforcers and Teenage Mutant Ninja Turtles: Tournament Fighters a
 Biker Mice from Mars
 FD 80 A8 E4 90 F9 1C 5D 1F 29 08
 
+Akumajou Dracula XX
+FD 80 A8 E2 90 F9 1C 5D 1F 18 0E
+Castlevania: Dracula X/Castlevania: Vampire's Kiss
+FD 80 A8 E2 90 F9 1C 5D 1F 19 0E
 Ganbare Goemon Kirakira Douchuu - Boku ga Dancer ni Natta Wake
 FD 80 A8 E2 90 F9 1C 5D 1F CD 10
 Tokimeki Memorial: Densetsu no Ki no Shita de
 FD 80 A8 E2 90 F9 1C 5D 1F 45 09
+Between Akumajou Dracula XX (Castlevania: Dracula X/Caslevania: Vampire's Kiss is identical other minus pointer differences) and Ganbare Goemon Kirakira Douchuu, there is a code difference at $0E54/$1109 (offset $3C).
 Between Ganbare Goemon Kirakira Douchuu and Tokimeki Memorial, there is a code difference at $1122/$099A (offset $55).
+
+Chibi Maruko-chan: Mezase! Minami no Island!!
+80 A8 E2 90 DC 1C 5D 1F 81 0A
 
 Jikkyou Oshaberi Parodius
 80 A8 E6 90 E2 1C 5D 1F 27 0C
@@ -163,6 +171,12 @@ E4 2C F0 FB 78 FF 2D F0 F6 8F FF 2D 6F
 02 1F 6F 12 1F 6F
 3F 61 17 8F 00 1C 8F 00 04 8F 80 05 8D 10 F6 8F 01 28 01 D0 09 09 05 04 D6 CE 00 D6 8E 01 4B 05 DC FE EB E4 04 5F C2 0C
 8F 00 26 F2 1F 8F 00 F1 8F 20 FA 8F 01 F1 E8 7F 8F 0C F2 C4 F3 8F 1C F2 C4 F3 3F 61 17 E8 00 C4 1C C4 2A 32 1F 8D 10 D6 CE 00 D6 8E 01 DC FE F7 E8 FF 5F C2 0C
+
+Chibi Maruko-chan: Mezase! Minami no Island!! (Sample)
+80 A8 E6 90 DC 1C 5D 1F 70 08
+
+8F 3F 10 8F 00 0E 22 1F E8 05 5F 17 0B
+32 1F E4 0F C4 0E 6F
 
 Jikkyou Powerful Pro Yakyuu '94
 80 A8 E6 90 DC 1C 5D 1F 6B 0E

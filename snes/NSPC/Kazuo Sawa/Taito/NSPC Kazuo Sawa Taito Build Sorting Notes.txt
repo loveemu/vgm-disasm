@@ -1,11 +1,10 @@
-Total number of known unique builds: 10
+Total number of known unique builds: 11
 
 (Program starts at $0400 - using BD 3F ?? ?? 3F ?? ??)
 (Program starts at $0400 - 89 0D & 8A 05)
 - Populous
-(Program starts at $0800 - using BD 3F ?? ?? 3F ?? ??)
 (Program starts at $0800 - 96 11 & A2 09)
-- Hat Trick Hero/Super Soccer Champ
+- Hat Trick Hero/Super Soccer Champ/Euro Football Champ
 (Program starts at $0800 - BE 11 & 9C 09)
 - Darius Twin (Japanese Version)
 (Program starts at $0800 - C0 11 & 97 09)
@@ -17,7 +16,11 @@ Total number of known unique builds: 10
 (Program starts at $0800 - 14 12 & B1 09)
 - Gousou Jinrai Densetsu Musha/Musya
 (Program starts at $0800 - 24 12 & C1 09)
-- Super Shanghai: Dragon's Eye/Shanghai II: Dragon's Eye
+- Super Shanghai: Dragon's Eye
+
+(Program starts at $0800 - using D0 F4 3F ?? ?? 3F ?? ??)
+(Program starts at $0800 - 0E 12 & C4 09)
+- Shanghai II: Dragon's Eye
 
 (*Ver S1.20*)
 (Program starts at $0800 - using BD 3F ?? ?? 3F ?? ??)

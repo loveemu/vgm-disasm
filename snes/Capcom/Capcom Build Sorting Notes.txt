@@ -1,40 +1,50 @@
-Total number of known unique builds: 12
+Total number of known unique builds: 14
 (Does not count the US and European versions of Final Fight as well as Final Fight Guy as unique builds because the only difference is the number of FIR table entries)
 
 (Program starts at $0300 - using CD ?? BD 3F ?? ??)
+(Program starts at $0300 - 56 06)
+- U.N. Squadron (European version)
+- Super Ghouls 'n Ghosts (European version)
 (Program starts at $0300 - DF 06 & A6 0C (using D5 ?? ?? FD 3F ?? ?? at $04F3 to distinguish))
 - Final Fight (Japanese Version)
 (Program starts at $0300 - DF 06 & 8E 0C (using D5 ?? ?? FD 3F ?? ?? at $04F3 to distinguish))
 - Final Fight (US & European Version)/Final Fight Guy
 (NOTE: The only difference here is the number of FIR table entries compared to the above build, thus I consider this to be completely identical code-wise)
 (Program starts at $0300 - 11 0B)
-- Area 88/U.N. Squadron
-- Chou Makaimura/Super Ghouls 'n Ghosts
+- Area 88/U.N. Squadron (US version)
+- Chou Makaimura/Super Ghouls 'n Ghosts (US version)
 
 (Program starts at $02C0 - using D0 F8 3F ?? ??)
 (Program starts at $02C0 - 25 04 & BB 0C (using 8D ?? E8 ?? 3F ?? ?? to distinguish))
 - Aladdin
 - Final Fight 2
+- Goof Troop (French version)
 - Street Fighter II Turbo
 (Program starts at $02C0 - 25 04 & C2 0C (using 8D ?? E8 ?? 3F ?? ?? to distinguish))
 - Captain Commando
 (Program starts at $02C0 - 2F 04)
-- Mickey no Magical Adventure/Magical Quest Starring Mickey Mouse
+- Mickey no Magical Adventure/Magical Quest Starring Mickey Mouse/Magical Quest Con Topolino
+- Super Pang/Super Buster Bros. (US Version only, not revision 1)
 (Program starts at $02C0 - 36 04 & D6 0C (using 8D ?? E8 ?? 3F ?? ?? to distinguish))
 - Goof Troop/Goofy to Max: Kaizoku Shima no Daibouken
 (Program starts at $02C0 - 36 04 & D9 0C (using 8D ?? E8 ?? 3F ?? ?? to distinguish))
-- Breath of Fire
+- Breath of Fire - Ryuu no Senshi
+- Magical Quest Starring Mickey Mouse (German version)
+- Super Pang (European version and US Version Revision 1)
 (Program starts at $02C0 - 4C 04)
 - Street Fighter II: The World Warrior
-- Super Pang/Super Buster Bros.
 (Program starts at $02C0 - 51 04 & 4A 0D (using 8D ?? E8 ?? 3F ?? ?? to distinguish))
-- Muscle Bomber - The Body Explosion/Saturday Night Slam Masters
+- Muscle Bomber - The Body Explosion
+- Super Street Fighter II: The New Challengers (US and European versions)
 (Program starts at $02C0 - 51 04 & 4B 0D (using 8D ?? E8 ?? 3F ?? ?? to distinguish))
-- Super Street Fighter II: The New Challengers
+- Saturday Night Slam Masters
+- Super Street Fighter II: The New Challengers (Japanese version)
+(Program starts at $02C0 - 51 04 & 61 0D (using 8D ?? E8 ?? 3F ?? ?? to distinguish))
+- Mickey to Minnie - Magical Adventure 2 (Sample)
 (Program starts at $02C0 - 51 04 & 64 0D (using 8D ?? E8 ?? 3F ?? ?? to distinguish))
 - Rockman X/Mega Man X
 (Program starts at $02C0 - 51 04 & 7E 0D (using 8D ?? E8 ?? 3F ?? ?? to distinguish))
-- Breath of Fire II
+- Breath of Fire II - Shimei no Ko
 - Demon's Blazon/Demon's Crest
 - Mickey to Minnie: Magical Adventure 2/Great Circus Mystery Starring Mickey & Minnie
 - Rockman 7: Shukumei no Taiketsu!/Mega Man 7
