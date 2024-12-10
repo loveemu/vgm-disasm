@@ -1,0 +1,15 @@
+Total number of known unique builds: 32
+
+NOTE: These builds mostly don't have shared SFX code due to their hardcoded nature for the most part, and VCMD sets are not guaranteed to be an exact match, either. The only other special note is that Super Scope 6 (Blastris) has a shared VCMD set with Super Scope 6 (LazerBlazer), but the latter is under Akito Nakatsuka due to its shared SFX programming with later games.
+
+(Program starts at $0800 - Using D0 E8 E8 ?? 3F ?? ??)
+(Program starts at $0800 - F4 0B)
+- Dream TV (Beta 2)
+(Program starts at $0300 - Using D0 E8 E8 ?? 3F ?? ??)
+(Program starts at $0300 - 9D 07)
+- Kick Off
+(Program starts at $0300 - Using D0 F7 3F ?? ?? and D0 F5 3F ?? ??)
+(Program starts at $0300 - 9D 07 & 94 09)
+- Krusty's Super Fun House (version 1)
+(Program starts at $0300 - Using D0 F7 3F ?? ?? and D0 F5 3F ?? ??)
+(Program starts at $0300 - 9D 07 & 99 09)
