@@ -1,6 +1,6 @@
 Total number of known unique builds: 32
 
-NOTE: These builds mostly don't have shared SFX code due to their hardcoded nature for the most part, and VCMD sets are not guaranteed to be an exact match, either. The only other special note is that Super Scope 6 (Blastris) has a shared VCMD set with Super Scope 6 (LazerBlazer), but the latter is under Akito Nakatsuka due to its shared SFX programming with later games.
+NOTE: Gods has 2 copies of the code in the ROM.
 
 (Program starts at $0800 - Using D0 E8 E8 ?? 3F ?? ??)
 (Program starts at $0800 - F4 0B)
@@ -13,3 +13,89 @@ NOTE: These builds mostly don't have shared SFX code due to their hardcoded natu
 - Krusty's Super Fun House (version 1)
 (Program starts at $0300 - Using D0 F7 3F ?? ?? and D0 F5 3F ?? ??)
 (Program starts at $0300 - 9D 07 & 99 09)
+- Krusty's Super Fun House (version 2)
+(Program starts at $0200 - Using D0 F4 3F ?? ??)
+(Program starts at $0200 - 0D 08)
+- Gods (Ending)
+(Program starts at $0200 - Using D0 F4 3F ?? ??)
+(Program starts at $0200 - 0D 09)
+- Gods (Title Screen & In-Game)
+(Program starts at $0200 - Using D0 F4 3F ?? ??)
+(Program starts at $0200 - 15 09)
+- World Class Rugby (Outside of a game)
+(Program starts at $0200 - Using D0 F7 3F ?? ?? and CD ?? 3F ?? ??)
+(Program starts at $0200 - 1F 09 & EB 05)
+- Batman: Revenge of the Joker
+(Program starts at $0200 - Using D0 F4 3F ?? ?? and CD ?? 3F ?? ??)
+(Program starts at $0200 - 1F 09 & EB 05)
+- Gods (Opening)
+(Program starts at $0200 - Using D0 F4 3F ?? ??)
+(Program starts at $0200 - 23 09)
+- Dream TV
+(Program starts at $0200 - Using D0 F4 3F ?? ??)
+(Program starts at $0200 - D8 09)
+- Lemmings 2: The Tribes (Cavelem Tribe)
+(Program starts at $0200 - Using D0 F4 3F ?? ?? and CD ?? 3F ?? ??)
+(Program starts at $0200 - 1F 09 & EB 05)
+- World Class Rugby (During a game)
+(Program starts at $0200 - Using D0 F4 3F ?? ?? and CD ?? 3F ?? ??)
+(Program starts at $0200 - 1F 09 & EB 05)
+- Super SWIV/Firepower 2000
+(Program starts at $0200 - Using D0 F4 3F ?? ?? and CD ?? 3F ?? ??)
+(Program starts at $0200 - 1F 09 & EB 05)
+- Apocalypse II (Opening Logo) Lemmings 2: The Tribes (Opening Logo)	
+(Program starts at $0200 - Using D0 F4 3F ?? ?? and CD ?? 3F ?? ??)
+(Program starts at $0200 - 1F 09 & EB 05)
+- Lemmings 2: The Tribes (Beach Tribe)
+(Program starts at $0200 - Using D0 F4 3F ?? ?? and CD ?? 3F ?? ??)
+(Program starts at $0200 - 1F 09 & EB 05)
+- Lemmings 2: The Tribes (Title Screen)
+(Program starts at $0200 - Using D0 F4 3F ?? ?? and CD ?? 3F ?? ??)
+(Program starts at $0200 - 1F 09 & EB 05)
+- Lemmings 2: The Tribes (Most common build used) Riddick Bowe Boxing (Japanese version)
+(Program starts at $0200 - Using D0 F4 3F ?? ?? and CD ?? 3F ?? ??)
+(Program starts at $0200 - 1F 09 & EB 05)
+- Apocalypse II (In-Game)
+(Program starts at $0200 - Using D0 F4 3F ?? ?? and CD ?? 3F ?? ??)
+(Program starts at $0200 - 1F 09 & EB 05)
+- Kick Off 3 (Beta) (In-Game)
+(Program starts at $0200 - Using D0 F4 3F ?? ?? and CD ?? 3F ?? ??)
+(Program starts at $0200 - 1F 09 & EB 05)
+- Kick Off 3 (Beta) (Title Screen)
+(Program starts at $0200 - Using D0 F4 3F ?? ?? and CD ?? 3F ?? ??)
+(Program starts at $0200 - 1F 09 & EB 05)
+- Porky Pig's Haunted Holiday (Beta)
+(Program starts at $0200 - Using D0 F4 3F ?? ?? and CD ?? 3F ?? ??)
+(Program starts at $0200 - 1F 09 & EB 05)
+-
+(Program starts at $0200 - Using D0 F4 3F ?? ?? and CD ?? 3F ?? ??)
+(Program starts at $0200 - 1F 09 & EB 05)
+- Shaq Fu
+(Program starts at $0200 - Using D0 F4 3F ?? ?? and CD ?? 3F ?? ??)
+(Program starts at $0200 - 1F 09 & EB 05)
+- Elite Soccer/World Cup Striker (Japanese version) (Title Screen)
+(Program starts at $0200 - Using D0 F4 3F ?? ?? and CD ?? 3F ?? ??)
+(Program starts at $0200 - 1F 09 & EB 05)
+- Riddick Bowe Boxing (US version)
+(Program starts at $0200 - Using D0 F4 3F ?? ?? and CD ?? 3F ?? ??)
+(Program starts at $0200 - 1F 09 & EB 05)
+- Chavez
+(Program starts at $0200 - Using D0 F4 3F ?? ?? and CD ?? 3F ?? ??)
+(Program starts at $0200 - 1F 09 & EB 05)
+- Lawnmower Man/Virtual Wars (In-Game)
+(Program starts at $0200 - Using D0 F4 3F ?? ?? and CD ?? 3F ?? ??)
+(Program starts at $0200 - 1F 09 & EB 05)
+-
+(Program starts at $0200 - Using D0 F4 3F ?? ?? and CD ?? 3F ?? ??)
+(Program starts at $0200 - 1F 09 & EB 05)
+-
+(Program starts at $0200 - Using D0 F4 3F ?? ?? and CD ?? 3F ?? ??)
+(Program starts at $0200 - 1F 09 & EB 05)
+-
+(Program starts at $0200 - Using D0 F4 3F ?? ?? and CD ?? 3F ?? ??)
+(Program starts at $0200 - 1F 09 & EB 05)
+-
+(Program starts at $0200 - Using D0 F4 3F ?? ?? and CD ?? 3F ?? ??)
+(Program starts at $0200 - 1F 09 & EB 05)
+-
+
