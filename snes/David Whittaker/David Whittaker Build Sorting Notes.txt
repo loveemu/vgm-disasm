@@ -85,17 +85,37 @@ NOTE: Gods has 2 copies of the code in the ROM.
 - Lawnmower Man/Virtual Wars (In-Game)
 (Program starts at $0200 - Using D0 F4 3F ?? ?? and CD ?? 3F ?? ??)
 (Program starts at $0200 - 1F 09 & EB 05)
--
+- Porky Pig's Haunted Holiday (Beta)
 (Program starts at $0200 - Using D0 F4 3F ?? ?? and CD ?? 3F ?? ??)
 (Program starts at $0200 - 1F 09 & EB 05)
--
+- Shaq Fu
 (Program starts at $0200 - Using D0 F4 3F ?? ?? and CD ?? 3F ?? ??)
 (Program starts at $0200 - 1F 09 & EB 05)
--
+- Elite Soccer/World Cup Striker (Japanese version) (Title Screen)	
 (Program starts at $0200 - Using D0 F4 3F ?? ?? and CD ?? 3F ?? ??)
 (Program starts at $0200 - 1F 09 & EB 05)
--
+- Riddick Bowe Boxing (US version)
 (Program starts at $0200 - Using D0 F4 3F ?? ?? and CD ?? 3F ?? ??)
 (Program starts at $0200 - 1F 09 & EB 05)
--
-
+- Chavez
+(Program starts at $0200 - Using D0 F4 3F ?? ?? and CD ?? 3F ?? ??)
+(Program starts at $0200 - 1F 09 & EB 05)
+- Lawnmower Man/Virtual Wars (In-Game)
+(Program starts at $0200 - Using D0 F4 3F ?? ?? and CD ?? 3F ?? ??)
+(Program starts at $0200 - 1F 09 & EB 05)
+- Elite Soccer/World Cup Striker (European version) (In-Game)
+(Program starts at $0200 - Using D0 F4 3F ?? ?? and CD ?? 3F ?? ??)
+(Program starts at $0200 - 1F 09 & EB 05)
+- Battle Cars
+(Program starts at $0200 - Using D0 F4 3F ?? ?? and CD ?? 3F ?? ??)
+(Program starts at $0200 - 1F 09 & EB 05)
+- World Cup Striker (Japanese version) (In-Game)
+(Program starts at $0200 - Using D0 F4 3F ?? ?? and CD ?? 3F ?? ??)
+(Program starts at $0200 - 1F 09 & EB 05)
+- World Cup Striker (European version) (Title Screen)
+(Program starts at $0200 - Using D0 F4 3F ?? ?? and CD ?? 3F ?? ??)
+(Program starts at $0200 - 1F 09 & EB 05)
+- Lawnmower Man/Virtual Wars (Driving)
+(Program starts at $0200 - Using D0 F4 3F ?? ?? and CD ?? 3F ?? ??)
+(Program starts at $0200 - 1F 09 & EB 05)
+- Michael Jordan: Chaos in the Windy City
