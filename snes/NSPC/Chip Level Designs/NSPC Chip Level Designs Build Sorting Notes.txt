@@ -7,7 +7,7 @@ Years may vary between builds, and are noted below.
 
 (No signature - Program starts at $0400 - Using D0 FB BC 3F ?? ??)
 (No signature - Program starts at $0400 - 6E 09)
-- Mickey's Ultimate Challenge (9/25/93 prototype)
+- Mickey's Ultimate Challenge (8/25/93 prototype)
 (No signature - Program starts at $0400 - 4F 0C)
 - Mickey's Ultimate Challenge
 (No signature - Program starts at $0400 - 59 0C)
