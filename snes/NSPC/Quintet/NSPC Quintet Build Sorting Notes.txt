@@ -1,21 +1,23 @@
-Total number of known unique builds: 8
+Total number of known unique builds: 9
 
 (Program starts at $0400 - using D0 FB C5 ?? ?? BC 3F ?? ??)
-(Program starts at $0400 - A9 09)
+(Program starts at $0400 - A9 09 & 06 0F (using 3F ?? ?? at $0601 to distinguish))
+- ActRaiser (English Prototype)
+(Program starts at $0400 - A9 09 & 0C 0F (using 3F ?? ?? at $0601 to distinguish))
 - ActRaiser (US and European version)
 - Soul Blader/Soul Blazer
 (Program starts at $0400 - C3 09)
 - Magic Sword
 - Takahashi Meijin no Daibouken-jima/Super Adventure Island
 (Program starts at $0400 - C5 09)
-- Actraiser (Japanese version)
+- ActRaiser (Japanese version)
 (Program starts at $0400 - using C2 ?? BC 3F ?? ??)
 (Program starts at $0400 - 6F 0A & 30 0E (using E4 ?? F0 03 3F ?? ?? to distinguish))
-- Actraiser 2 (US and Japanese versions)
+- ActRaiser 2 (US and Japanese versions)
 (Program starts at $0400 - 6F 0A & 80 0E (using E4 ?? F0 03 3F ?? ?? to distinguish))
 - Slap Stick/Robotrek
 (Program starts at $0400 - 76 0A)
-- Actraiser 2 (European version)
+- ActRaiser 2 (European version)
 - Illusion of Gaia/Illusion of Time
 - Miracle Casino Paradise
 (Program starts at $0400 - using D0 FB BC 3F ?? ??)
