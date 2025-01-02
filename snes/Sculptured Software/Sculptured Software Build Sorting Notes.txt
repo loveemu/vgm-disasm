@@ -1,4 +1,4 @@
-Total number of known unique builds: 39
+Total number of known unique builds: 40
 
 (Program starts at $0700 - using 8F ?? ?? 3F ?? ??)
 (Program starts at $0700 - D3 0D)
@@ -74,6 +74,8 @@ Total number of known unique builds: 39
 - Mortal Kombat - Shinken Kourin Densetsu
 (Program starts at $0700 - 66 0F)
 - Ramos' World Wide Soccer
+(Program starts at $0700 - 56 10)
+- Loony Tunes - Hoop It Up!
 (Program starts at $0700 - 73 10)
 - Secret of Evermore (US version)
 (Program starts at $0700 - 7B 10 & D1 10 (using 3F ?? ?? at $0789 to distinguish))

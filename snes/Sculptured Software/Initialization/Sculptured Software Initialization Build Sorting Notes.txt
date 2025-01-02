@@ -5,6 +5,9 @@ NOTE: Some of these don't have a pointer-based signature because none exists: th
 These games have no initialization build and instead immediately load the actual sound driver (probably because it intends on using the initialization code stored in the sound driver itself rather than using it separately):
 - Monopoly
 
+These games also have no initialization build because they immediately jump to $FFC0 when they load to $0700, that being the IPL Boot ROM...
+- Loony Tunes - Hoop It Up!
+
 (Program starts at $0700 - using 8F ?? ?? 3F ?? ??)
 (Program starts at $0700 - 61 07)
 - Simpsons: Bart's Nightmare/Simpsons: Bart no Fushigi na Yume no Daibouken
