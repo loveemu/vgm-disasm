@@ -1,0 +1,7 @@
+Total number of known unique builds: 2
+
+(Program starts at $0460 - using D0 FB BC 3F ?? ??)
+(Program starts at $0460 - 78 0A)
+- Special Tee Shot (Prototype)
+(Program starts at $0400 - 86 0B)
+- Special Tee Shot (BS-X version)

@@ -1,0 +1,26 @@
+Total number of known unique builds: 9
+
+(Program starts at $0500 - Using 8F ?? ?? 3F ?? ??)
+(Program starts at $0500 - 1C 08)
+- Ardy Lightfoot (Beta)
+
+(Program starts at $0500 - Using C5 ?? ?? 8F ?? ?? 3F ?? ??)
+(Program starts at $0500 - 35 08 & DB 10 (using D0 03 3F ?? ?? to distinguish))
+- Ardy Lightfoot (Japanese version)
+(Program starts at $0500 - 35 08 & E4 10 (using D0 03 3F ?? ?? to distinguish))
+- Ardy Lightfoot (US and European versions)
+(Program starts at $0500 - 3C 08)
+- Derby Stallion II
+(Program starts at $0500 - 3D 08)
+- Sanrio Shanghai
+(Program starts at $0500 - 44 08 & 49 11 (using E4 ?? D0 03 3F ?? ?? to distinguish))
+- Derby Stallion III
+- Derby Stallion '96
+- Derby Stallion '98
+(Program starts at $0500 - 44 08 & 52 11 (using E4 ?? D0 03 3F ?? ?? to distinguish))
+- Wizardry VI: Bane of the Cosmic Forge
+(Program starts at $0500 - 56 08)
+- Ganpuru: Gunman's Proof
+- Wizardry Gaiden IV: Throb of the Demon's Heart
+(Program starts at $04E8 - 33 08)
+- Down the World: Mervil's Ambition

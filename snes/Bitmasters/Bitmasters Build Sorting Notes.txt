@@ -1,0 +1,151 @@
+Total number of known unique build variants: 36
+
+Build counts sorted by version:
+No signature (pre-dates SLICK/Audio in general): 19
+No signature (SLICK/Audio, pre-dates v1.01 and MusiCart Build 1.02): 4
+SLICK/Audio v1.0.1: 10 (counting MusiCart Build 1.02 and MusiCart Build 1.06)
+SLICK/Audio v1.0.7a: 1
+SLICK/Audio v1.0.7b: 2 (1 identical to v1.0.7a) (counting MusiCart Build 1.06)
+
+(No signature - Program starts at $0308, some bytes are initially overwritten, using D0 F7 CD ?? 3F ?? ??)
+(Program starts at $0308, some bytes are initially overwritten - 61 05)
+- Home Alone
+
+(No signature - Program starts at $0600 - using C8 ?? D0 FB 3F ?? ??)
+(No signature - Program starts at $0600 - 39 0A)
+- Might and Magic II (European Version only: Japanese version does not use this sound driver)
+- Super Battletank (Earlier US Version)
+
+(No signature - Program starts at $0600 - using E8 ?? C5 ?? ?? 3F ?? ??)
+(No signature - Program starts at $0600 - 51 0A & B6 18 (using 8F ?? ?? 3F ?? ?? at $0679 to distinguish))
+- Home Alone 2 - Lost In New York
+- Race Drivin'
+- Super Battletank (Japanese and European version)
+(No signature - Program starts at $0600 - 51 0A & CD 18 (using 8F ?? ?? 3F ?? ?? at $0679 to distinguish))
+- David Crane's Amazing Tennis
+- Jeopardy!
+
+(No signature - Program starts at $0600 - using 8F ?? ?? 3F ?? ??)
+(No signature - Program starts at $0600 - 52 0A)
+- David Crane's Amazing Tennis (Arcade)
+(No signature - Program starts at $0600 - 53 0A & 26 18 (using a second 8F ?? ?? 3F ?? ?? to distinguish))
+- Race Drivin' (Prototype)
+- Super Battletank (US Version Revision 1)
+(No signature - Program starts at $0600 - 53 0A & 38 18 (using a second 8F ?? ?? 3F ?? ?? to distinguish))
+- Rampart
+(No signature - Program starts at $0700 - D5 09 & CE 1B (using C5 ?? ?? 8F ?? ?? 3F ?? ?? to distinguish))
+- Side Pocket
+(No signature - Program starts at $0700 - D5 09 & FB 1B (using C5 ?? ?? 8F ?? ?? 3F ?? ?? to distinguish))
+- Aero the Acrobat
+- Might and Magic III (Beta)
+(No signature - Program starts at $0700 - D5 09 & 08 1C (using C5 ?? ?? 8F ?? ?? 3F ?? ?? to distinguish))
+- Rap Basketball
+(No signature - Program starts at $0700 - D5 09 & 1F 1C (using C5 ?? ?? 8F ?? ?? 3F ?? ?? to distinguish) & 4D 0A (using 3F ?? ?? at $128F to distinguish))
+- Casper (US and European versions only: Japanese version does not use this sound driver)
+- Frogger
+- Ren and Stimpy - Buckeroo$!
+(No signature - Program starts at $0700 - D5 09 & 1F 1C (using C5 ?? ?? 8F ?? ?? 3F ?? ?? to distinguish) & 38 1E (using 3F ?? ?? at $128F to distinguish))
+- Super Battletank 2
+- Turn and Burn - No Fly Zone/Super Dogfight
+(No signature - Program starts at $0700 - D7 09)
+- ESPN Sunday Night NFL
+- Home Improvement
+(No signature - Program starts at $0700 - D7 09 (code difference at $1D09))
+- Aero The Acrobat 2
+- Might and Magic III
+- Zero the Kamikaze Squirrel
+(No signature - Program starts at $070C - has a sub-routine beforehand starting from $0700 - E3 09)
+- NBA Jam
+(No signature - Program starts at $08C1 - has some sub-routines beforehand starting from $0700 - 96 0B)
+- Championship Pool/Super Billiard
+
+(No signature - Program starts at $0700 - using C5 ?? ?? C5 ?? ?? 3F ?? ??)
+(No signature - Program starts at $0700 - DD 09)
+- Family Feud
+(No signature - Program starts at $0700 - 7F 0C)
+- Toys
+(No signature - Program starts at $0700 - AF 0C)
+- Adventures of Rocky and Bullwinkle and Friends
+- Family Dog
+
+---------------------SLICK/Audio builds start here--------------------------
+
+(No signature - Program starts at $085E - has some code beforehand starting from $0580 - D8 0B & 49 1A (using C5 ?? ?? 8F ?? ?? 3F ?? ?? at $08B2 to distinguish))
+- Lion King (earliest beta)
+(No signature - Program starts at $085E - has some code beforehand starting from $0580 - D8 0B & 4D 1A (using C5 ?? ?? 8F ?? ?? 3F ?? ?? at $08B2 to distinguish))
+- ESPN Speedworld (Beta)
+(No signature - Program starts at $085E - has some code beforehand starting from $0580 - E1 0B)
+- Gargoyles
+- Spider-Man (Beta)
+(No signature - Program starts at $0876 - has some code beforehand starting from $0580 - EB 0B)
+- Ballz 3D (Prototype)
+(Copyright notice only for Bitmasters - Program starts at $0878 - has some code beforehand starting from $0580 - ED 0B)
+- MusiCart Build 1.02
+(Copyright notice only for Bitmasters - Program starts at $0801 - has some code beforehand starting from $0500 - 54 0B)
+- MusiCart Build 1.06
+
+(v1.01)
+(v1.01 - Program starts at ???? - has some code beforehand starting from $0580 - using 8F ?? ?? 8F ?? ?? 3F ?? ??)
+(v1.01 - Program starts at $0801 - has some code beforehand starting from $0500 - 54 0B)
+- Porky Pig's Haunted Holiday (non-beta only)
+(v1.01 - Program starts at $0816 - has some code beforehand starting from $0500 - 8F 0B)
+- Primal Rage
+(v1.01 - Program starts at $0874 - has some code beforehand starting from $0580 - E7 0B)
+- ESPN Speedworld
+(v1.01 - Program starts at $0876 - has some code beforehand starting from $0580 - EB 0B)
+- Ballz 3D
+(v1.01 - Program starts at $0878 - has some code beforehand starting from $0580 - ED 0B)
+- Earthworm Jim
+- Lion King
+- Prime
+(v1.01 - Program starts at $087A - has some code beforehand starting from $0580 - EF 0B)
+- College Slam Basketball
+- Frank Thomas' Big Hurt Baseball
+- NBA Jam ~ Tournament Edition
+- NCAA Football
+- NFL Quarterback Club
+- NFL Quarterback Club '96
+- Spider-Man
+- Super R.B.I. Baseball
+(v1.01 - Program starts at $087A - has some code beforehand starting from $0580 - F7 0B)
+- AAAHH!!! Real Monsters
+- Big Sky Trooper
+- Bobby's World
+- Demolition Man
+- ESPN National Hockey Night
+- MoHawk and Headphone Jack
+- NCAA Final Four Basketball
+- Shadowhawk
+- Wayne Gretzky and the NHLPA All-Stars
+(v1.01 - Program starts at $087A - has some code beforehand starting from $0580 - 05 0C)
+- Bass Masters Classic
+- Head-On Soccer/Fever Pitch Soccer
+- Izzy's Quest for the Olympic Rings
+- Jim Lee's WildC.A.T.S.
+- Justice League Task Force
+- XBAND
+(v1.01 - Program starts at $087A - has some code beforehand starting from $0580 - 0B 0C)
+- Mask (Beta)
+- Spot Goes to Hollywood (Earlier prototype)
+
+(v1.07a - Program starts at ???? - has some code beforehand starting from $0500 - using 8F ?? ?? 8F ?? ?? 3F ?? ??)
+(v1.07a - Program starts at $0801 - has some code beforehand starting from $0500 - 54 0B)
+- Bass Masters Classic ~ Pro Edition
+- Mask
+- MechWarrior 3050/Battletech 3050
+
+(v1.07b - Program starts at ???? - has some code beforehand starting from $0500 - using 8F ?? ?? 8F ?? ?? 3F ?? ??)
+(v1.07b - Program starts at $0801 - has some code beforehand starting from $0500 - 54 0B)
+(NOTE: this build is identical to the only v1.07a build above)
+- College Football '97
+- Emmitt Smith Football
+- FIFA 98
+- Lobo
+- Madden NFL '96
+- Ms. Pac-Man
+- Mutant Chronicles Doom Troopers
+- NBA Hang Time
+- Noughts and Crosses
+- Spot Goes to Hollywood (Later prototype)
+(v1.07b - Program starts at $0816 - has some code beforehand starting from $0500 - 8F 0B)
+- Earthworm Jim 2

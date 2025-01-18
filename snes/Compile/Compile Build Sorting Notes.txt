@@ -1,10 +1,14 @@
-Total number of known unique builds: 5
+Total number of known unique builds: 7
 
 (Program starts at $0400 - code prior to $0600 is overwritten after initialization - using 8F ?? ?? 3F ?? ?? 3F ?? ??)
+(Program starts at $0400 - code prior to $0600 is overwritten after initialization - 3A 04 & 42 0A)
+- Super Aleste (Japanese version)
+(Program starts at $0400 - code prior to $0600 is overwritten after initialization - 42 04 & 74 09 & 30 09 & 5B 11 (using 3F ?? ?? 3F ?? ?? next to the initial signature to distinguish))
+- Space Megaforce
+(Program starts at $0400 - code prior to $0600 is overwritten after initialization - 42 04 & 74 09 & 30 09 & 70 11 (using 3F ?? ?? 3F ?? ?? next to the initial signature to distinguish))
+- Super Aleste (European Version)
 (Program starts at $0400 - code prior to $0600 is overwritten after initialization - 42 04 & A7 09)
 - Jaki Crush
-(Program starts at $0400 - code prior to $0600 is overwritten after initialization - 3A 04 & 42 0A)
-- Super Aleste/Space Megaforce
 
 (Program starts at $0400 - code prior to $0550 is overwritten after initialization - using 3F ?? ?? 3F ?? ??)
 (Program starts at $0400 - code prior to $0550 is overwritten after initialization - CA 08 & 86 08)

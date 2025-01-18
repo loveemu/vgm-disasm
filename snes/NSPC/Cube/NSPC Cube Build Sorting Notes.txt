@@ -20,15 +20,15 @@ Total number of known unique builds: 13
 (Program starts at $0800 - 37 10)
 - Kakinoki Shougi
 
-(Program starts at $0400 - using CD 00 3F ?? ??)
-(Program starts at $0400 - E9 11)
+(Program starts at $0800 (with code as far back as $0400) - using CD 00 3F ?? ??)
+(Program starts at $0800 (with code as far back as $0400) - E9 11)
 - Sgt. Saunders' Combat!
 - Super Hanafuda
-(Program starts at $0400 - 10 12)
+(Program starts at $0800 (with code as far back as $0400)- 10 12)
 - Ys IV
-(Program starts at $0400 - 25 12)
+(Program starts at $0800 (with code as far back as $0400) - 25 12)
 - Monster Maker III
-(Program starts at $0400 - F2 12)
+(Program starts at $0800 (with code as far back as $0400) - F2 12)
 - Power of the Hired
-(Program starts at $0418 - 26 12)
+(Program starts at $0800 (with code as far back as $0418) - 26 12)
 - Wizap!

@@ -1,4 +1,4 @@
-Total number of known unique builds: 8
+Total number of known unique builds: 9
 
 (Program starts at $0200 - using CD ?? BD 3F ?? ??)
 (Program starts at $0200 - EB 0A)
@@ -13,6 +13,8 @@ Total number of known unique builds: 8
 (Program starts at $F000 - using C5 ?? ?? 3F ?? ??)
 (Program starts at $F000 - D6 F9)
 - Kishin Korinden Oni
+(Program starts at $F000 - 4D FA)
+- Kishin Korinden Oni (Beta)
 (Program starts at $F000 - 62 FA)
 - Battle Soccer 2
 (Program starts at $F000 - 69 FA)

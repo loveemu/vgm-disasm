@@ -2,7 +2,7 @@ Total number of known unique builds: 6
 
 (Program starts at $0580 - using 8F ?? ?? 8F ?? ?? 3F ?? ??)
 (Program starts at $0580 - 53 0D)
-- Darius Force
+- Darius Force/Super Nova (Beta)
 (Program starts at $0580 - 75 0D)
 - Super Nova
 (Program starts at $0800 - 32 11)

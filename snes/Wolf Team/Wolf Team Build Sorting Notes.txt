@@ -1,4 +1,4 @@
-Total number of known unique builds: 15
+Total number of known unique builds: 16
 
 (Program starts at $0700 - using 8D ?? E8 ?? CB ?? C4 ??)
 (Program starts at $0700 - 75 07 & FC 12 (using C4 ?? D0 05 3F ?? ?? to distinguish))
@@ -11,6 +11,8 @@ Total number of known unique builds: 15
 (Program starts at $0B00 - has a loading program earlier in the code - using D7 ?? 3F ?? ??)
 (Program starts at $0B00 - has a loading program earlier in the code - B1 19)
 - Ace o Nerae!
+(Program starts at $0B00 - has a loading program earlier in the code - 18 1A)
+- Dark Kingdom (Beta)
 (Program starts at $0B00 - has a loading program earlier in the code - 24 1A)
 - Dark Kingdom
 (Program starts at $0B00 - has a loading program earlier in the code - 29 1A)
