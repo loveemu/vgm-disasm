@@ -2,18 +2,24 @@ No relation to Rebecca Heineman's sound driver, used in RPM Racing, Wolfenstein 
 
 Build sorting notes are SPC700-side only.
 
-Total number of known unique builds: 4
+Total number of known unique builds: 7
 
-(Program starts at $1000 - using CD ?? BD 3F ?? ??)
-(Program starts at $1000 - 17 10)
+(Program starts at $1000 - using CD ?? BD 3F ?? ?? 3F ?? ??)
+(Program starts at $1000 - 17 10 & F8 10)
+- Out of this World (Beta)
+(Program starts at $1000 - 17 10 & FE 10)
 - Out of this World/Outer World/Another World
 
 (Program starts at $1000 - using 8F ?? ?? 3F ?? ??)
+(Program starts at $1000 - 1D 10)
+- Lost Vikings (Beta)
 (Program starts at $1000 - 3E 10 & BA 11 (using a second 8F ?? ?? 3F ?? ?? right next to it to distinguish))
-- Lost Vikings
-(Program starts at $1000 - 3E 10 & C3 11 (using a second 8F ?? ?? 3F ?? ?? right next to it to distinguish))
+- Lost Vikings/Viking no Daimeiwaku
+(Program starts at $1000 - 3E 10 & C3 11 (using a second 8F ?? ?? 3F ?? ?? right next to it to distinguish) & CB 1D (using a third 8F ?? ?? 3F ?? ?? right next to it to distinguish))
+- Claymates (European version)
+(Program starts at $1000 - 3E 10 & C3 11 (using a second 8F ?? ?? 3F ?? ?? right next to it to distinguish) & CC 1D (using a third 8F ?? ?? 3F ?? ?? right next to it to distinguish))
 - Blackthrone/Blackhawk
-- Claymates
+- Claymates (US version)
 - J.R.R. Tolkien's Lord of the Rings Volume 1
 (Program starts at $1000 - 4C 10)
 - Lost Vikings 2

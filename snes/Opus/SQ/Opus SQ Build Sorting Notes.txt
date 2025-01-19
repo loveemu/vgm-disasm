@@ -1,10 +1,12 @@
 Total number of known unique builds: 52
+(Does not count Monopoly (Japanese version) and Skyblazer (Beta) as a unique build, nor is the build used in Panic in Nakayoshi World, Spriggan Powered, Shinri Game 3, Todd McFarlane's Spawn and Zenkoku Juudan: Ultra Shinri Game unique either: in both cases, the version marker causes pointer differences, but no code differences)
+(Cacoma Knight is counted as a unique build despite being identical in terms of opcodes to the Japanese version of Might and Magic - Book II as well as The Atlas, Doraemon 3: Nobita to Toki no Hougyoku, Laser Birdie: Get in the Hole, Pokonyan! - Henpokorin Adventure, SD Gundam GX, Sotsugyou Bangai Hen: Nee Mahjong Shiyo!, Super Bomberman, SWAT Kats and Yokozuna Monogatari. This is because of an array size difference that affects the code pointers to start with, but it also affects the parameter of two AND opcodes, which in turn affects the music code)
 
 Build counts sorted by SQ version (NOTE: there are a few cases where the SNES-side ROM text doesn't match up with the internal SPC700 ROM text: the SPC700 side gains priority in these cases)...
-No version identifier: 15
+No version identifier: 16 (NOTE: One of the builds matched a copy with a version identifier, thus it is counted under V108)
 V108: 14
 SQV1228: 2
-V110: 4
+V110: 3 (NOTE: Two of the builds matched a build with an earlier internal version marking)
 V111: 1
 SQ(1.16): 1
 SQ(1.23): 1 (NOTE: There are three other cases that weren't counted because they matched an earlier build instead or the internal markings were wrong: one build matched an earlier textless SPC700-side build, a second one had an internal marking of V110, and a third one had an internal marking of 1.28. The only one that was counted was also textless SPC700-side, but was a unique build)
@@ -56,12 +58,17 @@ NOTE: Both SNES-side and SPC700-side version text are included. However, only th
 - Mizuki Shigeru no Youkai Hyakkiyakou (Matches the above VER1.03 build)
 
 (VER1.03 - Program starts at $0812 - 30 1E)
+- Cacoma Knight in Bizyland
 - Hayazashi Nidan Morita Shougi
 - Hayazashi Nidan Morita Shougi 2
 - Makeruna! Makendou/Kendo Rage
 - Verne World
+(VER1.03 - internal marking V108 - Program starts at $0816 - 34 1E)
+- Monopoly (Japanese version) (Matches the above VER1.03 build minus the version marker)
+- Skyblazer (Beta) (Matches the above VER1.03 build minus the version marker)
+
 (VER1.03 - Program starts at $0812 - 31 1E)
-- Cacoma Knight in Bizyland
+- Cacoma Knight (NOTE: De-facto identical to the Japanese version of Might and Magic - Book II as well as The Atlas, Doraemon 3: Nobita to Toki no Hougyoku, Laser Birdie: Get in the Hole, Pokonyan! - Henpokorin Adventure, SD Gundam GX, Sotsugyou Bangai Hen: Nee Mahjong Shiyo!, Super Bomberman, SWAT Kats and Yokozuna Monogatari except for an array difference... which, in turn, affects the pointers, but also affects the parameter of two AND opcodes, which in turn affects the music code)
 (VER1.03 - Program starts at $0812 - 33 1E)
 - Ranma 1/2: Chounai Gekitouhen
 (VER1.03 - Program starts at $0812 - 49 1E)
@@ -69,6 +76,7 @@ NOTE: Both SNES-side and SPC700-side version text are included. However, only th
 
 (VER1.03 - Program starts at $0812 - 4E 1E)
 - Araiguma Rascal
+- A.S.P. Air Strike Patrol
 - Drift King Shutokou Battle '94
 - Hebereke no Oishii Puzzle: ha Irimasen ka
 (VER1228 - Program starts at $0812 - 4E 1E)
@@ -77,19 +85,23 @@ NOTE: Both SNES-side and SPC700-side version text are included. However, only th
 - Super Real Mahjong PV Paradise (Matches the above VER1.03 builds)
 - Yuujin Janjuu Gakuen 2 (Matches the above VER1.03 builds)
 
-(VER1.03 - Program starts at $0812 - 74 1E)
+(VER1.03 - Program starts at $0812 - 74 1E & 38 20 (using 3F ?? ?? at $09FA to distinguish))
 - Accelebrid
-- Assault Suits Valken/Cybernator/Juusou Kihei Valken
+- Assault Suits Valken/Juusou Kihei Valken/Cybernator (Beta only)
 - Bastard!!: Ankoku no Hakai-shin
 - Brain Lord
-- Desert Fighter: Suna no Arashi Sakusen/A.S.P. Air Strike Patrol
+- Desert Fighter: Suna no Arashi Sakusen
 - Gambler Jiko Chuushinha 2: Dorapon Quest
 - Sword Maniac
 - Wally wo Sagase!
+(VER1.03 - Program starts at $0812 - 74 1E & 56 20 (using 3F ?? ?? at $09FA to distinguish))
+- Cybernator
 (VER1.03 - Program starts at $0812 - 90 1E)
 - Battle Pinball
+(VER1.03 - Program starts at $0812 - F0 1E)
+- Exhaust Heat (European version)/F1 ROC: Race of Champions
 (VER1.03 - Program starts at $0812 - FB 1E)
-- Exhaust Heat/F1 ROC: Race of Champions
+- Exhaust Heat (Japanese version)
 
 (VER1.03 - internal marking V108 - Program starts at $0816 - 63 15)
 - Mr. Do!
@@ -121,8 +133,6 @@ NOTE: Both SNES-side and SPC700-side version text are included. However, only th
 - Tottemo! Lucky Man - Lucky Cookie Roulette de Totsugekii
 (VER1.03 - internal marking V108 - Program starts at $0816 - 32 1E)
 - Exhaust Heat II: F-1 Driver no Kiseki/F1 ROC II: Race of Champions
-(VER1.03 - internal marking V108 - Program starts at $0816 - 34 1E)
-- Monopoly (Japanese version)
 (VER1.03 - internal marking V108 - Program starts at $0816 - 48 1E)
 - Asameshimae Nyanko
 - Date Kimiko no Virtual Tennis
@@ -144,13 +154,11 @@ NOTE: Both SNES-side and SPC700-side version text are included. However, only th
 - Shodani Nintei - Shodan Pro Mahjong (Matches the above VER1.03 builds)
 (GAPS SOUND 1.02 - internal marking V108 - Program starts at $0816 - 4C 1E)
 - Larry Nixon's Super Bass Fishing/TNN Bass Tournament of Champions (Matches the above VER1.03 builds)
+(VER1.05 - internal marking V110 - Program starts at $0816 - 4C 1E)
+- Great Battle Gaiden 2: Matsuri da Wasshoi (Matches the above VER1.03 builds)
 
-(VER1.03 - internal marking V110 - Program starts at $0816 - 62 1E)
-- Panic in Nakayoshi World
-- Spriggan Powered
-- Shinri Game 3
-- Todd McFarlane's Spawn
-- Zenkoku Juudan: Ultra Shinri Game
+(VER1.03 - internal marking V110 - Program starts at $0816 - 4A 1E)
+- Go Go Ackman
 (VER1.03 - internal marking V110 - Program starts at $0816 - 92 1E)
 - Mario no Super Picross
 - Picross NP Vol. 1
@@ -165,10 +173,6 @@ NOTE: Both SNES-side and SPC700-side version text are included. However, only th
 (VER1.04 - internal marking V111 - Program starts at $0818 - using D0 E8 3F ?? ??)
 (VER1.04 - internal marking V111 - Program starts at $0818 - 55 1E)
 - Daikaijuu Monogatari
-
-(VER1.05 - internal marking V110 - Program starts at $0816 - using D0 E8 3F ?? ??)
-(VER1.05 - internal marking V110 - Program starts at $0816 - 4C 1E)
-- Great Battle Gaiden 2: Matsuri da Wasshoi
 
 (VER1228 - internal marking SQV1228 - Program starts at $081D - using 20 3F ?? ?? C0 20)
 (VER1228 - internal marking SQV1228 - Program starts at $081D - E2 1F)
@@ -187,6 +191,12 @@ NOTE: Both SNES-side and SPC700-side version text are included. However, only th
 - Game no Tatsujin
 - Super Real Mahjong PIV
 - Zenkoku Koukou Soccer
+(VER1.03 - internal marking V110 - Program starts at $0816 - 62 1E)
+- Panic in Nakayoshi World (Matches the above VER1228 builds)
+- Spriggan Powered (Matches the above VER1228 builds)
+- Shinri Game 3 (Matches the above VER1228 builds)
+- Todd McFarlane's Spawn (Matches the above VER1228 builds)
+- Zenkoku Juudan: Ultra Shinri Game (Matches the above VER1228 builds)
 
 
 (DB(1.12) SQ(1.16)by BPS - Program starts at $0812 - using E8 ?? C5 ?? ?? 3F ?? ??)
@@ -194,6 +204,7 @@ NOTE: Both SNES-side and SPC700-side version text are included. However, only th
 - Michael Andretti's IndyCar Challenge (BPS Logo Only, although it malfunctions and never executes due to a bad pointer)
 - Super Tetris 2 + Bombliss (Genteiban) (BPS Logo Only)
 - Tetris 2/Tetris Flash (BPS Logo Only - exists in all versions, but used in Japan only)
+- Tetris Battle Gaiden (Beta)
 
 (--DB(1.18) SQ(1.23)by BPS-- - Program starts at $0812 - using E8 ?? C5 ?? ?? 3F ?? ??)
 (--DB(1.18) SQ(1.23)by BPS-- - Program starts at $0812 - A9 1E)
@@ -224,8 +235,10 @@ NOTE: Both SNES-side and SPC700-side version text are included. However, only th
 - Shounin yo, Taishi o Idake!! (Matches the above BPS Driver.DB(1.23) SQ(1.28) build)
 
 (VER1.00 - Program starts at $081A - using D0 E8 3F ?? ??)
+(VER1.00 - Program starts at $081A - internal marking V102 - 1E 1F)
+- Nobunaga no Yabou: Haouden (Revision 1)
 (VER1.00 - Program starts at $081A - internal marking V104 - 1E 1F)
-- Daikoukai Jidai II/Uncharted Waters: New Horizons
+- Daikoukai Jidai II/Uncharted Waters: New Horizons (matches the above VER1.00 internal marking V102 build)
 (VER1.00 - Program starts at $081A - internal marking V105 - 19 19)
 - Angelique
 (VER1.00 - Program starts at $081A - internal marking V105 - 3C 19)

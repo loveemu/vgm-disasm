@@ -1,0 +1,82 @@
+Total number of known unique builds: 32
+
+(Program starts at $0800 - using D0 E8 E8 ?? 3F ?? ??)
+(Program starts at $0800 - F4 0B)
+- Dream TV (Beta 2)
+
+(Program starts at $0300 - using D0 F7 3F ?? ?? and D0 F5 3F ?? ?? as a differentiator)
+(Program starts at $0300 - 9D 07)
+- Kick Off
+(Program starts at $0300 - A8 07 & 94 09)
+- Krusty's Super Fun House (version 1) (Only version used in the Japanese version)
+(Program starts at $0300 - A8 07 & 99 09)
+- Krusty's Super Fun House (version 2)
+
+(Program starts at $0200 - using D0 F4 3F ?? ?? and CD ?? 3F ?? ?? as a differentiator)
+(Program starts at $0200 - 0D 08)
+- Gods (Ending)
+(Program starts at $0200 - 0D 09)
+- Gods (Title Screen & In-Game)
+(Program starts at $0200 - 15 09)
+- World Class Rugby (outside a game)
+(Program starts at $0200 - 1F 09 & E4 05)
+- Batman: Revenge of the Joker
+(Program starts at $0200 - 1F 09 & EB 05)
+- Gods (Opening)
+(Program starts at $0200 - 23 09)
+- Dream TV
+(Program starts at $0200 - D8 09)
+- Lemmings 2: The Tribes (Cavelem Tribe)
+
+(Program starts at $0200 - using D0 FA 3F ?? ??)
+(Program starts at $0200 - 1C 05)
+- World Class Rugby (during a game)
+(Program starts at $0200 - BC 08)
+- Super SWIV/Firepower 2000
+(Program starts at $0200 - F0 08)
+- Apocalypse II (Opening logo)
+- Lemmings 2: The Tribes (Opening logo)
+(Program starts at $0200 - 50 09)
+- Lemmings 2: The Tribes (Beach Tribe)
+(Program starts at $0200 - 55 09)
+- Lemmings 2: The Tribes (Title Screen)
+(Program starts at $0200 - 62 09)
+- Lemmings 2: The Tribes (Most common build used)
+- Riddick Bowe Boxing (Japanese version)
+(Program starts at $0200 - 65 09)
+- Apocalypse II (In-Game)
+(Program starts at $0200 - 99 09)
+- Kick Off 3 (beta) (In-Game)
+(Program starts at $0200 - FE 09)
+- Kick Off 3 (beta) (Title Screen)
+- Lawnmower Man/Virtual Wars (US Beta)
+(Program starts at $0200 - contains an opening jump - 0B 0A)
+- Porky Pig's Haunted Holiday (beta)
+
+(Program starts at $0200 - using E8 ?? C4 ?? 8D ?? 3F ?? ??)
+(Program starts at $0200 - 74 08)
+- Shaq Fu
+(Program starts at $0200 - 47 09)
+- Elite Soccer/World Cup Striker (Japanese version) (Title Screen)
+(Program starts at $0200 - A2 09)
+- Riddick Bowe Boxing (US version) (NOTE: Lots of memory location reference-related differences between the two builds I found, but none of it overall is actual code-related execution, thus I'm counting it as identical)
+(Program starts at $0200 - B9 09)
+- Chavez
+(Program starts at $0200 - E0 09)
+- Lawnmower Man/Virtual Wars (In-Game)
+(Program starts at $0200 - 3B 0A)
+- Elite Soccer/World Cup Striker (European version) (In-Game)
+(Program starts at $0200 - 3C 0A)
+- Battle Cars
+(Program starts at $0200 - 3E 0A)
+- World Cup Striker (Japanese version) (In-Game)
+(Program starts at $0200 - 47 0A)
+- World Cup Striker (European version) (Title Screen)
+
+(Program starts at $0200 - using E8 ?? 8D ?? 3F ?? ??)
+(Program starts at $0200 - 6F 0A)
+- Lawnmower Man/Virtual Wars (Driving)
+
+(Program starts at $0200 - using CD ?? 3F ?? ??)
+(Program starts at $0200 - 2E 05)
+- Michael Jordan Chaos in the Windy City

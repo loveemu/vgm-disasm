@@ -15,6 +15,7 @@ Total number of known unique builds: 11
 - Pachinko Challenger
 (Program starts at $0700 - 3C 08 & 4E 0C & 7A 0D (using E4 ?? 5F ?? ?? at $1931 to distinguish))
 - Block Kuzushi
+- Final Fight 3 (Beta)
 - Princess Maker: Legend of Another World
 - Super Okumanchouja Game
 (Program starts at $0700 - 3C 08 & 4E 0C & 7D 0D (using E4 ?? 5F ?? ?? at $1931 to distinguish))

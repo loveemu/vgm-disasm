@@ -1,4 +1,4 @@
-Total number of known unique build variants: 8
+Total number of known unique build variants: 9
 
 (Program starts at $0B92 (code starts at $0630) - loading program at beginning - using 8D ?? 3F ?? ??)
 (Program starts at $0B92 (code starts at $0630) - loading program at beginning - C1 06 & EB 0C (using 8F ?? ?? 3F ?? ?? at $0BEF to distinguish))
@@ -15,8 +15,11 @@ Total number of known unique build variants: 8
 (Program starts at $0C84 (code starts at $0630) - loading program at beginning - 55 07 (code difference at $08F4) & 40 0E (using 8F ?? ?? 3F ?? ?? at $0CE0 to distinguish))
 - Ganbare! Daiku no Gen-san
 
-(Program starts at $05B0 - contains a JMP opcode at the beginning - loading program at beginning - 24 07)
-- R-Type III - The Third Lightning
+(Program starts at $05B0 - contains a JMP opcode at the beginning - loading program at beginning - using 5F ?? ??)
+(VER 2.73 93.9.10 - Program starts at $05B0 - contains a JMP opcode at the beginning - loading program at beginning - BD 0B)
+- R-Type III - The Third Lightning (Japanese version & Beta)
+(VER 2.80 93.10.27 - Program starts at $05B0 - contains a JMP opcode at the beginning - loading program at beginning - BF 0B)
+- R-Type III - The Third Lightning (US & European versions)
 
 (Program starts at $0D98 (code starts at $0670) - loading program at beginning - using 5F ?? ?? 3F ?? ??)
 (Program starts at $0D98 (code starts at $0670) - loading program at beginning - 45 07 & 0F 07)

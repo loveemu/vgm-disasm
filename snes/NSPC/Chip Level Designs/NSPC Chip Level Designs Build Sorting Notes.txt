@@ -1,4 +1,4 @@
-Total number of known unique builds: 16
+Total number of known unique builds: 18
 
 NOTE: Some ROM text is noted as following as a partial versioning marker (earlier ones do not have this present):
 (C) 1992 Basement Boys Software
@@ -6,6 +6,8 @@ NOTE: Some ROM text is noted as following as a partial versioning marker (earlie
 Years may vary between builds, and are noted below.
 
 (No signature - Program starts at $0400 - Using D0 FB BC 3F ?? ??)
+(No signature - Program starts at $0400 - 6E 09)
+- Mickey's Ultimate Challenge (8/25/93 prototype)
 (No signature - Program starts at $0400 - 4F 0C)
 - Mickey's Ultimate Challenge
 (No signature - Program starts at $0400 - 59 0C)
@@ -26,6 +28,8 @@ Years may vary between builds, and are noted below.
 - Bubsy in Claws Encounters of the Furred Kind
 - Kawasaki Caribbean Challenge (during a race)
 - Urban Strike
+(1992 - Program starts at $0460 - 13 0D)
+- Super Off Road: The Baja (Beta)
 (1992 - Program starts at $0460 - B9 0D)
 - Cool Spot
 - Young Merlin
@@ -47,10 +51,12 @@ Years may vary between builds, and are noted below.
 (1992, 1993 - Program starts at $0460 - using D0 FB 8F ?? ?? 3F ?? ??)
 (1992, 1993 - Program starts at $0460 - F1 0D)
 - Jammit
+- PGA European Tour (during a golf game)
+- PGA Tour '96 (during a golf game)
 - Street Hockey '95
 (1992, 1993 - Program starts at $0290 - BA 09)
-- PGA European Tour
-- PGA Tour '96
+- PGA European Tour (outside of a golf game)
+- PGA Tour '96 (outside of a golf game)
 (1992-1994 - Program starts at $0460 - using D0 FB 8F ?? ?? 3F ?? ??)
 (1992-1994 - Program starts at $0460 - F9 0D)
 - Death and Return of Superman

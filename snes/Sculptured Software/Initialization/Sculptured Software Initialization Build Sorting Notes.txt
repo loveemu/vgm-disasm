@@ -1,0 +1,106 @@
+Total number of known unique builds: 10
+
+NOTE: Some of these don't have a pointer-based signature because none exists: they don't have a signature yet for this reason.
+
+These games have no initialization build and instead immediately load the actual sound driver (probably because it intends on using the initialization code stored in the sound driver itself rather than using it separately):
+- Monopoly
+
+These games also have no initialization build because they immediately jump to $FFC0 when they load to $0700, that being the IPL Boot ROM...
+- Loony Tunes - Hoop It Up!
+
+(Program starts at $0700 - using 8F ?? ?? 3F ?? ??)
+(Program starts at $0700 - 61 07)
+- Simpsons: Bart's Nightmare/Simpsons: Bart no Fushigi na Yume no Daibouken
+(Program starts at $0700 - 66 07)
+- Jack Nicklaus Golf
+- WWF Super WrestleMania
+(Program starts at $0700 - 68 07)
+- Alfred Chicken
+- Andre Agassi Tennis
+- Barbie: Super Model
+- Boxing Legends of the Ring/Final Knockout
+- Bronkie
+- Bugs Bunny: Rabbit Rampage/Bugs Bunny - Hachamecha Daibouken
+- Captain Novolin
+- Cliffhanger
+- Clue
+- Daffy Duck: The Marvin Missions
+- Faceball 2000
+- Falcon
+- M.A.C.S. Basic Rifle Marksmanship
+- Mario is Missing!
+- Mario's Time Machine
+- Mer Wars
+- Mortal Kombat
+- NCAA Basketball/World League Basketball/Super Dunk Shot
+- Outlander
+- Out to Lunch
+- Packy and Marlon
+- Pink Panther in Pink Goes to Hollywood
+- Pro Quarterback
+- Rex Ronan: Experimental Surgeon
+- Robocop vs. The Terminator
+- Road Runner's Death Valley Rally/Looney Tunes: Road Runner/Road Runner vs. Wile E. Coyote
+- Roger Clemens' MVP Baseball
+- Spectre
+- SpellCraft
+- Super Battleship
+- Super Conflict
+- Super Star Wars
+- Super Star Wars: Teikoku no Gyakushuu
+- Super Strike Eagle
+- Tarzan
+- Tecmo Super NBA Basketball
+- Tony Meola's Sidekicks Soccer (Beta)
+- Total Carnage
+- Wild Snake/Super Snakey
+- Wing Commander
+- Wing Commander: The Secret Missions
+- Wizard of Oz
+- WWF Royal Rumble
+
+(Program starts at $0700 - no subroutine or JMP opcodes exist (other than the one to go to $0100) - TODO sort)
+- Super Star Wars: The Empire Strikes Back
+
+(Program starts at $0700 - no subroutine or JMP opcodes exist (other than the one to go to $0100) - TODO sort)
+- Sports Illustrated Championship Football & Baseball/All-American Championship Football
+- Mortal Kombat - Shinken Kourin Densetsu
+- Tony Meola's Sidekicks Soccer/World Soccer
+
+(Program starts at $0700 - no subroutine or JMP opcodes exist (other than the one to go to $0100) - TODO sort)
+- NHL Stanley Cup/Super Hockey
+
+(Program starts at $0700 - no subroutine or JMP opcodes exist (other than the one to go to $0100) - TODO sort)
+- Rocko's Modern Life: Spunky's Dangerous Day
+
+(Program starts at $0700 - no subroutine or JMP opcodes exist (other than the one to go to $0100) - TODO sort)
+- Ramos' World Wide Soccer
+
+(Program starts at $0700 - no subroutine or JMP opcodes exist (other than the one to go to $0000) - TODO sort)
+- Jungle Book
+- King Arthur and the Knights of Justice
+- Mortal Kombat 2
+- Pitfall: The Mayan Adventure
+- Secret of Evermore (US version)
+- Super Copa
+- Tecmo Super Baseball
+- Virtual Bart
+
+(Program starts at $0700 - no subroutine or JMP opcodes exist (other than the one to go to $0000) - TODO sort)
+- Air Calvary
+- Boogerman
+- Carrier Aces
+- Chavez II
+- Dirt Trax FX
+- Doom
+- Looney Tunes B-Ball
+- Mortal Kombat 3
+- Ren and Stimpy: Time Warp
+- Seaquest DSV
+- Secret of Evermore (European version)
+- Super Star Wars: Return of the Jedi/Jedi no Fukushuu
+- Untitled NFL Football Game
+- War 2410
+- War 3010
+- WWF Raw
+- WWF WrestleMania: The Arcade Game
