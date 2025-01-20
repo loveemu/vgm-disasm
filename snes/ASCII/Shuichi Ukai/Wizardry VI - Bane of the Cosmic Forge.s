@@ -234,28 +234,32 @@
 058d: 8f 00 dc  mov   $dc,#$00
 0590: 8f fe f4  mov   $f4,#$fe
 0593: 8f 02 9f  mov   $9f,#$02
+;
 0596: 3f 18 10  call  $1018
 0599: e5 fd 00  mov   a,$00fd
 059c: f0 f8     beq   $0596             ; wait for timer 0 clock
 059e: 2d        push  a
 059f: 64 98     cmp   a,$98
-05a1: 10 08     bpl   $05ab
+05a1: 10 08     bpl   $05ab             ; handle tick for SFX
 05a3: 80        setc
 05a4: c4 b8     mov   $b8,a
-05a6: a9 b8 98  sbc   ($98),($b8)
+05a6: a9 b8 98  sbc   ($98),($b8)       ; decrease by timer 0 tick count
 05a9: 2f 08     bra   $05b3
+; handle tick for SFX
 05ab: fa 99 98  mov   ($98),($99)
 05ae: cd 0b     mov   x,#$0b
-05b0: 3f 25 06  call  $0625
-05b3: ae        pop   a
+05b0: 3f 25 06  call  $0625             ; process vcmds in track 8-11
+;
+05b3: ae        pop   a                 ; timer 0 tick count
 05b4: 64 96     cmp   a,$96
-05b6: 10 09     bpl   $05c1
+05b6: 10 09     bpl   $05c1             ; handle tick for song
 05b8: 80        setc
 05b9: c4 b8     mov   $b8,a
-05bb: a9 b8 96  sbc   ($96),($b8)
+05bb: a9 b8 96  sbc   ($96),($b8)       ; decrease by timer 0 tick count
 05be: 5f e8 05  jmp   $05e8
 
-05c1: fa 97 96  mov   ($96),($97)
+; handle tick for song
+05c1: fa 97 96  mov   ($96),($97)       ; reload timer counter (song tempo)
 05c4: 73 9f 1c  bbc3  $9f,$05e3
 05c7: 6e ae 19  dbnz  $ae,$05e3
 05ca: fa af ae  mov   ($ae),($af)
@@ -268,7 +272,8 @@
 05dd: 6e ad 03  dbnz  $ad,$05e3
 05e0: 38 f7 9f  and   $9f,#$f7
 05e3: cd 07     mov   x,#$07
-05e5: 3f 25 06  call  $0625
+05e5: 3f 25 06  call  $0625             ; process vcmds in track 0-7
+;
 05e8: f3 a0 37  bbc7  $a0,$0622
 05eb: 6e 9c 34  dbnz  $9c,$0622
 05ee: d3 a0 1f  bbc6  $a0,$0610
@@ -293,12 +298,13 @@
 061f: 3f 20 08  call  $0820             ; set FLG
 0622: 5f 96 05  jmp   $0596
 
-0625: d8 ab     mov   $ab,x             ; channel index (0-7)
+; process vcmds in tracks
+0625: d8 ab     mov   $ab,x             ; track index (0-11)
 0627: f5 00 02  mov   a,$0200+x         ; read voice pointer (low)
 062a: fb 0c     mov   y,$0c+x           ; read voice pointer (high)
 062c: da 8c     movw  $8c,ya
-062e: f5 30 02  mov   a,$0230+x
-0631: fb 24     mov   y,$24+x
+062e: f5 30 02  mov   a,$0230+x         ; last note length
+0631: fb 24     mov   y,$24+x           ; delta time
 0633: da 90     movw  $90,ya
 0635: e6        mov   a,(x)
 0636: c4 9d     mov   $9d,a
@@ -348,7 +354,7 @@
 0692: 60        clrc
 0693: 86        adc   a,(x)
 0694: c6        mov   (x),a
-0695: 9b 24     dec   $24+x             ; decrease delta time
+0695: 9b 24     dec   $24+x
 0697: 20        clrp
 0698: d0 03     bne   $069d
 069a: 38 f7 9d  and   $9d,#$f7          ; clear bit 3
@@ -378,7 +384,7 @@
 06ca: 03 a0 79  bbs0  $a0,$0746
 06cd: f8 ab     mov   x,$ab
 06cf: f5 54 02  mov   a,$0254+x
-06d2: fb 78     mov   y,$78+x
+06d2: fb 78     mov   y,$78+x           ; read note length
 06d4: da 92     movw  $92,ya
 06d6: f8 ac     mov   x,$ac
 06d8: e4 a5     mov   a,$a5
@@ -414,19 +420,22 @@
 0717: d5 c8 02  mov   $02c8+x,a
 071a: f8 ac     mov   x,$ac
 071c: 78 04 91  cmp   $91,#$04
-071f: 10 0d     bpl   $072e
+071f: 10 0d     bpl   $072e             ; branch if delta time >= 4
+;
 0721: 43 9d 0a  bbs2  $9d,$072e
 0724: 8d 9f     mov   y,#$9f
 0726: 3f 06 09  call  $0906
-0729: 6e 91 2f  dbnz  $91,$075b
+0729: 6e 91 2f  dbnz  $91,$075b         ; decrease delta time shadow
 072c: 2f 03     bra   $0731
-072e: 6e 91 1e  dbnz  $91,$074f
+;
+072e: 6e 91 1e  dbnz  $91,$074f         ; decrease delta time shadow
+;
 0731: fb c8     mov   y,$c8+x
 0733: f5 d8 02  mov   a,$02d8+x
 0736: 3f 20 08  call  $0820             ; set ADSR(1)
 0739: f8 ab     mov   x,$ab
 073b: e8 00     mov   a,#$00
-073d: d5 3c 01  mov   $013c+x,a
+073d: d5 3c 01  mov   $013c+x,a         ; clear one-time volume adjustment
 0740: 3f 15 0c  call  $0c15             ; dispatch next vcmd
 0743: 5f 5b 07  jmp   $075b
 
@@ -463,7 +472,7 @@
 078a: 40        setp
 078b: e6        mov   a,(x)             ; ($0100+x) base volume
 078c: 60        clrc
-078d: 94 3c     adc   a,$3c+x           ; ($013c+x) volume adjustment
+078d: 94 3c     adc   a,$3c+x           ; ($013c+x) one-time volume adjustment
 078f: c4 7a     mov   $7a,a
 0791: 20        clrp
 0792: d3 9d 06  bbc6  $9d,$079b
@@ -511,9 +520,9 @@
 07df: e4 9d     mov   a,$9d
 07e1: c6        mov   (x),a
 07e2: 38 07 ab  and   $ab,#$07
-07e5: f0 04     beq   $07eb
-07e7: 1d        dec   x
-07e8: 5f 25 06  jmp   $0625
+07e5: f0 04     beq   $07eb             ; break if last track
+07e7: 1d        dec   x                 ; decrease track number
+07e8: 5f 25 06  jmp   $0625             ; process next track
 
 07eb: e4 a6     mov   a,$a6
 07ed: f0 08     beq   $07f7
@@ -653,22 +662,22 @@
 08d7: 7a b8     addw  ya,$b8
 08d9: 6f        ret
 
-; vcmd 9f
+; vcmd 9f - rest
 08da: f8 ac     mov   x,$ac
 08dc: 38 fb 9d  and   $9d,#$fb
-08df: dd        mov   a,y               ; arg1
-08e0: 10 0b     bpl   $08ed
+08df: dd        mov   a,y               ; maybe arg1: length in ticks
+08e0: 10 0b     bpl   $08ed             ; branch if with arg1
 08e2: b0 03     bcs   $08e7
 08e4: 3f fd 08  call  $08fd             ; set GAIN/ADSR(1)
 08e7: fa 90 91  mov   ($91),($90)
-08ea: 5f 6c 0d  jmp   $0d6c
-;
+08ea: 5f 6c 0d  jmp   $0d6c             ; write voice pointer back to array
+; handle arg1 (note length)
 08ed: da 90     movw  $90,ya
 08ef: b0 09     bcs   $08fa
 08f1: 23 9d 03  bbs1  $9d,$08f7
 08f4: 3f c3 09  call  $09c3
 08f7: 3f fd 08  call  $08fd             ; set GAIN/ADSR(1)
-08fa: 5f 6a 0d  jmp   $0d6a
+08fa: 5f 6a 0d  jmp   $0d6a             ; voice pointer += 1, write it back to array
 
 08fd: 8f 00 93  mov   $93,#$00
 0900: f8 ab     mov   x,$ab
@@ -684,22 +693,22 @@
 
 ; vcmd a4
 0917: f8 ab     mov   x,$ab
-0919: dd        mov   a,y
+0919: dd        mov   a,y               ; arg1
 091a: d5 18 02  mov   $0218+x,a
 091d: b0 03     bcs   $0922
-091f: 3f 4f 09  call  $094f
+091f: 3f 4f 09  call  $094f             ; load instrument
 0922: f8 ab     mov   x,$ab
 0924: 38 d7 9d  and   $9d,#$d7
 0927: 8d 00     mov   y,#$00
 0929: 3a 8c     incw  $8c
 092b: f7 8c     mov   a,($8c)+y
-092d: d5 00 01  mov   $0100+x,a
+092d: d5 00 01  mov   $0100+x,a         ; arg2
 0930: 3a 8c     incw  $8c
 0932: f7 8c     mov   a,($8c)+y
-0934: d5 0c 01  mov   $010c+x,a
+0934: d5 0c 01  mov   $010c+x,a         ; arg3
 0937: 3a 8c     incw  $8c
 0939: f7 8c     mov   a,($8c)+y
-093b: d5 24 02  mov   $0224+x,a
+093b: d5 24 02  mov   $0224+x,a         ; arg4
 093e: 5f 13 0c  jmp   $0c13             ; advance pointer, dispatch next vcmd
 
 ; vcmd 89 - instrument
@@ -758,7 +767,7 @@
 ; vcmd 8e
 099f: f8 ab     mov   x,$ab
 09a1: dd        mov   a,y
-09a2: d5 3c 02  mov   $023c+x,a
+09a2: d5 3c 02  mov   $023c+x,a         ; arg1
 09a5: 5f 13 0c  jmp   $0c13             ; advance pointer, dispatch next vcmd
 
 ; vcmd 90 - quantize (duration rate)
@@ -811,34 +820,34 @@
 09f8: 20        clrp
 09f9: 5f 13 0c  jmp   $0c13             ; advance pointer, dispatch next vcmd
 
-; vcmd 93
+; vcmd 93 - volume
 09fc: f8 ab     mov   x,$ab
 09fe: e8 00     mov   a,#$00
 0a00: d5 00 01  mov   $0100+x,a
-; vcmd 94
+; vcmd 94 - volume (relative)
 0a03: f8 ab     mov   x,$ab
 0a05: 38 f7 9d  and   $9d,#$f7
 0a08: dd        mov   a,y
 0a09: 40        setp
 0a0a: 60        clrc
 0a0b: 94 00     adc   a,$00+x
-0a0d: d4 00     mov   $00+x,a
+0a0d: d4 00     mov   $00+x,a           ; ($0100+x) add volume value
 0a0f: 20        clrp
 0a10: 5f 13 0c  jmp   $0c13             ; advance pointer, dispatch next vcmd
 
-; vcmd 96
+; vcmd 96 - pan
 0a13: f8 ab     mov   x,$ab
 0a15: 38 df 9d  and   $9d,#$df
 0a18: 40        setp
-0a19: db 0c     mov   $0c+x,y
+0a19: db 0c     mov   $0c+x,y           ; ($010c+x) arg1
 0a1b: 20        clrp
 0a1c: 5f 13 0c  jmp   $0c13             ; advance pointer, dispatch next vcmd
 
-; vcmd 95
+; vcmd 95 - volume (relative, temporary)
 0a1f: f8 ab     mov   x,$ab
 0a21: b0 04     bcs   $0a27
 0a23: dd        mov   a,y
-0a24: d5 3c 01  mov   $013c+x,a         ; arg1
+0a24: d5 3c 01  mov   $013c+x,a         ; arg1: volume delta (signed 8-bit)
 0a27: 5f 13 0c  jmp   $0c13             ; advance pointer, dispatch next vcmd
 
 ; vcmd 98
@@ -916,14 +925,15 @@
 
 ; vcmd 8b - tempo
 0aa8: cb b1     mov   $b1,y             ; arg1: tempo
-0aaa: 3f b0 0a  call  $0ab0
+0aaa: 3f b0 0a  call  $0ab0             ; update tempo
 0aad: 5f 13 0c  jmp   $0c13             ; advance pointer, dispatch next vcmd
 
-0ab0: ba b1     movw  ya,$b1
+; update timer counter value by tempo values
+0ab0: ba b1     movw  ya,$b1            ; $b1: tempo, $b2: tempo scaler (usually #$10)
 0ab2: cf        mul   ya
 0ab3: cd 10     mov   x,#$10
 0ab5: 9e        div   ya,x
-0ab6: c4 97     mov   $97,a             ; update actual tempo
+0ab6: c4 97     mov   $97,a             ; update actual tempo (timer counter value)
 0ab8: 6f        ret
 
 ; read word from voice pointer to YA
@@ -936,7 +946,7 @@
 0ac4: e4 b3     mov   a,$b3
 0ac6: 6f        ret
 
-; vcmd 80
+; vcmd 80 - end of track
 0ac7: 63 ab 08  bbs3  $ab,$0ad2
 0aca: 18 80 9d  or    $9d,#$80
 0acd: 1a 8c     decw  $8c
@@ -946,7 +956,7 @@
 0ad4: 8d 01     mov   y,#$01
 0ad6: 5f 0e 0c  jmp   $0c0e             ; set voice pointer to $0197
 
-; vcmd ff
+; vcmd ab
 0ad9: 18 80 9d  or    $9d,#$80
 0adc: f8 ac     mov   x,$ac
 0ade: e8 fe     mov   a,#$fe
@@ -990,7 +1000,7 @@
 0b32: 18 02 9f  or    $9f,#$02
 0b35: 38 fe 9f  and   $9f,#$fe
 0b38: 3f de 0f  call  $0fde
-0b3b: 5f 6c 0d  jmp   $0d6c
+0b3b: 5f 6c 0d  jmp   $0d6c             ; write voice pointer back to array
 
 ; vcmd 81 - start loop (infinite)
 0b3e: f8 ab     mov   x,$ab
@@ -1103,6 +1113,7 @@
 
 0bf9: fb 54     mov   y,$54+x
 0bfb: d6 6f 03  mov   $036f+y,a
+;
 0bfe: fb 48     mov   y,$48+x
 0c00: 20        clrp
 0c01: f6 df 02  mov   a,$02df+y
@@ -1219,11 +1230,11 @@
 0cc4: c4 92     mov   $92,a
 0cc6: 8d 00     mov   y,#$00
 0cc8: 3a 8c     incw  $8c
-0cca: f7 8c     mov   a,($8c)+y         ; read next byte (possible arg2)
+0cca: f7 8c     mov   a,($8c)+y         ; read next byte
 0ccc: fd        mov   y,a
 0ccd: ad ff     cmp   y,#$ff
 0ccf: d0 13     bne   $0ce4
-; when next byte == $ff, it is interpreted as arg2?
+; when next byte == $ff (slur/tie): combine with next note event
 0cd1: 8f 00 93  mov   $93,#$00
 0cd4: 3f 36 08  call  $0836
 0cd7: 18 04 9d  or    $9d,#$04
@@ -1397,16 +1408,16 @@
 0e1f: 18 04 a0  or    $a0,#$04
 0e22: 8d 00     mov   y,#$00
 0e24: f7 8c     mov   a,($8c)+y
-0e26: d5 60 02  mov   $0260+x,a
+0e26: d5 60 02  mov   $0260+x,a         ; arg1
 0e29: 3a 8c     incw  $8c
 0e2b: f7 8c     mov   a,($8c)+y
-0e2d: d4 54     mov   $54+x,a
+0e2d: d4 54     mov   $54+x,a           ; arg2
 0e2f: 3a 8c     incw  $8c
 0e31: f7 8c     mov   a,($8c)+y
-0e33: d5 6c 02  mov   $026c+x,a
+0e33: d5 6c 02  mov   $026c+x,a         ; arg3
 0e36: 3a 8c     incw  $8c
 0e38: f7 8c     mov   a,($8c)+y
-0e3a: d5 78 02  mov   $0278+x,a
+0e3a: d5 78 02  mov   $0278+x,a         ; arg4
 0e3d: 5f 13 0c  jmp   $0c13             ; advance pointer, dispatch next vcmd
 
 ; vcmd 9e
@@ -1658,7 +1669,7 @@
 100e: 5f 00 05  jmp   $0500
 
 ; cpucmd ef
-1011: c4 b2     mov   $b2,a
+1011: c4 b2     mov   $b2,a             ; update tempo scaler (#$10 = 1.x speed)
 1013: 3f b0 0a  call  $0ab0
 1016: 2f 31     bra   $1049
 ;
@@ -1845,7 +1856,7 @@
 116c: 6f        ret
 
 ; vcmd dispatch table
-116d: dw $0ac7  ; 80
+116d: dw $0ac7  ; 80 - end of track
 116f: dw $0b3e  ; 81 - start loop (infinite)
 1171: dw $0b4a  ; 82 - end loop (infinite)
 1173: dw $0b54  ; 83 - (related to contidional jump?)
@@ -1864,10 +1875,10 @@
 118d: dw $09a8  ; 90 - quantize (duration rate)
 118f: dw $019c  ; 91 - nop?
 1191: dw $09ec  ; 92 - volume & pan
-1193: dw $09fc  ; 93
-1195: dw $0a03  ; 94
-1197: dw $0a1f  ; 95
-1199: dw $0a13  ; 96
+1193: dw $09fc  ; 93 - volume
+1195: dw $0a03  ; 94 - volume (relative)
+1197: dw $0a1f  ; 95 - volume (relative, temporary)
+1199: dw $0a13  ; 96 - pan
 119b: dw $0000  ; 97 - (undefined)
 119d: dw $0a2a  ; 98
 119f: dw $0a63  ; 99
@@ -1876,7 +1887,7 @@
 11a5: dw $0dee  ; 9c - echo on/off
 11a7: dw $0e1a  ; 9d
 11a9: dw $0e40  ; 9e
-11ab: dw $08da  ; 9f
+11ab: dw $08da  ; 9f - rest
 11ad: dw $087c  ; a0
 11af: dw $0867  ; a1
 11b1: dw $0dd4  ; a2
