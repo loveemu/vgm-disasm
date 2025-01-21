@@ -114,6 +114,10 @@
 0611: dw $0637  ; fd
 0613: dw $06d9  ; fe - reset
 0615: dw $06ea  ; ff
+
+0617: db $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01
+0627: db $01,$00,$00,$00,$00,$00,$00,$00,$01,$01,$00,$00,$00,$00,$01,$01
+
 ; CPU cmds FA,FB,FD
 0637: 6f        ret
 
@@ -329,7 +333,7 @@
 07cc: 75 10 04  cmp   a,$0410+x
 07cf: d0 03     bne   $07d4             ; wait for duration
 07d1: 3f bd 0c  call  $0cbd             ; do vcmds
-07d4: 3f c5 0e  call  $0ec5             ; read ADSR
+07d4: 3f c5 0e  call  $0ec5             ; read ADSR/GAIN
 07d7: 3f 0b 0f  call  $0f0b             ; process software envelope
 07da: f4 90     mov   a,$90+x
 07dc: 10 03     bpl   $07e1
@@ -484,7 +488,7 @@
 090d: e5 06 18  mov   a,$1806
 0910: c4 58     mov   $58,a
 0912: e5 07 18  mov   a,$1807
-0915: c4 59     mov   $59,a             ; set vibrato table address to $58/9
+0915: c4 59     mov   $59,a             ; set pitch envelope table address to $58/9
 0917: e5 08 18  mov   a,$1808
 091a: c4 5a     mov   $5a,a
 091c: e5 09 18  mov   a,$1809
@@ -496,7 +500,7 @@
 092b: e5 0c 18  mov   a,$180c
 092e: c4 5e     mov   $5e,a
 0930: e5 0d 18  mov   a,$180d
-0933: c4 5f     mov   $5f,a             ; set ADSR pattern table address to $5e/f
+0933: c4 5f     mov   $5f,a             ; set ADSR/GAIN pattern table address to $5e/f
 0935: 8f 5d f2  mov   $f2,#$5d
 0938: e5 0e 18  mov   a,$180e
 093b: c4 f3     mov   $f3,a             ; set $180E to DIR
@@ -556,7 +560,7 @@
 09a5: dw $0a09  ; 80 - jump
 09a7: dw $0a14  ; 81 - loop end
 09a9: dw $0a60  ; 82 - halt
-09ab: dw $0a6b  ; 83 - set vibrato
+09ab: dw $0a6b  ; 83 - set pitch envelope id
 09ad: dw $0a99  ; 84
 09af: dw $0ab1  ; 85
 09b1: dw $0a5b  ; 86
@@ -584,7 +588,7 @@
 09dd: dw $0b23  ; 9c
 09df: dw $0ba6  ; 9d
 09e1: dw $0b1b  ; 9e
-09e3: dw $0bda  ; 9f - set ADSR pattern
+09e3: dw $0bda  ; 9f - set ADSR/GAIN pattern
 09e5: dw $0baa  ; a0 - set sample
 09e7: dw $0b92  ; a1 - slur on
 09e9: dw $0b9a  ; a2 - slur off
@@ -677,7 +681,7 @@
 0a66: ae        pop   a
 0a67: ae        pop   a
 0a68: 5f 35 08  jmp   $0835
-; vcmd 83 - set vibrato
+; vcmd 83 - set pitch envelope id
 0a6b: d5 40 03  mov   $0340+x,a
 0a6e: 6f        ret
 
@@ -933,7 +937,7 @@
 0bd8: ee        pop   y
 0bd9: 6f        ret
 
-; vcmd 9F - set ADSR pattern
+; vcmd 9F - set ADSR/GAIN pattern
 0bda: d5 b0 03  mov   $03b0+x,a
 0bdd: 6f        ret
 
@@ -1107,7 +1111,7 @@
 0cf8: c4 3a     mov   $3a,a
 0cfa: fc        inc   y
 0cfb: f7 54     mov   a,($54)+y
-0cfd: d5 b0 03  mov   $03b0+x,a         ; +1 ADSR pattern
+0cfd: d5 b0 03  mov   $03b0+x,a         ; +1 ADSR/GAIN pattern
 0d00: fc        inc   y
 0d01: f7 54     mov   a,($54)+y
 0d03: d5 30 03  mov   $0330+x,a         ; +2 volume envelope #
@@ -1349,19 +1353,19 @@
 0ec3: ee        pop   y
 0ec4: 6f        ret
 
-; read actual ADSR value from table
-0ec5: f5 b0 03  mov   a,$03b0+x         ; ADSR pattern #
+; read actual ADSR/GAIN value from table
+0ec5: f5 b0 03  mov   a,$03b0+x         ; ADSR/GAIN pattern #
 0ec8: 1c        asl   a
 0ec9: b0 0b     bcs   $0ed6
 0ecb: fd        mov   y,a
 0ecc: f7 5e     mov   a,($5e)+y
 0ece: c4 3b     mov   $3b,a
 0ed0: fc        inc   y
-0ed1: f7 5e     mov   a,($5e)+y
+0ed1: f7 5e     mov   a,($5e)+y ;used for both ADSR(2) and GAIN
 0ed3: c4 3c     mov   $3c,a
 0ed5: 6f        ret
 
-; reset ADSR if the index >= 0x80
+; reset ADSR/GAIN if the index = 0x80
 0ed6: 8f 00 3b  mov   $3b,#$00
 0ed9: d0 04     bne   $0edf
 0edb: 8f 7f 3c  mov   $3c,#$7f
@@ -1560,7 +1564,7 @@
 1042: d0 01     bne   $1045
 1044: 6f        ret
 
-; read vibrato params
+; read pitch envelope
 1045: 1c        asl   a
 1046: fd        mov   y,a
 1047: f7 58     mov   a,($58)+y
@@ -2001,7 +2005,7 @@
 137d: d5 30 03  mov   $0330+x,a         ; +03 volume envelope #
 1380: fc        inc   y
 1381: f7 36     mov   a,($36)+y
-1383: d5 40 03  mov   $0340+x,a         ; +04 vibrato
+1383: d5 40 03  mov   $0340+x,a         ; +04 pitch envelope #
 1386: fc        inc   y
 1387: f7 36     mov   a,($36)+y
 1389: 60        clrc
@@ -2027,7 +2031,7 @@
 13b0: d5 a0 03  mov   $03a0+x,a         ; +10 SRCN
 13b3: fc        inc   y
 13b4: f7 36     mov   a,($36)+y
-13b6: d5 b0 03  mov   $03b0+x,a         ; +11 ADSR pattern #
+13b6: d5 b0 03  mov   $03b0+x,a         ; +11 ADSR/GAIN pattern #
 13b9: fc        inc   y
 13ba: e4 01     mov   a,$01
 13bc: 28 04     and   a,#$04
