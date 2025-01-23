@@ -325,7 +325,7 @@
 0654: fb 84     mov   y,$84+x
 0656: da 94     movw  $94,ya
 0658: f8 ab     mov   x,$ab
-065a: 93 9d 26  bbc4  $9d,$0683
+065a: 93 9d 26  bbc4  $9d,$0683         ; branch if vibrato is off
 065d: 9b 48     dec   $48+x
 065f: d0 22     bne   $0683
 0661: f4 54     mov   a,$54+x
@@ -884,7 +884,7 @@
 0a5f: e8 00     mov   a,#$00
 0a61: 2f f6     bra   $0a59
 
-; vcmd 99
+; vcmd 99 - volume fade
 0a63: f8 ab     mov   x,$ab
 0a65: 18 08 9d  or    $9d,#$08
 0a68: 3f b9 0a  call  $0ab9             ; read arg (2 bytes possible)
@@ -1002,124 +1002,127 @@
 0b38: 3f de 0f  call  $0fde
 0b3b: 5f 6c 0d  jmp   $0d6c             ; write voice pointer back to array
 
-; vcmd 81 - start loop (infinite)
+; vcmd 81 - infinite loop start
 0b3e: f8 ab     mov   x,$ab
 0b40: ba 8c     movw  ya,$8c
 0b42: d5 0c 02  mov   $020c+x,a         ; save voice pointer (low)
 0b45: db 18     mov   $18+x,y           ; save voice pointer (high)
 0b47: 5f 15 0c  jmp   $0c15             ; dispatch next vcmd
 
-; vcmd 82 - end loop (infinite)
+; vcmd 82 - loop infinitely
 0b4a: f8 ab     mov   x,$ab
 0b4c: fb 18     mov   y,$18+x
 0b4e: f5 0c 02  mov   a,$020c+x
-0b51: 5f 0e 0c  jmp   $0c0e             ; goto
+0b51: 5f 0e 0c  jmp   $0c0e             ; goto loop point
 
-; vcmd 83 - (related to contidional jump?)
+; vcmd 83 - repeat start
 0b54: f8 ab     mov   x,$ab
 0b56: ba 8c     movw  ya,$8c
 0b58: 40        setp
 0b59: cb 79     mov   $79,y
-0b5b: fb 48     mov   y,$48+x           ; read stack offset from $0148+x
-0b5d: d6 e0 02  mov   $02e0+y,a         ; save voice pointer (low)
+0b5b: fb 48     mov   y,$48+x           ; ($0148+x) stack offset for repeat start address stack (max nesting level is 3)
+0b5d: d6 e0 02  mov   $02e0+y,a         ; save repeat start address (low)
 0b60: e4 79     mov   a,$79
-0b62: d6 04 03  mov   $0304+y,a         ; save voice pointer (high)
-0b65: bb 48     inc   $48+x             ; increase stack offset
+0b62: d6 04 03  mov   $0304+y,a         ; save repeat start address (high)
+0b65: bb 48     inc   $48+x             ; increase the stack offset
 0b67: 20        clrp
 0b68: 5f 15 0c  jmp   $0c15             ; dispatch next vcmd
 
-; vcmd 85 - (contidional jump?)
-0b6b: cd 9a     mov   x,#$9a
+; vcmd 85 - repeat break
+0b6b: cd 9a     mov   x,#$9a            ; use $9a for BGM
 0b6d: 73 ab 01  bbc3  $ab,$0b71
-0b70: 3d        inc   x
+0b70: 3d        inc   x                 ; or use $9b for SFX
+; check if the first time
 0b71: d8 b6     mov   $b6,x
 0b73: e6        mov   a,(x)
-0b74: 04 8e     or    a,$8e
+0b74: 04 8e     or    a,$8e             ; ($8e) channel bitmask
 0b76: 66        cmp   a,(x)
-0b77: f0 04     beq   $0b7d
-;
-0b79: c6        mov   (x),a
+0b77: f0 04     beq   $0b7d             ; branch if the bit is not set
+; first time - just ignore
+0b79: c6        mov   (x),a             ; set the bit - indicate that the voice is now in a loop with break
 0b7a: 5f 15 0c  jmp   $0c15             ; dispatch next vcmd
-;
+; after the first time - end the repeat if necessary
 0b7d: f8 ab     mov   x,$ab
 0b7f: 40        setp
-0b80: fb 54     mov   y,$54+x
-0b82: f6 6f 03  mov   a,$036f+y         ; read repeat counter
-0b85: 9c        dec   a                 ; decrease
-0b86: f0 04     beq   $0b8c
-; when not last iteration
+0b80: fb 54     mov   y,$54+x           ; ($0154+x) stack offset for repeat counter stack
+0b82: f6 6f 03  mov   a,$036f+y         ; ($0370+y-1) read repeat counter
+0b85: 9c        dec   a
+0b86: f0 04     beq   $0b8c             ; branch when this is last iteration
+; not last iteration - just ignore
 0b88: 20        clrp
 0b89: 5f 15 0c  jmp   $0c15             ; dispatch next vcmd
-; when last iteration
-0b8c: 9b 54     dec   $54+x
-0b8e: 9b 48     dec   $48+x             ; decrease the stack levels
+; last iteration - goto repeat end
+0b8c: 9b 54     dec   $54+x             ; ($0154+x)
+0b8e: 9b 48     dec   $48+x             ; ($0148+x) decrease offset (i.e. decrease nesting level)
 0b90: fb 54     mov   y,$54+x
 0b92: 20        clrp
-0b93: f6 28 03  mov   a,$0328+y
+0b93: f6 28 03  mov   a,$0328+y         ; repeat end address (low)
 0b96: c4 8c     mov   $8c,a
-0b98: f6 4c 03  mov   a,$034c+y
-0b9b: c4 8d     mov   $8d,a
+0b98: f6 4c 03  mov   a,$034c+y         ; repeat end address (high)
+0b9b: c4 8d     mov   $8d,a             ; goto repeat end
 0b9d: f8 b6     mov   x,$b6
-0b9f: e4 8f     mov   a,$8f
-0ba1: 26        and   a,(x)
+0b9f: e4 8f     mov   a,$8f             ; ($8f) bitnot of channel bitmask
+0ba1: 26        and   a,(x)             ; set the bit off
 0ba2: c6        mov   (x),a
 0ba3: 5f 15 0c  jmp   $0c15             ; dispatch next vcmd
 
-; vcmd 84 - (contidional jump?)
+; vcmd 84 - repeat end
 0ba6: f8 ab     mov   x,$ab
 0ba8: 3a 8c     incw  $8c
 0baa: 40        setp
-0bab: cb 79     mov   $79,y
-0bad: f4 54     mov   a,$54+x           ; read stack offset
-0baf: 74 89     cmp   a,$89+x
-0bb1: f0 15     beq   $0bc8             ; skip if no jump address is stored
-;
+0bab: cb 79     mov   $79,y             ; save arg1 (repeat count)
+0bad: f4 54     mov   a,$54+x           ; ($0154+x) stack offset for repeat counter stack
+0baf: 74 89     cmp   a,$89+x           ; compare to the initial offset (defined in lookup table)
+0bb1: f0 15     beq   $0bc8             ; branch if equals (i.e. reached end for the first time)
+; maybe not the first repeat
 0bb3: fb 54     mov   y,$54+x
 0bb5: dc        dec   y
-0bb6: f6 28 03  mov   a,$0328+y
+0bb6: f6 28 03  mov   a,$0328+y         ; repeat end address (low)
 0bb9: c4 7a     mov   $7a,a
-0bbb: f6 4c 03  mov   a,$034c+y
+0bbb: f6 4c 03  mov   a,$034c+y         ; repeat end address (low)
 0bbe: c4 7b     mov   $7b,a
 0bc0: 20        clrp
 0bc1: ba 8c     movw  ya,$8c
 0bc3: 40        setp
-0bc4: 5a 7a     cmpw  ya,$7a
-0bc6: f0 21     beq   $0be9
-;
-0bc8: e4 79     mov   a,$79
+0bc4: 5a 7a     cmpw  ya,$7a            ; compare current voice address to the last repeat end address
+0bc6: f0 21     beq   $0be9             ; branch if the same (if not, consider the loop as different one)
+; first repeat
+0bc8: e4 79     mov   a,$79             ; arg1: repeat count
 0bca: 9c        dec   a
-0bcb: d0 06     bne   $0bd3
-0bcd: 9b 48     dec   $48+x
+0bcb: d0 06     bne   $0bd3             ; branch if arg1 != 1
+; first repeat - repeat once
+0bcd: 9b 48     dec   $48+x             ; ($0148+x) decrease offset (i.e. decrease nesting level)
 0bcf: 20        clrp
 0bd0: 5f 15 0c  jmp   $0c15             ; dispatch next vcmd
-
-0bd3: fb 54     mov   y,$54+x
-0bd5: d6 70 03  mov   $0370+y,a
+; first repeat - repeat N times (N=2)
+0bd3: fb 54     mov   y,$54+x           ; ($0154+x) stack offset for repeat counter stack
+0bd5: d6 70 03  mov   $0370+y,a         ; save remaining repeat count
 0bd8: e5 8c 00  mov   a,$008c
-0bdb: d6 28 03  mov   $0328+y,a
+0bdb: d6 28 03  mov   $0328+y,a         ; save repeat end address (low)
 0bde: e5 8d 00  mov   a,$008d
-0be1: d6 4c 03  mov   $034c+y,a
-0be4: bb 54     inc   $54+x
-0be6: 5f fe 0b  jmp   $0bfe
-
-0be9: fb 54     mov   y,$54+x
-0beb: f6 6f 03  mov   a,$036f+y
+0be1: d6 4c 03  mov   $034c+y,a         ; save repeat end address (high)
+0be4: bb 54     inc   $54+x             ; ($0154+x) increase offset
+0be6: 5f fe 0b  jmp   $0bfe             ; repeat again
+; after the first repeat
+0be9: fb 54     mov   y,$54+x           ; ($0154+x) stack offset for repeat counter stack
+0beb: f6 6f 03  mov   a,$036f+y         ; ($0370+y-1) remaining repeat count
 0bee: 9c        dec   a
-0bef: d0 08     bne   $0bf9
-0bf1: 9b 48     dec   $48+x
+0bef: d0 08     bne   $0bf9             
+; after the first repeat - last time
+0bf1: 9b 48     dec   $48+x             ; ($0148+x) decrease offset (i.e. decrease nesting level)
 0bf3: 9b 54     dec   $54+x
 0bf5: 20        clrp
 0bf6: 5f 15 0c  jmp   $0c15             ; dispatch next vcmd
-
+; after the first repeat - repeat again
 0bf9: fb 54     mov   y,$54+x
-0bfb: d6 6f 03  mov   $036f+y,a
-;
-0bfe: fb 48     mov   y,$48+x
+0bfb: d6 6f 03  mov   $036f+y,a         ; ($0370+y-1) update remaining repeat count
+; repeat again
+0bfe: fb 48     mov   y,$48+x           ; ($0148+x) stack offset for return start address stack
 0c00: 20        clrp
-0c01: f6 df 02  mov   a,$02df+y
+0c01: f6 df 02  mov   a,$02df+y         ; ($02e0+y-1)
 0c04: c4 8c     mov   $8c,a
-0c06: f6 03 03  mov   a,$0303+y
-0c09: c4 8d     mov   $8d,a
+0c06: f6 03 03  mov   a,$0303+y         ; ($0304+y-1)
+0c09: c4 8d     mov   $8d,a             ; goto the repeat start address
 0c0b: 5f 15 0c  jmp   $0c15             ; dispatch next vcmd
 
 ; set voice pointer to YA (goto)
@@ -1201,9 +1204,9 @@
 0c90: d5 6c 02  mov   $026c+x,a
 ;
 0c93: 38 fb a0  and   $a0,#$fb
-0c96: f4 54     mov   a,$54+x
+0c96: f4 54     mov   a,$54+x           ; vibrato rate
 0c98: 60        clrc
-0c99: 95 60 02  adc   a,$0260+x
+0c99: 95 60 02  adc   a,$0260+x         ; vibrato delay
 0c9c: d4 48     mov   $48+x,a
 0c9e: f5 78 02  mov   a,$0278+x
 0ca1: 5c        lsr   a
@@ -1402,25 +1405,25 @@
 0e14: 8f 04 9c  mov   $9c,#$04
 0e17: 5f 13 0c  jmp   $0c13             ; advance pointer, dispatch next vcmd
 
-; vcmd 9d
+; vcmd 9d - vibrato
 0e1a: f8 ab     mov   x,$ab
-0e1c: 18 10 9d  or    $9d,#$10
+0e1c: 18 10 9d  or    $9d,#$10          ; vibrato on
 0e1f: 18 04 a0  or    $a0,#$04
 0e22: 8d 00     mov   y,#$00
 0e24: f7 8c     mov   a,($8c)+y
-0e26: d5 60 02  mov   $0260+x,a         ; arg1
+0e26: d5 60 02  mov   $0260+x,a         ; arg1: vibrato delay
 0e29: 3a 8c     incw  $8c
 0e2b: f7 8c     mov   a,($8c)+y
-0e2d: d4 54     mov   $54+x,a           ; arg2
+0e2d: d4 54     mov   $54+x,a           ; arg2: vibrato rate
 0e2f: 3a 8c     incw  $8c
 0e31: f7 8c     mov   a,($8c)+y
-0e33: d5 6c 02  mov   $026c+x,a         ; arg3
+0e33: d5 6c 02  mov   $026c+x,a         ; arg3: vibrato depth?
 0e36: 3a 8c     incw  $8c
 0e38: f7 8c     mov   a,($8c)+y
-0e3a: d5 78 02  mov   $0278+x,a         ; arg4
+0e3a: d5 78 02  mov   $0278+x,a         ; arg4: vibrato depth?
 0e3d: 5f 13 0c  jmp   $0c13             ; advance pointer, dispatch next vcmd
 
-; vcmd 9e
+; vcmd 9e - vibrato off
 0e40: 38 ef 9d  and   $9d,#$ef
 0e43: 5f 15 0c  jmp   $0c15             ; dispatch next vcmd
 
@@ -1433,10 +1436,10 @@
 0e4e: e4 8c     mov   a,$8c
 0e50: 60        clrc
 0e51: 88 02     adc   a,#$02
-0e53: d6 94 03  mov   $0394+y,a
+0e53: d6 94 03  mov   $0394+y,a         ; save return address (low)
 0e56: e4 8d     mov   a,$8d
 0e58: 88 00     adc   a,#$00
-0e5a: d6 b8 03  mov   $03b8+y,a         ; save voice pointer (pointing to next vcmd)
+0e5a: d6 b8 03  mov   $03b8+y,a         ; save return address (high)
 0e5d: 3f b9 0a  call  $0ab9             ; read arg1/2
 0e60: 5f 0e 0c  jmp   $0c0e             ; goto
 
@@ -1857,11 +1860,11 @@
 
 ; vcmd dispatch table
 116d: dw $0ac7  ; 80 - end of track
-116f: dw $0b3e  ; 81 - start loop (infinite)
-1171: dw $0b4a  ; 82 - end loop (infinite)
-1173: dw $0b54  ; 83 - (related to contidional jump?)
-1175: dw $0ba6  ; 84 - (contidional jump?)
-1177: dw $0b6b  ; 85 - (contidional jump?)
+116f: dw $0b3e  ; 81 - infinite loop point
+1171: dw $0b4a  ; 82 - loop infinitely
+1173: dw $0b54  ; 83 - repeat start
+1175: dw $0ba6  ; 84 - repeat end
+1177: dw $0b6b  ; 85 - repeat break
 1179: dw $0e46  ; 86 - call subroutine
 117b: dw $0e63  ; 87 - end subroutine
 117d: dw $0b32  ; 88
@@ -1881,12 +1884,12 @@
 1199: dw $0a13  ; 96 - pan
 119b: dw $0000  ; 97 - (undefined)
 119d: dw $0a2a  ; 98
-119f: dw $0a63  ; 99
+119f: dw $0a63  ; 99 - volume fade
 11a1: dw $0d95  ; 9a - master volume
 11a3: dw $0da1  ; 9b - echo delay/feedback
 11a5: dw $0dee  ; 9c - echo on/off
-11a7: dw $0e1a  ; 9d
-11a9: dw $0e40  ; 9e
+11a7: dw $0e1a  ; 9d - vibrato
+11a9: dw $0e40  ; 9e - vibrato off
 11ab: dw $08da  ; 9f - rest
 11ad: dw $087c  ; a0
 11af: dw $0867  ; a1
