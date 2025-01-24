@@ -326,6 +326,7 @@
 0656: da 94     movw  $94,ya
 0658: f8 ab     mov   x,$ab
 065a: 93 9d 26  bbc4  $9d,$0683         ; branch if vibrato is off
+;
 065d: 9b 48     dec   $48+x
 065f: d0 22     bne   $0683
 0661: f4 54     mov   a,$54+x
@@ -344,33 +345,35 @@
 067d: 48 ff     eor   a,#$ff
 067f: bc        inc   a
 0680: d5 6c 02  mov   $026c+x,a
+;
 0683: 73 9d 17  bbc3  $9d,$069d
-0686: 9b 3c     dec   $3c+x
+0686: 9b 3c     dec   $3c+x             ; decrease volume fade delay
 0688: d0 13     bne   $069d
 068a: f5 9c 02  mov   a,$029c+x
 068d: d4 3c     mov   $3c+x,a
 068f: 40        setp
-0690: f4 18     mov   a,$18+x
+0690: f4 18     mov   a,$18+x           ; ($0118+x)
 0692: 60        clrc
 0693: 86        adc   a,(x)
 0694: c6        mov   (x),a
-0695: 9b 24     dec   $24+x
+0695: 9b 24     dec   $24+x             ; ($0124+x)
 0697: 20        clrp
 0698: d0 03     bne   $069d
 069a: 38 f7 9d  and   $9d,#$f7          ; clear bit 3
+;
 069d: b3 9d 2a  bbc5  $9d,$06ca
 06a0: 9b 30     dec   $30+x
 06a2: d0 26     bne   $06ca
 06a4: f5 84 02  mov   a,$0284+x
 06a7: d4 30     mov   $30+x,a
 06a9: 40        setp
-06aa: 5b 30     lsr   $30+x
+06aa: 5b 30     lsr   $30+x             ; ($0130+x)
 06ac: b0 05     bcs   $06b3
 06ae: bb 0c     inc   $0c+x
 06b0: 5f b5 06  jmp   $06b5
 
 06b3: 9b 0c     dec   $0c+x
-06b5: 9b 30     dec   $30+x
+06b5: 9b 30     dec   $30+x             ; ($0130+x)
 06b7: d0 0e     bne   $06c7
 06b9: f5 90 02  mov   a,$0290+x
 06bc: d0 06     bne   $06c4
@@ -515,8 +518,8 @@
 07d3: d5 54 02  mov   $0254+x,a
 07d6: db 78     mov   $78+x,y           ; update note length (key-off timer)
 07d8: ba 90     movw  ya,$90
-07da: d5 30 02  mov   $0230+x,a
-07dd: db 24     mov   $24+x,y
+07da: d5 30 02  mov   $0230+x,a         ; update last note length
+07dd: db 24     mov   $24+x,y           ; update delta time
 07df: e4 9d     mov   a,$9d
 07e1: c6        mov   (x),a
 07e2: 38 07 ab  and   $ab,#$07
@@ -595,7 +598,7 @@
 
 ; vcmd 8a
 0860: f8 ab     mov   x,$ab
-0862: db 6c     mov   $6c+x,y
+0862: db 6c     mov   $6c+x,y           ; arg1
 0864: 5f 13 0c  jmp   $0c13             ; advance pointer, dispatch next vcmd
 
 ; vcmd a1
@@ -732,7 +735,7 @@
 095e: dc        dec   y
 095f: 3f 20 08  call  $0820             ; set SRCN
 0962: fd        mov   y,a
-0963: f7 be     mov   a,($be)+y         ; ($be) fine tuning (signed)
+0963: f7 be     mov   a,($be)+y         ; ($be) tuning (signed)
 0965: d5 d0 02  mov   $02d0+x,a
 0968: ab b3     inc   $b3
 096a: eb b3     mov   y,$b3
@@ -752,11 +755,11 @@
 0988: d4 6c     mov   $6c+x,a
 098a: 6f        ret
 
-; vcmd 8c - transpose (absolute)
+; vcmd 8c - coarse tuning / transpose (absolute)
 098b: f8 ab     mov   x,$ab
 098d: e8 00     mov   a,#$00
 098f: d5 24 02  mov   $0224+x,a
-; vcmd 8d - transpose (relative)
+; vcmd 8d - coarse tuning / transpose (relative)
 0992: f8 ab     mov   x,$ab
 0994: dd        mov   a,y
 0995: 60        clrc
@@ -764,10 +767,10 @@
 0999: d5 24 02  mov   $0224+x,a         ; update transpose
 099c: 5f 13 0c  jmp   $0c13             ; advance pointer, dispatch next vcmd
 
-; vcmd 8e
-099f: f8 ab     mov   x,$ab
+; vcmd 8e - tuning
+Z: f8 ab     mov   x,$ab
 09a1: dd        mov   a,y
-09a2: d5 3c 02  mov   $023c+x,a         ; arg1
+09a2: d5 3c 02  mov   $023c+x,a         ; arg1: tuning (signed 8-bit, in 1/128 semitones)
 09a5: 5f 13 0c  jmp   $0c13             ; advance pointer, dispatch next vcmd
 
 ; vcmd 90 - quantize (duration rate)
@@ -850,27 +853,29 @@
 0a24: d5 3c 01  mov   $013c+x,a         ; arg1: volume delta (signed 8-bit)
 0a27: 5f 13 0c  jmp   $0c13             ; advance pointer, dispatch next vcmd
 
-; vcmd 98
+; vcmd 98 - pan fade
 0a2a: f8 ab     mov   x,$ab
 0a2c: 18 20 9d  or    $9d,#$20
 0a2f: 3a 8c     incw  $8c
-0a31: dd        mov   a,y
+0a31: dd        mov   a,y               ; arg1: pan fade delay
 0a32: bc        inc   a
-0a33: d5 84 02  mov   $0284+x,a
+0a33: d5 84 02  mov   $0284+x,a         ; save pan fade delay
 0a36: c4 b8     mov   $b8,a
-0a38: 3f b9 0a  call  $0ab9             ; read arg (2 bytes possible)
+0a38: 3f b9 0a  call  $0ab9             ; read arg2/3 (pan fade rate)
 0a3b: 60        clrc
 0a3c: 84 b8     adc   a,$b8
 0a3e: d4 30     mov   $30+x,a
-0a40: dd        mov   a,y
+0a40: dd        mov   a,y               ; arg3: pan fade depth?
 0a41: 5c        lsr   a
 0a42: 80        setc
-0a43: b5 0c 01  sbc   a,$010c+x
+0a43: b5 0c 01  sbc   a,$010c+x         ; subtract current pan
 0a46: 60        clrc
 0a47: 10 04     bpl   $0a4d
+; abs
 0a49: 48 ff     eor   a,#$ff
 0a4b: bc        inc   a
 0a4c: 80        setc
+;
 0a4d: 3c        rol   a
 0a4e: d5 30 01  mov   $0130+x,a
 0a51: dd        mov   a,y
@@ -887,18 +892,18 @@
 ; vcmd 99 - volume fade
 0a63: f8 ab     mov   x,$ab
 0a65: 18 08 9d  or    $9d,#$08
-0a68: 3f b9 0a  call  $0ab9             ; read arg (2 bytes possible)
-0a6b: c4 b8     mov   $b8,a
+0a68: 3f b9 0a  call  $0ab9             ; read arg1/2
+0a6b: c4 b8     mov   $b8,a             ; arg1: volume fade delay
 0a6d: dd        mov   a,y
-0a6e: d5 9c 02  mov   $029c+x,a
+0a6e: d5 9c 02  mov   $029c+x,a         ; save arg2: volume fade speed (interval)
 0a71: 60        clrc
 0a72: 84 b8     adc   a,$b8
-0a74: d4 3c     mov   $3c+x,a
+0a74: d4 3c     mov   $3c+x,a           ; save volume fade delay
 0a76: 3a 8c     incw  $8c
-0a78: 3f b9 0a  call  $0ab9             ; read arg (2 bytes possible)
+0a78: 3f b9 0a  call  $0ab9             ; read arg3/4
 0a7b: 40        setp
-0a7c: d4 18     mov   $18+x,a
-0a7e: db 24     mov   $24+x,y
+0a7c: d4 18     mov   $18+x,a           ; ($0118+x) save arg3 - volume fade depth
+0a7e: db 24     mov   $24+x,y           ; ($0124+x) save arg4 - volume fade step length
 0a80: 20        clrp
 0a81: 5f 13 0c  jmp   $0c13             ; advance pointer, dispatch next vcmd
 
@@ -1275,12 +1280,12 @@
 0d18: 5f 6c 0d  jmp   $0d6c             ; write voice pointer back
 
 0d1b: 3a 8c     incw  $8c
-; vcmd 8f
+; vcmd 8f - pitch bend slide
 0d1d: f8 ac     mov   x,$ac
 0d1f: 09 8e a5  or    ($a5),($8e)
-0d22: 3f b9 0a  call  $0ab9             ; read arg (2 bytes possible)
+0d22: 3f b9 0a  call  $0ab9             ; read arg1
 0d25: d5 b0 02  mov   $02b0+x,a
-0d28: 3f b9 0a  call  $0ab9             ; read arg (2 bytes possible)
+0d28: 3f b9 0a  call  $0ab9             ; read arg2
 0d2b: d5 c8 02  mov   $02c8+x,a
 0d2e: dd        mov   a,y
 0d2f: 80        setc
@@ -1291,16 +1296,18 @@
 0d38: 88 0c     adc   a,#$0c
 0d3a: 75 dc 03  cmp   a,$03dc+x
 0d3d: 30 0b     bmi   $0d4a
+;
 0d3f: 29 8f 9e  and   ($9e),($8f)
 0d42: 3f 98 08  call  $0898             ; calculate pitch
 0d45: 9a 94     subw  ya,$94
 0d47: 5f 56 0d  jmp   $0d56
-
+;
 0d4a: 09 8e 9e  or    ($9e),($8e)
 0d4d: 3f 98 08  call  $0898             ; calculate pitch
 0d50: da b8     movw  $b8,ya
 0d52: ba 94     movw  ya,$94
 0d54: 9a b8     subw  ya,$b8
+;
 0d56: c4 b3     mov   $b3,a
 0d58: d8 b6     mov   $b6,x
 0d5a: f5 c8 02  mov   a,$02c8+x
@@ -1370,14 +1377,15 @@
 ;
 0dd1: 5f 13 0c  jmp   $0c13             ; skip arg3, dispatch next vcmd
 
-; vcmd a2
+; vcmd a2 - echo filter
 0dd4: 8f 00 b3  mov   $b3,#$00
 0dd7: cd 00     mov   x,#$00
+;
 0dd9: e4 b3     mov   a,$b3
 0ddb: 9f        xcn   a
 0ddc: 08 0f     or    a,#$0f
 0dde: fd        mov   y,a
-0ddf: e7 8c     mov   a,($8c+x)
+0ddf: e7 8c     mov   a,($8c+x)         ;
 0de1: 3f 20 08  call  $0820             ; set FIR
 0de4: 3a 8c     incw  $8c
 0de6: ab b3     inc   $b3
@@ -1414,13 +1422,13 @@
 0e26: d5 60 02  mov   $0260+x,a         ; arg1: vibrato delay
 0e29: 3a 8c     incw  $8c
 0e2b: f7 8c     mov   a,($8c)+y
-0e2d: d4 54     mov   $54+x,a           ; arg2: vibrato rate
+0e2d: d4 54     mov   $54+x,a           ; arg2: vibrato rate (interval, ticks per step)
 0e2f: 3a 8c     incw  $8c
 0e31: f7 8c     mov   a,($8c)+y
-0e33: d5 6c 02  mov   $026c+x,a         ; arg3: vibrato depth?
+0e33: d5 6c 02  mov   $026c+x,a         ; arg3: vibrato depth (pitch frequency delta per step)
 0e36: 3a 8c     incw  $8c
 0e38: f7 8c     mov   a,($8c)+y
-0e3a: d5 78 02  mov   $0278+x,a         ; arg4: vibrato depth?
+0e3a: d5 78 02  mov   $0278+x,a         ; arg4: vibrato step length (steps per cycle)
 0e3d: 5f 13 0c  jmp   $0c13             ; advance pointer, dispatch next vcmd
 
 ; vcmd 9e - vibrato off
@@ -1871,10 +1879,10 @@
 117f: dw $0941  ; 89 - instrument
 1181: dw $0860  ; 8a
 1183: dw $0aa8  ; 8b - tempo
-1185: dw $098b  ; 8c - transpose (absolute)
-1187: dw $0992  ; 8d - transpose (relative)
-1189: dw $099f  ; 8e
-118b: dw $0d1d  ; 8f
+1185: dw $098b  ; 8c - coarse tuning / transpose (absolute)
+1187: dw $0992  ; 8d - coarse tuning / transpose (relative)
+1189: dw $099f  ; 8e - tuning
+118b: dw $0d1d  ; 8f - pitch bend slide
 118d: dw $09a8  ; 90 - quantize (duration rate)
 118f: dw $019c  ; 91 - nop?
 1191: dw $09ec  ; 92 - volume & pan
@@ -1883,7 +1891,7 @@
 1197: dw $0a1f  ; 95 - volume (relative, temporary)
 1199: dw $0a13  ; 96 - pan
 119b: dw $0000  ; 97 - (undefined)
-119d: dw $0a2a  ; 98
+119d: dw $0a2a  ; 98 - pan fade
 119f: dw $0a63  ; 99 - volume fade
 11a1: dw $0d95  ; 9a - master volume
 11a3: dw $0da1  ; 9b - echo delay/feedback
@@ -1893,7 +1901,7 @@
 11ab: dw $08da  ; 9f - rest
 11ad: dw $087c  ; a0
 11af: dw $0867  ; a1
-11b1: dw $0dd4  ; a2
+11b1: dw $0dd4  ; a2 - echo filter
 11b3: dw $09dc  ; a3
 11b5: dw $0917  ; a4
 11b7: dw $09bb  ; a5
