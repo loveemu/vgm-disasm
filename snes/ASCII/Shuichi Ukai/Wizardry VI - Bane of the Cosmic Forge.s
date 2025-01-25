@@ -328,7 +328,7 @@
 0656: da 94     movw  $94,ya
 0658: f8 ab     mov   x,$ab
 065a: 93 9d 26  bbc4  $9d,$0683         ; branch if vibrato is off
-;
+; vibrato
 065d: 9b 48     dec   $48+x
 065f: d0 22     bne   $0683
 0661: f4 54     mov   a,$54+x
@@ -338,7 +338,7 @@
 066a: 10 01     bpl   $066d
 066c: dc        dec   y
 066d: 7a 94     addw  ya,$94
-066f: da 94     movw  $94,ya
+066f: da 94     movw  $94,ya            ; adjust pitch
 0671: 9b 60     dec   $60+x
 0673: d0 0e     bne   $0683
 0675: f5 78 02  mov   a,$0278+x
@@ -401,6 +401,7 @@
 06e4: d5 b0 02  mov   $02b0+x,a
 06e7: 5f 1a 07  jmp   $071a
 
+; pitch slide
 06ea: f5 b8 02  mov   a,$02b8+x
 06ed: c4 b3     mov   $b3,a
 06ef: f5 c0 02  mov   a,$02c0+x
@@ -417,12 +418,13 @@
 0706: ab b3     inc   $b3
 0708: e4 b3     mov   a,$b3
 070a: 7a 94     addw  ya,$94
-070c: da 94     movw  $94,ya
+070c: da 94     movw  $94,ya            ; adjust pitch
 070e: f5 c8 02  mov   a,$02c8+x
 0711: 9c        dec   a
 0712: d0 03     bne   $0717
 0714: 29 8f a5  and   ($a5),($8f)
 0717: d5 c8 02  mov   $02c8+x,a
+;
 071a: f8 ac     mov   x,$ac
 071c: 78 04 91  cmp   $91,#$04
 071f: 10 0d     bpl   $072e             ; branch if delta time >= 4
@@ -636,20 +638,22 @@
 0899: f6 36 04  mov   a,$0436+y         ; read pitch table (low-byte)
 089c: c4 ba     mov   $ba,a
 089e: f6 e4 03  mov   a,$03e4+y         ; read pitch table (high-byte)
-08a1: c4 bb     mov   $bb,a
+08a1: c4 bb     mov   $bb,a             ; pitch in $ba/bb
 08a3: eb ab     mov   y,$ab
 08a5: 60        clrc
-08a6: f6 3c 02  mov   a,$023c+y
+08a6: f6 3c 02  mov   a,$023c+y         ; voice detune
 08a9: 8f 00 b6  mov   $b6,#$00
-08ac: 95 d0 02  adc   a,$02d0+x
-08af: 10 05     bpl   $08b6
+08ac: 95 d0 02  adc   a,$02d0+x         ; add fine tuning via instrument
+08af: 10 05     bpl   $08b6             ; branch if positive
+; prepare for negative tuning
 08b1: 48 ff     eor   a,#$ff
-08b3: bc        inc   a
-08b4: ab b6     inc   $b6
-08b6: eb bb     mov   y,$bb
-08b8: cf        mul   ya
+08b3: bc        inc   a                 ; abs()
+08b4: ab b6     inc   $b6               ; set sign bit
+; calcurate pitch delta for the tuning
+08b6: eb bb     mov   y,$bb             ; (high-byte of pitch (= pitch / 256)
+08b8: cf        mul   ya                ;   * tuning
 08b9: 60        clrc
-08ba: 88 08     adc   a,#$08
+08ba: 88 08     adc   a,#$08            ;   + 8) // as 0.5
 08bc: 90 01     bcc   $08bf
 08be: fc        inc   y
 08bf: cb b9     mov   $b9,y
@@ -660,13 +664,14 @@
 08c7: 4b b9     lsr   $b9
 08c9: 7c        ror   a
 08ca: 4b b9     lsr   $b9
-08cc: 7c        ror   a
+08cc: 7c        ror   a                 ;   / 16
 08cd: c4 b8     mov   $b8,a
 08cf: ba ba     movw  ya,$ba
 08d1: 13 b6 03  bbc0  $b6,$08d7
+; apply negative tuning
 08d4: 9a b8     subw  ya,$b8
 08d6: 6f        ret
-
+; apply positive tuning
 08d7: 7a b8     addw  ya,$b8
 08d9: 6f        ret
 
@@ -741,8 +746,8 @@
 095e: dc        dec   y
 095f: 3f 20 08  call  $0820             ; set SRCN
 0962: fd        mov   y,a
-0963: f7 be     mov   a,($be)+y         ; ($be) tuning (signed)
-0965: d5 d0 02  mov   $02d0+x,a
+0963: f7 be     mov   a,($be)+y         ; ($be) fine tuning (signed)
+0965: d5 d0 02  mov   $02d0+x,a         ; save fine tuning via instrument
 0968: ab b3     inc   $b3
 096a: eb b3     mov   y,$b3
 096c: f7 bc     mov   a,($bc)+y         ; ($bc) offset 1: ADSR(1)
@@ -776,7 +781,7 @@
 ; vcmd 8e - tuning
 Z: f8 ab     mov   x,$ab
 09a1: dd        mov   a,y
-09a2: d5 3c 02  mov   $023c+x,a         ; arg1: tuning (signed 8-bit, in 1/128 semitones)
+09a2: d5 3c 02  mov   $023c+x,a         ; arg1: tuning (signed 8-bit, multiply the pitch by 1.0 + n/4096, approx.)
 09a5: 5f 13 0c  jmp   $0c13             ; advance pointer, dispatch next vcmd
 
 ; vcmd 90 - note duration in rate
@@ -1229,7 +1234,7 @@ Z: f8 ab     mov   x,$ab
 0ca6: e4 b3     mov   a,$b3
 0ca8: d5 dc 03  mov   $03dc+x,a         ; save note number
 0cab: 3f 98 08  call  $0898             ; calculate pitch
-0cae: da 94     movw  $94,ya
+0cae: da 94     movw  $94,ya            ; save pitch
 ;
 0cb0: ee        pop   y                 ; arg1: note length (in ticks)
 0cb1: dd        mov   a,y
