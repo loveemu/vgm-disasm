@@ -479,10 +479,12 @@
 084c: 10 ea     bpl   $0838
 084e: 6f        ret
 
+; vcmd 8a - set release GAIN
 084f: f8 a0     mov   x,$a0
 0851: db 63     mov   $63+x,y
 0853: 5f 01 0c  jmp   $0c01
 
+; vcmd a1 - noise off
 0856: 90 06     bcc   $085e
 0858: 29 84 9f  and   ($9f),($84)
 085b: 5f 03 0c  jmp   $0c03
@@ -493,6 +495,7 @@
 0865: 29 84 99  and   ($99),($84)
 0868: 5f 7d 08  jmp   $087d
 
+; vcmd a0 - noise on
 086b: 90 06     bcc   $0873
 086d: 09 83 9f  or    ($9f),($83)
 0870: 5f 03 0c  jmp   $0c03
@@ -544,6 +547,7 @@
 08c6: 7a ad     addw  ya,$ad
 08c8: 6f        ret
 
+; vcmd 9f - rest
 08c9: f8 a1     mov   x,$a1
 08cb: 38 fb 92  and   $92,#$fb
 08ce: dd        mov   a,y
@@ -572,6 +576,7 @@
 0902: 3f 0f 08  call  $080f
 0905: 6f        ret
 
+; vcmd a4 - instrument, volume, pan, coarse tuning (transpose)
 0906: f8 a0     mov   x,$a0
 0908: dd        mov   a,y
 0909: d5 16 02  mov   $0216+x,a
@@ -591,6 +596,7 @@
 092a: d5 21 02  mov   $0221+x,a
 092d: 5f 01 0c  jmp   $0c01
 
+; vcmd 89 - instrument
 0930: f8 a0     mov   x,$a0
 0932: dd        mov   a,y
 0933: d5 16 02  mov   $0216+x,a
@@ -630,9 +636,11 @@
 0977: d4 63     mov   $63+x,a
 0979: 6f        ret
 
+; vcmd 8c - coarse tuning / transpose (absolute)
 097a: f8 a0     mov   x,$a0
 097c: e8 00     mov   a,#$00
 097e: d5 21 02  mov   $0221+x,a
+; vcmd 8d - coarse tuning / transpose (relative)
 0981: f8 a0     mov   x,$a0
 0983: dd        mov   a,y
 0984: 60        clrc
@@ -640,11 +648,13 @@
 0988: d5 21 02  mov   $0221+x,a
 098b: 5f 01 0c  jmp   $0c01
 
+; vcmd 8e - tuning
 098e: f8 a0     mov   x,$a0
 0990: dd        mov   a,y
 0991: d5 37 02  mov   $0237+x,a
 0994: 5f 01 0c  jmp   $0c01
 
+; vcmd 90 - note duration in rate
 0997: 38 fd 92  and   $92,#$fd
 099a: f8 a0     mov   x,$a0
 099c: dd        mov   a,y
@@ -654,6 +664,7 @@
 09a4: 3f b2 09  call  $09b2
 09a7: 5f 01 0c  jmp   $0c01
 
+; vcmd a5 - note duration in ticks
 09aa: 18 02 92  or    $92,#$02
 09ad: cb 87     mov   $87,y
 09af: 5f 01 0c  jmp   $0c01
@@ -673,14 +684,17 @@
 09c7: 3f 1a 08  call  $081a
 09ca: 6f        ret
 
+; vcmd a3 - mute channels
 09cb: dd        mov   a,y
 09cc: 3f 77 0f  call  $0f77
 09cf: fa ff a5  mov   ($a5),($ff)
 09d2: 5f 01 0c  jmp   $0c01
 
+; vcmd a6 - write to APUI02
 09d5: cb f6     mov   $f6,y
 09d7: 5f 01 0c  jmp   $0c01
 
+; vcmd 92 - volume & pan
 09da: f8 a0     mov   x,$a0
 09dc: 38 d7 92  and   $92,#$d7
 09df: 3f a7 0a  call  $0aa7
@@ -690,9 +704,11 @@
 09e6: 20        clrp
 09e7: 5f 01 0c  jmp   $0c01
 
+; vcmd 93 - volume
 09ea: f8 a0     mov   x,$a0
 09ec: e8 00     mov   a,#$00
 09ee: d5 00 01  mov   $0100+x,a
+; vcmd 94 - volume (relative)
 09f1: f8 a0     mov   x,$a0
 09f3: 38 f7 92  and   $92,#$f7
 09f6: dd        mov   a,y
@@ -703,6 +719,7 @@
 09fd: 20        clrp
 09fe: 5f 01 0c  jmp   $0c01
 
+; vcmd 96 - pan
 0a01: f8 a0     mov   x,$a0
 0a03: 38 df 92  and   $92,#$df
 0a06: 40        setp
@@ -710,12 +727,14 @@
 0a09: 20        clrp
 0a0a: 5f 01 0c  jmp   $0c01
 
+; vcmd 95 - volume (relative, temporary)
 0a0d: f8 a0     mov   x,$a0
 0a0f: b0 04     bcs   $0a15
 0a11: dd        mov   a,y
 0a12: d5 37 01  mov   $0137+x,a
 0a15: 5f 01 0c  jmp   $0c01
 
+; vcmd 98 - pan fade
 0a18: f8 a0     mov   x,$a0
 0a1a: 18 20 92  or    $92,#$20
 0a1d: 3a 81     incw  $81
@@ -748,6 +767,8 @@
 
 0a4d: e8 00     mov   a,#$00
 0a4f: 2f f6     bra   $0a47
+
+; vmcd 99 - volume fade
 0a51: f8 a0     mov   x,$a0
 0a53: 18 08 92  or    $92,#$08
 0a56: 3f a7 0a  call  $0aa7
@@ -786,6 +807,7 @@
 0a94: 20        clrp
 0a95: 6f        ret
 
+; vcmd 8b - tempo
 0a96: cb a6     mov   $a6,y
 0a98: 3f 9e 0a  call  $0a9e
 0a9b: 5f 01 0c  jmp   $0c01
@@ -806,6 +828,7 @@
 0ab2: e4 a8     mov   a,$a8
 0ab4: 6f        ret
 
+; vcmd 80 - end of track
 0ab5: 63 a0 08  bbs3  $a0,$0ac0
 0ab8: 18 80 92  or    $92,#$80
 0abb: 1a 81     decw  $81
@@ -815,6 +838,7 @@
 0ac2: 8d 04     mov   y,#$04
 0ac4: 5f fc 0b  jmp   $0bfc
 
+; vcmd ab
 0ac7: 18 80 92  or    $92,#$80
 0aca: f8 a1     mov   x,$a1
 0acc: e8 fe     mov   a,#$fe
@@ -854,22 +878,26 @@
 0b1a: 29 84 96  and   ($96),($84)
 0b1d: 5f 5a 0d  jmp   $0d5a
 
+; vcmd 88
 0b20: 18 02 94  or    $94,#$02
 0b23: 38 fe 94  and   $94,#$fe
 0b26: 3f 67 0f  call  $0f67
 0b29: 5f 5a 0d  jmp   $0d5a
 
+; vcmd 81 - infinite loop start
 0b2c: f8 a0     mov   x,$a0
 0b2e: ba 81     movw  ya,$81
 0b30: d5 0b 02  mov   $020b+x,a
 0b33: db 16     mov   $16+x,y
 0b35: 5f 03 0c  jmp   $0c03
 
+; vcmd 82 - loop infinitely
 0b38: f8 a0     mov   x,$a0
 0b3a: fb 16     mov   y,$16+x
 0b3c: f5 0b 02  mov   a,$020b+x
 0b3f: 5f fc 0b  jmp   $0bfc
 
+; vcmd 83 - repeat start
 0b42: f8 a0     mov   x,$a0
 0b44: ba 81     movw  ya,$81
 0b46: 40        setp
@@ -882,6 +910,7 @@
 0b55: 20        clrp
 0b56: 5f 03 0c  jmp   $0c03
 
+; vcmd 85 - repeat break
 0b59: cd 8f     mov   x,#$8f
 0b5b: 73 a0 01  bbc3  $a0,$0b5f
 0b5e: 3d        inc   x
@@ -916,6 +945,7 @@
 0b90: c6        mov   (x),a
 0b91: 5f 03 0c  jmp   $0c03
 
+; vcmd 84 - repeat end
 0b94: f8 a0     mov   x,$a0
 0b96: 3a 81     incw  $81
 0b98: 40        setp
@@ -984,12 +1014,14 @@
 0c11: a8 ac     sbc   a,#$ac
 0c13: 10 0b     bpl   $0c20
 0c15: 60        clrc
-0c16: 88 2c     adc   a,#$2c
+0c16: 88 2c     adc   a,#$2c            ; (vcmd 80-ab) $d4-ff => $00-2b
 0c18: 1c        asl   a
 0c19: 5d        mov   x,a
 0c1a: aa 95 00  mov1  c,$0095,0
 0c1d: 1f dd 10  jmp   ($10dd+x)
 
+; vcmd ac-fe - note
+; vcmd ff - slur/tie
 0c20: 60        clrc
 0c21: 88 0c     adc   a,#$0c
 0c23: 13 95 33  bbc0  $95,$0c59
@@ -1017,6 +1049,7 @@
 0c53: 98 00 82  adc   $82,#$00
 0c56: 5f 58 0d  jmp   $0d58
 
+; dispatch note vcmd
 0c59: 6d        push  y
 0c5a: f8 a0     mov   x,$a0
 0c5c: 60        clrc
@@ -1101,6 +1134,7 @@
 0d06: 5f 5a 0d  jmp   $0d5a
 
 0d09: 3a 81     incw  $81
+; vcmd 8f - pitch bend slide
 0d0b: f8 a1     mov   x,$a1
 0d0d: 09 83 9a  or    ($9a),($83)
 0d10: 3f a7 0a  call  $0aa7
@@ -1159,11 +1193,13 @@
 0d80: fe fe     dbnz  y,$0d80
 0d82: 6f        ret
 
+; vcmd 9a - master volume
 0d83: cc b9 03  mov   $03b9,y
 0d86: 3f a7 0a  call  $0aa7
 0d89: cc ba 03  mov   $03ba,y
 0d8c: 5f 01 0c  jmp   $0c01
 
+; vcmd 9b - echo delay/feedback
 0d8f: 8f 00 98  mov   $98,#$00
 0d92: 6d        push  y
 0d93: 3f 64 0d  call  $0d64
@@ -1188,6 +1224,7 @@
 0dbd: 10 f2     bpl   $0db1
 0dbf: 5f 01 0c  jmp   $0c01
 
+; vcmd 9c - echo on/off channels
 0dc2: 73 a0 0c  bbc3  $a0,$0dd1
 0dc5: 29 84 98  and   ($98),($84)
 0dc8: ad 00     cmp   y,#$00
@@ -1206,6 +1243,7 @@
 0de8: 8f 04 91  mov   $91,#$04
 0deb: 5f 01 0c  jmp   $0c01
 
+; vcmd 9d - vibrato
 0dee: f8 a0     mov   x,$a0
 0df0: 18 10 92  or    $92,#$10
 0df3: 18 04 95  or    $95,#$04
@@ -1223,9 +1261,11 @@
 0e0e: d5 6e 02  mov   $026e+x,a
 0e11: 5f 01 0c  jmp   $0c01
 
+; vcmd 9e - vibrato off
 0e14: 38 ef 92  and   $92,#$ef
 0e17: 5f 03 0c  jmp   $0c03
 
+; vcmd 86 - call subroutine
 0e1a: f8 a0     mov   x,$a0
 0e1c: 40        setp
 0e1d: fb 58     mov   y,$58+x
@@ -1241,6 +1281,7 @@
 0e31: 3f a7 0a  call  $0aa7
 0e34: 5f fc 0b  jmp   $0bfc
 
+; vcmd 87 - end subroutine
 0e37: f8 a0     mov   x,$a0
 0e39: 40        setp
 0e3a: 9b 58     dec   $58+x
@@ -1252,6 +1293,7 @@
 0e47: c4 82     mov   $82,a
 0e49: 5f 03 0c  jmp   $0c03
 
+; cpu cmd e6
 0e4c: fd        mov   y,a
 0e4d: f6 00 2e  mov   a,$2e00+y
 0e50: c4 ad     mov   $ad,a
@@ -1335,6 +1377,7 @@
 0ef8: 20        clrp
 0ef9: 6f        ret
 
+; cpu cmd e7
 0efa: 13 96 0b  bbc0  $96,$0f08
 0efd: e8 de     mov   a,#$de
 0eff: c5 08 02  mov   $0208,a
@@ -1342,6 +1385,7 @@
 0f05: 8f 01 29  mov   $29,#$01
 0f08: 5f b5 0f  jmp   $0fb5
 
+; cpu cmd e0
 0f0b: 8f 01 94  mov   $94,#$01
 0f0e: 68 00     cmp   a,#$00
 0f10: f0 0a     beq   $0f1c
@@ -1374,6 +1418,7 @@
 0f4e: d0 fa     bne   $0f4a
 0f50: 6f        ret
 
+; cpu cmd e1
 0f51: 68 00     cmp   a,#$00
 0f53: f0 0c     beq   $0f61
 0f55: 18 0c 94  or    $94,#$0c
@@ -1406,6 +1451,7 @@
 0f86: 10 f3     bpl   $0f7b
 0f88: 6f        ret
 
+; cpu cmd ee
 0f89: 8f 40 ac  mov   $ac,#$40
 0f8c: 5f e8 04  jmp   $04e8
 
@@ -1430,6 +1476,7 @@
 0fb0: e4 f5     mov   a,$f5
 0fb2: 1f 35 11  jmp   ($1135+x)
 
+; cpu cmd e4-e5,f0
 0fb5: e4 d0     mov   a,$d0
 0fb7: c4 d1     mov   $d1,a
 0fb9: c4 f4     mov   $f4,a
@@ -1586,65 +1633,67 @@
 10da: 10 f0     bpl   $10cc
 10dc: 6f        ret
 
-10dd: dw $0ab5
-10df: dw $0b2c
-10e1: dw $0b38
-10e3: dw $0b42
-10e5: dw $0b94
-10e7: dw $0b59
-10e9: dw $0e1a
-10eb: dw $0e37
-10ed: dw $0b20
-10ef: dw $0930
-10f1: dw $084f
-10f3: dw $0a96
-10f5: dw $097a
-10f7: dw $0981
-10f9: dw $098e
-10fb: dw $0d0b
-10fd: dw $0997
-10ff: dw $0000
-1101: dw $09da
-1103: dw $09ea
-1105: dw $09f1
-1107: dw $0a0d
-1109: dw $0a01
-110b: dw $0000
-110d: dw $0a18
-110f: dw $0a51
-1111: dw $0d83
-1113: dw $0d8f
-1115: dw $0dc2
-1117: dw $0dee
-1119: dw $0e14
-111b: dw $08c9
-111d: dw $086b
-111f: dw $0856
-1121: dw $0000
-1123: dw $09cb
-1125: dw $0906
-1127: dw $09aa
-1129: dw $09d5
-112b: dw $0000
-112d: dw $0000
-112f: dw $0000
-1131: dw $0000
-1133: dw $0ac7
+; vcmd dispatch table
+10dd: dw $0ab5  ; 80 - end of track
+10df: dw $0b2c  ; 81 - infinite loop point
+10e1: dw $0b38  ; 82 - loop infinitely
+10e3: dw $0b42  ; 83 - repeat start
+10e5: dw $0b94  ; 84 - repeat end
+10e7: dw $0b59  ; 85 - repeat break
+10e9: dw $0e1a  ; 86 - call subroutine
+10eb: dw $0e37  ; 87 - end subroutine
+10ed: dw $0b20  ; 88
+10ef: dw $0930  ; 89 - instrument
+10f1: dw $084f  ; 8a - set release GAIN
+10f3: dw $0a96  ; 8b - tempo
+10f5: dw $097a  ; 8c - coarse tuning / transpose (absolute)
+10f7: dw $0981  ; 8d - coarse tuning / transpose (relative)
+10f9: dw $098e  ; 8e - tuning
+10fb: dw $0d0b  ; 8f - pitch bend slide
+10fd: dw $0997  ; 90 - note duration in rate
+10ff: dw $0000  ; 91 - (undefined)
+1101: dw $09da  ; 92 - volume & pan
+1103: dw $09ea  ; 93 - volume
+1105: dw $09f1  ; 94 - volume (relative)
+1107: dw $0a0d  ; 95 - volume (relative, temporary)
+1109: dw $0a01  ; 96 - pan
+110b: dw $0000  ; 97 - (undefined)
+110d: dw $0a18  ; 98 - pan fade
+110f: dw $0a51  ; 99 - volume fade
+1111: dw $0d83  ; 9a - master volume
+1113: dw $0d8f  ; 9b - echo delay/feedback
+1115: dw $0dc2  ; 9c - echo on/off channels
+1117: dw $0dee  ; 9d - vibrato
+1119: dw $0e14  ; 9e - vibrato off
+111b: dw $08c9  ; 9f - rest
+111d: dw $086b  ; a0 - noise on
+111f: dw $0856  ; a1 - noise off
+1121: dw $0000  ; a2 - (undefined)
+1123: dw $09cb  ; a3 - mute channels
+1125: dw $0906  ; a4 - instrument, volume, pan, coarse tuning (transpose)
+1127: dw $09aa  ; a5 - note duration in ticks
+1129: dw $09d5  ; a6 - write to APUI02
+112b: dw $0000  ; a7 - (undefined)
+112d: dw $0000  ; a8 - (undefined)
+112f: dw $0000  ; a9 - (undefined)
+1131: dw $0000  ; aa - (undefined)
+1133: dw $0ac7  ; ab
 
-1135: dw $0f0b
-1137: dw $0f51
-1139: dw $0000
-113b: dw $0000
-113d: dw $0fb5
-113f: dw $0fb5
-1141: dw $0e4c
-1143: dw $0efa
-1145: dw $0000
-1147: dw $0000
-1149: dw $0000
-114b: dw $0000
-114d: dw $0000
-114f: dw $0000
-1151: dw $0f89
-1153: dw $0000
-1155: dw $0fb5
+; cpucmd table
+1135: dw $0f0b  ; e0
+1137: dw $0f51  ; e1
+1139: dw $0000  ; e2 - (undefined)
+113b: dw $0000  ; e3 - (undefined)
+113d: dw $0fb5  ; e4
+113f: dw $0fb5  ; e5
+1141: dw $0e4c  ; e6
+1143: dw $0efa  ; e7
+1145: dw $0000  ; e8 - (undefined)
+1147: dw $0000  ; e9 - (undefined)
+1149: dw $0000  ; ea - (undefined)
+114b: dw $0000  ; eb - (undefined)
+114d: dw $0000  ; ec - (undefined)
+114f: dw $0000  ; ed - (undefined)
+1151: dw $0f89  ; ee
+1153: dw $0000  ; ef - (undefined)
+1155: dw $0fb5  ; f0

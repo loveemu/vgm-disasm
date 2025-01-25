@@ -27,6 +27,8 @@
 019a: db $00
 019b: db $00
 
+; vcmd 91
+; cpucmd e2,eb-ed
 019c: 5f 49 10  jmp   $1049
 
 03dc: db $00,$00,$00,$00,$00,$00,$00,$00
@@ -386,8 +388,8 @@
 06c9: 20        clrp
 06ca: 03 a0 79  bbs0  $a0,$0746
 06cd: f8 ab     mov   x,$ab
-06cf: f5 54 02  mov   a,$0254+x
-06d2: fb 78     mov   y,$78+x           ; read note length
+06cf: f5 54 02  mov   a,$0254+x         ; read note duration
+06d2: fb 78     mov   y,$78+x           ; read note key-off timer
 06d4: da 92     movw  $92,ya
 06d6: f8 ac     mov   x,$ac
 06d8: e4 a5     mov   a,$a5
@@ -424,13 +426,13 @@
 071a: f8 ac     mov   x,$ac
 071c: 78 04 91  cmp   $91,#$04
 071f: 10 0d     bpl   $072e             ; branch if delta time >= 4
-;
-0721: 43 9d 0a  bbs2  $9d,$072e
+; delta time <= 3 - force key-off 3 ticks before next command (except for slur)
+0721: 43 9d 0a  bbs2  $9d,$072e         ; branch if slurred
 0724: 8d 9f     mov   y,#$9f
-0726: 3f 06 09  call  $0906
+0726: 3f 06 09  call  $0906             ; update ADSR/GAIN dsp regs (pseudo key-off)
 0729: 6e 91 2f  dbnz  $91,$075b         ; decrease delta time shadow
 072c: 2f 03     bra   $0731
-;
+; delta time >= 4 or slurred
 072e: 6e 91 1e  dbnz  $91,$074f         ; decrease delta time shadow
 ;
 0731: fb c8     mov   y,$c8+x
@@ -446,11 +448,13 @@
 0749: 3f 15 0c  call  $0c15             ; dispatch next vcmd
 074c: 5f cf 07  jmp   $07cf
 
-074f: 6e 93 09  dbnz  $93,$075b
+074f: 6e 93 09  dbnz  $93,$075b         ; decrease key-off timer
+; pseudo key-off (update ADSR/GAIN)
 0752: f8 ab     mov   x,$ab
-0754: fb 6c     mov   y,$6c+x
+0754: fb 6c     mov   y,$6c+x           ; GAIN for note release
 0756: f8 ac     mov   x,$ac
-0758: 3f 06 09  call  $0906
+0758: 3f 06 09  call  $0906             ; update ADSR/GAIN dsp regs
+;
 075b: f8 ac     mov   x,$ac
 075d: e4 a4     mov   a,$a4
 075f: 24 8e     and   a,$8e
@@ -515,8 +519,8 @@
 07cc: 3f 2b 08  call  $082b             ; set VOL(R)
 07cf: f8 ab     mov   x,$ab
 07d1: ba 92     movw  ya,$92
-07d3: d5 54 02  mov   $0254+x,a
-07d6: db 78     mov   $78+x,y           ; update note length (key-off timer)
+07d3: d5 54 02  mov   $0254+x,a         ; update note duration
+07d6: db 78     mov   $78+x,y           ; update note key-off timer
 07d8: ba 90     movw  ya,$90
 07da: d5 30 02  mov   $0230+x,a         ; update last note length
 07dd: db 24     mov   $24+x,y           ; update delta time
@@ -527,12 +531,13 @@
 07e7: 1d        dec   x                 ; decrease track number
 07e8: 5f 25 06  jmp   $0625             ; process next track
 
-07eb: e4 a6     mov   a,$a6
+07eb: e4 a6     mov   a,$a6             ; KON shadow bits
 07ed: f0 08     beq   $07f7
 07ef: 8d 4c     mov   y,#$4c
 07f1: 3f 20 08  call  $0820             ; set KON
 07f4: 8f 00 a6  mov   $a6,#$00
-07f7: e4 a7     mov   a,$a7
+;
+07f7: e4 a7     mov   a,$a7             ; KOF shadow bits
 07f9: f0 14     beq   $080f
 07fb: 8d 5c     mov   y,#$5c
 07fd: 3f 20 08  call  $0820             ; set KOF
@@ -596,12 +601,12 @@
 085d: 10 ea     bpl   $0849
 085f: 6f        ret
 
-; vcmd 8a
+; vcmd 8a - set release GAIN
 0860: f8 ab     mov   x,$ab
-0862: db 6c     mov   $6c+x,y           ; arg1
+0862: db 6c     mov   $6c+x,y           ; arg1: GAIN for note release
 0864: 5f 13 0c  jmp   $0c13             ; advance pointer, dispatch next vcmd
 
-; vcmd a1
+; vcmd a1 - noise off
 0867: 90 06     bcc   $086f
 0869: 29 8f aa  and   ($aa),($8f)
 086c: 5f 15 0c  jmp   $0c15             ; dispatch next vcmd
@@ -612,7 +617,7 @@
 0876: 29 8f a4  and   ($a4),($8f)
 0879: 5f 8e 08  jmp   $088e
 
-; vcmd a0
+; vcmd a0 - noise on
 087c: 90 06     bcc   $0884
 087e: 09 8e aa  or    ($aa),($8e)
 0881: 5f 15 0c  jmp   $0c15             ; dispatch next vcmd
@@ -671,32 +676,33 @@
 08df: dd        mov   a,y               ; maybe arg1: length in ticks
 08e0: 10 0b     bpl   $08ed             ; branch if with arg1
 08e2: b0 03     bcs   $08e7
-08e4: 3f fd 08  call  $08fd             ; set GAIN/ADSR(1)
+08e4: 3f fd 08  call  $08fd             ; pseudo key-off
 08e7: fa 90 91  mov   ($91),($90)
 08ea: 5f 6c 0d  jmp   $0d6c             ; write voice pointer back to array
 ; handle arg1 (note length)
 08ed: da 90     movw  $90,ya
 08ef: b0 09     bcs   $08fa
-08f1: 23 9d 03  bbs1  $9d,$08f7
-08f4: 3f c3 09  call  $09c3
-08f7: 3f fd 08  call  $08fd             ; set GAIN/ADSR(1)
+08f1: 23 9d 03  bbs1  $9d,$08f7         ; skip if auto duration update is disabled
+08f4: 3f c3 09  call  $09c3             ; calcurate note duration
+08f7: 3f fd 08  call  $08fd             ; pseudo key-off
 08fa: 5f 6a 0d  jmp   $0d6a             ; voice pointer += 1, write it back to array
 
-08fd: 8f 00 93  mov   $93,#$00
+08fd: 8f 00 93  mov   $93,#$00          ; key-off timer
 0900: f8 ab     mov   x,$ab
-0902: fb 6c     mov   y,$6c+x
+0902: fb 6c     mov   y,$6c+x           ; read GAIN for note release
 0904: f8 ac     mov   x,$ac
-0906: f5 c8 04  mov   a,$04c8+x
+; update ADSR/GAIN dsp regs for pseudo key-off
+0906: f5 c8 04  mov   a,$04c8+x         ; read GAIN dsp reg address
 0909: 3f 2b 08  call  $082b             ; set GAIN
-090c: fb c8     mov   y,$c8+x
-090e: f5 d8 02  mov   a,$02d8+x
+090c: fb c8     mov   y,$c8+x           ; read ADSR(1) dsp reg address
+090e: f5 d8 02  mov   a,$02d8+x         ; ADSR(1) for current instrument
 0911: 28 7f     and   a,#$7f
 0913: 3f 20 08  call  $0820             ; set ADSR(1)
 0916: 6f        ret
 
-; vcmd a4
+; vcmd a4 - instrument, volume, pan, coarse tuning (transpose)
 0917: f8 ab     mov   x,$ab
-0919: dd        mov   a,y               ; arg1
+0919: dd        mov   a,y               ; arg1: instrument
 091a: d5 18 02  mov   $0218+x,a
 091d: b0 03     bcs   $0922
 091f: 3f 4f 09  call  $094f             ; load instrument
@@ -705,13 +711,13 @@
 0927: 8d 00     mov   y,#$00
 0929: 3a 8c     incw  $8c
 092b: f7 8c     mov   a,($8c)+y
-092d: d5 00 01  mov   $0100+x,a         ; arg2
+092d: d5 00 01  mov   $0100+x,a         ; arg2: volume
 0930: 3a 8c     incw  $8c
 0932: f7 8c     mov   a,($8c)+y
-0934: d5 0c 01  mov   $010c+x,a         ; arg3
+0934: d5 0c 01  mov   $010c+x,a         ; arg3: pan (must be 0..30)
 0937: 3a 8c     incw  $8c
 0939: f7 8c     mov   a,($8c)+y
-093b: d5 24 02  mov   $0224+x,a         ; arg4
+093b: d5 24 02  mov   $0224+x,a         ; arg4: coarse tuning / transpose
 093e: 5f 13 0c  jmp   $0c13             ; advance pointer, dispatch next vcmd
 
 ; vcmd 89 - instrument
@@ -750,9 +756,9 @@
 097e: 3f 1f 08  call  $081f             ; set ADSR(2)
 0981: eb b3     mov   y,$b3
 0983: fc        inc   y
-0984: f7 bc     mov   a,($bc)+y         ; ($bc) offset 3: ?
+0984: f7 bc     mov   a,($bc)+y         ; ($bc) offset 3: GAIN for note release
 0986: f8 ab     mov   x,$ab
-0988: d4 6c     mov   $6c+x,a
+0988: d4 6c     mov   $6c+x,a           ; set GAIN for note release
 098a: 6f        ret
 
 ; vcmd 8c - coarse tuning / transpose (absolute)
@@ -773,26 +779,27 @@ Z: f8 ab     mov   x,$ab
 09a2: d5 3c 02  mov   $023c+x,a         ; arg1: tuning (signed 8-bit, in 1/128 semitones)
 09a5: 5f 13 0c  jmp   $0c13             ; advance pointer, dispatch next vcmd
 
-; vcmd 90 - quantize (duration rate)
-09a8: 38 fd 9d  and   $9d,#$fd
+; vcmd 90 - note duration in rate
+09a8: 38 fd 9d  and   $9d,#$fd          ; enable auto duration update
 09ab: f8 ab     mov   x,$ab
-09ad: dd        mov   a,y               ; arg1: quantize (note duration rate) (unsigned 8-bit)
-09ae: d5 48 02  mov   $0248+x,a         ; set quantize (0 is full-length, 1 is the shortest)
+09ad: dd        mov   a,y               ; arg1: note duration rate (unsigned 8-bit)
+09ae: d5 48 02  mov   $0248+x,a         ; save note duration rate (0 is full-length, 1 is the shortest)
 09b1: b0 05     bcs   $09b8
 09b3: e4 90     mov   a,$90
-09b5: 3f c3 09  call  $09c3
+09b5: 3f c3 09  call  $09c3             ; calcurate note duration
 09b8: 5f 13 0c  jmp   $0c13             ; advance pointer, dispatch next vcmd
 
-; vcmd a5
-09bb: 18 02 9d  or    $9d,#$02
-09be: cb 92     mov   $92,y
+; vcmd a5 - note duration in ticks
+09bb: 18 02 9d  or    $9d,#$02          ; disable auto update for note duration
+09be: cb 92     mov   $92,y             ; arg1: update note duration (will be ignored on the note just before slur/tie)
 09c0: 5f 13 0c  jmp   $0c13             ; advance pointer, dispatch next vcmd
 
-09c3: fd        mov   y,a
-09c4: f5 48 02  mov   a,$0248+x
+; calcurate and update note duration
+09c3: fd        mov   y,a               ; note length base
+09c4: f5 48 02  mov   a,$0248+x         ; duration rate
 09c7: f0 01     beq   $09ca
 09c9: cf        mul   ya
-09ca: cb 92     mov   $92,y
+09ca: cb 92     mov   $92,y             ; update note duration
 09cc: 6f        ret
 
 09cd: e8 0c     mov   a,#$0c
@@ -803,14 +810,14 @@ Z: f8 ab     mov   x,$ab
 09d8: 3f 2b 08  call  $082b             ; set MVOL(R)
 09db: 6f        ret
 
-; vcmd a3
-09dc: dd        mov   a,y
+; vcmd a3 - mute channels
+09dc: dd        mov   a,y               ; arg1: channel bits
 09dd: 3f f9 0f  call  $0ff9
 09e0: fa ff b0  mov   ($b0),($ff)
 09e3: 5f 13 0c  jmp   $0c13             ; advance pointer, dispatch next vcmd
 
-; vcmd a6
-09e6: cc f6 00  mov   $00f6,y
+; vcmd a6 - write to APUI02
+09e6: cc f6 00  mov   $00f6,y           ; arg1: value to be written
 09e9: 5f 13 0c  jmp   $0c13             ; advance pointer, dispatch next vcmd
 
 ; vcmd 92 - volume & pan
@@ -969,16 +976,16 @@ Z: f8 ab     mov   x,$ab
 0ae1: c6        mov   (x),a
 0ae2: 28 02     and   a,#$02
 0ae4: d0 0a     bne   $0af0
-0ae6: f5 30 02  mov   a,$0230+x
-0ae9: 3f c3 09  call  $09c3
+0ae6: f5 30 02  mov   a,$0230+x         ; last note length
+0ae9: 3f c3 09  call  $09c3             ; calcurate note duration
 0aec: dd        mov   a,y
-0aed: d5 54 02  mov   $0254+x,a
-0af0: f5 18 02  mov   a,$0218+x
-0af3: 3f 4f 09  call  $094f
+0aed: d5 54 02  mov   $0254+x,a         ; save note duration immediately
+0af0: f5 18 02  mov   a,$0218+x         ; instrument
+0af3: 3f 4f 09  call  $094f             ; load instrument
 0af6: f8 ac     mov   x,$ac
-0af8: d4 6c     mov   $6c+x,a
+0af8: d4 6c     mov   $6c+x,a           ; set GAIN for note release
 0afa: e8 ff     mov   a,#$ff
-0afc: d5 dc 03  mov   $03dc+x,a
+0afc: d5 dc 03  mov   $03dc+x,a         ; set note number = -1
 0aff: 29 8f a5  and   ($a5),($8f)
 0b02: e4 a9     mov   a,$a9
 0b04: 24 8e     and   a,$8e
@@ -1154,21 +1161,22 @@ Z: f8 ab     mov   x,$ab
 0c2c: aa a0 00  mov1  c,$00a0,0
 0c2f: 1f 6d 11  jmp   ($116d+x)
 
-; vcmd ac-ff
+; vcmd ac-fe - note
+; vcmd ff - slur/tie
 0c32: 60        clrc
 0c33: 88 0c     adc   a,#$0c
 0c35: 13 a0 33  bbc0  $a0,$0c6b
 ;
-0c38: 38 fb 9d  and   $9d,#$fb          ; clear bit 2
+0c38: 38 fb 9d  and   $9d,#$fb          ; clear bit 2 (slur)
 0c3b: dd        mov   a,y               ; read arg1
-0c3c: 30 16     bmi   $0c54             ; branch if bit 7 is set
+0c3c: 30 16     bmi   $0c54             ; branch if bit 7 is set (i.e. next vcmd, not arg1)
 ;
 0c3e: da 90     movw  $90,ya
 0c40: 3f b9 0a  call  $0ab9             ; read arg1 and next (arg2 or next vcmd)
 0c43: ad ff     cmp   y,#$ff
 0c45: d0 06     bne   $0c4d
 ;
-0c47: 18 04 9d  or    $9d,#$04          ; set bit 2
+0c47: 18 04 9d  or    $9d,#$04          ; set bit 2 (slur)
 0c4a: 3f b9 0a  call  $0ab9             ; read arg (2 bytes possible)
 ;
 0c4d: ad 8f     cmp   y,#$8f
@@ -1178,7 +1186,7 @@ Z: f8 ab     mov   x,$ab
 0c54: fa 90 91  mov   ($91),($90)
 0c57: 68 ff     cmp   a,#$ff
 0c59: d0 f2     bne   $0c4d
-0c5b: 18 04 9d  or    $9d,#$04
+0c5b: 18 04 9d  or    $9d,#$04          ; set bit 2 (slur)
 0c5e: 5f 47 0c  jmp   $0c47
 ;
 0c61: 60        clrc
@@ -1235,7 +1243,7 @@ Z: f8 ab     mov   x,$ab
 0cbf: dd        mov   a,y
 0cc0: d0 02     bne   $0cc4
 0cc2: e4 90     mov   a,$90             ; use full length if $0248+x == 0
-0cc4: c4 92     mov   $92,a
+0cc4: c4 92     mov   $92,a             ; save actual note length (duration rate applied)
 0cc6: 8d 00     mov   y,#$00
 0cc8: 3a 8c     incw  $8c
 0cca: f7 8c     mov   a,($8c)+y         ; read next byte
@@ -1243,7 +1251,7 @@ Z: f8 ab     mov   x,$ab
 0ccd: ad ff     cmp   y,#$ff
 0ccf: d0 13     bne   $0ce4
 ; when next byte == $ff (slur/tie): combine with next note event
-0cd1: 8f 00 93  mov   $93,#$00
+0cd1: 8f 00 93  mov   $93,#$00          ; key-off timer
 0cd4: 3f 36 08  call  $0836
 0cd7: 18 04 9d  or    $9d,#$04
 0cda: 8d 00     mov   y,#$00
@@ -1252,15 +1260,16 @@ Z: f8 ab     mov   x,$ab
 0ce0: fd        mov   y,a
 0ce1: 5f 0d 0d  jmp   $0d0d
 ;
-0ce4: fa 92 93  mov   ($93),($92)
+0ce4: fa 92 93  mov   ($93),($92)       ; update key-off timer
 0ce7: 3f 36 08  call  $0836
 0cea: 5f 0d 0d  jmp   $0d0d
 
 ; when no arguments
 0ced: fa 90 91  mov   ($91),($90)       ; reuse the same note length
 0cf0: 68 ff     cmp   a,#$ff
-0cf2: d0 13     bne   $0d07
-0cf4: 8f 00 93  mov   $93,#$00
+0cf2: d0 13     bne   $0d07             ; slur event?
+; when event is note
+0cf4: 8f 00 93  mov   $93,#$00          ; key-off timer
 0cf7: 3f 36 08  call  $0836
 0cfa: 18 04 9d  or    $9d,#$04
 0cfd: 8d 00     mov   y,#$00
@@ -1268,8 +1277,8 @@ Z: f8 ab     mov   x,$ab
 0d01: f7 8c     mov   a,($8c)+y         ; readahead next vcmd
 0d03: fd        mov   y,a
 0d04: 5f 0d 0d  jmp   $0d0d
-
-0d07: fa 92 93  mov   ($93),($92)
+; when event is slur
+0d07: fa 92 93  mov   ($93),($92)       ; update key-off timer
 0d0a: 3f 36 08  call  $0836
 ;
 0d0d: ad 8f     cmp   y,#$8f
@@ -1392,7 +1401,7 @@ Z: f8 ab     mov   x,$ab
 0de8: 73 b3 ee  bbc3  $b3,$0dd9
 0deb: 5f 15 0c  jmp   $0c15             ; dispatch next vcmd
 
-; vcmd 9c - echo on/off
+; vcmd 9c - echo on/off channels
 0dee: 73 ab 0c  bbc3  $ab,$0dfd
 0df1: 29 8f a3  and   ($a3),($8f)
 0df4: ad 00     cmp   y,#$00            ; arg1: echo on/off bitmask (EON)
@@ -1663,13 +1672,15 @@ Z: f8 ab     mov   x,$ab
 0ff4: c4 b0     mov   $b0,a
 0ff6: 5f 49 10  jmp   $1049
 
-0ff9: c4 b3     mov   $b3,a
+0ff9: c4 b3     mov   $b3,a             ; argument (channel bits)
 0ffb: cd 07     mov   x,#$07
+; $00-07
 0ffd: e6        mov   a,(x)
-0ffe: 28 bf     and   a,#$bf
+0ffe: 28 bf     and   a,#$bf            ; extract bit 6
 1000: 4b b3     lsr   $b3
 1002: 90 02     bcc   $1006
-1004: 08 40     or    a,#$40
+; 
+1004: 08 40     or    a,#$40            ; set bit 6
 1006: c6        mov   (x),a
 1007: 1d        dec   x
 1008: 10 f3     bpl   $0ffd
@@ -1877,14 +1888,14 @@ Z: f8 ab     mov   x,$ab
 117b: dw $0e63  ; 87 - end subroutine
 117d: dw $0b32  ; 88
 117f: dw $0941  ; 89 - instrument
-1181: dw $0860  ; 8a
+1181: dw $0860  ; 8a - set release GAIN
 1183: dw $0aa8  ; 8b - tempo
 1185: dw $098b  ; 8c - coarse tuning / transpose (absolute)
 1187: dw $0992  ; 8d - coarse tuning / transpose (relative)
 1189: dw $099f  ; 8e - tuning
 118b: dw $0d1d  ; 8f - pitch bend slide
-118d: dw $09a8  ; 90 - quantize (duration rate)
-118f: dw $019c  ; 91 - nop?
+118d: dw $09a8  ; 90 - note duration in rate
+118f: dw $019c  ; 91
 1191: dw $09ec  ; 92 - volume & pan
 1193: dw $09fc  ; 93 - volume
 1195: dw $0a03  ; 94 - volume (relative)
@@ -1895,17 +1906,17 @@ Z: f8 ab     mov   x,$ab
 119f: dw $0a63  ; 99 - volume fade
 11a1: dw $0d95  ; 9a - master volume
 11a3: dw $0da1  ; 9b - echo delay/feedback
-11a5: dw $0dee  ; 9c - echo on/off
+11a5: dw $0dee  ; 9c - echo on/off channels
 11a7: dw $0e1a  ; 9d - vibrato
 11a9: dw $0e40  ; 9e - vibrato off
 11ab: dw $08da  ; 9f - rest
-11ad: dw $087c  ; a0
-11af: dw $0867  ; a1
+11ad: dw $087c  ; a0 - noise on
+11af: dw $0867  ; a1 - noise off
 11b1: dw $0dd4  ; a2 - echo filter
-11b3: dw $09dc  ; a3
-11b5: dw $0917  ; a4
-11b7: dw $09bb  ; a5
-11b9: dw $09e6  ; a6
+11b3: dw $09dc  ; a3 - mute channels
+11b5: dw $0917  ; a4 - instrument, volume, pan, coarse tuning (transpose)
+11b7: dw $09bb  ; a5 - note duration in ticks
+11b9: dw $09e6  ; a6 - write to APUI02
 11bb: dw $0000  ; a7 - (undefined)
 11bd: dw $0000  ; a8 - (undefined)
 11bf: dw $0000  ; a9 - (undefined)
@@ -1915,7 +1926,7 @@ Z: f8 ab     mov   x,$ab
 ; cpucmd table
 11c5: dw $0f7c  ; e0 - play song
 11c7: dw $0fc2  ; e1
-11c9: dw $019c  ; e2 - nop?
+11c9: dw $019c  ; e2
 11cb: dw $0fee  ; e3
 11cd: dw $0f19  ; e4
 11cf: dw $0e82  ; e5
@@ -1924,9 +1935,9 @@ Z: f8 ab     mov   x,$ab
 11d5: dw $0f5a  ; e8
 11d7: dw $0f54  ; e9
 11d9: dw $0f60  ; ea
-11db: dw $019c  ; eb - nop?
-11dd: dw $019c  ; ec - nop?
-11df: dw $019c  ; ed - nop?
+11db: dw $019c  ; eb
+11dd: dw $019c  ; ec
+11df: dw $019c  ; ed
 11e1: dw $100b  ; ee
 11e3: dw $1011  ; ef
 11e5: dw $0e78  ; f0
