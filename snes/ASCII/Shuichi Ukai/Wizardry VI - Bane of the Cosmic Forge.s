@@ -978,7 +978,7 @@ Z: f8 ab     mov   x,$ab
 0adc: f8 ac     mov   x,$ac
 0ade: e8 fe     mov   a,#$fe
 0ae0: 26        and   a,(x)
-0ae1: c6        mov   (x),a
+0ae1: c6        mov   (x),a             ; ($fe)
 0ae2: 28 02     and   a,#$02
 0ae4: d0 0a     bne   $0af0
 0ae6: f5 30 02  mov   a,$0230+x         ; last note length
@@ -1011,7 +1011,7 @@ Z: f8 ab     mov   x,$ab
 0b27: f0 03     beq   $0b2c
 0b29: 3f 20 11  call  $1120
 0b2c: 29 8f a1  and   ($a1),($8f)
-0b2f: 5f 6c 0d  jmp   $0d6c
+0b2f: 5f 6c 0d  jmp   $0d6c             ; write voice pointer back to array
 
 ; vcmd 88
 0b32: 18 02 9f  or    $9f,#$02
@@ -1487,14 +1487,14 @@ Z: f8 ab     mov   x,$ab
 0e82: 3f 84 0a  call  $0a84
 0e85: 5f 49 10  jmp   $1049
 
-; cpucmd e6 - ???? select
-0e88: fd        mov   y,a               ; ???? number
-0e89: f6 00 2e  mov   a,$2e00+y         ; ???? address table (low-byte)
+; cpucmd e6 - play sfx
+0e88: fd        mov   y,a               ; sfx number
+0e89: f6 00 2e  mov   a,$2e00+y         ; sfx address table (low-byte)
 0e8c: c4 b8     mov   $b8,a
-0e8e: f6 80 2e  mov   a,$2e80+y         ; ???? address table (high-byte)
+0e8e: f6 80 2e  mov   a,$2e80+y         ; sfx address table (high-byte)
 0e91: c4 b9     mov   $b9,a
 0e93: cd 00     mov   x,#$00
-0e95: e7 b8     mov   a,($b8+x)         ; (???? header) offset 0: number of channels
+0e95: e7 b8     mov   a,($b8+x)         ; (sfx header) offset 0: number of channels
 0e97: c4 ba     mov   $ba,a
 0e99: 1c        asl   a
 0e9a: c4 bb     mov   $bb,a
@@ -1522,10 +1522,10 @@ Z: f8 ab     mov   x,$ab
 0ec4: 08 08     or    a,#$08
 0ec6: 5d        mov   x,a
 0ec7: eb ba     mov   y,$ba
-0ec9: f7 b8     mov   a,($b8)+y         ; (???? header) offset 1: voice pointer (low)
+0ec9: f7 b8     mov   a,($b8)+y         ; (sfx header) offset 1: voice pointer (low)
 0ecb: d5 00 02  mov   $0200+x,a
 0ece: eb bb     mov   y,$bb
-0ed0: f7 b8     mov   a,($b8)+y         ; (???? header) offset 1 + N: voice pointer (high)
+0ed0: f7 b8     mov   a,($b8)+y         ; (sfx header) offset 1 + N: voice pointer (high)
 0ed2: d4 0c     mov   $0c+x,a
 0ed4: 8b bb     dec   $bb
 0ed6: e8 03     mov   a,#$03
@@ -1614,10 +1614,12 @@ Z: f8 ab     mov   x,$ab
 0f7c: 8f 01 9f  mov   $9f,#$01
 0f7f: 68 00     cmp   a,#$00
 0f81: f0 0a     beq   $0f8d
+;
 0f83: 18 08 9f  or    $9f,#$08
 0f86: c4 af     mov   $af,a
 0f88: c4 ae     mov   $ae,a
 0f8a: 8f 1a ad  mov   $ad,#$1a
+;
 0f8d: 3f 44 08  call  $0844
 0f90: 3f 76 0d  call  $0d76             ; set echo volume to 0
 0f93: cd 07     mov   x,#$07            ; 8 channels
@@ -1645,16 +1647,16 @@ Z: f8 ab     mov   x,$ab
 0fbf: d0 fa     bne   $0fbb
 0fc1: 6f        ret
 
-; cpucmd e1
-0fc2: 68 00     cmp   a,#$00
+; cpucmd e1 - volume fade-out
+0fc2: 68 00     cmp   a,#$00            ; APUI01 - fade-out length
 0fc4: f0 0c     beq   $0fd2
-;
+; fade-out step by step
 0fc6: 18 0c 9f  or    $9f,#$0c
 0fc9: c4 af     mov   $af,a
 0fcb: c4 ae     mov   $ae,a
 0fcd: 8f 00 ad  mov   $ad,#$00
 0fd0: 2f 09     bra   $0fdb
-;
+; fade-out immediately
 0fd2: 3f de 0f  call  $0fde
 0fd5: 18 02 9f  or    $9f,#$02          ; set bit 1
 0fd8: 38 fe 9f  and   $9f,#$fe          ; clear bit 0
@@ -1734,18 +1736,18 @@ Z: f8 ab     mov   x,$ab
 ; cpucmd ff - receive data from SNES
 1054: 8f 7f f4  mov   $f4,#$7f          ; write $7f to APUI00
 1057: 78 7f f4  cmp   $f4,#$7f
-105a: d0 fb     bne   $1057             ; poll for APUI00 == $7f
+105a: d0 fb     bne   $1057             ; poll for APUI00 == 0x7f
 105c: fa f6 dd  mov   ($dd),($f6)
 105f: fa f7 de  mov   ($de),($f7)       ; read destination spc address from APUI02/APUI03
 1062: 8f 80 f4  mov   $f4,#$80          ; write $80 to APUI00
 1065: 78 80 f4  cmp   $f4,#$80
-1068: d0 fb     bne   $1065             ; poll for APUI00 == $80
+1068: d0 fb     bne   $1065             ; poll for APUI00 == 0x80
 106a: fa f6 df  mov   ($df),($f6)
 106d: fa f7 e0  mov   ($e0),($f7)       ; read data size from APUI02/APUI03
 1070: 8f 7f f4  mov   $f4,#$7f          ; write $7f to APUI00
 1073: cd 00     mov   x,#$00
 1075: e4 f4     mov   a,$f4
-1077: 30 fc     bmi   $1075             ; poll for APUI00 < $80
+1077: 30 fc     bmi   $1075             ; poll for APUI00 < 0x80
 1079: e4 f5     mov   a,$f5             ; read data byte #0 from APUI01
 107b: c7 dd     mov   ($dd+x),a         ; write byte #0
 107d: ba f6     movw  ya,$f6            ; read data byte #1/#2 from APUI02/APUI03
@@ -1763,7 +1765,7 @@ Z: f8 ab     mov   x,$ab
 1095: f0 30     beq   $10c7             ; break if received all data
 1097: 3a dd     incw  $dd
 1099: e4 f4     mov   a,$f4
-109b: 10 fc     bpl   $1099             ; poll for APUI00 > $80
+109b: 10 fc     bpl   $1099             ; poll for APUI00 > 0x80
 109d: e4 f5     mov   a,$f5             ; read data byte #0 from APUI01
 109f: c7 dd     mov   ($dd+x),a         ; write byte #0
 10a1: ba f6     movw  ya,$f6            ; read data byte #1/#2 from APUI02/APUI03
@@ -1834,17 +1836,17 @@ Z: f8 ab     mov   x,$ab
 
 1120: 40        setp
 1121: e8 ff     mov   a,#$ff
-1123: 8b 74     dec   $74
+1123: 8b 74     dec   $74               ; ($0174)
 1125: f0 25     beq   $114c
-1127: 3e 75     cmp   x,$75
+1127: 3e 75     cmp   x,$75             ; ($0175)
 1129: f0 0f     beq   $113a
-112b: 3e 76     cmp   x,$76
+112b: 3e 76     cmp   x,$76             ; ($0176)
 112d: f0 14     beq   $1143
-112f: fb 6c     mov   y,$6c+x
-1131: f4 70     mov   a,$70+x
+112f: fb 6c     mov   y,$6c+x           ; ($016c+x)
+1131: f4 70     mov   a,$70+x           ; ($0170+x)
 1133: 5d        mov   x,a
-1134: d9 70     mov   $70+y,x
-1136: db 6c     mov   $6c+x,y
+1134: d9 70     mov   $70+y,x           ; ($0170+x)
+1136: db 6c     mov   $6c+x,y           ; ($016c+x)
 1138: 20        clrp
 1139: 6f        ret
 
@@ -1930,12 +1932,12 @@ Z: f8 ab     mov   x,$ab
 
 ; cpucmd table
 11c5: dw $0f7c  ; e0 - play song
-11c7: dw $0fc2  ; e1
+11c7: dw $0fc2  ; e1 - volume fade-out
 11c9: dw $019c  ; e2
 11cb: dw $0fee  ; e3
 11cd: dw $0f19  ; e4
 11cf: dw $0e82  ; e5
-11d1: dw $0e88  ; e6 - ???? select
+11d1: dw $0e88  ; e6 - play sfx
 11d3: dw $0f43  ; e7
 11d5: dw $0f5a  ; e8
 11d7: dw $0f54  ; e9
