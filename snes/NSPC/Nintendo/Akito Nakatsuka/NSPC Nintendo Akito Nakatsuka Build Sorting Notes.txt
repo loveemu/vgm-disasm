@@ -1,4 +1,4 @@
-Total number of known unique builds: 9
+Total number of known unique builds: 17
 
 (Program starts at $0500 - Using D0 F3 BC 3F ?? ??)
 (Program starts at $0500 - 37 0B)
@@ -15,6 +15,15 @@ Total number of known unique builds: 9
 - SA-1 Demo
 (Program starts at $0400 - C5 0B)
 - Marvelous - Mouhitotsu no Takara-jima
+(Program starts at $0400 - FC 0B)
+- Game Tora no Chou Ooana 2 (4-7)
+(Program starts at $0500 - 2E 0C & 73 11 (using C5 ?? ?? C5 ?? ?? 3F ?? ?? to distinguish))
+- Excitebike - Bunbun Mario Battle - Stadium 3 (1998-01-11 - 1998-01-17)- Excitebike - Bunbun Mario Battle - Stadium 3 (xxxx-02-08)
+- Excitebike - Bunbun Mario Battle - Stadium 4
+(Program starts at $0500 - 2E 0C & 74 11 (using C5 ?? ?? C5 ?? ?? 3F ?? ?? to distinguish))
+- Excitebike - Bunbun Mario Battle - Stadium 1- Excitebike - Bunbun Mario Battle - Stadium 2
+(Program starts at $0500 - DB 0C)
+- BS Dragon Quest I
 
 (Program starts at $0370 - Using 8F ?? ?? 8F ?? ?? 3F ?? ??)
 (Program starts at $0370 - AB 04)
@@ -30,3 +39,34 @@ Total number of known unique builds: 9
 (Program starts at $0400 - 8D 0C)
 - Heisei Shin Onigashima - Kouhen
 - Heisei Shin Onigashima - Zenpen
+
+(Program starts at $0400 - using D0 F3 8F ?? ?? 3F ?? ??)
+(Program starts at $0400 - 04 0E)
+- Asterisk no Daibouken
+- Sound Journal for Lovers - Valentine Special - Vol. 1
+
+(Program starts at $0400 - using D0 F3 8F ?? ?? BC 3F ?? ??)
+(Program starts at $0400 - 90 0D)
+- B Dash - 2 Gatsugou
+- B Dash - 3 Gatsugou
+- BS Nintendo HP - 2-21 Gou
+- BS Nintendo HP - 5-17 Gou- BS Nintendo HP - 5-31 Gou
+- BS St. Giga PG - 10 Gatsugou
+- Cheap de Gorgeous Vol. 1
+- Columbus no Tamagoyaki - Dai-1-kai- Columbus no Tamagoyaki - Dai-2-kai- Columbus no Tamagoyaki - Dai-3-kai
+- Dandan Belt Conveyor - Gyuunyuu no Maki- Dandan Belt Conveyor - Ukulele no Maki
+- Digital Magazine Busters BS - 4-12 Gou- Digital Magazine Busters BS - 5-10 Gou- Digital Magazine Busters BS - 5-24 Gou
+- Digital Magazine Busters BS - 6-7 Gou
+- Digital Magazine Busters BS - 8-23 Gou
+- Freud no Chousenjou - Dai-1-gou- Freud no Chousenjou - Dai-2-gou- Freud no Chousenjou - Dai-3-gou- Freud no Chousenjou - Dai-4-gou- Freud no Chousenjou - Dai-5-gou- Freud no Chousenjou - Dai-6-gou- Gal Kan Bazooka - Dai-5-kan
+- Gekkan Coin Toss - Deck 1
+- GoodsPress - 3 Gatsugou
+- GoodsPress - 7 Gatsugou
+- MARIA - Part 1
+- Pokekame Magazine
+- Sousa Sentai Wappers - Mission 01- Sousa Sentai Wappers - Mission 02- Sousa Sentai Wappers - Soushuuhen
+- Yung Hakase no Shinsatsushitsu - Dai-1-gou- Yung Hakase no Shinsatsushitsu - Dai-2-gou
+(Program starts at $0400 - EB 0C & 78 13 (using D5 ?? ?? 5F ?? ?? at $12E7 to distinguish))
+- BS Zelda no Densetsu Map 2 - Dai-4-wa
+(Program starts at $0400 - EB 0C & 79 13 (using D5 ?? ?? 5F ?? ?? at $12E7 to distinguish))
+- BS Zelda no Densetsu - Dai-3-wa
