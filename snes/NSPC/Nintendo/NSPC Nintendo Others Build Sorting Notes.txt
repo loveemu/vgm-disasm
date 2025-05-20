@@ -1,4 +1,4 @@
-Total number of known unique builds: 10
+Total number of known unique builds: 12
 
 NOTE: These builds mostly don't have shared SFX code due to their hardcoded nature for the most part, and VCMD sets are not guaranteed to be an exact match, either. The only other special note is that Super Scope 6 (Blastris) has a shared VCMD set with Super Scope 6 (LazerBlazer), but the latter is under Akito Nakatsuka due to its shared SFX programming with later games.
 
@@ -21,6 +21,13 @@ NOTE: These builds mostly don't have shared SFX code due to their hardcoded natu
 - Super Scope 6 (one of two different builds used, used for Blastris: builds are identical between all versions)
 
 (*Ver S1.20*)
+(Program starts at $0400 - using D0 FB C4 ?? BC 3F ?? ??)
+(Program starts at $0400 - 76 0A)
+- BS Tantei Club - Yuki ni Kieta Kako - Zenpen
+(Program starts at $0400 - 76 0A (Code difference at $0756))
+- BS Tantei Club - Yuki ni Kieta Kako - Chuuhen
+- BS Tantei Club - Yuki ni Kieta Kako - Kouhen
+
 (Program starts at $0800 - Using C5 ?? ?? C5 ?? ?? BC 3F ?? ?? and 84 ?? C4 ?? 90 19 3F ?? ??)
 (Program starts at $0800 - 5C 0D & 8F 11)
 - Tetris & Dr. Mario (Mixed Match)
