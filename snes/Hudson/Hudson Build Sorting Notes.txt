@@ -2,22 +2,24 @@ Total number of known unique build variants: 17
 (Does not count Super Genjin 2 as a unique build despite a unique version marker: the only differences are purely with the allocation of its memory variables, and all differences start at $20DC: this affects the number of SFX tracks that the sound driver supports)
 (Does not count Daikaijuu Monogatari II as a unique build because the only thing that happened was the code being pushed back by $80 bytes)
 
-(Program starts at $0800 - using D0 F7 3F ?? ??)
-(Program starts at $0800 - 0D 0B)
+Older build cases have had their versioning info extracted via a sound driver command or two instead of ROM text: later ones have the same versioning command, but outputs directly based off of the text.
+
+(Version 0.18 - Program starts at $0800 - using D0 F7 3F ?? ??)
+(Version 0.18 - Program starts at $0800 - 0D 0B)
 - Elfaria
 - Super Momotarou Dentetsu II
 - Super Momotarou Dentetsu III
 
 (Program starts at $0800 - using 8F ?? ?? 3F ?? ??)
-(Program starts at $0800 - 37 0C)
+(Version 0.49 - Program starts at $0800 - 37 0C)
 - Shin Momotarou Densetsu
-(Program starts at $0800 - 43 0C)
+(Version 0.55 - Program starts at $0800 - 43 0C)
 - An American Tail: Fievel Goes West
-(Program starts at $0800 - 67 0C)
+(Version 0.58 - Program starts at $0800 - 67 0C)
 - Super Bomberman 2
-(Program starts at $0800 - 89 0C)
+(Version 1.01 - Program starts at $0800 - 89 0C)
 - Elfaria II: The Quest of the Meld
-(Program starts at $0800 - C2 0C)
+(Version 1.05 - Program starts at $0800 - C2 0C)
 - Hagane: The Final Conflict
 
 (Version 1.08a - Program starts at $0800 - contains an opening branch - 74 0D)
