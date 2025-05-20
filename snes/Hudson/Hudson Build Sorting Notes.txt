@@ -1,6 +1,12 @@
-Total number of known unique build variants: 16
-(Does not count Super Genjin 2 as a unique build despite a unique version marker: the only differences are purely with the allocation of its memory variables, and all differences start at $20DC)
+Total number of known unique build variants: 17
+(Does not count Super Genjin 2 as a unique build despite a unique version marker: the only differences are purely with the allocation of its memory variables, and all differences start at $20DC: this affects the number of SFX tracks that the sound driver supports)
 (Does not count Daikaijuu Monogatari II as a unique build because the only thing that happened was the code being pushed back by $80 bytes)
+
+(Program starts at $0800 - using D0 F7 3F ?? ??)
+(Program starts at $0800 - 0D 0B)
+- Elfaria
+- Super Momotarou Dentetsu II
+- Super Momotarou Dentetsu III
 
 (Program starts at $0800 - using 8F ?? ?? 3F ?? ??)
 (Program starts at $0800 - 37 0C)
