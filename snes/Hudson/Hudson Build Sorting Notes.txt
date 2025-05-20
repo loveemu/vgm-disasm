@@ -1,4 +1,4 @@
-Total number of known unique build variants: 17
+Total number of known unique build variants: 18
 (Does not count Super Genjin 2 as a unique build despite a unique version marker: the only differences are purely with the allocation of its memory variables, and all differences start at $20DC: this affects the number of SFX tracks that the sound driver supports)
 (Does not count Daikaijuu Monogatari II as a unique build because the only thing that happened was the code being pushed back by $80 bytes)
 
@@ -52,12 +52,15 @@ Older build cases have had their versioning info extracted via a sound driver co
 (Ver 2.27b - Program starts at $0800 - contains an opening jump - 9E 12)
 - Tengai Makyou Zero
 
-(Ver 2.28 - Program starts at $0800 - contains an opening jump - C4 12)
+(Ver 2.28 - Program starts at $0800 - contains an opening jump - C4 12 & 52 28 (using C4 ?? 3F ?? ?? next to the preceding call to distinguish))
 - Kishin Douji Zenki - Tenchi Meidou
 - Super Bomberman 4
 
 (Ver 2.30a - Program starts at $0800 - contains an opening jump - BE 12)
 - Same Game
+
+(Ver 2.30 - Program starts at $0800 - contains an opening jump - C4 12 & 50 28 (using C4 ?? 3F ?? ?? next to the preceding call to distinguish))
+- Same Game Koma Editor 4
 
 (Ver 2.32 - Program starts at $0800 - contains an opening jump - C7 12)
 - Bakukyuu Renpatsu!! Super B-Daman
