@@ -50,8 +50,9 @@ Total number of known unique builds: 32
 (Program starts at $0200 - FE 09)
 - Kick Off 3 (beta) (Title Screen)
 - Lawnmower Man/Virtual Wars (US Beta)
+- Porky Pig's Haunted Holiday (beta - 5/24/1994)
 (Program starts at $0200 - contains an opening jump - 0B 0A)
-- Porky Pig's Haunted Holiday (beta)
+- Porky Pig's Haunted Holiday (beta - 1/26/1995)
 
 (Program starts at $0200 - using E8 ?? C4 ?? 8D ?? 3F ?? ??)
 (Program starts at $0200 - 74 08)
