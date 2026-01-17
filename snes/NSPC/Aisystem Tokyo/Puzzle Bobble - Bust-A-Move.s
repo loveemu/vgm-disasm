@@ -2355,4 +2355,5 @@
 3300: db $32,$65,$7f,$98,$b2,$cb,$e5,$fc
 ; per-note velocity values
 3308: db $19,$32,$4c,$65,$72,$7f,$8c,$98
+
 3310: db $a5,$b2,$bf,$cb,$d8,$e5,$f2,$fc
