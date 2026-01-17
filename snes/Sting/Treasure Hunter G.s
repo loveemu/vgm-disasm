@@ -665,27 +665,27 @@
 
 0d5f: fd        mov   y,a
 0d60: 10 41     bpl   $0da3
-0d62: 68 c8     cmp   a,#$c8
+0d62: 68 c8     cmp   a,#$c8		; set note length
 0d64: f0 1f     beq   $0d85
-0d66: 68 c9     cmp   a,#$c9
+0d66: 68 c9     cmp   a,#$c9		; tie
 0d68: f0 10     beq   $0d7a
-0d6a: 68 ca     cmp   a,#$ca
+0d6a: 68 ca     cmp   a,#$ca		; rest
 0d6c: f0 07     beq   $0d75
-0d6e: 68 d0     cmp   a,#$d0
+0d6e: 68 d0     cmp   a,#$d0		; main vcmds
 0d70: 90 31     bcc   $0da3
 0d72: 5f 63 0e  jmp   $0e63
 
-; vcmd ea
+; vcmd ca - rest
 0d75: 42 d1     set2  $d1
 0d77: 5f 0b 0e  jmp   $0e0b
 
-; vcmd c9
+; vcmd c9 - tie
 0d7a: 3f 66 16  call  $1666
 0d7d: d5 51 01  mov   $0151+x,a
 0d80: 72 d1     clr3  $d1
 0d82: 5f 0b 0e  jmp   $0e0b
 
-; vcmd c8
+; vcmd c8 - set note length
 0d85: 3f 64 16  call  $1664             ; read byte from voice ptr
 0d88: fd        mov   y,a
 0d89: 3f 8f 0d  call  $0d8f
@@ -806,54 +806,54 @@
 0e74: 1f c2 00  jmp   ($00c2+x)
 
 ; vcmd dispatch table
-0e77: dw $0ed3  ; d0
-0e79: dw $0ffb  ; d1
-0e7b: dw $0f1d  ; d2
-0e7d: dw $0f3e  ; d3
-0e7f: dw $0f5d  ; d4
-0e81: dw $0f6c  ; d5
-0e83: dw $0f9f  ; d6
-0e85: dw $0f83  ; d7
-0e87: dw $1003  ; d8
-0e89: dw $0fc2  ; d9
-0e8b: dw $102b  ; da
-0e8d: dw $0fca  ; db
-0e8f: dw $0fd4  ; dc
-0e91: dw $104d  ; dd
+0e77: dw $0ed3  ; d0 - set instrument
+0e79: dw $0ffb  ; d1 - master volume
+0e7b: dw $0f1d  ; d2 - set ASDR(1)
+0e7d: dw $0f3e  ; d3 - set ASDR(2)
+0e7f: dw $0f5d  ; d4 - set GAIN
+0e81: dw $0f6c  ; d5 - set ASDR / GAIN
+0e83: dw $0f9f  ; d6 - set quantization
+0e85: dw $0f83  ; d7 - pitch envelope
+0e87: dw $1003  ; d8 - pitch envelope (attack)
+0e89: dw $0fc2  ; d9 - tempo
+0e8b: dw $102b  ; da - tempo fade
+0e8d: dw $0fca  ; db - volume
+0e8f: dw $0fd4  ; dc - volume fade
+0e91: dw $104d  ; dd - tremolo on
 0e93: dw $106a  ; de
 0e95: dw $10a8  ; df
-0e97: dw $105e  ; e0
-0e99: dw $10af  ; e1
-0e9b: dw $10b7  ; e2
-0e9d: dw $10c0  ; e3
-0e9f: dw $10c9  ; e4
-0ea1: dw $10da  ; e5
-0ea3: dw $10eb  ; e6
-0ea5: dw $10f9  ; e7
-0ea7: dw $10fe  ; e8
-0ea9: dw $1105  ; e9
-0eab: dw $110c  ; ea
-0ead: dw $1117  ; eb
-0eaf: dw $111f  ; ec
-0eb1: dw $115a  ; ed
-0eb3: dw $116d  ; ee
-0eb5: dw $1186  ; ef
+0e97: dw $105e  ; e0 - tremolo off
+0e99: dw $10af  ; e1 - global transpose
+0e9b: dw $10b7  ; e2 - per-voice transpose
+0e9d: dw $10c0  ; e3 - tuning
+0e9f: dw $10c9  ; e4 - vibrato on
+0ea1: dw $10da  ; e5 - vibrato off
+0ea3: dw $10eb  ; e6 - set pitch
+0ea5: dw $10f9  ; e7 - get slur value
+0ea7: dw $10fe  ; e8 - slur on
+0ea9: dw $1105  ; e9 - slur off
+0eab: dw $110c  ; ea - set echo (1)
+0ead: dw $1117  ; eb - set echo (2)
+0eaf: dw $111f  ; ec - set FIR
+0eb1: dw $115a  ; ed - echo volume
+0eb3: dw $116d  ; ee - echo on
+0eb5: dw $1186  ; ef - echo off
 0eb7: dw $119f  ; f0
 0eb9: dw $11d1  ; f1
-0ebb: dw $11f9  ; f2
-0ebd: dw $1202  ; f3
-0ebf: dw $120a  ; f4
+0ebb: dw $11f9  ; f2 - noise off
+0ebd: dw $1202  ; f3 - pitch modulation
+0ebf: dw $120a  ; f4 - reset pitch
 0ec1: dw $1212  ; f5 - goto
 0ec3: dw $121e  ; f6 - call subroutine
 0ec5: dw $123f  ; f7 - end subroutine
-0ec7: dw $1259  ; f8
-0ec9: dw $1271  ; f9
+0ec7: dw $1259  ; f8 - repeat start
+0ec9: dw $1271  ; f9 - repeat end
 
 0ecb: 80        setc
 0ecc: a8 10     sbc   a,#$10
 0ece: 8f 80 11  mov   $11,#$80
 0ed1: 2f 03     bra   $0ed6
-; vcmd d0
+; vcmd d0 - set instrument
 0ed3: 3f 64 16  call  $1664             ; read byte from voice ptr
 0ed6: c4 c5     mov   $c5,a
 0ed8: c8 10     cmp   x,#$10
@@ -892,7 +892,7 @@
 0f19: d5 b0 01  mov   $01b0+x,a
 0f1c: 6f        ret
 
-; vcmd d2
+; vcmd d2 - set ASDR(1)
 0f1d: 3f 64 16  call  $1664             ; read byte from voice ptr
 0f20: 08 80     or    a,#$80
 0f22: c4 c2     mov   $c2,a
@@ -909,7 +909,7 @@
 0f38: 3f 7a 16  call  $167a             ; set ADSR(1)
 0f3b: 5f f9 0c  jmp   $0cf9
 
-; vcmd d3
+; vcmd d3 - set ASDR(2)
 0f3e: 3f 64 16  call  $1664             ; read byte from voice ptr
 0f41: c4 c2     mov   $c2,a
 0f43: c8 10     cmp   x,#$10
@@ -925,7 +925,7 @@
 0f57: 3f 7a 16  call  $167a             ; set ADSR(2)
 0f5a: 5f f9 0c  jmp   $0cf9
 
-; vcmd d4
+; vcmd d4 - set GAIN
 0f5d: 3f 64 16  call  $1664             ; read byte from voice ptr
 0f60: 28 1f     and   a,#$1f
 0f62: 08 a0     or    a,#$a0
@@ -933,7 +933,7 @@
 0f67: e2 d1     set7  $d1
 0f69: 5f f9 0c  jmp   $0cf9
 
-; vcmd d5
+; vcmd d5 - set ASDR / GAIN
 0f6c: f8 12     mov   x,$12
 0f6e: f2 d1     clr7  $d1
 0f70: c8 10     cmp   x,#$10
@@ -945,7 +945,7 @@
 0f7d: 3f 93 16  call  $1693
 0f80: 5f f9 0c  jmp   $0cf9
 
-; vcmd d7
+; vcmd d7 - pitch envelope
 0f83: 3f 64 16  call  $1664             ; read byte from voice ptr
 0f86: c4 c2     mov   $c2,a
 0f88: 38 3f d2  and   $d2,#$3f
@@ -959,7 +959,7 @@
 0f9a: 22 d1     set1  $d1
 0f9c: 5f f9 0c  jmp   $0cf9
 
-; vcmd d6
+; vcmd d6 - set quantization
 0f9f: 3f 64 16  call  $1664             ; read byte from voice ptr
 0fa2: c4 c2     mov   $c2,a
 0fa4: 28 70     and   a,#$70
@@ -977,18 +977,18 @@
 0fbd: 22 d1     set1  $d1
 0fbf: 5f f9 0c  jmp   $0cf9
 
-; vcmd d9
+; vcmd d9 - tempo
 0fc2: 3f 64 16  call  $1664             ; read byte from voice ptr
 0fc5: c4 0d     mov   $0d,a
 0fc7: 5f f9 0c  jmp   $0cf9
 
-; vcmd db
+; vcmd db - volume
 0fca: 3f 64 16  call  $1664             ; read byte from voice ptr
 0fcd: d4 30     mov   $30+x,a
 0fcf: 22 d1     set1  $d1
 0fd1: 5f f9 0c  jmp   $0cf9
 
-; vcmd dc
+; vcmd dc - volume fade
 0fd4: 3f 58 16  call  $1658             ; read word from voice ptr
 0fd7: eb c2     mov   y,$c2
 0fd9: db 31     mov   $31+x,y
@@ -1008,12 +1008,12 @@
 0ff5: d5 29 02  mov   $0229+x,a
 0ff8: 5f f9 0c  jmp   $0cf9
 
-; vcmd d1
+; vcmd d1 - master volume
 0ffb: 3f 64 16  call  $1664             ; read byte from voice ptr
 0ffe: c4 10     mov   $10,a
 1000: 5f f9 0c  jmp   $0cf9
 
-; vcmd d8
+; vcmd d8 - pitch envelope (attack)
 1003: 3f 58 16  call  $1658             ; read word from voice ptr
 1006: eb c2     mov   y,$c2
 1008: db 48     mov   $48+x,y
@@ -1033,7 +1033,7 @@
 1025: d5 f8 01  mov   $01f8+x,a
 1028: 5f f9 0c  jmp   $0cf9
 
-; vcmd da
+; vcmd da - tempo fade
 102b: 3f 58 16  call  $1658             ; read word from voice ptr
 102e: eb c2     mov   y,$c2
 1030: cb 08     mov   $08,y
@@ -1052,14 +1052,14 @@
 1047: 8f 00 0b  mov   $0b,#$00
 104a: 5f f9 0c  jmp   $0cf9
 
-; vcmd dd
+; vcmd dd - tremolo on
 104d: 3f 64 16  call  $1664             ; read byte from voice ptr
 1050: d5 d0 02  mov   $02d0+x,a
 1053: 3f 64 16  call  $1664             ; read byte from voice ptr
 1056: d5 e9 02  mov   $02e9+x,a
 1059: 3f 64 16  call  $1664             ; read byte from voice ptr
 105c: 2f 07     bra   $1065
-; vcmd e0
+; vcmd e0 - tremolo off
 105e: f8 12     mov   x,$12
 1060: e8 00     mov   a,#$00
 1062: d5 00 03  mov   $0300+x,a
@@ -1100,29 +1100,29 @@
 10aa: d2 d1     clr6  $d1
 10ac: 5f f9 0c  jmp   $0cf9
 
-; vcmd e1
+; vcmd e1 - global transpose
 10af: 3f 64 16  call  $1664             ; read byte from voice ptr
 10b2: c4 0f     mov   $0f,a
 10b4: 5f f9 0c  jmp   $0cf9
 
-; vcmd e2
+; vcmd e2 - per-voice transpose
 10b7: 3f 64 16  call  $1664             ; read byte from voice ptr
 10ba: d5 80 01  mov   $0180+x,a
 10bd: 5f f9 0c  jmp   $0cf9
 
-; vcmd e3
+; vcmd e3 - tuning
 10c0: 3f 64 16  call  $1664             ; read byte from voice ptr
 10c3: d5 81 01  mov   $0181+x,a
 10c6: 5f f9 0c  jmp   $0cf9
 
-; vcmd e4
+; vcmd e4 - vibrato on
 10c9: 3f 64 16  call  $1664             ; read byte from voice ptr
 10cc: d5 89 02  mov   $0289+x,a
 10cf: 3f 66 16  call  $1666
 10d2: d5 a0 02  mov   $02a0+x,a
 10d5: 3f 66 16  call  $1666
 10d8: 2f 04     bra   $10de
-; vcmd e5
+; vcmd e5 - vibrato off
 10da: f8 12     mov   x,$12
 10dc: e8 00     mov   a,#$00
 10de: d4 60     mov   $60+x,a
@@ -1131,39 +1131,39 @@
 10e5: d5 a1 02  mov   $02a1+x,a
 10e8: 5f f9 0c  jmp   $0cf9
 
-; vcmd e6
+; vcmd e6 - set pitch
 10eb: 3f 58 16  call  $1658             ; read word from voice ptr
 10ee: d5 b0 01  mov   $01b0+x,a
 10f1: e4 c2     mov   a,$c2
 10f3: d5 b1 01  mov   $01b1+x,a
 10f6: 5f f9 0c  jmp   $0cf9
 
-; vcmd e7
+; vcmd e7 - get slur value
 10f9: f8 12     mov   x,$12
 10fb: 5f f9 0c  jmp   $0cf9
 
-; vcmd e8
+; vcmd e8 - slur on
 10fe: f8 12     mov   x,$12
 1100: 82 d1     set4  $d1
 1102: 5f f9 0c  jmp   $0cf9
 
-; vcmd e9
+; vcmd e9 - slur off
 1105: f8 12     mov   x,$12
 1107: 92 d1     clr4  $d1
 1109: 5f f9 0c  jmp   $0cf9
 
-; vcmd ea
+; vcmd ea - set echo (1)
 110c: 3f 64 16  call  $1664             ; read byte from voice ptr
 110f: c4 07     mov   $07,a
 1111: 3f f3 16  call  $16f3
 1114: 5f f9 0c  jmp   $0cf9
 
-; vcmd eb
+; vcmd eb - set echo (2)
 1117: 3f 64 16  call  $1664             ; read byte from voice ptr
 111a: c4 06     mov   $06,a
 111c: 5f f9 0c  jmp   $0cf9
 
-; vcmd ec
+; vcmd ec - set FIR
 111f: 3f 64 16  call  $1664             ; read byte from voice ptr
 1122: 8f 00 c2  mov   $c2,#$00
 1125: 8f 3a c3  mov   $c3,#$3a
@@ -1197,7 +1197,7 @@
 1155: f8 12     mov   x,$12
 1157: 5f f9 0c  jmp   $0cf9
 
-; vcmd ed
+; vcmd ed - echo volume
 115a: 3f 64 16  call  $1664             ; read byte from voice ptr
 115d: 43 d0 0a  bbs2  $d0,$116a
 1160: 28 7f     and   a,#$7f
@@ -1207,7 +1207,7 @@
 1168: b2 01     clr5  $01
 116a: 5f f9 0c  jmp   $0cf9
 
-; vcmd ee
+; vcmd ee - echo on
 116d: f8 12     mov   x,$12
 116f: e4 15     mov   a,$15
 1171: c8 10     cmp   x,#$10
@@ -1220,7 +1220,7 @@
 1180: 0e 02 00  tset1 $0002
 1183: 5f f9 0c  jmp   $0cf9
 
-; vcmd ef
+; vcmd ef - echo off
 1186: f8 12     mov   x,$12
 1188: e4 15     mov   a,$15
 118a: c8 10     cmp   x,#$10
@@ -1280,18 +1280,18 @@
 11f5: 3f 8f 0d  call  $0d8f
 11f8: 6f        ret
 
-; vcmd f2
+; vcmd f2 - noise off
 11f9: f8 12     mov   x,$12
 11fb: e8 00     mov   a,#$00
 11fd: c4 e3     mov   $e3,a
 11ff: 5f f9 0c  jmp   $0cf9
 
-; vcmd f3
+; vcmd f3 - pitch modulation
 1202: f8 12     mov   x,$12
 1204: 09 15 ea  or    ($ea),($15)
 1207: 5f f9 0c  jmp   $0cf9
 
-; vcmd f4
+; vcmd f4 - reset pitch
 120a: f8 12     mov   x,$12
 120c: 8f 00 ea  mov   $ea,#$00
 120f: 5f f9 0c  jmp   $0cf9
