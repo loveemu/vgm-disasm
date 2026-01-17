@@ -1508,4 +1508,5 @@
 0f91: dw $0e14
 
 ; version text string
+
 0f99: db "*Ver S1.20*"
