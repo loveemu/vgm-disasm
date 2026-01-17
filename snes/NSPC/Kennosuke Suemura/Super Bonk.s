@@ -1700,4 +1700,5 @@
 
 ; per-note velocity values
 3b08: db $0a,$19,$28,$3c,$50,$64,$7d,$96
+
 3b10: db $aa,$b9,$c8,$d4,$e1,$eb,$f5,$ff
