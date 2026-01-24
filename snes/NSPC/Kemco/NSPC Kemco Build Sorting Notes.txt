@@ -1,0 +1,21 @@
+Total number of known unique builds: 5
+
+(Program starts at $0800 - Using D0 FB BC 3F ?? ??)
+(Program starts at $0800 - 34 10)
+- Bombuzal (Japanese version of Ka-blooey)
+(Program starts at $0800 - 9F 10)
+- Lagoon
+(Program starts at $0800 - E7 11)
+- Drakkhen
+- Ka-blooey (US version of Bombuzal)
+
+(*Ver S1.20*)
+(*Ver S1.20* - Program starts at $0800 - Using D0 FB BC 3F ?? ??)
+(Program starts at $0800 - E7 11)
+- First Samurai
+- Phalanx - The Enforce Fighter A-144
+- Super Drakkhen/Dragon View
+- Super Full Metal
+- X-Zone
+(Program starts at $0800 - EA 11)
+- Kid Klown in Crazy Chase
