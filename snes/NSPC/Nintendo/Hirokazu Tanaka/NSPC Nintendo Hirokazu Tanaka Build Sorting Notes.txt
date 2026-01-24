@@ -1,4 +1,16 @@
-Total number of known unique builds: 4
+Total number of known unique builds: 7
+
+(Program starts at $0800 - Using D0 F8 BC 3F ?? ??)
+(Program starts at $0800 - 6D 0D)
+- SNES Burn-In Test Cartridge (one of three different builds used, used for the Super Scope Test)
+- World Class Service Super Nintendo Tester (one of the unused builds)
+(Program starts at $0800 - E3 0D)
+- Nintendo Campus Challenge 1992
+- Nintendo PowerFest '94
+
+(Program starts at $0800 - Using D0 F8 BC 3F ?? ??)
+(Program starts at $0800 - CB 0D)
+- Nintendo Power Menu Program
 
 (Program starts at $0800 - Using E8 ?? C4 ?? C4 ?? 3F ?? ??)
 (Program starts at $0800 - 25 26)

@@ -1,4 +1,4 @@
-Total number of known unique builds: 12
+Total number of known unique builds: 10
 
 NOTE: These builds mostly don't have shared SFX code due to their hardcoded nature for the most part, and VCMD sets are not guaranteed to be an exact match, either. The only other special note is that Super Scope 6 (Blastris) has a shared VCMD set with Super Scope 6 (LazerBlazer), but the latter is under Akito Nakatsuka due to its shared SFX programming with later games.
 
@@ -10,11 +10,6 @@ NOTE: These builds mostly don't have shared SFX code due to their hardcoded natu
 (Program starts at $0800 - 3A 11)
 - Aging Cassette
 - SNES Burn-In Test Cartridge (one of three different builds used, used for the Sound Module and Burn-In test)
-
-(Program starts at $0800 - Using D0 F8 BC 3F ?? ??)
-(Program starts at $0800 - 6D 0D)
-- SNES Burn-In Test Cartridge (one of three different builds used, used for the Super Scope Test)
-- World Class Service Super Nintendo Tester (one of the unused builds)
 
 (Program starts at $0800 - Using 90 F8 BC 3F ?? ??)
 (Program starts at $0800 - 89 0D)
@@ -35,10 +30,6 @@ NOTE: These builds mostly don't have shared SFX code due to their hardcoded natu
 - Tetris & Dr. Mario (Dr. Mario)
 (Program starts at $0800 - 5C 0D & A1 11)
 - Tetris & Dr. Mario (Tetris)
-
-(Program starts at $0800 - Using D0 F8 BC 3F ?? ??)
-(Program starts at $0800 - CB 0D)
-- Nintendo Power Menu Program
 
 (Program starts at $1500 - Using E8 ?? C5 ?? ?? 3F ?? ??)
 (Program starts at $1500 - D7 1E)
