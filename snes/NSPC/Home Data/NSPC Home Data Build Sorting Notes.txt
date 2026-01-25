@@ -1,0 +1,32 @@
+Total number of known unique builds: 6
+
+(Program starts at $0800 - Using D0 E8 3F ?? ??)
+(Program starts at $0800 - 4D 0A)
+- Mahjong Sengoku Monogatari
+(Program starts at $0800 - 52 0A)
+- Hakunetsu Pro Yakyuu: Ganba League/Extra Innings
+(Program starts at $0800 - using D0 FB BC 3F ?? ??)
+(Program starts at $0800 - C9 0D)
+- Hungry Dinosaurs
+- Multi Play Volleyball
+- Pachi-Slot Kenkyuu
+- Shougi Saikyou
+(Program starts at $0800 - CB 0D)
+- Harapeko Bakka
+(Program starts at $0800 - DF 0D)
+- Koushien 3
+
+(*Ver S1.20*)
+(*Ver S1.20* - Program starts at $0800 - using D0 E8 3F ?? ??)
+(Program starts at $0800 - 4D 0A)
+- Itou Hatasu Rokudan no Shougi Doujou
+- Kentou Ou World Champion/TKO Super Championship Boxing
+- Naki no Ryuu - Mahjong Hishouden
+- Nice de Shot
+- Super Igo - Go Ou
+- Super Keiba
+- Super Kyousouba - Kaze no Sylphid
+- Super Mahjong
+- Super Shougi
+- Super Shougi 2
+- Super Uno
