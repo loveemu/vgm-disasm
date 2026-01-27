@@ -12,6 +12,15 @@ Total number of known unique builds: 12
 (Program starts at $0800 - 09 10)
 - Super Mahjong Taikai
 
+(*Ver S1.20*)
+(*Ver S1.20* - Program starts at $0800 - Using D0 FB BC 3F ?? ??)
+(Program starts at $0800 - C6 0B)
+- Super Royal Blood
+(Program starts at $0800 - E5 0B)
+- Sangokushi III (Japanese version)
+(Program starts at $0800 - E5 0B (Opcode difference at $0528))
+- Gemfire
+
 (Program starts at $0400 - Using D0 FB E8 ?? 3F ?? ??)
 (Program starts at $0400 - BE 0B)
 - Teitoku no Ketsudan
@@ -31,12 +40,3 @@ Total number of known unique builds: 12
 - Genghis Khan II - Clan of the Gray Wolf
 (Program starts at $0400 - BF 04 & B7 10 (using a second 3F ?? ?? right next to it to distinguish))
 - Aerobiz Supersonic
-
-(*Ver S1.20*)
-(*Ver S1.20* - Program starts at $0800 - Using D0 FB BC 3F ?? ??)
-(Program starts at $0800 - C6 0B)
-- Super Royal Blood
-(Program starts at $0800 - E5 0B)
-- Sangokushi III (Japanese version)
-(Program starts at $0800 - E5 0B (Opcode difference at $0528))
-- Gemfire
