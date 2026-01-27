@@ -1,0 +1,43 @@
+Total number of known unique builds: 14
+
+(*Ver S1.20*)
+(*Ver S1.20* - Program starts at $0800 - Using D0 FB BC 3F ?? ??)
+(Program starts at $0800 - 59 0F)
+- Yuuyu no Quiz de Go! Go!
+(Program starts at $0800 - 61 0F)
+- Hansei Zaru Jiro-kun no Daibouken/Spanky's Quest
+(Program starts at $0800 - D6 0F)
+- Ushio to Tora
+(Program starts at $0800 - Using DA ?? BC 3F ?? ?? (and C5 ?? ?? 3F ?? ?? to distinguish))
+(Program starts at $0800 - 3A 0C)
+- Inazuma Serve da!! Super Beach Volley
+- Yakouchuu
+(Program starts at $0800 - 43 0C)
+- Jissen Kyoutei
+- Spark World
+- Super Kyoutei
+- Super Trump Collection
+(Program starts at $0800 - 8F 0C)
+- Mujintou Monogatari
+(Program starts at $0800 - 91 0C & 9C 12)
+- Gangan Gan-chan
+(Program starts at $0800 - 91 0C & AC 12)
+- Kouryuu no Mimi
+- Super Trump Collection 2
+- Zakuro no Aji
+(Program starts at $0800 - B7 0C)
+- SD Ultra Battle: Seven Legend
+- SD Ultra Battle: Ultraman Legend
+- Sugoroku Ginga Senki
+- VS. Collection
+(Program starts at $0800 - 76 0D)
+- Genjuu Ryodan
+(Program starts at $0800 - 9B 0D & 30 13)
+- Aryol
+- Zig Zag Cat: Ostrich Club mo Oosawagi da
+(Program starts at $0800 - 9B 0D & 48 13)
+- Honke Hanafuda
+(Program starts at $0800 - B6 0D & 80 13)
+- Super Tsume Shougi 1000
+(Program starts at $0800 - B6 0D & 88 13)
+- Denz Traffic Panic
