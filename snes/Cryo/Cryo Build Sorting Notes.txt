@@ -1,0 +1,11 @@
+Total number of known unique builds: 3
+
+(Program starts at $0200 - using C4 ?? 8F ?? ?? 3F ?? ??)
+(Program starts at $0200 - 84 05)
+- Super Dany
+
+(Program starts at $0200 - using C4 ?? C4 ?? 3F ?? ??)
+(Program starts at $0200 - 5F 05 & 48 08 (using 8F ?? ?? to distinguish))
+- Time Cop (Japanese version)
+(Program starts at $0200 - 5F 05 & 53 08 (using 8F ?? ?? to distinguish))
+- Time Cop (US and European version)

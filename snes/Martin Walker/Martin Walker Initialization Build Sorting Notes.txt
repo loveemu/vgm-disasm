@@ -1,0 +1,15 @@
+Total number of known unique builds: 1
+
+(Program starts at $0004 - using E8 ?? 8D ?? 3F ?? ??)
+(Program starts at $0004 - C2 00)
+- 3 Ninjas Kick Back
+- Chaos Engine/Soldiers of Fortunes
+- James Pond 3 - Operation Starfish
+- Pinball Dreams/Pinball Pinball
+- Pinkie
+- Putty Squad
+- Rise of the Robots
+- Spawn (Psygnosis)
+- Super Morph
+- Super Troll Islands
+- Time Trax
