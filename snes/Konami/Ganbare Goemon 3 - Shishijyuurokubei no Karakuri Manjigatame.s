@@ -1,5 +1,90 @@
 ; Ganbare Goemon 3
 
+0200: 20        clrp
+0201: cd ff     mov   x,#$ff
+0203: bd        mov   sp,x
+0204: 8f 30 f1  mov   $f1,#$30          ; clear ports
+0207: e8 00     mov   a,#$00
+0209: 5d        mov   x,a
+020a: af        mov   (x)+,a            ; clear direct page $00-$ef
+020b: c8 f0     cmp   x,#$f0
+020d: d0 fb     bne   $020a
+020f: 8d 00     mov   y,#$00
+0211: 8f 00 04  mov   $04,#$00
+0214: 8f 01 05  mov   $05,#$01
+0217: d7 04     mov   ($04)+y,a
+0219: fc        inc   y
+021a: ad e0     cmp   y,#$e0
+021c: d0 f9     bne   $0217
+021e: e8 00     mov   a,#$00
+0220: 8f 7d f2  mov   $f2,#$7d
+0223: c4 f3     mov   $f3,a             ; EDL - echo delay = 0
+0225: 8f 6d f2  mov   $f2,#$6d
+0228: c4 f3     mov   $f3,a             ; FLG - enable echo
+022a: a2 13     set5  $13
+022c: 8f 4b 19  mov   $19,#$4b
+022f: 8f 2c f2  mov   $f2,#$2c
+0232: c4 f3     mov   $f3,a             ; EVOL(L) - echo volume (L) = 0
+0234: 8f 3c f2  mov   $f2,#$3c
+0237: c4 f3     mov   $f3,a             ; EVOL(R) - echo volume (R) = 0
+0239: 8f 0d f2  mov   $f2,#$0d
+023c: c4 f3     mov   $f3,a             ; EFB - echo feedback = 0
+023e: 8d 71     mov   y,#$71
+0240: e8 00     mov   a,#$00
+0242: cb f2     mov   $f2,y
+0244: 8f 00 f3  mov   $f3,#$00          ; VOL(R) - voice volume (R) = 0
+0247: dc        dec   y
+0248: cb f2     mov   $f2,y
+024a: 8f 00 f3  mov   $f3,#$00          ; VOL(L) - voice volume (L) = 0
+024d: dd        mov   a,y
+024e: 80        setc
+024f: a8 0f     sbc   a,#$0f
+0251: fd        mov   y,a
+0252: 10 ec     bpl   $0240
+0254: 8f 5c f2  mov   $f2,#$5c
+0257: 8f ff f3  mov   $f3,#$ff          ; KOF - key off voices
+025a: e8 7f     mov   a,#$7f
+025c: 8f 0c f2  mov   $f2,#$0c
+025f: c4 f3     mov   $f3,a             ; MVOL(L) - master volume (L) = $7f
+0261: 8f 1c f2  mov   $f2,#$1c
+0264: c4 f3     mov   $f3,a             ; MVOL(R) - master volume (R) = $7f
+0266: 8f 5d f2  mov   $f2,#$5d
+0269: 8f 04 f3  mov   $f3,#$04          ; DIR - sample dir = $0400
+026c: 8f 20 fa  mov   $fa,#$20          ; set timer 0 frequency (4 ms)
+026f: 8f 01 f1  mov   $f1,#$01          ; start timer 0
+0272: 5f 28 10  jmp   $1028
+
+; pitch table
+0300: dw $0042,$0046,$004b,$004f,$0054,$0059,$005e,$0064
+0310: dw $006a,$0070,$0077,$007e,$0085,$008d,$0096,$009f
+0320: dw $00a8,$00b2,$00bd,$00c8,$00d4,$00e1,$00ee,$00fc
+0330: dw $010b,$011b,$012c,$013e,$0151,$0165,$017a,$0191
+0340: dw $01a9,$01c2,$01dd,$01f9,$0217,$0237,$0259,$027d
+0350: dw $02a3,$02cb,$02f5,$0322,$0352,$0385,$03ba,$03f3
+0360: dw $042f,$046f,$04b2,$04fa,$0546,$0596,$05eb,$0645
+0370: dw $06a5,$070a,$0775,$07e6,$085f,$08de,$0965,$09f4
+0380: dw $0a8c,$0b2c,$0bd6,$0c8b,$0d4a,$0e14,$0eea,$0fcd
+0390: dw $10be,$11bd,$12cb,$13e9,$1518,$1659,$17ad,$1916
+03a0: dw $1a94,$1c28,$1dd5,$1f9b,$217c,$237a,$2596,$27d2
+03b0: dw $2a30,$2cb2,$2f5a,$322c,$3528,$3850,$3bac,$3f36
+
+03c0: dw $000b,$000c,$000d,$000e,$000e,$000f,$0010,$0010
+03d0: dw $0012,$0013,$0014,$0015,$0016,$0018,$0019,$001b
+03e0: dw $001c,$001e,$0020,$0021,$0023,$0026,$0028,$002a
+03f0: dw $002d,$002f,$0032,$0035,$0038,$003c,$003f,$0042
+
+0ca2: dw $0cb8  ; e5
+0ca4: dw $0cc3  ; e6
+0ca6: dw $0cd0  ; e7
+0ca8: dw $0cdd  ; e8
+0caa: dw $0ceb  ; e9
+0cac: dw $0cee  ; ea
+0cae: dw $0d55  ; eb
+0cb0: dw $0d55  ; ec
+0cb2: dw $0d55  ; ed
+0cb4: dw $0cf1  ; ee
+0cb6: dw $0d1b  ; ef
+
 0cb8: e4 2c     mov   a,$2c
 0cba: d0 06     bne   $0cc2
 0cbc: 8f 04 2c  mov   $2c,#$04
@@ -427,12 +512,8 @@
 101c: fc        inc   y
 101d: 5f aa 0f  jmp   $0faa
 
-1020: 40        setp
-1021: c0        di
-1022: 70 f0     bvs   $1014
-1024: 1f 3f 7f  jmp   ($7f3f+x)
+1020: db $40,$c0,$70,$f0,$1f,$3f,$7f,$ff
 
-1027: ff        stop
 1028: e4 fd     mov   a,$fd
 102a: f0 fc     beq   $1028
 102c: 03 24 12  bbs0  $24,$1041
