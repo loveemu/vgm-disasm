@@ -1,0 +1,5 @@
+Total number of known unique builds: 1
+
+(Program starts at $03C0 - Using C5 ?? ?? E8 ?? 3F ?? ??)
+(Program starts at $03C0 - 7C 0A)
+- Ultraman (This is referring to the Japanese version, which is completely different from the US version)

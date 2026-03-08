@@ -1,0 +1,41 @@
+Total number of known unique builds: 9
+
+(Program starts at $0800 - using CD ?? BD 3F ?? ??)
+(Program starts at $0800 - E7 09)
+- King of Rally
+(Program starts at $0800 - F1 09)
+- Pachinko Monogatari
+(Program starts at $0800 - 03 0A & 2E 0C (using 28 ?? D0 06 3F ?? ?? to distinguish))
+- Chester Cheetah: Wild Wild Quest
+- Haisei Mahjong Ryouga
+- Jungle no Ouja Tar-chan
+- Marmalade Boy
+- Super Gomoku Narabe Renju
+- Super Pinball: Behind the Mask (European version)
+- Super Pinball II: Amazing Odyssey
+- Sutobasu Yarou Show: 3 on 3 Basketball
+- UFO Kamen Yakisoban
+(Program starts at $0800 - 03 0A & 36 0C (using 28 ?? D0 06 3F ?? ?? to distinguish))
+- Uchuu Race: Astro Go! Go!
+(Program starts at $0800 - 1F 0A)
+- Chester Cheetah: Wild Wild Quest (Beta)
+- Super Jinsei Game
+- Super Pinball: Behind the Mask (US and Japanese versions)
+(Program starts at $0800 - 22 0A)
+- Pachinko Monogatari 2: Nagoya Shachihoko no Teiou
+- Pachi-Slot Monogatari: Universal Special
+(Program starts at $0800 - 2A 0A)
+- Shin Nihon Pro Wrestling - Chou Senshi in Tokyo Dome - Fantastic Story
+(Program starts at $0800 - CD 0B)
+- Nage Libre
+- Stardust Suplex
+(Program starts at $0800 - D6 0B)
+- Best Shot Pro Golf
+- Dark Law: Meaning of Death
+- Kat's Run
+- Jumpin' Derby
+- Mini Yonku Shining Scorpion: Let's & Go!!
+- Pachi-slot Monogatari - PAL Kougyou Special
+- Shin Nihon Pro Wrestling Kounin - '95 Tokyo Dome Battle 7
+- Super Jinsei Game 2
+- Super Jinsei Game 3

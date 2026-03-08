@@ -1,0 +1,14 @@
+Total number of known unique builds: 4
+
+(Program starts at $0800 - Using D0 FB BC 3F ?? ??)
+(Program starts at $0800 - 8B 0D)
+- New 3D Golf Simulation - Harukanaru Augusta (earlier revision only: later revision is marked Ver S1.20)
+(Program starts at $0800 - 96 0D)
+- True Golf Classics - Waialae Country Club (US version only: does not refer to New 3D Golf Simulation - Waialae no Kiseki)
+
+(*Ver S1.20*)
+(*Ver S1.20* - Program starts at $0800 - Using D0 FB BC 3F ?? ??)
+(Program starts at $0800 - 96 0D)
+- New 3D Golf Simulation - Harukanaru Augusta (later revision only)
+(Program starts at $0800 - 96 0D (code difference at $11FF))
+- New 3D Golf Simulation - Waialae no Kiseki (Japanese version only: does not refer to True Golf Classics - Waialae Country Club) (NOTE: Contains a second sound driver that is not Kankichi used for playing the in-game golf music)

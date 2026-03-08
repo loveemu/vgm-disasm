@@ -1,0 +1,27 @@
+Total number of known unique builds: 11
+
+(Program starts at $0800 - Using D0 FB BC 3F ?? ??)
+(Program starts at $0800 - 15 09)
+- F-1 Grand Prix
+(Program starts at $0800 - 19 09)
+- Super Volley II
+(Program starts at $0400 - 18 09)
+- Super Soukoban
+
+(Program starts at $0380 - Using 90 06 3F ?? ?? from $0800 onwards)
+(Program starts at $0380 - 37 0B)
+- Appleseed
+(Program starts at $0380 - 3F 0B & 37 07 (using E8 ?? 3F ?? ?? to distinguish))
+- Dear Boys
+(Program starts at $0380 - 3F 0B & 53 07 (using E8 ?? 3F ?? ?? to distinguish))
+- Shinri Game 2: Magical Trip
+(Program starts at $0380 - 3F 0B & 53 07 (using E8 ?? 3F ?? ?? to distinguish) (opcode difference at $0773))
+- Super Drift Out
+(Program starts at $0380 - 41 0B & 5E 0F (using E2 ?? 3F ?? ?? at $0A8D to distinguish) & B2 07 (using E8 ?? 3F ?? ?? to distinguish))
+- Super Pachinko Taisen
+(Program starts at $0380 - 41 0B & AF 07 (using E8 ?? 3F ?? ?? to distinguish))
+- Logos Panic: Go.a.i.sa.tsu.
+(Program starts at $0380 - 41 0B & 72 0F (using E2 ?? 3F ?? ?? at $0A8D to distinguish))
+- Super Gussun Oyoyo
+(Program starts at $0380 - 54 0B)
+- Super Gussun Oyoyo 2

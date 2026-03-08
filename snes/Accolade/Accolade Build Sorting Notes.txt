@@ -1,0 +1,15 @@
+Total number of known unique builds: 5
+
+(Program starts at $0100 (with code as far back as $0030) - using FE F2 3F ?? ??)
+(Program starts at $0100 (with code as far back as $0030) - 3C 03)
+- WarpSpeed
+
+(Program starts at $0800 - using CD ?? BD 3F ?? ??)
+(Program starts at $0800 (with code as far back as $012C) - 1E 0E)
+- Hardball III
+(Program starts at $0800 (with code as far back as $0144) - 3C 10)
+- Barkley Shut Up and Jam!/Barkley's Power Dunk
+(Program starts at $0800 (with code as far back as $0144) - 5B 10)
+- Bubsy II
+(Program starts at $0800 (with code as far back as $0144) - 98 12)
+- Fireteam Rogue
