@@ -1,0 +1,45 @@
+Total number of known unique builds: 14
+
+(Program starts at $0500 - using D0 F7 BC 3F ?? ??)
+(Program starts at $0500 - E5 0E)
+- Super Ultra Baseball
+(Program starts at $0500 - F6 0E)
+- Super Baseball Simulator 1.000
+
+(*Ver S1.20*)
+(*Ver S1.20* - Program starts at $0500 - using D0 F7 BC 3F ?? ??)
+(Program starts at $0500 - A1 0E)
+- Super Ninja Boy
+(Program starts at $0500 - 4F 0F)
+- Hiryuu no Ken S - Golden Fighter/Ultimate Fighter
+- Hiryuu no Ken S - Hyper Version
+(Program starts at $0500 - 68 0F)
+- Super Chinese World 2 (Beta 1)
+(Program starts at $0500 - 6B 0F)
+- Super Chinese World/Super Ninja Boy (US Beta)
+(Program starts at $0500 - 7A 0F)
+- Computer Nouryoku Kaiseki: Ultra Baken
+- Super Chinese World 2
+- Super Chinese World 3
+- Super Chinese Fighter
+(Program starts at $0500 - 7F 0F)
+- Super Chinese World 2 (Beta 2)
+(Program starts at $0500 - A4 0F)
+- SD Hiryuu no Ken
+- Ossu!! Karate-bu
+(Program starts at $0500 - 20 10)
+- Ultra Baseball Jitsumei Ban
+- Super Ultra Baseball 2
+(Program starts at $0500 - 38 10)
+- Ultra Baseball Jitsumei Ban 3
+- Pro Yakyuu Star
+(Program starts at $0500 - 3A 10)
+- Ultra Baseball Jitsumei Ban 2
+(Program starts at $0400 - 7F 0E)
+- Nintama Rantarou
+(Program starts at $0400 - 8F 0E)
+- Nintama Rantarou 2
+- Nintama Rantarou 3
+- Nintama Rantarou: Ninjutsu Gaiden Puzzle Taikai no Dan
+- Nintama Rantarou Special
+- Pro Mahjong Tsuwamono

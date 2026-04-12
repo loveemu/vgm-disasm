@@ -1,0 +1,14 @@
+Total number of known unique builds: 5
+
+(Program starts at $0300 - using 8F ?? ?? 3F ?? ??)
+(Program starts at $0300 - 51 06)
+- Syndicate (Beta)
+(Program starts at $0300 - 97 06)
+- Syndicate
+(Program starts at $0300 - F1 07)
+- Theme Park (Prototype)
+(Program starts at $0300 - FD 07)
+- Marko's Magic Football
+- Theme Park
+(Program starts at $0300 - 89 08)
+- Smurfs 2 - Smurfs Travel The World

@@ -1,0 +1,12 @@
+Total number of known unique builds: 2
+
+NOTE: This variant has a bug where some of the first sixteen bytes get overwritten due to the starting location being placed too early.
+
+(Program starts at $0400 - Using D0 FB BC 3F ?? ??)
+(Program starts at $0400 - 23 0A)
+- Jerry Boy/Smart Ball
+
+(*Ver S1.20*)
+(*Ver S1.20* - Program starts at $0400 - Using D0 FB BC 3F ?? ??)
+(*Ver S1.20* - Program starts at $0400 - 33 0A)
+- Battle Grand Prix

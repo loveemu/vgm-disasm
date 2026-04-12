@@ -1,17 +1,25 @@
-Total number of known unique build variants: 16
-(Does not count Super Genjin 2 as a unique build despite a unique version marker: the only differences are purely with the allocation of its memory variables, and all differences start at $20DC)
+Total number of known unique build variants: 18
+(Does not count Super Genjin 2 as a unique build despite a unique version marker: the only differences are purely with the allocation of its memory variables, and all differences start at $20DC: this affects the number of SFX tracks that the sound driver supports)
 (Does not count Daikaijuu Monogatari II as a unique build because the only thing that happened was the code being pushed back by $80 bytes)
 
+Older build cases have had their versioning info extracted via a sound driver command or two instead of ROM text: later ones have the same versioning command, but outputs directly based off of the text.
+
+(Version 0.18 - Program starts at $0800 - using D0 F7 3F ?? ??)
+(Version 0.18 - Program starts at $0800 - 0D 0B)
+- Elfaria
+- Super Momotarou Dentetsu II
+- Super Momotarou Dentetsu III
+
 (Program starts at $0800 - using 8F ?? ?? 3F ?? ??)
-(Program starts at $0800 - 37 0C)
+(Version 0.49 - Program starts at $0800 - 37 0C)
 - Shin Momotarou Densetsu
-(Program starts at $0800 - 43 0C)
+(Version 0.55 - Program starts at $0800 - 43 0C)
 - An American Tail: Fievel Goes West
-(Program starts at $0800 - 67 0C)
+(Version 0.58 - Program starts at $0800 - 67 0C)
 - Super Bomberman 2
-(Program starts at $0800 - 89 0C)
+(Version 1.01 - Program starts at $0800 - 89 0C)
 - Elfaria II: The Quest of the Meld
-(Program starts at $0800 - C2 0C)
+(Version 1.05 - Program starts at $0800 - C2 0C)
 - Hagane: The Final Conflict
 
 (Version 1.08a - Program starts at $0800 - contains an opening branch - 74 0D)
@@ -44,12 +52,15 @@ Total number of known unique build variants: 16
 (Ver 2.27b - Program starts at $0800 - contains an opening jump - 9E 12)
 - Tengai Makyou Zero
 
-(Ver 2.28 - Program starts at $0800 - contains an opening jump - C4 12)
+(Ver 2.28 - Program starts at $0800 - contains an opening jump - C4 12 & 52 28 (using C4 ?? 3F ?? ?? next to the preceding call to distinguish))
 - Kishin Douji Zenki - Tenchi Meidou
 - Super Bomberman 4
 
 (Ver 2.30a - Program starts at $0800 - contains an opening jump - BE 12)
 - Same Game
+
+(Ver 2.30 - Program starts at $0800 - contains an opening jump - C4 12 & 50 28 (using C4 ?? 3F ?? ?? next to the preceding call to distinguish))
+- Same Game Koma Editor 4
 
 (Ver 2.32 - Program starts at $0800 - contains an opening jump - C7 12)
 - Bakukyuu Renpatsu!! Super B-Daman
