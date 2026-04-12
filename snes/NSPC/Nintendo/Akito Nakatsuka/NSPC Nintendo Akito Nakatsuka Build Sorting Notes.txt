@@ -27,10 +27,11 @@ Total number of known unique builds: 17
 (Program starts at $0500 - DB 0C)
 - BS Dragon Quest I
 
-(Program starts at $0370 - Using 8F ?? ?? 8F ?? ?? 3F ?? ??)
-(Program starts at $0370 - AB 04)
+(Program starts at $0470 - Using 8F ?? ?? 8F ?? ?? 3F ?? ??)
+(Program starts at $0470 - AB 04)
 - BS-X BIOS
 - Cassette Kensaki - NUS-you S Cassette
+- Hori GameCube Controller Test
 (Program starts at $06E0 - 39 07)
 - JRA PAT
 - JRA PAT - Wide Taiouban
