@@ -27,22 +27,23 @@ f032: dw $1000  ; a
 f033: dw $10f3  ; a#
 f035: dw $11f6  ; b
 
-f038: dw $f0bd
-f03a: dw $f0d1
-f03c: dw $f0d8
-f03e: dw $f110
-f040: dw $f111
-f042: dw $f13f
-f044: dw $f153
-f046: dw $f167
-f048: dw $f16b
-f04a: dw $f190
-f04c: dw $f19f
-f04e: dw $f1ae
-f050: dw $f1d9
-f052: dw $f1ec
-f054: dw $f1fb
-f056: dw $f21c
+; cpucmd dispatch table
+f038: dw $f0bd  ; 00
+f03a: dw $f0d1  ; 01
+f03c: dw $f0d8  ; 02
+f03e: dw $f110  ; 03 - nop
+f040: dw $f111  ; 04
+f042: dw $f13f  ; 05
+f044: dw $f153  ; 06
+f046: dw $f167  ; 07
+f048: dw $f16b  ; 08
+f04a: dw $f190  ; 09
+f04c: dw $f19f  ; 0a
+f04e: dw $f1ae  ; 0b - play SFX
+f050: dw $f1d9  ; 0c
+f052: dw $f1ec  ; 0d
+f054: dw $f1fb  ; 0e
+f056: dw $f21c  ; 0f
 
 f058: db $01,$02,$04,$08,$10,$20,$40,$80
 
@@ -81,7 +82,7 @@ f0a7: 2f cf     bra   $f078
 f0a9: 11        tcall 1
 f0aa: 3f af f0  call  $f0af
 f0ad: 2f c9     bra   $f078
-;
+; dispatch cpucmd
 f0af: e5 e2 ff  mov   a,$ffe2
 f0b2: 1c        asl   a
 f0b3: 5d        mov   x,a
@@ -91,6 +92,7 @@ f0b8: f5 38 f0  mov   a,$f038+x
 f0bb: 2d        push  a
 f0bc: 6f        ret
 
+; cpucmd 00
 f0bd: e5 e3 ff  mov   a,$ffe3
 f0c0: c5 c6 01  mov   $01c6,a
 f0c3: e5 e4 ff  mov   a,$ffe4
@@ -98,10 +100,12 @@ f0c6: c5 cb 01  mov   $01cb,a
 f0c9: e5 e5 ff  mov   a,$ffe5
 f0cc: c5 ce 01  mov   $01ce,a
 f0cf: 2f 00     bra   $f0d1
+; cpucmd 01
 f0d1: 3f d2 f9  call  $f9d2
 f0d4: 3f cd fa  call  $facd
 f0d7: 6f        ret
 
+; cpucmd 02
 f0d8: 3f d2 f9  call  $f9d2
 f0db: 3f 3d f2  call  $f23d
 f0de: ba dd     movw  ya,$dd
@@ -129,8 +133,10 @@ f10b: dd        mov   a,y
 f10c: d5 03 fb  mov   $fb03+x,a
 f10f: 6f        ret
 
+; cpucmd 03 - nop
 f110: 6f        ret
 
+; cpucmd 04
 f111: e5 c8 01  mov   a,$01c8
 f114: 05 cd 01  or    a,$01cd
 f117: f0 03     beq   $f11c
@@ -152,6 +158,7 @@ f13b: 8d 6c     mov   y,#$6c
 f13d: 61        tcall 6                 ; write dsp FLG
 f13e: 6f        ret
 
+; cpucmd 05
 f13f: 3f d2 f9  call  $f9d2
 f142: e8 00     mov   a,#$00
 f144: c5 c7 01  mov   $01c7,a
@@ -161,19 +168,23 @@ f14d: c5 cd 01  mov   $01cd,a
 f150: 12 e6     clr0  $e6
 f152: 6f        ret
 
+; cpucmd 06
 f153: 3f 54 f2  call  $f254
 f156: ba db     movw  ya,$db
 f158: da ec     movw  $ec,ya
 f15a: 31        tcall 3
+;
 f15b: 3f 5c f9  call  $f95c
 f15e: e9 cd 01  mov   x,$01cd
 f161: 3f b3 f9  call  $f9b3
 f164: 22 e6     set1  $e6
 f166: 6f        ret
 
+; cpucmd 07
 f167: 3f 54 f2  call  $f254
 f16a: 6f        ret
 
+; cpucmd 08
 f16b: e5 e3 ff  mov   a,$ffe3
 f16e: c5 d7 01  mov   $01d7,a
 f171: e5 e4 ff  mov   a,$ffe4
@@ -188,6 +199,7 @@ f189: 3f 91 f2  call  $f291
 f18c: 3f 75 f2  call  $f275
 f18f: 6f        ret
 
+; cpucmd 09
 f190: ba dd     movw  ya,$dd
 f192: c5 c0 01  mov   $01c0,a
 f195: cc c1 01  mov   $01c1,y
@@ -195,6 +207,7 @@ f198: e5 c3 01  mov   a,$01c3
 f19b: c5 c2 01  mov   $01c2,a
 f19e: 6f        ret
 
+; cpucmd 0a
 f19f: e5 c0 01  mov   a,$01c0
 f1a2: ec c1 01  mov   y,$01c1
 f1a5: da dd     movw  $dd,ya
@@ -202,14 +215,16 @@ f1a7: e5 c2 01  mov   a,$01c2
 f1aa: c5 c3 01  mov   $01c3,a
 f1ad: 6f        ret
 
-f1ae: e5 e4 ff  mov   a,$ffe4
+; cpucmd 0b - play SFX
+f1ae: e5 e4 ff  mov   a,$ffe4           ; command bytes[2] - SFX index
 f1b1: 1c        asl   a
 f1b2: 5d        mov   x,a
 f1b3: f5 81 01  mov   a,$0181+x
 f1b6: fd        mov   y,a
 f1b7: f5 80 01  mov   a,$0180+x
-f1ba: e9 e3 ff  mov   x,$ffe3
+f1ba: e9 e3 ff  mov   x,$ffe3           ; command bytes[1]
 f1bd: d0 11     bne   $f1d0
+; when 0
 f1bf: da d9     movw  $d9,ya            ; $d9/a = $d700 (when y=0)
 f1c1: e5 c8 01  mov   a,$01c8
 f1c4: 05 cd 01  or    a,$01cd
@@ -217,12 +232,13 @@ f1c7: f0 03     beq   $f1cc
 f1c9: 3f d2 f9  call  $f9d2
 f1cc: 3f 21 f1  call  $f121
 f1cf: 6f        ret
-
-f1d0: da db     movw  $db,ya
+; when non-0
+f1d0: da db     movw  $db,ya            ; SFX pointer
 f1d2: 3f 54 f2  call  $f254
 f1d5: 3f 5b f1  call  $f15b
 f1d8: 6f        ret
 
+; cpucmd 0c
 f1d9: e8 f0     mov   a,#$f0
 f1db: 80        setc
 f1dc: a5 cb 01  sbc   a,$01cb
@@ -233,6 +249,7 @@ f1e6: e8 00     mov   a,#$00
 f1e8: c5 c4 01  mov   $01c4,a
 f1eb: 6f        ret
 
+; cpucmd 0d
 f1ec: e8 f0     mov   a,#$f0
 f1ee: 80        setc
 f1ef: a5 cb 01  sbc   a,$01cb
@@ -241,6 +258,7 @@ f1f5: e8 00     mov   a,#$00
 f1f7: c5 c9 01  mov   $01c9,a
 f1fa: 6f        ret
 
+; cpucmd 0e
 f1fb: 3f 3d f2  call  $f23d
 f1fe: e5 e6 ff  mov   a,$ffe6
 f201: 1c        asl   a
@@ -257,6 +275,7 @@ f217: cc c5 01  mov   $01c5,y
 f21a: 31        tcall 3
 f21b: 6f        ret
 
+; cpucmd 0f
 f21c: 3f 3d f2  call  $f23d
 f21f: e5 e6 ff  mov   a,$ffe6
 f222: 1c        asl   a
@@ -1750,11 +1769,11 @@ ff70: f5 a4 fe  mov   a,$fea4+x
 ff73: 2d        push  a
 ff74: 6f        ret
 
-; tcall 1
+; tcall 1 - receive cpucmd
 ff75: 8d 00     mov   y,#$00
-ff77: e9 e0 ff  mov   x,$ffe0
+ff77: e9 e0 ff  mov   x,$ffe0           ; data size / 2 (repeat count)
 ff7a: e4 f6     mov   a,$f6
-ff7c: d6 e2 ff  mov   $ffe2+y,a
+ff7c: d6 e2 ff  mov   $ffe2+y,a         ; write received command bytes
 ff7f: e4 f7     mov   a,$f7
 ff81: d6 e3 ff  mov   $ffe3+y,a
 ff84: d8 f5     mov   $f5,x
