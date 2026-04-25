@@ -217,7 +217,7 @@ f1aa: c5 c3 01  mov   $01c3,a           ; restore sample count
 f1ad: 6f        ret
 
 ; cpucmd 0b - play BGM/SFX
-f1ae: e5 e4 ff  mov   a,$ffe4           ; [2] slot index
+f1ae: e5 e4 ff  mov   a,$ffe4           ; [2] target sound (BGM/SFX slot index)
 f1b1: 1c        asl   a
 f1b2: 5d        mov   x,a
 f1b3: f5 81 01  mov   a,$0181+x
@@ -261,7 +261,7 @@ f1fa: 6f        ret
 
 ; cpucmd 0e - transfer BGM and play
 f1fb: 3f 3d f2  call  $f23d             ; calc total transfer size
-f1fe: e5 e6 ff  mov   a,$ffe6           ; [4] slot index
+f1fe: e5 e6 ff  mov   a,$ffe6           ; [4] BGM/SFX slot index
 f201: 1c        asl   a
 f202: 5d        mov   x,a
 f203: e5 c5 01  mov   a,$01c5
@@ -278,7 +278,7 @@ f21b: 6f        ret
 
 ; cpucmd 0f - transfer SFX
 f21c: 3f 3d f2  call  $f23d             ; calc total transfer size
-f21f: e5 e6 ff  mov   a,$ffe6           ; [4] slot index
+f21f: e5 e6 ff  mov   a,$ffe6           ; [4] BGM/SFX slot index
 f222: 1c        asl   a
 f223: 5d        mov   x,a
 f224: e5 ca 01  mov   a,$01ca
@@ -1651,26 +1651,26 @@ fe80: 2f 2a     bra   $feac
 ; tcall 5 etc - halt
 fe82: 2f fe     bra   $fe82
 
-; tcall address table
-fe84: dw $ff5c  ; 0
-fe86: dw $ff75  ; 1
-fe88: dw $ff98  ; 2
-fe8a: dw $ff43  ; 3
-fe8c: dw $ff67  ; 4
-fe8e: dw $fe82  ; 5
-fe90: dw $ff39  ; 6
-fe92: dw $ff3e  ; 7
-fe94: dw $fe82  ; 8
-fe96: dw $fe82  ; 9
-fe98: dw $fe82  ; 10
-fe9a: dw $fe82  ; 11
-fe9c: dw $fe82  ; 12
-fe9e: dw $fe82  ; 13
-fea0: dw $fe82  ; 14
-fea2: dw $fe82  ; 15
+; tcall address table (transfered to $ffc0 in reverse order)
+fe84: dw $ff5c  ; tcall 0 - read port 0/1
+fe86: dw $ff75  ; tcall 1 - read cpucmd bytes
+fe88: dw $ff98  ; tcall 2 - transfer data from SNES
+fe8a: dw $ff43  ; tcall 3 - dispatch transfer cpucmd
+fe8c: dw $ff67  ; tcall 4 - dispatch bootstrap cpucmd
+fe8e: dw $fe82  ; tcall 5 - halt
+fe90: dw $ff39  ; tcall 6 - write dsp reg Y <- A
+fe92: dw $ff3e  ; tcall 7 - read dsp reg Y -> A
+fe94: dw $fe82  ; tcall 8 - halt
+fe96: dw $fe82  ; tcall 9 - halt
+fe98: dw $fe82  ; tcall 10 - halt
+fe9a: dw $fe82  ; tcall 11 - halt
+fe9c: dw $fe82  ; tcall 12 - halt
+fe9e: dw $fe82  ; tcall 13 - halt
+fea0: dw $fe82  ; tcall 14 - read voice byte
+fea2: dw $fe82  ; tcall 15 - halt
 
 ; bootstrap cpucmd dispatch table
-fea4: dw $ff10  ; 00 - restart IPL?
+fea4: dw $ff10  ; 00 - restart IPL
 fea6: dw $ff16  ; 01 - start sound driver
 fea8: dw $ff2c  ; 02 - transfer data from SNES
 feaa: dw $ff38  ; 03 - nop
@@ -1726,7 +1726,7 @@ ff0a: d4 ec     mov   $ec+x,a
 ff0c: db ed     mov   $ed+x,y
 ff0e: 2f d2     bra   $fee2
 
-; bootstrap cpucmd 00 - restart IPL?
+; bootstrap cpucmd 00 - restart IPL
 ff10: 8f 80 f1  mov   $f1,#$80
 ff13: 5f c0 ff  jmp   $ffc0
 
@@ -1836,21 +1836,3 @@ ffb5: e4 f4     mov   a,$f4
 ffb7: d0 fc     bne   $ffb5
 ffb9: c4 f5     mov   $f5,a
 ffbb: 6f        ret
-
-; tcall table (copied from $fe84)
-ffc0: dw $fe82  ; tcall 15 - halt
-ffc2: dw $fa5f  ; tcall 14 - read voice byte
-ffc4: dw $fe82  ; tcall 13 - halt
-ffc6: dw $fe82  ; tcall 12 - halt
-ffc8: dw $fe82  ; tcall 11 - halt
-ffca: dw $fe82  ; tcall 10 - halt
-ffcc: dw $fe82  ; tcall 9 - halt
-ffce: dw $fe82  ; tcall 8 - halt
-ffd0: dw $ff3e  ; tcall 7 - read dsp reg Y -> A
-ffd2: dw $ff39  ; tcall 6 - write dsp reg Y <- A
-ffd4: dw $fe82  ; tcall 5 - halt
-ffd6: dw $ff67  ; tcall 4
-ffd8: dw $ff43  ; tcall 3 - dispatch transfer cpucmd
-ffda: dw $ff98  ; tcall 2 - transfer data from SNES
-ffdc: dw $ff75  ; tcall 1 - read cpucmd bytes
-ffde: dw $ff5c  ; tcall 0 - read port 0/1
