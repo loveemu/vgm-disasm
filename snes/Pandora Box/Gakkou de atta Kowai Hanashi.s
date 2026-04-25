@@ -28,22 +28,22 @@ f033: dw $10f3  ; a#
 f035: dw $11f6  ; b
 
 ; cpucmd dispatch table
-f038: dw $f0bd  ; 00
-f03a: dw $f0d1  ; 01
+f038: dw $f0bd  ; 00 - reset (init)
+f03a: dw $f0d1  ; 01 - soft reset
 f03c: dw $f0d8  ; 02
 f03e: dw $f110  ; 03 - nop
-f040: dw $f111  ; 04
+f040: dw $f111  ; 04 - transfer BGM (overwrite current)
 f042: dw $f13f  ; 05
 f044: dw $f153  ; 06
 f046: dw $f167  ; 07
 f048: dw $f16b  ; 08
 f04a: dw $f190  ; 09
 f04c: dw $f19f  ; 0a
-f04e: dw $f1ae  ; 0b - play SFX
-f050: dw $f1d9  ; 0c
-f052: dw $f1ec  ; 0d
-f054: dw $f1fb  ; 0e
-f056: dw $f21c  ; 0f
+f04e: dw $f1ae  ; 0b - play BGM/SFX
+f050: dw $f1d9  ; 0c - reset BGM destination
+f052: dw $f1ec  ; 0d - reset SFX destination
+f054: dw $f1fb  ; 0e - transfer BGM
+f056: dw $f21c  ; 0f - transfer SFX
 
 f058: db $01,$02,$04,$08,$10,$20,$40,$80
 
@@ -92,22 +92,22 @@ f0b8: f5 38 f0  mov   a,$f038+x
 f0bb: 2d        push  a
 f0bc: 6f        ret
 
-; cpucmd 00
+; cpucmd 00 - reset (init)
 f0bd: e5 e3 ff  mov   a,$ffe3
-f0c0: c5 c6 01  mov   $01c6,a
+f0c0: c5 c6 01  mov   $01c6,a           ; [1] BGM area size (N*$100)
 f0c3: e5 e4 ff  mov   a,$ffe4
-f0c6: c5 cb 01  mov   $01cb,a
+f0c6: c5 cb 01  mov   $01cb,a           ; [2] SFX area size (N*$100)
 f0c9: e5 e5 ff  mov   a,$ffe5
-f0cc: c5 ce 01  mov   $01ce,a
+f0cc: c5 ce 01  mov   $01ce,a           ; [3]
 f0cf: 2f 00     bra   $f0d1
-; cpucmd 01
-f0d1: 3f d2 f9  call  $f9d2
-f0d4: 3f cd fa  call  $facd
+; cpucmd 01 - soft reset
+f0d1: 3f d2 f9  call  $f9d2             ; reset S-DSP (mute all)
+f0d4: 3f cd fa  call  $facd             ; initialize RAM
 f0d7: 6f        ret
 
 ; cpucmd 02
-f0d8: 3f d2 f9  call  $f9d2
-f0db: 3f 3d f2  call  $f23d
+f0d8: 3f d2 f9  call  $f9d2             ; reset S-DSP (mute all)
+f0db: 3f 3d f2  call  $f23d             ; calc total transfer size
 f0de: ba dd     movw  ya,$dd
 f0e0: 9a d0     subw  ya,$d0
 f0e2: da dd     movw  $dd,ya
@@ -136,30 +136,31 @@ f10f: 6f        ret
 ; cpucmd 03 - nop
 f110: 6f        ret
 
-; cpucmd 04
+; cpucmd 04 - transfer BGM (overwrite current)
 f111: e5 c8 01  mov   a,$01c8
 f114: 05 cd 01  or    a,$01cd
 f117: f0 03     beq   $f11c
-f119: 3f d2 f9  call  $f9d2
-f11c: ba d9     movw  ya,$d9
-f11e: da ec     movw  $ec,ya
-f120: 31        tcall 3
-f121: 3f d5 f8  call  $f8d5
-f124: 3f d8 f9  call  $f9d8
-f127: 3f 34 fa  call  $fa34
+f119: 3f d2 f9  call  $f9d2             ; reset S-DSP (mute all)
+f11c: ba d9     movw  ya,$d9            ; BGM address
+f11e: da ec     movw  $ec,ya            ; set destination SPC address
+f120: 31        tcall 3                 ; receive BGM
+; load and start BGM
+f121: 3f d5 f8  call  $f8d5             ; load song header
+f124: 3f d8 f9  call  $f9d8             ; reset S-DSP registers
+f127: 3f 34 fa  call  $fa34             ; clear echo RAM
 f12a: cd ff     mov   x,#$ff
-f12c: 3f b3 f9  call  $f9b3
+f12c: 3f b3 f9  call  $f9b3             ; key off/on
 f12f: e8 00     mov   a,#$00
 f131: c5 cc 01  mov   $01cc,a
 f134: c5 cd 01  mov   $01cd,a
 f137: 02 e6     set0  $e6
-f139: e8 00     mov   a,#$00
-f13b: 8d 6c     mov   y,#$6c
-f13d: 61        tcall 6                 ; write dsp FLG
+f139: e8 00     mov   a,#$00            ; unmute
+f13b: 8d 6c     mov   y,#$6c            ; FLG
+f13d: 61        tcall 6                 ; write dsp
 f13e: 6f        ret
 
 ; cpucmd 05
-f13f: 3f d2 f9  call  $f9d2
+f13f: 3f d2 f9  call  $f9d2             ; reset S-DSP (mute all)
 f142: e8 00     mov   a,#$00
 f144: c5 c7 01  mov   $01c7,a
 f147: c5 c8 01  mov   $01c8,a
@@ -215,30 +216,30 @@ f1a7: e5 c2 01  mov   a,$01c2
 f1aa: c5 c3 01  mov   $01c3,a
 f1ad: 6f        ret
 
-; cpucmd 0b - play SFX
-f1ae: e5 e4 ff  mov   a,$ffe4           ; command bytes[2] - SFX index
+; cpucmd 0b - play BGM/SFX
+f1ae: e5 e4 ff  mov   a,$ffe4           ; [2] slot index
 f1b1: 1c        asl   a
 f1b2: 5d        mov   x,a
 f1b3: f5 81 01  mov   a,$0181+x
 f1b6: fd        mov   y,a
 f1b7: f5 80 01  mov   a,$0180+x
-f1ba: e9 e3 ff  mov   x,$ffe3           ; command bytes[1]
+f1ba: e9 e3 ff  mov   x,$ffe3           ; [1] BGM/SFX type (0:BGM, 1:SFX)
 f1bd: d0 11     bne   $f1d0
-; when 0
-f1bf: da d9     movw  $d9,ya            ; $d9/a = $d700 (when y=0)
+; BGM
+f1bf: da d9     movw  $d9,ya            ; BGM address
 f1c1: e5 c8 01  mov   a,$01c8
 f1c4: 05 cd 01  or    a,$01cd
 f1c7: f0 03     beq   $f1cc
-f1c9: 3f d2 f9  call  $f9d2
-f1cc: 3f 21 f1  call  $f121
+f1c9: 3f d2 f9  call  $f9d2             ; reset S-DSP (mute all)
+f1cc: 3f 21 f1  call  $f121             ; load and start BGM
 f1cf: 6f        ret
-; when non-0
-f1d0: da db     movw  $db,ya            ; SFX pointer
+; SFX
+f1d0: da db     movw  $db,ya            ; SFX address
 f1d2: 3f 54 f2  call  $f254
 f1d5: 3f 5b f1  call  $f15b
 f1d8: 6f        ret
 
-; cpucmd 0c
+; cpucmd 0c - reset BGM destination
 f1d9: e8 f0     mov   a,#$f0
 f1db: 80        setc
 f1dc: a5 cb 01  sbc   a,$01cb
@@ -246,62 +247,63 @@ f1df: 80        setc
 f1e0: a5 c6 01  sbc   a,$01c6
 f1e3: c5 c5 01  mov   $01c5,a
 f1e6: e8 00     mov   a,#$00
-f1e8: c5 c4 01  mov   $01c4,a
+f1e8: c5 c4 01  mov   $01c4,a           ; reset transfer destination to BGM area top
 f1eb: 6f        ret
 
-; cpucmd 0d
+; cpucmd 0d - reset SFX destination
 f1ec: e8 f0     mov   a,#$f0
 f1ee: 80        setc
 f1ef: a5 cb 01  sbc   a,$01cb
 f1f2: c5 ca 01  mov   $01ca,a
 f1f5: e8 00     mov   a,#$00
-f1f7: c5 c9 01  mov   $01c9,a
+f1f7: c5 c9 01  mov   $01c9,a           ; reset transfer destination to SFX area top
 f1fa: 6f        ret
 
-; cpucmd 0e
-f1fb: 3f 3d f2  call  $f23d
-f1fe: e5 e6 ff  mov   a,$ffe6
+; cpucmd 0e - transfer BGM
+f1fb: 3f 3d f2  call  $f23d             ; calc total transfer size
+f1fe: e5 e6 ff  mov   a,$ffe6           ; [4] slot index
 f201: 1c        asl   a
 f202: 5d        mov   x,a
 f203: e5 c5 01  mov   a,$01c5
 f206: d5 81 01  mov   $0181+x,a
 f209: fd        mov   y,a
 f20a: e5 c4 01  mov   a,$01c4
-f20d: d5 80 01  mov   $0180+x,a
-f210: da ec     movw  $ec,ya
+f20d: d5 80 01  mov   $0180+x,a         ; save data address to BGM/SFX slot
+f210: da ec     movw  $ec,ya            ; set transfer destination address
 f212: 7a d0     addw  ya,$d0
-f214: c5 c4 01  mov   $01c4,a
+f214: c5 c4 01  mov   $01c4,a           ; update BGM destination for next entry
 f217: cc c5 01  mov   $01c5,y
-f21a: 31        tcall 3
+f21a: 31        tcall 3                 ; receive BGM
 f21b: 6f        ret
 
-; cpucmd 0f
-f21c: 3f 3d f2  call  $f23d
-f21f: e5 e6 ff  mov   a,$ffe6
+; cpucmd 0f - transfer SFX
+f21c: 3f 3d f2  call  $f23d             ; calc total transfer size
+f21f: e5 e6 ff  mov   a,$ffe6           ; [4] slot index
 f222: 1c        asl   a
 f223: 5d        mov   x,a
 f224: e5 ca 01  mov   a,$01ca
 f227: d5 81 01  mov   $0181+x,a
 f22a: fd        mov   y,a
 f22b: e5 c9 01  mov   a,$01c9
-f22e: d5 80 01  mov   $0180+x,a
-f231: da ec     movw  $ec,ya
+f22e: d5 80 01  mov   $0180+x,a         ; save data address to BGM/SFX slot
+f231: da ec     movw  $ec,ya            ; set transfer destination address
 f233: 7a d0     addw  ya,$d0
-f235: c5 c9 01  mov   $01c9,a
+f235: c5 c9 01  mov   $01c9,a           ; update SFX destination for next entry
 f238: cc ca 01  mov   $01ca,y
-f23b: 31        tcall 3
+f23b: 31        tcall 3                 ; receive SFX
 f23c: 6f        ret
 
-f23d: e5 e3 ff  mov   a,$ffe3
-f240: ec e4 ff  mov   y,$ffe4
+; calculate total transfer size
+f23d: e5 e3 ff  mov   a,$ffe3           ; [1] chunk size (in words)
+f240: ec e4 ff  mov   y,$ffe4           ; [2] chunk count
 f243: cf        mul   ya
 f244: da d0     movw  $d0,ya
-f246: e5 e5 ff  mov   a,$ffe5
+f246: e5 e5 ff  mov   a,$ffe5           ; [3] extra chunk size (in words)
 f249: 8d 00     mov   y,#$00
 f24b: 7a d0     addw  ya,$d0
 f24d: da d0     movw  $d0,ya
 f24f: 0b d0     asl   $d0
-f251: 2b d1     rol   $d1
+f251: 2b d1     rol   $d1               ; total transfer size in bytes
 f253: 6f        ret
 
 f254: e5 cd 01  mov   a,$01cd
@@ -1342,30 +1344,34 @@ f8d0: f5 70 f0  mov   a,$f070+x
 f8d3: 5d        mov   x,a
 f8d4: 6f        ret
 
+; load song header
 f8d5: 8d 20     mov   y,#$20
-f8d7: f7 d9     mov   a,($d9)+y         ; +$20
+f8d7: f7 d9     mov   a,($d9)+y         ; +$20 - master volume or ...
 f8d9: 68 ff     cmp   a,#$ff
 f8db: d0 05     bne   $f8e2
-f8dd: 3f aa fa  call  $faaa
+; when $ff - use default song params
+f8dd: 3f aa fa  call  $faaa             ; use default song params
 f8e0: 2f 23     bra   $f905
-f8e2: c5 db 01  mov   $01db,a
+; else - load song params
+f8e2: c5 db 01  mov   $01db,a           ; +$20 - master volume (MVOL L/R)
 f8e5: fc        inc   y
-f8e6: f7 d9     mov   a,($d9)+y         ; +$21
+f8e6: f7 d9     mov   a,($d9)+y         ; +$21 - echo volume (EVOL L/R)
 f8e8: c5 dc 01  mov   $01dc,a
 f8eb: fc        inc   y
-f8ec: f7 d9     mov   a,($d9)+y         ; +$22
+f8ec: f7 d9     mov   a,($d9)+y         ; +$22 - echo delay (EDL)
 f8ee: c5 dd 01  mov   $01dd,a
 f8f1: fc        inc   y
-f8f2: f7 d9     mov   a,($d9)+y         ; +$23
+f8f2: f7 d9     mov   a,($d9)+y         ; +$23 - echo feedback (EFB)
 f8f4: c5 de 01  mov   $01de,a
 f8f7: fc        inc   y
 f8f8: cd 00     mov   x,#$00
-f8fa: f7 d9     mov   a,($d9)+y         ; +$24-2b
+f8fa: f7 d9     mov   a,($d9)+y         ; +$24-2b - echo filter (FIR)
 f8fc: d5 df 01  mov   $01df+x,a
 f8ff: fc        inc   y
 f900: 3d        inc   x
 f901: c8 08     cmp   x,#$08
 f903: d0 f5     bne   $f8fa
+;
 f905: 8d 06     mov   y,#$06
 f907: f7 d9     mov   a,($d9)+y         ; +$06 - initial tempo
 f909: 3f dc f4  call  $f4dc             ; set timer frequency
@@ -1377,7 +1383,7 @@ f917: 8f 08 e3  mov   $e3,#$08          ; number of tracks
 f91a: 8d 10     mov   y,#$10
 ; for each tracks
 f91c: fc        inc   y
-f91d: f7 d9     mov   a,($d9)+y
+f91d: f7 d9     mov   a,($d9)+y         ; +$10-1f - track start offset
 f91f: dc        dec   y
 f920: 37 d9     and   a,($d9)+y
 f922: 68 ff     cmp   a,#$ff
@@ -1477,17 +1483,19 @@ f9ce: 8d 4d     mov   y,#$4d
 f9d0: 61        tcall 6                 ; write dsp KON
 f9d1: 6f        ret
 
+; reset S-DSP (mute all)
 f9d2: e8 e0     mov   a,#$e0
 f9d4: 8d 6c     mov   y,#$6c
 f9d6: 61        tcall 6                 ; write dsp FLG
 f9d7: 6f        ret
 
+; reset S-DSP registers
 f9d8: e8 fb     mov   a,#$fb
 f9da: 8d 5d     mov   y,#$5d
-f9dc: 61        tcall 6                 ; write dsp DIR
+f9dc: 61        tcall 6                 ; write dsp DIR (sample dir = $fb00)
 f9dd: e8 02     mov   a,#$02
 f9df: 8d 6d     mov   y,#$6d
-f9e1: 61        tcall 6                 ; write dsp ESA
+f9e1: 61        tcall 6                 ; write dsp ESA (echo RAM = $0200)
 f9e2: e5 dd 01  mov   a,$01dd
 f9e5: 8d 7d     mov   y,#$7d
 f9e7: 61        tcall 6                 ; write dsp EDL
@@ -1511,7 +1519,7 @@ fa05: 4d        push  x
 fa06: 8d 7f     mov   y,#$7f
 fa08: cd 07     mov   x,#$07
 fa0a: f5 df 01  mov   a,$01df+x
-fa0d: 61        tcall 6                 ; write dsp GAIN
+fa0d: 61        tcall 6                 ; write dsp FIR
 fa0e: dd        mov   a,y
 fa0f: 80        setc
 fa10: a8 10     sbc   a,#$10
@@ -1539,12 +1547,13 @@ fa30: 88 0e     adc   a,#$0e
 fa32: fd        mov   y,a
 fa33: 6f        ret
 
+; clear echo RAM
 fa34: e8 00     mov   a,#$00
 fa36: c5 00 02  mov   $0200,a
 fa39: c5 01 02  mov   $0201,a
 fa3c: c5 02 02  mov   $0202,a
 fa3f: c5 03 02  mov   $0203,a
-fa42: e5 dd 01  mov   a,$01dd
+fa42: e5 dd 01  mov   a,$01dd           ; echo delay
 fa45: f0 17     beq   $fa5e
 fa47: 1c        asl   a
 fa48: 1c        asl   a
@@ -1594,6 +1603,7 @@ faa3: c5 d5 01  mov   $01d5,a
 faa6: 8f 00 e6  mov   $e6,#$00
 faa9: 6f        ret
 
+; use default song params
 faaa: e8 60     mov   a,#$60
 faac: c5 db 01  mov   $01db,a
 faaf: e8 30     mov   a,#$30
@@ -1610,25 +1620,27 @@ fac7: e8 7f     mov   a,#$7f
 fac9: c5 df 01  mov   $01df,a
 facc: 6f        ret
 
+; initialize RAM
 facd: 8d 40     mov   y,#$40
 facf: e8 ff     mov   a,#$ff
-fad1: d6 3f 01  mov   $013f+y,a
-fad4: fe fb     dbnz  y,$fad1
+fad1: d6 3f 01  mov   $013f+y,a         ; set $ff to
+fad4: fe fb     dbnz  y,$fad1           ;  $0140-$017f
 fad6: e8 f0     mov   a,#$f0
 fad8: 80        setc
 fad9: a5 cb 01  sbc   a,$01cb
 fadc: c4 dc     mov   $dc,a
-fade: 8f 00 db  mov   $db,#$00
+fade: 8f 00 db  mov   $db,#$00          ; set SFX area top ($e300)
 fae1: 80        setc
 fae2: a5 c6 01  sbc   a,$01c6
 fae5: c4 da     mov   $da,a
-fae7: 8f 00 d9  mov   $d9,#$00
+fae7: 8f 00 d9  mov   $d9,#$00          ; set BGM area top ($d700)
 faea: fd        mov   y,a
 faeb: e8 00     mov   a,#$00
 faed: da dd     movw  $dd,ya
 faef: c5 c3 01  mov   $01c3,a
 faf2: 6f        ret
 
+; bootstrap entry point
 fe80: 2f 2a     bra   $feac
 
 ; tcall 5 etc - halt
@@ -1652,11 +1664,13 @@ fe9e: dw $fe82  ; 13
 fea0: dw $fe82  ; 14
 fea2: dw $fe82  ; 15
 
-fea4: dw $ff10
-fea6: dw $ff16
-fea8: dw $ff2c
-feaa: dw $ff38
+; bootstrap cpucmd dispatch table
+fea4: dw $ff10  ; 00 - restart IPL?
+fea6: dw $ff16  ; 01 - start sound driver
+fea8: dw $ff2c  ; 02 - transfer data from SNES
+feaa: dw $ff38  ; 03 - nop
 
+; bootstrap start
 feac: 20        clrp
 fead: 8f 00 f5  mov   $f5,#$00
 feb0: 8f 6c f2  mov   $f2,#$6c
@@ -1671,7 +1685,7 @@ fec7: 8d 00     mov   y,#$00
 fec9: 1d        dec   x
 feca: 1d        dec   x
 fecb: f6 84 fe  mov   a,$fe84+y
-fece: d5 c0 ff  mov   $ffc0+x,a
+fece: d5 c0 ff  mov   $ffc0+x,a         ; setup tcall table
 fed1: f6 85 fe  mov   a,$fe85+y
 fed4: d5 c1 ff  mov   $ffc1+x,a
 fed7: fc        inc   y
@@ -1681,12 +1695,13 @@ fedb: d0 ec     bne   $fec9
 fedd: 8d 6c     mov   y,#$6c
 fedf: e8 c0     mov   a,#$c0
 fee1: 61        tcall 6                 ; write dsp FLG
-fee2: 01        tcall 0
+;
+fee2: 01        tcall 0                 ; read port 0/1
 fee3: f0 fd     beq   $fee2
 fee5: e5 e1 ff  mov   a,$ffe1
-fee8: d0 06     bne   $fef0
-feea: 11        tcall 1
-feeb: 3f 67 ff  call  $ff67
+fee8: d0 06     bne   $fef0             ; until both port0/1 != 0
+feea: 11        tcall 1                 ; read cpucmd bytes
+feeb: 3f 67 ff  call  $ff67             ; dispatch cpucmd
 feee: 2f f2     bra   $fee2
 fef0: 1c        asl   a
 fef1: 5d        mov   x,a
@@ -1695,7 +1710,7 @@ fef4: fb ed     mov   y,$ed+x
 fef6: da ec     movw  $ec,ya
 fef8: 8d 00     mov   y,#$00
 fefa: e9 e0 ff  mov   x,$ffe0
-fefd: 3f 98 ff  call  $ff98
+fefd: 3f 98 ff  call  $ff98             ; transfer data from SNES
 ff00: dd        mov   a,y
 ff01: 8d 00     mov   y,#$00
 ff03: 7a ec     addw  ya,$ec
@@ -1705,26 +1720,31 @@ ff09: 5d        mov   x,a
 ff0a: d4 ec     mov   $ec+x,a
 ff0c: db ed     mov   $ed+x,y
 ff0e: 2f d2     bra   $fee2
+
+; bootstrap cpucmd 00 - restart IPL?
 ff10: 8f 80 f1  mov   $f1,#$80
 ff13: 5f c0 ff  jmp   $ffc0
 
-ff16: e9 e4 ff  mov   x,$ffe4
+; bootstrap cpucmd 01 - start sound driver
+ff16: e9 e4 ff  mov   x,$ffe4           ; [2] stack address
 ff19: bd        mov   sp,x
 ff1a: e5 e9 ff  mov   a,$ffe9
 ff1d: 2d        push  a
-ff1e: e5 e8 ff  mov   a,$ffe8
+ff1e: e5 e8 ff  mov   a,$ffe8           ; [6, 7] entry address
 ff21: 2d        push  a
-ff22: e9 e7 ff  mov   x,$ffe7
-ff25: ec e6 ff  mov   y,$ffe6
-ff28: e5 e5 ff  mov   a,$ffe5
+ff22: e9 e7 ff  mov   x,$ffe7           ; [5] initial value of X
+ff25: ec e6 ff  mov   y,$ffe6           ; [4] initial value of Y
+ff28: e5 e5 ff  mov   a,$ffe5           ; [3] initial value of A
 ff2b: 6f        ret
 
+; bootstrap cpucmd 02 - transfer data from SNES
 ff2c: e5 e6 ff  mov   a,$ffe6
-ff2f: ec e7 ff  mov   y,$ffe7
+ff2f: ec e7 ff  mov   y,$ffe7           ; [4, 5] destination SPC address
 ff32: da ec     movw  $ec,ya
-ff34: 3f 43 ff  call  $ff43
+ff34: 3f 43 ff  call  $ff43             ; receive data
 ff37: 6f        ret
 
+; bootstrap cpucmd 03 - nop
 ff38: 6f        ret
 
 ; write A to DSP reg Y
@@ -1737,19 +1757,19 @@ ff3e: cb f2     mov   $f2,y
 ff40: e4 f3     mov   a,$f3
 ff42: 6f        ret
 
-; tcall 3
+; tcall 3 - dispatch transfer cpucmd
 ff43: 8d 00     mov   y,#$00
-ff45: e5 e4 ff  mov   a,$ffe4
+ff45: e5 e4 ff  mov   a,$ffe4           ; [2] chunk count
 ff48: f0 0a     beq   $ff54
 ff4a: 2d        push  a
-ff4b: e9 e3 ff  mov   x,$ffe3
-ff4e: 4f 98     pcall $98
+ff4b: e9 e3 ff  mov   x,$ffe3           ; [1] chunk size (in words)
+ff4e: 4f 98     pcall $98               ; receive data
 ff50: ae        pop   a
 ff51: 9c        dec   a
 ff52: d0 f6     bne   $ff4a
-ff54: e9 e5 ff  mov   x,$ffe5
+ff54: e9 e5 ff  mov   x,$ffe5           ; [3] extra chunk size (in words)
 ff57: f0 02     beq   $ff5b
-ff59: 4f 98     pcall $98
+ff59: 4f 98     pcall $98               ; receive data
 ff5b: 6f        ret
 
 ; tcall 0 - read port 0/1
@@ -1759,7 +1779,7 @@ ff61: e4 f4     mov   a,$f4
 ff63: c5 e0 ff  mov   $ffe0,a
 ff66: 6f        ret
 
-; tcall 4
+; tcall 4 - dispatch bootstrap cpucmd
 ff67: e5 e2 ff  mov   a,$ffe2
 ff6a: 1c        asl   a
 ff6b: 5d        mov   x,a
@@ -1769,7 +1789,7 @@ ff70: f5 a4 fe  mov   a,$fea4+x
 ff73: 2d        push  a
 ff74: 6f        ret
 
-; tcall 1 - receive cpucmd
+; tcall 1 - read cpucmd bytes
 ff75: 8d 00     mov   y,#$00
 ff77: e9 e0 ff  mov   x,$ffe0           ; data size / 2 (repeat count)
 ff7a: e4 f6     mov   a,$f6
@@ -1789,21 +1809,22 @@ ff93: d0 fc     bne   $ff91
 ff95: c4 f5     mov   $f5,a
 ff97: 6f        ret
 
-; tcall 2
+; tcall 2 - transfer data from SNES
+; (pcall $98)
 ff98: 3e f4     cmp   x,$f4
 ff9a: d0 fc     bne   $ff98
-ff9c: e4 f6     mov   a,$f6
-ff9e: d7 ec     mov   ($ec)+y,a
+ff9c: e4 f6     mov   a,$f6             ; port 2/3 - data bytes
+ff9e: d7 ec     mov   ($ec)+y,a         ; write received data
 ffa0: fc        inc   y
 ffa1: e4 f7     mov   a,$f7
 ffa3: d7 ec     mov   ($ec)+y,a
-ffa5: d8 f5     mov   $f5,x
+ffa5: d8 f5     mov   $f5,x             ; port1 - sync counter (SPC-side)
 ffa7: fc        inc   y
 ffa8: d0 02     bne   $ffac
 ffaa: ab ed     inc   $ed
 ffac: 1d        dec   x
 ffad: f0 06     beq   $ffb5
-ffaf: 3e f4     cmp   x,$f4
+ffaf: 3e f4     cmp   x,$f4             ; port0 - sync counter (SNES-side)
 ffb1: d0 fc     bne   $ffaf
 ffb3: 2f e7     bra   $ff9c
 ffb5: e4 f4     mov   a,$f4
@@ -1811,7 +1832,7 @@ ffb7: d0 fc     bne   $ffb5
 ffb9: c4 f5     mov   $f5,a
 ffbb: 6f        ret
 
-; tcall table
+; tcall table (copied from $fe84)
 ffc0: dw $fe82  ; tcall 15 - halt
 ffc2: dw $fa5f  ; tcall 14 - read voice byte
 ffc4: dw $fe82  ; tcall 13 - halt
@@ -1824,7 +1845,7 @@ ffd0: dw $ff3e  ; tcall 7 - read dsp reg Y -> A
 ffd2: dw $ff39  ; tcall 6 - write dsp reg Y <- A
 ffd4: dw $fe82  ; tcall 5 - halt
 ffd6: dw $ff67  ; tcall 4
-ffd8: dw $ff43  ; tcall 3
-ffda: dw $ff98  ; tcall 2
-ffdc: dw $ff75  ; tcall 1
+ffd8: dw $ff43  ; tcall 3 - dispatch transfer cpucmd
+ffda: dw $ff98  ; tcall 2 - transfer data from SNES
+ffdc: dw $ff75  ; tcall 1 - read cpucmd bytes
 ffde: dw $ff5c  ; tcall 0 - read port 0/1
