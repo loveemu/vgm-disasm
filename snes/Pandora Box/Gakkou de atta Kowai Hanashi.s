@@ -30,19 +30,19 @@ f035: dw $11f6  ; b
 ; cpucmd dispatch table
 f038: dw $f0bd  ; 00 - reset (init)
 f03a: dw $f0d1  ; 01 - soft reset
-f03c: dw $f0d8  ; 02
+f03c: dw $f0d8  ; 02 - transfer sample
 f03e: dw $f110  ; 03 - nop
-f040: dw $f111  ; 04 - transfer BGM (overwrite current)
-f042: dw $f13f  ; 05
-f044: dw $f153  ; 06
-f046: dw $f167  ; 07
-f048: dw $f16b  ; 08
-f04a: dw $f190  ; 09
-f04c: dw $f19f  ; 0a
+f040: dw $f111  ; 04 - transfer BGM (replace current) and play
+f042: dw $f13f  ; 05 - stop BGM/SFX
+f044: dw $f153  ; 06 - transfer SFX (replace current) and play
+f046: dw $f167  ; 07 - stop SFX
+f048: dw $f16b  ; 08 - dynamic volume control
+f04a: dw $f190  ; 09 - push sample transfer context
+f04c: dw $f19f  ; 0a - pop sample transfer context
 f04e: dw $f1ae  ; 0b - play BGM/SFX
 f050: dw $f1d9  ; 0c - reset BGM destination
 f052: dw $f1ec  ; 0d - reset SFX destination
-f054: dw $f1fb  ; 0e - transfer BGM
+f054: dw $f1fb  ; 0e - transfer BGM and play
 f056: dw $f21c  ; 0f - transfer SFX
 
 f058: db $01,$02,$04,$08,$10,$20,$40,$80
@@ -105,38 +105,38 @@ f0d1: 3f d2 f9  call  $f9d2             ; reset S-DSP (mute all)
 f0d4: 3f cd fa  call  $facd             ; initialize RAM
 f0d7: 6f        ret
 
-; cpucmd 02
+; cpucmd 02 - transfer sample
 f0d8: 3f d2 f9  call  $f9d2             ; reset S-DSP (mute all)
 f0db: 3f 3d f2  call  $f23d             ; calc total transfer size
 f0de: ba dd     movw  ya,$dd
-f0e0: 9a d0     subw  ya,$d0
+f0e0: 9a d0     subw  ya,$d0            ; end address - transfer size
 f0e2: da dd     movw  $dd,ya
-f0e4: da ec     movw  $ec,ya
-f0e6: 31        tcall 3
-f0e7: ec e7 ff  mov   y,$ffe7
-f0ea: e5 e6 ff  mov   a,$ffe6
-f0ed: d6 40 01  mov   $0140+y,a
+f0e4: da ec     movw  $ec,ya            ; set destination address
+f0e6: 31        tcall 3                 ; receive sample data
+f0e7: ec e7 ff  mov   y,$ffe7           ; [5] SRCN
+f0ea: e5 e6 ff  mov   a,$ffe6           ; [4] instrument number
+f0ed: d6 40 01  mov   $0140+y,a         ; update SRCN-instrument association
 f0f0: dd        mov   a,y
 f0f1: 1c        asl   a
 f0f2: 1c        asl   a
 f0f3: 5d        mov   x,a
 f0f4: ac c3 01  inc   $01c3
 f0f7: ba dd     movw  ya,$dd
-f0f9: d5 00 fb  mov   $fb00+x,a
+f0f9: d5 00 fb  mov   $fb00+x,a         ; set sample start address (SA)
 f0fc: dd        mov   a,y
-f0fd: d5 01 fb  mov   $fb01+x,a
+f0fd: d5 01 fb  mov   $fb01+x,a         ; high-byte too
 f100: e5 e8 ff  mov   a,$ffe8
-f103: ec e9 ff  mov   y,$ffe9
+f103: ec e9 ff  mov   y,$ffe9           ; [6, 7] loop start offset
 f106: 7a dd     addw  ya,$dd
-f108: d5 02 fb  mov   $fb02+x,a
+f108: d5 02 fb  mov   $fb02+x,a         ; set sample loop start address (LSA)
 f10b: dd        mov   a,y
-f10c: d5 03 fb  mov   $fb03+x,a
+f10c: d5 03 fb  mov   $fb03+x,a         ; high-byte too
 f10f: 6f        ret
 
 ; cpucmd 03 - nop
 f110: 6f        ret
 
-; cpucmd 04 - transfer BGM (overwrite current)
+; cpucmd 04 - transfer BGM (replace current) and play
 f111: e5 c8 01  mov   a,$01c8
 f114: 05 cd 01  or    a,$01cd
 f117: f0 03     beq   $f11c
@@ -148,8 +148,8 @@ f120: 31        tcall 3                 ; receive BGM
 f121: 3f d5 f8  call  $f8d5             ; load song header
 f124: 3f d8 f9  call  $f9d8             ; reset S-DSP registers
 f127: 3f 34 fa  call  $fa34             ; clear echo RAM
-f12a: cd ff     mov   x,#$ff
-f12c: 3f b3 f9  call  $f9b3             ; key off/on
+f12a: cd ff     mov   x,#$ff            ; all voices
+f12c: 3f b3 f9  call  $f9b3             ; key off all voices
 f12f: e8 00     mov   a,#$00
 f131: c5 cc 01  mov   $01cc,a
 f134: c5 cd 01  mov   $01cd,a
@@ -159,7 +159,7 @@ f13b: 8d 6c     mov   y,#$6c            ; FLG
 f13d: 61        tcall 6                 ; write dsp
 f13e: 6f        ret
 
-; cpucmd 05
+; cpucmd 05 - stop BGM/SFX
 f13f: 3f d2 f9  call  $f9d2             ; reset S-DSP (mute all)
 f142: e8 00     mov   a,#$00
 f144: c5 c7 01  mov   $01c7,a
@@ -169,51 +169,51 @@ f14d: c5 cd 01  mov   $01cd,a
 f150: 12 e6     clr0  $e6
 f152: 6f        ret
 
-; cpucmd 06
-f153: 3f 54 f2  call  $f254
-f156: ba db     movw  ya,$db
-f158: da ec     movw  $ec,ya
-f15a: 31        tcall 3
-;
-f15b: 3f 5c f9  call  $f95c
+; cpucmd 06 - transfer SFX (replace current) and play
+f153: 3f 54 f2  call  $f254             ; key off current SFX voice
+f156: ba db     movw  ya,$db            ; SFX address
+f158: da ec     movw  $ec,ya            ; set destination address
+f15a: 31        tcall 3                 ; receive data
+; load and start SFX
+f15b: 3f 5c f9  call  $f95c             ; load SFX header
 f15e: e9 cd 01  mov   x,$01cd
-f161: 3f b3 f9  call  $f9b3
+f161: 3f b3 f9  call  $f9b3             ; key off SFX voice
 f164: 22 e6     set1  $e6
 f166: 6f        ret
 
-; cpucmd 07
-f167: 3f 54 f2  call  $f254
+; cpucmd 07 - stop SFX
+f167: 3f 54 f2  call  $f254             ; key off current SFX voice
 f16a: 6f        ret
 
-; cpucmd 08
-f16b: e5 e3 ff  mov   a,$ffe3
+; cpucmd 08 - dynamic volume control
+f16b: e5 e3 ff  mov   a,$ffe3           ; [1] master panpot
 f16e: c5 d7 01  mov   $01d7,a
-f171: e5 e4 ff  mov   a,$ffe4
+f171: e5 e4 ff  mov   a,$ffe4           ; [2] master volume (unsigned)
 f174: c5 d6 01  mov   $01d6,a
-f177: e5 e5 ff  mov   a,$ffe5
+f177: e5 e5 ff  mov   a,$ffe5           ; [3]
 f17a: c5 d9 01  mov   $01d9,a
-f17d: e5 e6 ff  mov   a,$ffe6
+f17d: e5 e6 ff  mov   a,$ffe6           ; [4]
 f180: c5 d8 01  mov   $01d8,a
-f183: e5 e7 ff  mov   a,$ffe7
+f183: e5 e7 ff  mov   a,$ffe7           ; [5]
 f186: c5 da 01  mov   $01da,a
 f189: 3f 91 f2  call  $f291
 f18c: 3f 75 f2  call  $f275
 f18f: 6f        ret
 
-; cpucmd 09
+; cpucmd 09 - push sample transfer context
 f190: ba dd     movw  ya,$dd
 f192: c5 c0 01  mov   $01c0,a
-f195: cc c1 01  mov   $01c1,y
+f195: cc c1 01  mov   $01c1,y           ; save sample transfer pointer
 f198: e5 c3 01  mov   a,$01c3
-f19b: c5 c2 01  mov   $01c2,a
+f19b: c5 c2 01  mov   $01c2,a           ; save sample count
 f19e: 6f        ret
 
-; cpucmd 0a
+; cpucmd 0a - pop sample transfer context
 f19f: e5 c0 01  mov   a,$01c0
 f1a2: ec c1 01  mov   y,$01c1
-f1a5: da dd     movw  $dd,ya
+f1a5: da dd     movw  $dd,ya            ; restore sample transfer pointer
 f1a7: e5 c2 01  mov   a,$01c2
-f1aa: c5 c3 01  mov   $01c3,a
+f1aa: c5 c3 01  mov   $01c3,a           ; restore sample count
 f1ad: 6f        ret
 
 ; cpucmd 0b - play BGM/SFX
@@ -235,8 +235,8 @@ f1cc: 3f 21 f1  call  $f121             ; load and start BGM
 f1cf: 6f        ret
 ; SFX
 f1d0: da db     movw  $db,ya            ; SFX address
-f1d2: 3f 54 f2  call  $f254
-f1d5: 3f 5b f1  call  $f15b
+f1d2: 3f 54 f2  call  $f254             ; key off current SFX voice
+f1d5: 3f 5b f1  call  $f15b             ; load and start SFX
 f1d8: 6f        ret
 
 ; cpucmd 0c - reset BGM destination
@@ -259,7 +259,7 @@ f1f5: e8 00     mov   a,#$00
 f1f7: c5 c9 01  mov   $01c9,a           ; reset transfer destination to SFX area top
 f1fa: 6f        ret
 
-; cpucmd 0e - transfer BGM
+; cpucmd 0e - transfer BGM and play
 f1fb: 3f 3d f2  call  $f23d             ; calc total transfer size
 f1fe: e5 e6 ff  mov   a,$ffe6           ; [4] slot index
 f201: 1c        asl   a
@@ -306,6 +306,7 @@ f24f: 0b d0     asl   $d0
 f251: 2b d1     rol   $d1               ; total transfer size in bytes
 f253: 6f        ret
 
+; key off current SFX voice
 f254: e5 cd 01  mov   a,$01cd
 f257: f0 19     beq   $f272
 f259: 8d 5c     mov   y,#$5c
@@ -953,18 +954,20 @@ f662: 2f 08     bra   $f66c
 ;
 f664: 8d 0c     mov   y,#$0c
 f666: 60        clrc
-f667: 97 d9     adc   a,($d9)+y         ; add offset to instrument #
+f667: 97 d9     adc   a,($d9)+y         ; add offset to local instrument #
 f669: fd        mov   y,a               ; use it for index
 f66a: f7 d9     mov   a,($d9)+y         ; get global instrument number
-;
-f66c: ec c3 01  mov   y,$01c3
+; determine SRCN for the instrument
+f66c: ec c3 01  mov   y,$01c3           ; sample count in sample pool
 f66f: f0 07     beq   $f678
-f671: 76 3f 01  cmp   a,$013f+y         ; search for global instrument number
-f674: f0 03     beq   $f679
+; scan lookup table
+f671: 76 3f 01  cmp   a,$013f+y
+f674: f0 03     beq   $f679             ; break if target instrument number found
 f676: fe f9     dbnz  y,$f671
+;
 f678: fc        inc   y
-f679: dc        dec   y                 ; SRCN is index of the global instrument number (0 if not found)
-f67a: 6d        push  y                 ; push SRCN
+f679: dc        dec   y                 ; SRCN (0 if not found)
+f67a: 6d        push  y
 f67b: e4 e5     mov   a,$e5
 f67d: 9f        xcn   a
 f67e: 08 04     or    a,#$04
@@ -1419,6 +1422,7 @@ f957: fc        inc   y
 f958: 6e e3 c1  dbnz  $e3,$f91c
 f95b: 6f        ret
 
+; load SFX header
 f95c: 8d 06     mov   y,#$06
 f95e: f7 db     mov   a,($db)+y
 f960: 3f f0 f4  call  $f4f0
@@ -1465,6 +1469,7 @@ f9ae: fc        inc   y
 f9af: 6e e3 c1  dbnz  $e3,$f973
 f9b2: 6f        ret
 
+; key off specified voices
 f9b3: 7d        mov   a,x
 f9b4: f0 1b     beq   $f9d1
 f9b6: 8d 5c     mov   y,#$5c
@@ -1624,20 +1629,20 @@ facc: 6f        ret
 facd: 8d 40     mov   y,#$40
 facf: e8 ff     mov   a,#$ff
 fad1: d6 3f 01  mov   $013f+y,a         ; set $ff to
-fad4: fe fb     dbnz  y,$fad1           ;  $0140-$017f
+fad4: fe fb     dbnz  y,$fad1           ;  $0140-$017f (SRCN-instrument association table)
 fad6: e8 f0     mov   a,#$f0
 fad8: 80        setc
 fad9: a5 cb 01  sbc   a,$01cb
 fadc: c4 dc     mov   $dc,a
-fade: 8f 00 db  mov   $db,#$00          ; set SFX area top ($e300)
+fade: 8f 00 db  mov   $db,#$00          ; set SFX address ($e300)
 fae1: 80        setc
 fae2: a5 c6 01  sbc   a,$01c6
 fae5: c4 da     mov   $da,a
-fae7: 8f 00 d9  mov   $d9,#$00          ; set BGM area top ($d700)
+fae7: 8f 00 d9  mov   $d9,#$00          ; set BGM address ($d700)
 faea: fd        mov   y,a
 faeb: e8 00     mov   a,#$00
-faed: da dd     movw  $dd,ya
-faef: c5 c3 01  mov   $01c3,a
+faed: da dd     movw  $dd,ya            ; set sample trasnfer pointer (samples are stored from the end of the area, growing backward)
+faef: c5 c3 01  mov   $01c3,a           ; set sample count to 0
 faf2: 6f        ret
 
 ; bootstrap entry point
