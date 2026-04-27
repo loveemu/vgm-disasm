@@ -603,7 +603,7 @@ f457: f6 66 f4  mov   a,$f466+y
 f45a: c5 64 f4  mov   $f464,a
 f45d: f6 67 f4  mov   a,$f467+y
 f460: c5 65 f4  mov   $f465,a
-f463: 5f 13 f5  jmp   $f513
+f463: 5f 00 00  jmp   $0000             ; destination address is self-modified
 
 ; vcmd dispatch table
 f466: dw $f504  ; e0 - set tempo
