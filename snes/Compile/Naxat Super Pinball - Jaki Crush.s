@@ -131,6 +131,10 @@
 06fb: dw $0721  ; fd
 06fd: dw $07bb  ; fe - reset
 06ff: dw $07cc  ; ff
+
+0701: db $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01
+0711: db $01,$00,$00,$00,$00,$00,$00,$00,$01,$01,$00,$00,$00,$00,$01,$01
+
 ; CPU cmds FA-FD
 0721: 6f        ret
 ; CPU cmd F1
@@ -531,7 +535,7 @@
 0a46: dw $0aa8  ; 80 - goto
 0a48: dw $0ab3  ; 81 - loop end
 0a4a: dw $0aff  ; 82 - halt
-0a4c: dw $0b0a  ; 83 - set vibrato
+0a4c: dw $0b0a  ; 83 - set pitch envelope id
 0a4e: dw $0b38  ; 84
 0a50: dw $0b50  ; 85
 0a52: dw $0afa  ; 86
@@ -559,7 +563,7 @@
 0a7e: dw $0bc0  ; 9c
 0a80: dw $0c3e  ; 9d
 0a82: dw $0bb8  ; 9e
-0a84: dw $0c4c  ; 9f - set ADSR
+0a84: dw $0c4c  ; 9f - set ADSR/GAIN
 0a86: dw $0c42  ; a0 - set sample
 0a88: dw $0c2a  ; a1 - slur on
 0a8a: dw $0c32  ; a2 - slur off
@@ -645,7 +649,7 @@
 0b05: ae        pop   a
 0b06: ae        pop   a
 0b07: 5f 09 09  jmp   $0909
-; vcmd 83 - set vibrato
+; vcmd 83 - set pitch envelope id
 0b0a: d5 3c 03  mov   $033c+x,a
 0b0d: 6f        ret
 ; vcmd 88 - set software volume envelope
@@ -842,7 +846,7 @@
 0c47: 08 10     or    a,#$10
 0c49: c4 3a     mov   $3a,a
 0c4b: 6f        ret
-; vcmd 9F - set ADSR
+; vcmd 9F - set ADSR/GAIN
 0c4c: d5 a5 03  mov   $03a5+x,a
 0c4f: 6f        ret
 ; vcmd 97 - tuning
@@ -1030,7 +1034,7 @@
 0d93: 0d        push  psw
 0d94: e4 39     mov   a,$39             ;; note number?
 0d96: d5 b3 04  mov   $04b3+x,a
-0d99: f0 2c     beq   $0dc7             ;; jump if ($0540+X == 0) (rest)
+0d99: f0 2c     beq   $0dc7             ;; jump if ($04b3+X == 0) (rest)
 0d9b: 2d        push  a
 0d9c: f4 9e     mov   a,$9e+x
 0d9e: 28 08     and   a,#$08
@@ -1088,7 +1092,7 @@
 0e02: e8 00     mov   a,#$00
 0e04: d5 f0 03  mov   $03f0+x,a         ; zero duration counter
 0e07: 8e        pop   psw
-0e08: f0 2c     beq   $0e36             ;; jump if ($0540+X == 0) (rest)
+0e08: f0 2c     beq   $0e36             ;; jump if ($04b3+X == 0) (rest)
 0e0a: f4 80     mov   a,$80+x
 0e0c: 28 10     and   a,#$10
 0e0e: f0 14     beq   $0e24
@@ -1194,7 +1198,7 @@
 0ecc: d4 bc     mov   $bc+x,a
 0ece: d4 cb     mov   $cb+x,a
 0ed0: 6f        ret
-; read ADSR from $5c[$03a5+x] to $3b/c
+; read ADSR/GAIN from $5c[$03a5+x] to $3b/c
 0ed1: f5 a5 03  mov   a,$03a5+x
 0ed4: 1c        asl   a
 0ed5: b0 0b     bcs   $0ee2
@@ -1202,10 +1206,10 @@
 0ed8: f7 5c     mov   a,($5c)+y
 0eda: c4 3b     mov   $3b,a
 0edc: fc        inc   y
-0edd: f7 5c     mov   a,($5c)+y
+0edd: f7 5c     mov   a,($5c)+y ;used for both ADSR(2) and GAIN
 0edf: c4 3c     mov   $3c,a
 0ee1: 6f        ret
-; reset ADSR if the index >= 0x80
+; reset ADSR/GAIN if the index = 0x80
 0ee2: 8f 00 3b  mov   $3b,#$00
 0ee5: d0 04     bne   $0eeb
 0ee7: 8f 7f 3c  mov   $3c,#$7f
@@ -1362,7 +1366,7 @@
 1011: f5 3c 03  mov   a,$033c+x
 1014: d0 01     bne   $1017
 1016: 6f        ret
-; read vibrato params
+; read pitch envelope
 1017: 1c        asl   a
 1018: fd        mov   y,a
 1019: f7 56     mov   a,($56)+y

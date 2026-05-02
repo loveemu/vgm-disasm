@@ -26,6 +26,7 @@
 0624: e4 f5     mov   a,$f5
 0626: 68 e0     cmp   a,#$e0
 0628: b0 13     bcs   $063d
+;CPU cmds 00-DF - play sound
 062a: f8 2f     mov   x,$2f
 062c: c8 08     cmp   x,#$08
 062e: 90 07     bcc   $0637
@@ -35,6 +36,7 @@
 0637: d4 10     mov   $10+x,a
 0639: ab 2f     inc   $2f
 063b: 2f dc     bra   $0619
+;CPU cmds E0-FF
 063d: fd        mov   y,a
 063e: f6 f3 05  mov   a,$05f3+y
 0641: d0 1c     bne   $065f
@@ -45,11 +47,11 @@
 064a: 3f 67 06  call  $0667
 064d: cd 00     mov   x,#$00
 064f: e4 f5     mov   a,$f5
-0651: d4 10     mov   $10+x,a
+0651: d4 10     mov   $10+x,a ;save cpu id to queue
 0653: e4 f6     mov   a,$f6
-0655: d4 18     mov   $18+x,a
+0655: d4 18     mov   $18+x,a ;save arg1 to queue
 0657: e4 f7     mov   a,$f7
-0659: d4 20     mov   $20+x,a
+0659: d4 20     mov   $20+x,a ;save arg2 to queue
 065b: ab 2f     inc   $2f
 065d: 2f ba     bra   $0619
 065f: dd        mov   a,y
@@ -82,62 +84,66 @@
 068e: 2f e8     bra   $0678
 0690: 1f 93 06  jmp   ($0693+x)
 ; CPU cmd dispatch table
-0693: dw $075e  ; e0
-0695: dw $076f  ; e1
-0697: dw $077a  ; e2
-0699: dw $0785  ; e3
-069b: dw $0790  ; e4
-069d: dw $07a4  ; e5
-069f: dw $07ef  ; e6
-06a1: dw $07ef  ; e7
-06a3: dw $07ef  ; e8
-06a5: dw $07ef  ; e9
-06a7: dw $07ef  ; ea
-06a9: dw $07ef  ; eb
-06ab: dw $07ef  ; ec
-06ad: dw $07ef  ; ed
-06af: dw $07b6  ; ee
-06b1: dw $07be  ; ef
-06b3: dw $080d  ; f0
-06b5: dw $06f4  ; f1
-06b7: dw $06f7  ; f2
-06b9: dw $06fa  ; f3
-06bb: dw $070c  ; f4
-06bd: dw $071c  ; f5
-06bf: dw $0742  ; f6
-06c1: dw $074d  ; f7
-06c3: dw $07c6  ; f8
-06c5: dw $07d0  ; f9
-06c7: dw $0758  ; fa
-06c9: dw $06f3  ; fb
-06cb: dw $06f3  ; fc
-06cd: dw $06f3  ; fd
+0693: dw $075e  ; e0 - set ptr + send byte to CPUIO2
+0695: dw $076f  ; e1 - send byte from ptr1 to CPUIO2 + inc ptr1
+0697: dw $077a  ; e2 - set up ptr2
+0699: dw $0785  ; e3 - send byte from CPUIO2 to ptr2 + inc ptr2
+069b: dw $0790  ; e4 - read from zp/dsp
+069d: dw $07a4  ; e5 - write to zp/dsp
+069f: dw $07ef  ; e6 - nop
+06a1: dw $07ef  ; e7 - nop
+06a3: dw $07ef  ; e8 - nop
+06a5: dw $07ef  ; e9 - nop
+06a7: dw $07ef  ; ea - nop
+06a9: dw $07ef  ; eb - nop
+06ab: dw $07ef  ; ec - nop
+06ad: dw $07ef  ; ed - nop
+06af: dw $07b6  ; ee - toggle echo writes
+06b1: dw $07be  ; ef - toggle mono/stereo
+06b3: dw $080d  ; f0 - transfer data from SNES
+06b5: dw $06f4  ; f1 - stop sound + refresh master header
+06b7: dw $06f7  ; f2 - stop sound
+06b9: dw $06fa  ; f3 - fade out to volume
+06bb: dw $070c  ; f4 - play sound + fade in
+06bd: dw $071c  ; f5 - fade in
+06bf: dw $0742  ; f6 - play sound $00 + pause
+06c1: dw $074d  ; f7 - play sound $00 + unpause
+06c3: dw $07c6  ; f8 - clear zp bits
+06c5: dw $07d0  ; f9 - set zp bits
+06c7: dw $0758  ; fa - setup echo
+06c9: dw $06f3  ; fb - nop
+06cb: dw $06f3  ; fc - nop
+06cd: dw $06f3  ; fd - nop
 06cf: dw $07f2  ; fe - reset
-06d1: dw $0803  ; ff
-; CPU cmds FB-FD
+06d1: dw $0803  ; ff - clock pulse
+
+06d3: db $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01
+06e3: db $01,$00,$00,$00,$00,$00,$00,$00,$01,$01,$00,$00,$00,$00,$01,$01
+
+; CPU cmds FB-FD - nop
 06f3: 6f        ret
-; CPU cmd F1
+; CPU cmd F1 - stop sound + refresh master header
 06f4: 5f 42 0a  jmp   $0a42
-; CPU cmd F2
+; CPU cmd F2 - stop sound
 06f7: 5f cd 0a  jmp   $0acd
-; CPU cmd F3
+; CPU cmd F3 - fade out to volume
 06fa: 3f 28 07  call  $0728
 06fd: 8f 1f 4a  mov   $4a,#$1f
-0700: f6 20 00  mov   a,$0020+y
+0700: f6 20 00  mov   a,$0020+y ;fade out to volume arg2
 0703: c4 4b     mov   $4b,a
 0705: e4 01     mov   a,$01
 0707: 08 30     or    a,#$30
 0709: c4 01     mov   $01,a
 070b: 6f        ret
-; CPU cmd F4
+; CPU cmd F4 - play sound + fade in
 070c: 6d        push  y
-070d: f6 20 00  mov   a,$0020+y
+070d: f6 20 00  mov   a,$0020+y ;play sound from arg2
 0710: 3f 3b 15  call  $153b
 0713: ee        pop   y
 0714: 3f 28 07  call  $0728
 0717: 8f 00 4a  mov   $4a,#$00
 071a: 2f 00     bra   $071c
-; CPU cmd F5
+; CPU cmd F5 - fade in
 071c: 8f 1f 4b  mov   $4b,#$1f
 071f: e4 01     mov   a,$01
 0721: 28 ef     and   a,#$ef
@@ -153,26 +159,26 @@
 0734: d4 8f     mov   $8f+x,a
 0736: 1d        dec   x
 0737: 10 f1     bpl   $072a
-0739: f6 18 00  mov   a,$0018+y
+0739: f6 18 00  mov   a,$0018+y ;set fade in rate to arg1
 073c: c4 48     mov   $48,a
 073e: 8f ff 49  mov   $49,#$ff
 0741: 6f        ret
-; CPU cmd F6
+; CPU cmd F6 - play sound $00 + pause
 0742: e4 01     mov   a,$01
-0744: 08 02     or    a,#$02
+0744: 08 02     or    a,#$02 ;set pause flag
 0746: c4 01     mov   $01,a
-0748: e8 00     mov   a,#$00
-074a: 5f 3b 15  jmp   $153b
-; CPU cmd F7
+0748: e8 00     mov   a,#$00 ;play sound 00
+074a: 5f 3b 15  jmp   $153b  ;(uses a track ID that is not affected by flag set)
+; CPU cmd F7 - play sound $00 + unpause
 074d: e4 01     mov   a,$01
-074f: 28 fd     and   a,#$fd
+074f: 28 fd     and   a,#$fd ;clear pause flag
 0751: c4 01     mov   $01,a
-0753: e8 00     mov   a,#$00
+0753: e8 00     mov   a,#$00 ;play sound 00
 0755: 5f 3b 15  jmp   $153b
-; CPU cmd FA
+; CPU cmd FA - setup echo
 0758: f6 18 00  mov   a,$0018+y
 075b: 5f f9 0a  jmp   $0af9
-; CPU cmd E0
+; CPU cmd E0 - set ptr1 + send byte from ptr1 to CPUIO2
 075e: e4 f6     mov   a,$f6
 0760: c4 30     mov   $30,a
 0762: e4 f7     mov   a,$f7
@@ -181,60 +187,60 @@
 0768: f7 30     mov   a,($30)+y
 076a: c4 f6     mov   $f6,a
 076c: 5f 19 06  jmp   $0619
-; CPU cmd E1
+; CPU cmd E1 - send byte from ptr1 to CPUIO2 + inc ptr1
 076f: 8d 00     mov   y,#$00
 0771: f7 30     mov   a,($30)+y
 0773: c4 f6     mov   $f6,a
 0775: 3a 30     incw  $30
 0777: 5f 19 06  jmp   $0619
-; CPU cmd E2
+; CPU cmd E2 - set up ptr2
 077a: e4 f6     mov   a,$f6
 077c: c4 32     mov   $32,a
 077e: e4 f7     mov   a,$f7
 0780: c4 33     mov   $33,a
 0782: 5f 19 06  jmp   $0619
-; CPU cmd E3
+; CPU cmd E3 - send byte from CPUIO2 to ptr2 + inc ptr2
 0785: e4 f6     mov   a,$f6
 0787: 8d 00     mov   y,#$00
 0789: d7 32     mov   ($32)+y,a
 078b: 3a 32     incw  $32
 078d: 5f 19 06  jmp   $0619
-; CPU cmd E4
+; CPU cmd E4 - read from zp/dsp
 0790: f8 f6     mov   x,$f6
 0792: 10 07     bpl   $079b
-0794: f4 00     mov   a,$00+x
+0794: f4 00     mov   a,$00+x ;CPUIO2 $80-$FF - read from zp
 0796: c4 f6     mov   $f6,a
 0798: 5f 19 06  jmp   $0619
-079b: d8 f2     mov   $f2,x
+079b: d8 f2     mov   $f2,x ;CPUIO2 $00-$7F - read from dsp
 079d: e4 f3     mov   a,$f3
 079f: c4 f6     mov   $f6,a
 07a1: 5f 19 06  jmp   $0619
-; CPU cmd E5
+; CPU cmd E5 - write to zp/dsp
 07a4: e4 f7     mov   a,$f7
 07a6: f8 f6     mov   x,$f6
 07a8: 10 05     bpl   $07af
-07aa: d4 00     mov   $00+x,a
+07aa: d4 00     mov   $00+x,a ;CPUIO2 $80-$FF - write to zp
 07ac: 5f 19 06  jmp   $0619
-07af: d8 f2     mov   $f2,x
+07af: d8 f2     mov   $f2,x ;CPUIO2 $00-$7F - write to dsp
 07b1: c4 f3     mov   $f3,a
 07b3: 5f 19 06  jmp   $0619
-; CPU cmd EE
+; CPU cmd EE - toggle echo writes
 07b6: e4 01     mov   a,$01
 07b8: 48 08     eor   a,#$08
 07ba: c4 01     mov   $01,a
 07bc: 2f 18     bra   $07d6
-; CPU cmd EF
+; CPU cmd EF - toggle mono/stereo
 07be: e4 01     mov   a,$01
 07c0: 48 04     eor   a,#$04
 07c2: c4 01     mov   $01,a
 07c4: 2f 10     bra   $07d6
-; CPU cmd F8
+; CPU cmd F8 - clear zp bits
 07c6: e4 f7     mov   a,$f7
 07c8: f8 f6     mov   x,$f6
 07ca: 48 ff     eor   a,#$ff
 07cc: 34 00     and   a,$00+x
 07ce: 2f 06     bra   $07d6
-; CPU cmd F9
+; CPU cmd F9 - set zp bits
 07d0: e4 f7     mov   a,$f7
 07d2: f8 f6     mov   x,$f6
 07d4: 14 00     or    a,$00+x
@@ -248,51 +254,53 @@
 07e4: 28 1f     and   a,#$1f
 07e6: b0 02     bcs   $07ea
 07e8: 08 20     or    a,#$20
-07ea: 8f 6c f2  mov   $f2,#$6c
+07ea: 8f 6c f2  mov   $f2,#$6c          ;; DSP reg FLG
 07ed: c4 f3     mov   $f3,a
-; CPU cmds E6-ED
+; CPU cmds E6-ED - nop
 07ef: 5f 19 06  jmp   $0619
 ; CPU cmd FE - reset
 07f2: 8f b0 f1  mov   $f1,#$b0          ; clear ports
-07f5: 8f 6c f2  mov   $f2,#$6c
+07f5: 8f 6c f2  mov   $f2,#$6c          ;; DSP reg FLG
 07f8: 8f e0 f3  mov   $f3,#$e0          ; do soft reset
 07fb: 8f 80 f1  mov   $f1,#$80
 07fe: cd 00     mov   x,#$00
 0800: 1f fe ff  jmp   ($fffe+x)
-; CPU cmd FF
+; CPU cmd FF - clock pulse
 0803: e4 2e     mov   a,$2e
 0805: c4 f4     mov   $f4,a
 0807: bc        inc   a
 0808: c4 2e     mov   $2e,a
 080a: 5f 4f 08  jmp   $084f
-; CPU cmd F0
-080d: ba f6     movw  ya,$f6
-080f: da 34     movw  $34,ya
+; CPU cmd F0 - transfer data from SNES
+080d: ba f6     movw  ya,$f6            ; destination APU address
+080f: da 34     movw  $34,ya            ; save the destination address
 0811: f8 2e     mov   x,$2e
 0813: d8 f4     mov   $f4,x
 0815: 3e f4     cmp   x,$f4
-0817: d0 fc     bne   $0815
+0817: d0 fc     bne   $0815             ; sync
 0819: 3d        inc   x
 081a: eb f6     mov   y,$f6
 081c: d0 18     bne   $0836
+; APU2 is 00 - transfer 256 bytes to destination using two byte blocks
 081e: d8 f4     mov   $f4,x
 0820: 3e f4     cmp   x,$f4
-0822: d0 fc     bne   $0820
+0822: d0 fc     bne   $0820             ; sync
 0824: 3d        inc   x
 0825: e4 f6     mov   a,$f6
-0827: d7 34     mov   ($34)+y,a
+0827: d7 34     mov   ($34)+y,a         ; write APU2
 0829: fc        inc   y
 082a: e4 f7     mov   a,$f7
-082c: d7 34     mov   ($34)+y,a
+082c: d7 34     mov   ($34)+y,a         ; write APU3
 082e: fc        inc   y
 082f: d0 ed     bne   $081e
 0831: d8 2e     mov   $2e,x
 0833: 5f 19 06  jmp   $0619
+; APU2 is not zero - transfer (APU2) bytes to destination
 0836: cb 38     mov   $38,y
-0838: 8d 00     mov   y,#$00
+0838: 8d 00     mov   y,#$00             ; initial offset (0)
 083a: d8 f4     mov   $f4,x
 083c: 3e f4     cmp   x,$f4
-083e: d0 fc     bne   $083c
+083e: d0 fc     bne   $083c             ; sync
 0840: 3d        inc   x
 0841: e4 f6     mov   a,$f6
 0843: d7 34     mov   ($34)+y,a
@@ -304,11 +312,11 @@
 ;
 084f: 3f 67 06  call  $0667
 0852: 3f c2 0b  call  $0bc2
-0855: 8f 5c f2  mov   $f2,#$5c
+0855: 8f 5c f2  mov   $f2,#$5c          ;; DSP reg KOFF
 0858: 8f 00 f3  mov   $f3,#$00          ; key off all voices
 085b: 3f c3 13  call  $13c3
 085e: e4 01     mov   a,$01
-0860: 28 02     and   a,#$02
+0860: 28 02     and   a,#$02            ; check pause flag
 0862: d0 0a     bne   $086e
 0864: e4 8e     mov   a,$8e
 0866: d0 06     bne   $086e
@@ -324,7 +332,7 @@
 087b: d0 03     bne   $0880
 087d: 5f 40 09  jmp   $0940
 0880: f5 5a 03  mov   a,$035a+x         ; tempo value
-0883: f0 09     beq   $088e             ; #$00 means no wait (16ms/tick)
+0883: f0 09     beq   $088e             ; #$00 means no wait (pulse/tick)
 0885: 60        clrc
 0886: 95 3b 04  adc   a,$043b+x
 0889: d5 3b 04  mov   $043b+x,a         ; add tempo value
@@ -349,13 +357,13 @@
 08b3: f0 02     beq   $08b7
 08b5: b0 18     bcs   $08cf
 08b7: f4 8f     mov   a,$8f+x
-08b9: 28 fb     and   a,#$fb
+08b9: 28 fb     and   a,#$fb            ; key off note
 08bb: d4 8f     mov   $8f+x,a
 08bd: f4 80     mov   a,$80+x
 08bf: 28 04     and   a,#$04
 08c1: d0 0c     bne   $08cf
 08c3: e4 3a     mov   a,$3a
-08c5: 08 04     or    a,#$04
+08c5: 08 04     or    a,#$04            ; set voice bit to write to KOFF dsp register
 08c7: c4 3a     mov   $3a,a
 08c9: f4 9e     mov   a,$9e+x
 08cb: 08 10     or    a,#$10
@@ -366,16 +374,17 @@
 08d6: 75 ff 03  cmp   a,$03ff+x
 08d9: d0 03     bne   $08de             ; wait for duration
 08db: 3f 13 0f  call  $0f13             ; do vcmds
-08de: 3f f1 10  call  $10f1
-08e1: 3f 37 11  call  $1137
+; process every clock pulse
+08de: 3f f1 10  call  $10f1             ; read ADSR/GAIN
+08e1: 3f 37 11  call  $1137             ; process software volume envelope
 08e4: f5 d1 04  mov   a,$04d1+x
 08e7: f0 03     beq   $08ec
-08e9: 3f 7b 11  call  $117b
+08e9: 3f 7b 11  call  $117b             ; process pitch bend
 08ec: f4 9e     mov   a,$9e+x
 08ee: 28 08     and   a,#$08
 08f0: f0 03     beq   $08f5
-08f2: 3f c4 11  call  $11c4
-08f5: 3f 25 12  call  $1225
+08f2: 3f c4 11  call  $11c4             ; process portamento
+08f5: 3f 25 12  call  $1225             ; process pitch + envelopes (if any)
 08f8: 3f 9b 12  call  $129b
 08fb: f4 8f     mov   a,$8f+x
 08fd: 28 01     and   a,#$01
@@ -423,7 +432,7 @@
 0957: 1d        dec   x
 0958: 10 f7     bpl   $0951
 095a: e4 01     mov   a,$01
-095c: 28 20     and   a,#$20
+095c: 28 20     and   a,#$20            ; check fade flag
 095e: f0 2a     beq   $098a
 0960: e4 48     mov   a,$48
 0962: 60        clrc
@@ -431,7 +440,7 @@
 0965: c4 49     mov   $49,a
 0967: 90 21     bcc   $098a
 0969: e4 01     mov   a,$01
-096b: 28 10     and   a,#$10
+096b: 28 10     and   a,#$10            ; check fade out
 096d: d0 12     bne   $0981
 096f: e4 4a     mov   a,$4a
 0971: 64 4b     cmp   a,$4b
@@ -450,8 +459,8 @@
 098a: 3f 90 09  call  $0990
 098d: 5f 15 06  jmp   $0615
 0990: e4 3d     mov   a,$3d
-0992: 8f 5c f2  mov   $f2,#$5c
-0995: c4 f3     mov   $f3,a             ;; DSP reg KOF
+0992: 8f 5c f2  mov   $f2,#$5c          ;; DSP reg KOFF
+0995: c4 f3     mov   $f3,a
 0997: e4 40     mov   a,$40
 0999: f0 29     beq   $09c4
 099b: 4b 40     lsr   $40
@@ -474,15 +483,15 @@
 09bf: fd        mov   y,a
 09c0: 10 dd     bpl   $099f
 09c2: e4 38     mov   a,$38
-09c4: 8f 2d f2  mov   $f2,#$2d
-09c7: c4 f3     mov   $f3,a             ;; DSP reg PMON
+09c4: 8f 2d f2  mov   $f2,#$2d          ;; DSP reg PMON
+09c7: c4 f3     mov   $f3,a
 09c9: 8d 00     mov   y,#$00
 09cb: 4b 3b     lsr   $3b
 09cd: b0 0e     bcs   $09dd
-09cf: cb f2     mov   $f2,y
+09cf: cb f2     mov   $f2,y             ;; DSP reg VxVOL(L)
 09d1: 8f 00 f3  mov   $f3,#$00          ; zero voice vol L
 09d4: fc        inc   y
-09d5: cb f2     mov   $f2,y
+09d5: cb f2     mov   $f2,y             ;; DSP reg VxVOL(R)
 09d7: 8f 00 f3  mov   $f3,#$00          ; zero voice vol R
 09da: dc        dec   y
 09db: 2f 0f     bra   $09ec
@@ -493,7 +502,7 @@
 09e5: c4 f3     mov   $f3,a
 09e7: fc        inc   y
 09e8: 1d        dec   x
-09e9: d0 f5     bne   $09e0             ; copy $0200+Y to DSP voice regs 00-07
+09e9: d0 f5     bne   $09e0             ; copy $0280+Y to DSP voice regs 00-07
 09eb: ee        pop   y
 09ec: dd        mov   a,y
 09ed: 60        clrc
@@ -505,29 +514,29 @@
 09f7: f0 0c     beq   $0a05
 09f9: e4 44     mov   a,$44
 09fb: 68 04     cmp   a,#$04
-09fd: f0 20     beq   $0a1f
+09fd: f0 20     beq   $0a1f             ; if echo has been set up already...
 09ff: e4 3e     mov   a,$3e
 0a01: 28 1f     and   a,#$1f
 0a03: 2f 06     bra   $0a0b
 0a05: e4 3e     mov   a,$3e
 0a07: 28 1f     and   a,#$1f
 0a09: 08 20     or    a,#$20
-0a0b: 8f 4d f2  mov   $f2,#$4d
-0a0e: 8f 00 f3  mov   $f3,#$00          ;; DSP reg EON
-0a11: 8f 2c f2  mov   $f2,#$2c
-0a14: 8f 00 f3  mov   $f3,#$00          ;; DSP reg EVOL(L)
-0a17: 8f 3c f2  mov   $f2,#$3c
-0a1a: 8f 00 f3  mov   $f3,#$00          ;; DSP reg EVOL(R)
+0a0b: 8f 4d f2  mov   $f2,#$4d          ;; DSP reg EON
+0a0e: 8f 00 f3  mov   $f3,#$00
+0a11: 8f 2c f2  mov   $f2,#$2c          ;; DSP reg EVOL(L)
+0a14: 8f 00 f3  mov   $f3,#$00
+0a17: 8f 3c f2  mov   $f2,#$3c          ;; DSP reg EVOL(R)
+0a1a: 8f 00 f3  mov   $f3,#$00
 0a1d: 2f 0f     bra   $0a2e
 0a1f: e4 41     mov   a,$41
 0a21: 04 76     or    a,$76
 0a23: 24 75     and   a,$75
-0a25: 8f 4d f2  mov   $f2,#$4d
-0a28: c4 f3     mov   $f3,a             ;; DSP reg EON
+0a25: 8f 4d f2  mov   $f2,#$4d          ;; DSP reg EON
+0a28: c4 f3     mov   $f3,a
 0a2a: e4 3e     mov   a,$3e
 0a2c: 28 1f     and   a,#$1f
-0a2e: 8f 6c f2  mov   $f2,#$6c
-0a31: c4 f3     mov   $f3,a             ;; DSP reg FLG
+0a2e: 8f 6c f2  mov   $f2,#$6c          ;; DSP reg FLG
+0a31: c4 f3     mov   $f3,a
 0a33: e4 3f     mov   a,$3f
 0a35: 8f 3d f2  mov   $f2,#$3d
 0a38: c4 f3     mov   $f3,a             ;; DSP reg NON
@@ -539,8 +548,8 @@
 0a42: e4 01     mov   a,$01
 0a44: 28 0c     and   a,#$0c
 0a46: c4 01     mov   $01,a
-0a48: 8f 6c f2  mov   $f2,#$6c
-0a4b: 8f e0 f3  mov   $f3,#$e0          ;; DSP reg FLG
+0a48: 8f 6c f2  mov   $f2,#$6c          ;; DSP reg FLG
+0a4b: 8f e0 f3  mov   $f3,#$e0
 0a4e: e5 00 18  mov   a,$1800
 0a51: c4 4e     mov   $4e,a
 0a53: e5 01 18  mov   a,$1801
@@ -574,11 +583,11 @@
 0a96: c4 5c     mov   $5c,a
 0a98: e5 0d 18  mov   a,$180d
 0a9b: c4 5d     mov   $5d,a             ; set $5C/D to $180C/D
-0a9d: 8f 5d f2  mov   $f2,#$5d
+0a9d: 8f 5d f2  mov   $f2,#$5d          ;; DSP reg DIR
 0aa0: e5 0e 18  mov   a,$180e
 0aa3: c4 f3     mov   $f3,a             ; set sample dir from $180E
 0aa5: e5 0f 18  mov   a,$180f
-0aa8: c4 47     mov   $47,a             ; set $3D to $180F
+0aa8: c4 47     mov   $47,a             ; set $47 to $180F
 0aaa: e5 12 18  mov   a,$1812
 0aad: c4 60     mov   $60,a
 0aaf: e5 13 18  mov   a,$1813
@@ -617,7 +626,7 @@
 0af5: 10 f7     bpl   $0aee
 0af7: ce        pop   x
 0af8: 6f        ret
-;
+; setup echo parameters
 0af9: 1c        asl   a
 0afa: fd        mov   y,a
 0afb: f7 5e     mov   a,($5e)+y
@@ -625,24 +634,24 @@
 0aff: fc        inc   y
 0b00: f7 5e     mov   a,($5e)+y
 0b02: c4 37     mov   $37,a
-0b04: 8d 07     mov   y,#$07
-0b06: f7 36     mov   a,($36)+y
-0b08: d6 70 00  mov   $0070+y,a
-0b0b: dc        dec   y
-0b0c: 10 f8     bpl   $0b06
-0b0e: 8d 08     mov   y,#$08
-0b10: cd 0f     mov   x,#$0f
-0b12: f7 36     mov   a,($36)+y
-0b14: d8 f2     mov   $f2,x
-0b16: c4 f3     mov   $f3,a
-0b18: fc        inc   y
+0b04: 8d 07     mov   y,#$07            ; +0 ESA
+0b06: f7 36     mov   a,($36)+y         ; +1 EDL
+0b08: d6 70 00  mov   $0070+y,a         ; +2 EVOL(L)
+0b0b: dc        dec   y                 ; +3 EVOL(R)
+0b0c: 10 f8     bpl   $0b06             ; +4 EFB
+0b0e: 8d 08     mov   y,#$08            ; +5 voice bits to permit echo on
+0b10: cd 0f     mov   x,#$0f            ; +6 voice bits to force echo on
+0b12: f7 36     mov   a,($36)+y         ; +7 %??????xy
+0b14: d8 f2     mov   $f2,x             ;; %x - invert EVOL(L)
+0b16: c4 f3     mov   $f3,a             ;; %y - invert EVOL(R)
+0b18: fc        inc   y                 ; +8-f - FIR
 0b19: 7d        mov   a,x
 0b1a: 60        clrc
 0b1b: 88 10     adc   a,#$10
 0b1d: 5d        mov   x,a
 0b1e: 10 f2     bpl   $0b12
 0b20: e4 01     mov   a,$01
-0b22: 28 04     and   a,#$04
+0b22: 28 04     and   a,#$04            ; check stereo mode
 0b24: d0 12     bne   $0b38
 0b26: e4 77     mov   a,$77
 0b28: 5c        lsr   a
@@ -682,21 +691,21 @@
 0b61: 48 ff     eor   a,#$ff
 0b63: bc        inc   a
 0b64: cb 73     mov   $73,y
-0b66: 8f 7d f2  mov   $f2,#$7d
+0b66: 8f 7d f2  mov   $f2,#$7d          ;; DSP reg EDL
 0b69: e4 f3     mov   a,$f3
 0b6b: c4 39     mov   $39,a
-0b6d: 8f 6d f2  mov   $f2,#$6d
+0b6d: 8f 6d f2  mov   $f2,#$6d          ;; DSP reg ESA
 0b70: e4 f3     mov   a,$f3
 0b72: c4 38     mov   $38,a
 0b74: e4 44     mov   a,$44
 0b76: d0 2f     bne   $0ba7
-0b78: 8f 0f 45  mov   $45,#$0f
+0b78: 8f 0f 45  mov   $45,#$0f          ;$44 == $00
 0b7b: 8f 0f 2d  mov   $2d,#$0f
 0b7e: e4 70     mov   a,$70
-0b80: 8f 6d f2  mov   $f2,#$6d
+0b80: 8f 6d f2  mov   $f2,#$6d          ;; DSP reg ESA
 0b83: c4 f3     mov   $f3,a
 0b85: e4 71     mov   a,$71
-0b87: 8f 7d f2  mov   $f2,#$7d
+0b87: 8f 7d f2  mov   $f2,#$7d          ;; DSP reg EDL
 0b8a: c4 f3     mov   $f3,a
 0b8c: 8f 00 f1  mov   $f1,#$00
 0b8f: 8f 02 f1  mov   $f1,#$02
@@ -710,7 +719,7 @@
 0ba0: 8f 02 44  mov   $44,#$02
 0ba3: 6f        ret
 0ba4: 5f 2c 0c  jmp   $0c2c
-0ba7: e4 38     mov   a,$38
+0ba7: e4 38     mov   a,$38              ;$44 != $00
 0ba9: 64 70     cmp   a,$70
 0bab: d0 07     bne   $0bb4
 0bad: e4 39     mov   a,$39
@@ -729,13 +738,13 @@
 0bc5: b0 0d     bcs   $0bd4
 0bc7: 9c        dec   a
 0bc8: f0 28     beq   $0bf2
-0bca: e4 01     mov   a,$01
+0bca: e4 01     mov   a,$01             ;$44 == $03
 0bcc: 28 08     and   a,#$08
 0bce: d0 03     bne   $0bd3
 0bd0: 8f 02 44  mov   $44,#$02
 0bd3: 6f        ret
 0bd4: d0 3e     bne   $0c14
-0bd6: e4 fe     mov   a,$fe
+0bd6: e4 fe     mov   a,$fe             ;$44 == $01
 0bd8: f0 39     beq   $0c13
 0bda: c4 38     mov   $38,a
 0bdc: e4 2d     mov   a,$2d
@@ -745,25 +754,25 @@
 0be3: f0 03     beq   $0be8
 0be5: c4 2d     mov   $2d,a
 0be7: 6f        ret
-0be8: 8f 7d f2  mov   $f2,#$7d
+0be8: 8f 7d f2  mov   $f2,#$7d          ;; DSP reg EDL
 0beb: e4 f3     mov   a,$f3
 0bed: c4 45     mov   $45,a
 0bef: 8f 02 44  mov   $44,#$02
-0bf2: e4 01     mov   a,$01
+0bf2: e4 01     mov   a,$01             ;$44 == $02 or $04
 0bf4: 28 08     and   a,#$08
 0bf6: f0 1b     beq   $0c13
 0bf8: e4 45     mov   a,$45
 0bfa: f0 30     beq   $0c2c
 0bfc: c4 2d     mov   $2d,a
-0bfe: 8f 0d f2  mov   $f2,#$0d
+0bfe: 8f 0d f2  mov   $f2,#$0d          ;; DSP reg EFB
 0c01: 8f 00 f3  mov   $f3,#$00
-0c04: 8f 4d f2  mov   $f2,#$4d
+0c04: 8f 4d f2  mov   $f2,#$4d          ;; DSP reg EON
 0c07: 8f 00 f3  mov   $f3,#$00
 0c0a: 8f 00 f1  mov   $f1,#$00
 0c0d: 8f 02 f1  mov   $f1,#$02
 0c10: 8f 03 44  mov   $44,#$03
 0c13: 6f        ret
-0c14: e4 01     mov   a,$01
+0c14: e4 01     mov   a,$01             ;$44 == $03
 0c16: 28 08     and   a,#$08
 0c18: f0 b6     beq   $0bd0
 0c1a: e4 fe     mov   a,$fe
@@ -777,13 +786,13 @@
 0c29: c4 2d     mov   $2d,a
 0c2b: 6f        ret
 0c2c: e4 72     mov   a,$72
-0c2e: 8f 2c f2  mov   $f2,#$2c
+0c2e: 8f 2c f2  mov   $f2,#$2c          ;; DSP reg EVOL(L)
 0c31: c4 f3     mov   $f3,a
 0c33: e4 73     mov   a,$73
-0c35: 8f 3c f2  mov   $f2,#$3c
+0c35: 8f 3c f2  mov   $f2,#$3c          ;; DSP reg EVOL(R)
 0c38: c4 f3     mov   $f3,a
 0c3a: e4 74     mov   a,$74
-0c3c: 8f 0d f2  mov   $f2,#$0d
+0c3c: 8f 0d f2  mov   $f2,#$0d          ;; DSP reg EFB
 0c3f: c4 f3     mov   $f3,a
 0c41: 8f 04 44  mov   $44,#$04
 0c44: 6f        ret
@@ -791,52 +800,52 @@
 0c45: dw $0ca7  ; 80 - goto
 0c47: dw $0cb2  ; 81 - loop end
 0c49: dw $0cea  ; 82 - halt
-0c4b: dw $0cf5  ; 83 - set vibrato
-0c4d: dw $0d23  ; 84
-0c4f: dw $0d3b  ; 85
-0c51: dw $0ce5  ; 86
+0c4b: dw $0cf5  ; 83 - set pitch envelope id
+0c4d: dw $0d23  ; 84 - portamento
+0c4f: dw $0d3b  ; 85 - execute CPU command
+0c51: dw $0ce5  ; 86 - halt + output sound id stopped
 0c53: dw $0d1f  ; 87 - set volume
 0c55: dw $0cf9  ; 88 - set software volume envelope
 0c57: dw $0cfd  ; 89 - transpose (relative)
 0c59: dw $0d08  ; 8a - increase/decrease volume
-0c5b: dw $0dd9  ; 8b
+0c5b: dw $0dd9  ; 8b - noise voice id + volume scaler
 0c5d: dw $0e13  ; 8c - nop
 0c5f: dw $0cda  ; 8d - loop begin
-0c61: dw $0dcb  ; 8e
-0c63: dw $0dcf  ; 8f
-0c65: dw $0d05  ; 90
-0c67: dw $0d51  ; 91
-0c69: dw $0d56  ; 92
-0c6b: dw $0d69  ; 93
-0c6d: dw $0de5  ; 94
-0c6f: dw $0d96  ; 95
+0c61: dw $0dcb  ; 8e - noise clock modifier
+0c63: dw $0dcf  ; 8f - relative noise clock rate
+0c65: dw $0d05  ; 90 - set flag
+0c67: dw $0d51  ; 91 - set output flag bits
+0c69: dw $0d56  ; 92 - invert volume phase flag
+0c6b: dw $0d69  ; 93 - volume fade
+0c6d: dw $0de5  ; 94 - pitch bend
+0c6f: dw $0d96  ; 95 - jump if volume fade complete
 0c71: dw $0dc7  ; 96 - set tempo
 0c73: dw $0e35  ; 97 - tuning
-0c75: dw $0e25  ; 98
-0c77: dw $0e03  ; 99
-0c79: dw $0e3f  ; 9a
-0c7b: dw $0e52  ; 9b
-0c7d: dw $0dab  ; 9c
-0c7f: dw $0e29  ; 9d
-0c81: dw $0da3  ; 9e
-0c83: dw $0e31  ; 9f - set ADSR
+0c75: dw $0e25  ; 98 - voice id for track
+0c77: dw $0e03  ; 99 - slur toggle + restart envelopes on key on
+0c79: dw $0e3f  ; 9a - subroutine jump
+0c7b: dw $0e52  ; 9b - exit subroutine
+0c7d: dw $0dab  ; 9c - relative transposition by counter
+0c7f: dw $0e29  ; 9d - key off on duration
+0c81: dw $0da3  ; 9e - jump on retrigger for current sound
+0c83: dw $0e31  ; 9f - set ADSR/GAIN
 0c85: dw $0e2d  ; a0 - set sample
 0c87: dw $0e15  ; a1 - slur on
 0c89: dw $0e1d  ; a2 - slur off
-0c8b: dw $0e5f  ; a3
-0c8d: dw $0ea7  ; a4
-0c8f: dw $0ea7  ; a5
-0c91: dw $0ea7  ; a6
-0c93: dw $0eaf  ; a7
-0c95: dw $0eb7  ; a8
-0c97: dw $0ec3  ; a9
-0c99: dw $0ecb  ; aa
+0c8b: dw $0e5f  ; a3 - set panpot envelope
+0c8d: dw $0ea7  ; a4 - pitch modulation on (duplicate)
+0c8f: dw $0ea7  ; a5 - pitch modulation on (duplicate)
+0c91: dw $0ea7  ; a6 - pitch modulation on
+0c93: dw $0eaf  ; a7 - pitch modulation off
+0c95: dw $0eb7  ; a8 - echo parameter set id
+0c97: dw $0ec3  ; a9 - echo on
+0c99: dw $0ecb  ; aa - echo off
 0c9b: dw $0e9a  ; ab - set panpot
-0c9d: dw $0dd5  ; ac
-0c9f: dw $0cc6  ; ad - conditional loop
-0ca1: dw $0ef3  ; ae
-0ca3: dw $0efb  ; af
-0ca5: dw $0ed3  ; b0
+0c9d: dw $0dd5  ; ac - noise clock rate
+0c9f: dw $0cc6  ; ad - loop break
+0ca1: dw $0ef3  ; ae - enable fixed panpot for percussion
+0ca3: dw $0efb  ; af - disable fixed panpot for percussion
+0ca5: dw $0ed3  ; b0 - echo write switch
                 ; b1-bf - crash
 ; vcmd 80 - goto
 0ca7: 5d        mov   x,a
@@ -846,7 +855,7 @@
 0cad: d8 34     mov   $34,x             ; set $34/5 to arg1/2
 0caf: 8d ff     mov   y,#$ff            ; clear reading index
 0cb1: 6f        ret
-; vcmd 81 - jump if (--counter != 0)
+; vcmd 81 - loop end - jump if (--counter != 0)
 0cb2: 60        clrc
 0cb3: 84 2b     adc   a,$2b
 0cb5: 5d        mov   x,a
@@ -859,7 +868,7 @@
 0cc2: 2f e3     bra   $0ca7             ; if (counter != 0) goto arg2/3
 0cc4: fc        inc   y
 0cc5: 6f        ret
-; vcmd AD - jump if (--counter == 0)
+; vcmd AD - loop break - jump if (--counter == 0)
 0cc6: 60        clrc
 0cc7: 84 2b     adc   a,$2b
 0cc9: 5d        mov   x,a
@@ -880,7 +889,7 @@
 0cdf: f7 34     mov   a,($34)+y
 0ce1: d5 00 03  mov   $0300+x,a         ; set loop counter ($0300+X+arg1) to arg2
 0ce4: 6f        ret
-; vcmd 86
+; vcmd 86 - halt + output sound id stopped
 0ce5: f5 4a 04  mov   a,$044a+x
 0ce8: c4 00     mov   $00,a
 ; vcmd 82 - halt
@@ -891,7 +900,7 @@
 0cf0: ae        pop   a
 0cf1: ae        pop   a
 0cf2: 5f 40 09  jmp   $0940
-; vcmd 83 - set vibrato
+; vcmd 83 - set pitch envelope id
 0cf5: d5 3c 03  mov   $033c+x,a
 0cf8: 6f        ret
 ; vcmd 88 - set software volume envelope
@@ -899,10 +908,22 @@
 0cfc: 6f        ret
 ; vcmd 89 - transpose (relative)
 0cfd: 60        clrc
-0cfe: 95 4b 03  adc   a,$034b+x
+0cfe: 95 4b 03  adc   a,$034b+x         ; add arg1 (semitones)
 0d01: d5 4b 03  mov   $034b+x,a
 0d04: 6f        ret
-; vcmd 90
+; vcmd 90 - set flag
+; 00 - stop track
+; %xyzabcde
+; %x - don't fade out this track
+; %y - don't overwrite this track (stops setup of sound that tries to)
+; %z - pause tracks that are of a lower ID than this track
+; %a - slur on
+; %b - note = noise clock rate = internal VxPITCH of $100-$1FF
+; %c - koff dsp write disable on quantization elapse
+; %de...
+;; %00 or %01 - output sample
+;; %10 - output noise
+;; %11 - output sample + noise on different voice
 0d05: d4 80     mov   $80+x,a
 0d07: 6f        ret
 ; vcmd 8A - increase/decrease volume
@@ -920,7 +941,7 @@
 ; vcmd 87 - set volume
 0d1f: d5 1e 03  mov   $031e+x,a
 0d22: 6f        ret
-; vcmd 84
+; vcmd 84 - portamento
 0d23: f0 0f     beq   $0d34
 0d25: d5 a4 04  mov   $04a4+x,a
 0d28: e8 00     mov   a,#$00
@@ -933,7 +954,7 @@
 0d36: 28 f7     and   a,#$f7
 0d38: d4 9e     mov   $9e+x,a
 0d3a: 6f        ret
-; vcmd 85
+; vcmd 85 - execute CPU command
 0d3b: f8 2f     mov   x,$2f
 0d3d: c8 08     cmp   x,#$08
 0d3f: f0 0f     beq   $0d50
@@ -947,22 +968,22 @@
 0d4c: f7 34     mov   a,($34)+y
 0d4e: d4 20     mov   $20+x,a
 0d50: 6f        ret
-; vcmd 91
+; vcmd 91 - set output flag bits
 0d51: 04 00     or    a,$00
 0d53: c4 00     mov   $00,a
 0d55: 6f        ret
-; vcmd 92
+; vcmd 92 - invert volume phase flag
 0d56: 28 03     and   a,#$03
 0d58: c4 38     mov   $38,a
 0d5a: e4 01     mov   a,$01
-0d5c: 28 04     and   a,#$04
+0d5c: 28 04     and   a,#$04            ; check stereo mode
 0d5e: f0 08     beq   $0d68
 0d60: f4 ad     mov   a,$ad+x
 0d62: 28 fc     and   a,#$fc
 0d64: 04 38     or    a,$38
 0d66: d4 ad     mov   $ad+x,a
 0d68: 6f        ret
-; vcmd 93
+; vcmd 93 - volume fade
 0d69: c4 36     mov   $36,a
 0d6b: 28 1f     and   a,#$1f
 0d6d: d5 76 05  mov   $0576+x,a
@@ -985,7 +1006,7 @@
 0d91: 28 df     and   a,#$df
 0d93: d4 8f     mov   $8f+x,a
 0d95: 6f        ret
-; vcmd 95
+; vcmd 95 - jump if volume fade complete
 0d96: f4 8f     mov   a,$8f+x
 0d98: 28 02     and   a,#$02
 0d9a: d0 05     bne   $0da1
@@ -993,13 +1014,13 @@
 0d9e: 5f a7 0c  jmp   $0ca7
 0da1: fc        inc   y
 0da2: 6f        ret
-; vcmd 9E
+; vcmd 9E - jump on retrigger for current sound
 0da3: f4 9e     mov   a,$9e+x
 0da5: 28 20     and   a,#$20
 0da7: d0 f3     bne   $0d9c
 0da9: fc        inc   y
 0daa: 6f        ret
-; vcmd 9C
+; vcmd 9C - relative transposition by counter
 0dab: b5 00 03  sbc   a,$0300+x
 0dae: 2d        push  a
 0daf: fc        inc   y
@@ -1020,24 +1041,24 @@
 ; vcmd 96 - set tempo
 0dc7: d5 5a 03  mov   $035a+x,a
 0dca: 6f        ret
-; vcmd 8E
+; vcmd 8E - noise clock modifier
 0dcb: d5 58 05  mov   $0558+x,a
 0dce: 6f        ret
-; vcmd 8F
+; vcmd 8F - relative noise clock rate
 0dcf: 60        clrc
 0dd0: 95 67 05  adc   a,$0567+x
 0dd3: 28 1f     and   a,#$1f
-; vcmd AC
+; vcmd AC - noise clock rate
 0dd5: d5 67 05  mov   $0567+x,a
 0dd8: 6f        ret
-; vcmd 8B
+; vcmd 8B - noise voice id + volume scaler
 0dd9: 30 03     bmi   $0dde
 0ddb: d5 1d 04  mov   $041d+x,a
 0dde: fc        inc   y
 0ddf: f7 34     mov   a,($34)+y
 0de1: d5 2c 04  mov   $042c+x,a
 0de4: 6f        ret
-; vcmd 94
+; vcmd 94 - pitch bend
 0de5: 30 0c     bmi   $0df3
 0de7: f0 16     beq   $0dff
 0de9: d5 d1 04  mov   $04d1+x,a
@@ -1053,7 +1074,7 @@
 0dfe: 6f        ret
 0dff: d5 d1 04  mov   $04d1+x,a
 0e02: 6f        ret
-; vcmd 99
+; vcmd 99 - slur toggle + restart envelopes on key on
 0e03: f4 80     mov   a,$80+x
 0e05: 48 10     eor   a,#$10
 0e07: d4 80     mov   $80+x,a
@@ -1070,48 +1091,48 @@
 0e17: 08 10     or    a,#$10
 0e19: d4 80     mov   $80+x,a
 0e1b: 2f f0     bra   $0e0d
-; vcmd A1 - slur off
+; vcmd A2 - slur off
 0e1d: f4 80     mov   a,$80+x
 0e1f: 28 ef     and   a,#$ef
 0e21: d4 80     mov   $80+x,a
 0e23: dc        dec   y
 0e24: 6f        ret
-; vcmd 98
+; vcmd 98 - voice id for track
 0e25: d5 69 03  mov   $0369+x,a
 0e28: 6f        ret
-; vcmd 9D
+; vcmd 9D - key off on duration
 0e29: d5 a3 05  mov   $05a3+x,a
 0e2c: 6f        ret
 ; vcmd A0 - set sample
 0e2d: d5 96 03  mov   $0396+x,a
 0e30: 6f        ret
-; vcmd 9F - set ADSR
+; vcmd 9F - set ADSR/GAIN
 0e31: d5 a5 03  mov   $03a5+x,a
 0e34: 6f        ret
-; vcmd 97
+; vcmd 97 - tuning
 0e35: f0 04     beq   $0e3b
 0e37: 60        clrc
 0e38: 95 0e 04  adc   a,$040e+x
 0e3b: d5 0e 04  mov   $040e+x,a
 0e3e: 6f        ret
-; vcmd 9A
+; vcmd 9A - subroutine jump
 0e3f: dd        mov   a,y
 0e40: 80        setc
 0e41: 84 34     adc   a,$34
 0e43: d5 b2 05  mov   $05b2+x,a
 0e46: e4 35     mov   a,$35
 0e48: 88 00     adc   a,#$00
-0e4a: d5 c1 05  mov   $05c1+x,a
+0e4a: d5 c1 05  mov   $05c1+x,a         ; save position
 0e4d: f7 34     mov   a,($34)+y
-0e4f: 5f a7 0c  jmp   $0ca7
-; vcmd 9B
+0e4f: 5f a7 0c  jmp   $0ca7             ; subroutine jump
+; vcmd 9B - exit subroutine
 0e52: f5 b2 05  mov   a,$05b2+x
 0e55: c4 34     mov   $34,a
 0e57: f5 c1 05  mov   a,$05c1+x
-0e5a: c4 35     mov   $35,a
-0e5c: 8d 00     mov   y,#$00
+0e5a: c4 35     mov   $35,a             ; restore position
+0e5c: 8d 00     mov   y,#$00            ; clear reading index
 0e5e: 6f        ret
-; vcmd A3
+; vcmd A3 - set panpot envelope
 0e5f: f0 30     beq   $0e91
 0e61: 1c        asl   a
 0e62: 6d        push  y
@@ -1122,15 +1143,15 @@
 0e6b: fc        inc   y
 0e6c: f7 62     mov   a,($62)+y
 0e6e: d5 77 04  mov   $0477+x,a
-0e71: c4 37     mov   $37,a
+0e71: c4 37     mov   $37,a             ; load panpot envelope address
 0e73: 8d 00     mov   y,#$00
 0e75: f7 36     mov   a,($36)+y
 0e77: ee        pop   y
-0e78: d5 b4 03  mov   $03b4+x,a
+0e78: d5 b4 03  mov   $03b4+x,a         ; set panpot
 0e7b: e4 01     mov   a,$01
-0e7d: 28 04     and   a,#$04
+0e7d: 28 04     and   a,#$04            ; check stereo mode
 0e7f: d0 04     bne   $0e85
-0e81: d5 b4 03  mov   $03b4+x,a
+0e81: d5 b4 03  mov   $03b4+x,a         ; mono, force center
 0e84: 6f        ret
 0e85: f4 8f     mov   a,$8f+x
 0e87: 08 01     or    a,#$01
@@ -1138,31 +1159,32 @@
 0e8b: e8 80     mov   a,#$80
 0e8d: d5 59 04  mov   $0459+x,a
 0e90: 6f        ret
+; 00 - direct
 0e91: f4 8f     mov   a,$8f+x
 0e93: 28 fe     and   a,#$fe
 0e95: d4 8f     mov   $8f+x,a
 0e97: fc        inc   y
-0e98: f7 34     mov   a,($34)+y
+0e98: f7 34     mov   a,($34)+y         ; arg2 - panpot
 ; vcmd AB - set panpot
 0e9a: d5 b4 03  mov   $03b4+x,a
 0e9d: e4 01     mov   a,$01
-0e9f: 28 04     and   a,#$04
+0e9f: 28 04     and   a,#$04            ; check stereo mode
 0ea1: d0 03     bne   $0ea6
 0ea3: d5 b4 03  mov   $03b4+x,a
 0ea6: 6f        ret
-; vcmds A4,A5,A6
+; vcmds A4,A5,A6 - pitch modulation on
 0ea7: f4 9e     mov   a,$9e+x
 0ea9: 08 02     or    a,#$02
 0eab: d4 9e     mov   $9e+x,a
 0ead: dc        dec   y
 0eae: 6f        ret
-; vcmd A7
+; vcmd A7 - pitch modulation off
 0eaf: f4 9e     mov   a,$9e+x
 0eb1: 28 fd     and   a,#$fd
 0eb3: d4 9e     mov   $9e+x,a
 0eb5: dc        dec   y
 0eb6: 6f        ret
-; vcmd A8
+; vcmd A8 - echo parameter set id
 0eb7: 6d        push  y
 0eb8: 3f f9 0a  call  $0af9
 0ebb: ee        pop   y
@@ -1170,19 +1192,19 @@
 0ebe: 08 01     or    a,#$01
 0ec0: d4 9e     mov   $9e+x,a
 0ec2: 6f        ret
-; vcmd A9
+; vcmd A9 - echo on
 0ec3: f4 9e     mov   a,$9e+x
 0ec5: 08 01     or    a,#$01
 0ec7: d4 9e     mov   $9e+x,a
 0ec9: dc        dec   y
 0eca: 6f        ret
-; vcmd AA
+; vcmd AA - echo off
 0ecb: f4 9e     mov   a,$9e+x
 0ecd: 28 fe     and   a,#$fe
 0ecf: d4 9e     mov   $9e+x,a
 0ed1: dc        dec   y
 0ed2: 6f        ret
-; vcmd B0
+; vcmd B0 - echo write switch
 0ed3: f0 09     beq   $0ede
 0ed5: 8f 00 38  mov   $38,#$00
 0ed8: e4 01     mov   a,$01
@@ -1195,16 +1217,16 @@
 0ee7: e4 3e     mov   a,$3e
 0ee9: 28 1f     and   a,#$1f
 0eeb: 04 38     or    a,$38
-0eed: 8f 6c f2  mov   $f2,#$6c
+0eed: 8f 6c f2  mov   $f2,#$6c          ;; DSP reg FLG
 0ef0: c4 f3     mov   $f3,a
 0ef2: 6f        ret
-; vcmd AE
+; vcmd AE - enable fixed panpot for percussion
 0ef3: f4 ad     mov   a,$ad+x
 0ef5: 28 fb     and   a,#$fb
 0ef7: d4 ad     mov   $ad+x,a
 0ef9: dc        dec   y
 0efa: 6f        ret
-; vcmd AF
+; vcmd AF - disable fixed panpot for percussion
 0efb: f4 ad     mov   a,$ad+x
 0efd: 08 04     or    a,#$04
 0eff: d4 ad     mov   $ad+x,a
@@ -1238,31 +1260,32 @@
 0f30: 2f ed     bra   $0f1f             ; do next vcmd
 0f32: 68 de     cmp   a,#$de
 0f34: b0 75     bcs   $0fab             ; vcmds DE-FF
+; vcmds C0-DD, percussion notes
 0f36: a8 bf     sbc   a,#$bf            ; vcmds C0-DD
 0f38: 1c        asl   a
 0f39: 1c        asl   a
-0f3a: 1c        asl   a
+0f3a: 1c        asl   a                 ; percussion index * 8
 0f3b: 6d        push  y
 0f3c: fd        mov   y,a
-0f3d: f7 52     mov   a,($52)+y
+0f3d: f7 52     mov   a,($52)+y         ; +0 SRCN
 0f3f: d5 96 03  mov   $0396+x,a
 0f42: fc        inc   y
-0f43: f7 52     mov   a,($52)+y
+0f43: f7 52     mov   a,($52)+y         ; +1 ADSR/GAIN pattern
 0f45: d5 a5 03  mov   $03a5+x,a
 0f48: fc        inc   y
-0f49: f7 52     mov   a,($52)+y
+0f49: f7 52     mov   a,($52)+y         ; +2 volume envelope #
 0f4b: d5 2d 03  mov   $032d+x,a
 0f4e: fc        inc   y
-0f4f: f7 52     mov   a,($52)+y
+0f4f: f7 52     mov   a,($52)+y         ; +3 pitch envelope # (if +4 AND $80 is not zero)
 0f51: c4 38     mov   $38,a
 0f53: fc        inc   y
-0f54: f7 52     mov   a,($52)+y
-0f56: c4 39     mov   $39,a
-0f58: 28 1f     and   a,#$1f
-0f5a: d5 67 05  mov   $0567+x,a
-0f5d: e4 39     mov   a,$39
-0f5f: 0d        push  psw
-0f60: 28 60     and   a,#$60
+0f54: f7 52     mov   a,($52)+y         ; +4 flags and noise clock
+0f56: c4 39     mov   $39,a             ; %xyzaaaaa
+0f58: 28 1f     and   a,#$1f            ; %aaaaa - noise clock rate
+0f5a: d5 67 05  mov   $0567+x,a         ; %yz...
+0f5d: e4 39     mov   a,$39             ;; %00 or %01 - output sample
+0f5f: 0d        push  psw               ;; %10 - output noise
+0f60: 28 60     and   a,#$60            ;; %11 - output sample + noise on different voice
 0f62: 3c        rol   a
 0f63: 3c        rol   a
 0f64: 3c        rol   a
@@ -1274,7 +1297,7 @@
 0f6e: d4 80     mov   $80+x,a
 0f70: e4 38     mov   a,$38
 0f72: 8e        pop   psw
-0f73: 30 0a     bmi   $0f7f
+0f73: 30 0a     bmi   $0f7f             ; %x - pitch envelope on
 0f75: d5 3c 03  mov   $033c+x,a
 0f78: e8 00     mov   a,#$00
 0f7a: d5 d1 04  mov   $04d1+x,a
@@ -1288,14 +1311,14 @@
 0f8c: 28 04     and   a,#$04
 0f8e: d0 0b     bne   $0f9b
 0f90: e4 01     mov   a,$01
-0f92: 28 04     and   a,#$04
+0f92: 28 04     and   a,#$04            ; check stereo mode
 0f94: f0 02     beq   $0f98
 0f96: f7 52     mov   a,($52)+y
-0f98: d5 b4 03  mov   $03b4+x,a
-0f9b: fc        inc   y
+0f98: d5 b4 03  mov   $03b4+x,a         ; +5 panpot
+0f9b: fc        inc   y                 ; +6 not used?
 0f9c: fc        inc   y
 0f9d: f7 52     mov   a,($52)+y
-0f9f: d0 11     bne   $0fb2
+0f9f: d0 11     bne   $0fb2             ; +7 note number (if not zero)
 0fa1: c4 39     mov   $39,a
 0fa3: ee        pop   y
 0fa4: fc        inc   y
@@ -1314,7 +1337,7 @@
 0fb9: 0d        push  psw
 0fba: e4 39     mov   a,$39             ;; note number?
 0fbc: d5 b3 04  mov   $04b3+x,a
-0fbf: f0 2c     beq   $0fed             ;; jump if ($0540+X == 0) (rest)
+0fbf: f0 2c     beq   $0fed             ;; jump if ($04b3+X == 0) (rest)
 0fc1: 2d        push  a
 0fc2: f4 9e     mov   a,$9e+x
 0fc4: 28 08     and   a,#$08
@@ -1372,7 +1395,7 @@
 1028: e8 00     mov   a,#$00
 102a: d5 f0 03  mov   $03f0+x,a         ; zero duration counter
 102d: 8e        pop   psw
-102e: f0 1a     beq   $104a             ;; jump if ($0540+X == 0) (rest)
+102e: f0 1a     beq   $104a             ;; jump if ($04b3+X == 0) (rest)
 1030: f4 80     mov   a,$80+x
 1032: 28 10     and   a,#$10
 1034: f0 14     beq   $104a
@@ -1383,7 +1406,7 @@
 103e: 28 40     and   a,#$40
 1040: f0 3c     beq   $107e
 1042: e4 3a     mov   a,$3a
-1044: 08 40     or    a,#$40
+1044: 08 40     or    a,#$40            ; set voice bit to write to KON dsp register
 1046: c4 3a     mov   $3a,a
 1048: 2f 34     bra   $107e
 104a: f4 80     mov   a,$80+x
@@ -1394,7 +1417,7 @@
 1054: f0 06     beq   $105c
 1056: e4 3a     mov   a,$3a
 1058: 08 40     or    a,#$40
-105a: c4 3a     mov   $3a,a
+105a: c4 3a     mov   $3a,a             ; set voice bit to write to KON dsp register
 105c: e8 01     mov   a,#$01
 105e: d5 0d 05  mov   $050d+x,a         ; set $050d+X to #$01
 1061: d5 2b 05  mov   $052b+x,a         ; set $052b+X to #$01
@@ -1474,7 +1497,7 @@
 10ec: d4 bc     mov   $bc+x,a
 10ee: d4 cb     mov   $cb+x,a
 10f0: 6f        ret
-; read ADSR from $5c[$03a5+x] to $3b/c
+; read ADSR/GAIN from $5c[$03a5+x] to $42/3
 10f1: f5 a5 03  mov   a,$03a5+x
 10f4: 1c        asl   a
 10f5: b0 0b     bcs   $1102
@@ -1482,15 +1505,15 @@
 10f8: f7 5c     mov   a,($5c)+y
 10fa: c4 42     mov   $42,a
 10fc: fc        inc   y
-10fd: f7 5c     mov   a,($5c)+y
+10fd: f7 5c     mov   a,($5c)+y ;used for both ADSR(2) and GAIN
 10ff: c4 43     mov   $43,a
 1101: 6f        ret
-; reset ADSR if the index >= 0x80
-1102: 8f 00 42  mov   $42,#$00
+; reset ADSR/GAIN if the index = 0x80
+1102: 8f 00 42  mov   $42,#$00  ;force GAIN
 1105: d0 04     bne   $110b
 1107: 8f 7f 43  mov   $43,#$7f
 110a: 6f        ret
-;
+; process GAIN envelope if the index > 0x80
 110b: fd        mov   y,a
 110c: f7 5a     mov   a,($5a)+y
 110e: c4 36     mov   $36,a
@@ -1513,12 +1536,13 @@
 1132: f7 36     mov   a,($36)+y
 1134: c4 43     mov   $43,a
 1136: 6f        ret
-; read software envelope params
-1137: f5 2d 03  mov   a,$032d+x
+; process software volume envelope
+1137: f5 2d 03  mov   a,$032d+x         ; volume envelope #
 113a: d0 06     bne   $1142
 113c: f5 1e 03  mov   a,$031e+x
-113f: c4 2a     mov   $2a,a
+113f: c4 2a     mov   $2a,a             ; constant volume
 1141: 6f        ret
+; read software volume envelope params
 1142: 1c        asl   a
 1143: fd        mov   y,a
 1144: f7 54     mov   a,($54)+y
@@ -1551,7 +1575,8 @@
 1177: 3c        rol   a
 1178: c4 2a     mov   $2a,a
 117a: 6f        ret
-;
+
+; process pitch bend
 117b: c4 38     mov   $38,a
 117d: e4 3a     mov   a,$3a
 117f: 10 0d     bpl   $118e
@@ -1586,7 +1611,8 @@
 11bf: d4 bc     mov   $bc+x,a
 11c1: d4 cb     mov   $cb+x,a
 11c3: 6f        ret
-;
+
+; process portamento
 11c4: f5 b3 04  mov   a,$04b3+x
 11c7: f0 0e     beq   $11d7
 11c9: f4 cb     mov   a,$cb+x
@@ -1642,7 +1668,7 @@
 1231: f5 3c 03  mov   a,$033c+x
 1234: d0 01     bne   $1237
 1236: 6f        ret
-; read vibrato params
+; read pitch envelope
 1237: 1c        asl   a
 1238: fd        mov   y,a
 1239: f7 56     mov   a,($56)+y
@@ -1692,27 +1718,28 @@
 1295: e4 29     mov   a,$29
 1297: d5 cb 00  mov   $00cb+x,a
 129a: 6f        ret
-;
-129b: f5 58 05  mov   a,$0558+x
+
+; process noise clock modifier
+129b: f5 58 05  mov   a,$0558+x ;read noise clock modifier
 129e: 30 30     bmi   $12d0
 12a0: 68 20     cmp   a,#$20
 12a2: b0 09     bcs   $12ad
-12a4: 95 67 05  adc   a,$0567+x
+12a4: 95 67 05  adc   a,$0567+x ;$00-$1f: absolute transposition for noise
 12a7: 28 1f     and   a,#$1f
 12a9: d5 67 05  mov   $0567+x,a
 12ac: 6f        ret
 ;
 12ad: 68 30     cmp   a,#$30
 12af: b0 0b     bcs   $12bc
-12b1: 95 67 05  adc   a,$0567+x
-12b4: 28 0f     and   a,#$0f
+12b1: 95 67 05  adc   a,$0567+x ;$20-$2f: absolute transposition for noise
+12b4: 28 0f     and   a,#$0f    ;(only wrap around the lowest four bits)
 12b6: 08 10     or    a,#$10
 12b8: d5 67 05  mov   $0567+x,a
 12bb: 6f        ret
 ;
-12bc: 60        clrc
-12bd: c4 38     mov   $38,a
-12bf: 95 67 05  adc   a,$0567+x
+12bc: 60        clrc            ;$30-$7f: absolute transposition for noise
+12bd: c4 38     mov   $38,a     ;(using fixed frequency +
+12bf: 95 67 05  adc   a,$0567+x ; only wrap around the lowest three bits)
 12c2: 28 07     and   a,#$07
 12c4: c4 39     mov   $39,a
 12c6: e4 38     mov   a,$38
@@ -1723,12 +1750,12 @@
 ;
 12d0: 1c        asl   a
 12d1: d0 09     bne   $12dc
-12d3: f5 67 05  mov   a,$0567+x
+12d3: f5 67 05  mov   a,$0567+x ;$80 - invert noise frequency
 12d6: 48 1f     eor   a,#$1f
 12d8: d5 67 05  mov   $0567+x,a
 12db: 6f        ret
 ;
-12dc: fd        mov   y,a
+12dc: fd        mov   y,a       ;$81-$ff - noise clock envelope
 12dd: f7 58     mov   a,($58)+y
 12df: c4 36     mov   $36,a
 12e1: fc        inc   y
@@ -1750,59 +1777,67 @@
 1303: f7 36     mov   a,($36)+y
 1305: d5 67 05  mov   $0567+x,a
 1308: 6f        ret
-;
-1309: fc        inc   y
-130a: f7 36     mov   a,($36)+y
+
+; read next envelope value
+1309: fc        inc   y                 ; step
+130a: f7 36     mov   a,($36)+y         ; read new value
 130c: 30 02     bmi   $1310
+; 00-7f - delay x clock pulses
 130e: fc        inc   y
 130f: 6f        ret
 1310: 68 81     cmp   a,#$81
 1312: f0 06     beq   $131a
 1314: b0 0c     bcs   $1322
+; 80 - terminate envelope
 1316: e8 00     mov   a,#$00
 1318: dc        dec   y
 1319: 6f        ret
-;
+; 81 - branch backwards
 131a: dd        mov   a,y
 131b: fc        inc   y
 131c: 80        setc
 131d: b7 36     sbc   a,($36)+y
 131f: fd        mov   y,a
 1320: 2f e8     bra   $130a
+;
 1322: ad 83     cmp   y,#$83
 1324: f0 06     beq   $132c
 1326: b0 0e     bcs   $1336
+; 82 - restart envelope
 1328: 8d 00     mov   y,#$00
 132a: 2f de     bra   $130a
+; 83 - wait for key off
 132c: f4 8f     mov   a,$8f+x
 132e: 28 04     and   a,#$04
 1330: f0 0a     beq   $133c
 1332: e8 01     mov   a,#$01
 1334: 2f e2     bra   $1318
+; 84-ff - branch backwards if not key off
 1336: f4 8f     mov   a,$8f+x
 1338: 28 04     and   a,#$04
 133a: d0 de     bne   $131a
 133c: fc        inc   y
 133d: 2f cb     bra   $130a
-;
+
+; process panpot envelope
 133f: f5 68 04  mov   a,$0468+x
 1342: c4 36     mov   $36,a
 1344: f5 77 04  mov   a,$0477+x
 1347: c4 37     mov   $37,a
 1349: 8d 01     mov   y,#$01
-134b: f7 36     mov   a,($36)+y
+134b: f7 36     mov   a,($36)+y         ; target panpot
 134d: 48 80     eor   a,#$80
 134f: c4 38     mov   $38,a
 1351: f5 b4 03  mov   a,$03b4+x
 1354: 48 80     eor   a,#$80
 1356: c4 39     mov   $39,a
 1358: fc        inc   y
-1359: f7 36     mov   a,($36)+y
+1359: f7 36     mov   a,($36)+y         ; fractional panpot offset per pulse
 135b: 60        clrc
 135c: 95 59 04  adc   a,$0459+x
 135f: d5 59 04  mov   $0459+x,a
 1362: fc        inc   y
-1363: f7 36     mov   a,($36)+y
+1363: f7 36     mov   a,($36)+y         ; panpot offset per pulse
 1365: 30 0e     bmi   $1375
 1367: 84 39     adc   a,$39
 1369: b0 14     bcs   $137f
@@ -1832,7 +1867,7 @@
 1396: d5 77 04  mov   $0477+x,a
 1399: 6f        ret
 139a: fc        inc   y
-139b: f7 36     mov   a,($36)+y
+139b: f7 36     mov   a,($36)+y          ; next panpot envelope ptr
 139d: c4 34     mov   $34,a
 139f: fc        inc   y
 13a0: 17 36     or    a,($36)+y
@@ -1845,7 +1880,7 @@
 13ae: f7 36     mov   a,($36)+y
 13b0: d5 b4 03  mov   $03b4+x,a
 13b3: 2f d6     bra   $138b
-13b5: e4 38     mov   a,$38
+13b5: e4 38     mov   a,$38              ; zero ptr = terminate panpot envelope
 13b7: 48 80     eor   a,#$80
 13b9: d5 b4 03  mov   $03b4+x,a
 13bc: f4 8f     mov   a,$8f+x
@@ -1897,7 +1932,7 @@
 1416: 28 08     and   a,#$08
 1418: f0 1b     beq   $1435
 141a: e4 01     mov   a,$01
-141c: 28 20     and   a,#$20
+141c: 28 20     and   a,#$20            ; check fade flag
 141e: d0 08     bne   $1428
 1420: f4 8f     mov   a,$8f+x
 1422: 28 f7     and   a,#$f7
@@ -1958,13 +1993,13 @@
 1480: c4 38     mov   $38,a
 1482: ae        pop   a
 1483: c4 39     mov   $39,a
-1485: eb 2a     mov   y,$2a
-1487: f6 13 15  mov   a,$1513+y
+1485: eb 2a     mov   y,$2a             ; volume (00-1f)
+1487: f6 13 15  mov   a,$1513+y         ; get actual volume from table
 148a: c4 36     mov   $36,a
 148c: fd        mov   y,a
 148d: f5 b4 03  mov   a,$03b4+x
 1490: 48 80     eor   a,#$80
-1492: cf        mul   ya
+1492: cf        mul   ya                ; mul panpot
 1493: f4 ad     mov   a,$ad+x
 1495: 5c        lsr   a
 1496: c4 37     mov   $37,a
@@ -1973,29 +2008,29 @@
 149b: 90 03     bcc   $14a0
 149d: 48 ff     eor   a,#$ff
 149f: bc        inc   a
-14a0: d6 80 02  mov   $0280+y,a
+14a0: d6 80 02  mov   $0280+y,a         ; set VOL(L)
 14a3: eb 36     mov   y,$36
 14a5: f5 b4 03  mov   a,$03b4+x
 14a8: 48 7f     eor   a,#$7f
-14aa: cf        mul   ya
+14aa: cf        mul   ya                ; mul panpot
 14ab: dd        mov   a,y
 14ac: eb 39     mov   y,$39
 14ae: 4b 37     lsr   $37
 14b0: 90 03     bcc   $14b5
 14b2: 48 ff     eor   a,#$ff
 14b4: bc        inc   a
-14b5: d6 81 02  mov   $0281+y,a
+14b5: d6 81 02  mov   $0281+y,a         ; set VOL(R)
 14b8: e4 28     mov   a,$28
-14ba: d6 82 02  mov   $0282+y,a
+14ba: d6 82 02  mov   $0282+y,a         ; set P(L)
 14bd: e4 29     mov   a,$29
-14bf: d6 83 02  mov   $0283+y,a
+14bf: d6 83 02  mov   $0283+y,a         ; set P(H)
 14c2: f5 96 03  mov   a,$0396+x
-14c5: d6 84 02  mov   $0284+y,a
+14c5: d6 84 02  mov   $0284+y,a         ; set SRCN
 14c8: e4 42     mov   a,$42
-14ca: d6 85 02  mov   $0285+y,a
+14ca: d6 85 02  mov   $0285+y,a         ; set ADSR(1)
 14cd: e4 43     mov   a,$43
-14cf: d6 86 02  mov   $0286+y,a
-14d2: d6 87 02  mov   $0287+y,a
+14cf: d6 86 02  mov   $0286+y,a         ; set ADSR(2)
+14d2: d6 87 02  mov   $0287+y,a         ; set GAIN
 14d5: e4 3b     mov   a,$3b
 14d7: 04 38     or    a,$38
 14d9: c4 3b     mov   $3b,a
@@ -2027,9 +2062,11 @@
 150e: 04 38     or    a,$38
 1510: c4 3d     mov   $3d,a
 1512: 6f        ret
-;
+
+; Pre-adjusted VxVOL table
 1513: db $00,$03,$04,$05,$06,$07,$09,$0a,$0c,$0d,$0f,$12,$14,$17,$1a,$1c
 1523: db $1f,$24,$28,$2d,$31,$36,$3a,$3f,$47,$4f,$57,$5f,$67,$6f,$77,$7f
+
 ;
 1533: db $01,$02,$04,$08,$10,$20,$40,$80
 ;
@@ -2040,11 +2077,11 @@
 1541: c4 36     mov   $36,a
 1543: fc        inc   y
 1544: f7 4e     mov   a,($4e)+y
-1546: c4 37     mov   $37,a
+1546: c4 37     mov   $37,a             ; set sound header address to $36/7 from $4e/f
 1548: 8d 00     mov   y,#$00
-154a: f7 36     mov   a,($36)+y
+154a: f7 36     mov   a,($36)+y         ; header+0: number of tracks
 154c: d0 1f     bne   $156d
-154e: 8d 02     mov   y,#$02
+154e: 8d 02     mov   y,#$02            ; check for forced overwrite for track id
 1550: f7 36     mov   a,($36)+y
 1552: 5d        mov   x,a
 1553: f5 4a 04  mov   a,$044a+x
@@ -2057,11 +2094,11 @@
 1563: f0 04     beq   $1569
 1565: e8 01     mov   a,#$01
 1567: d4 80     mov   $80+x,a
-1569: 8d 01     mov   y,#$01
+1569: 8d 01     mov   y,#$01         ; header+1: number of tracks (if previous track counter was zero)
 156b: f7 36     mov   a,($36)+y
 156d: fc        inc   y
 156e: c4 39     mov   $39,a
-1570: f7 36     mov   a,($36)+y
+1570: f7 36     mov   a,($36)+y      ; +00 track #
 1572: fc        inc   y
 1573: 5d        mov   x,a
 1574: f7 36     mov   a,($36)+y
@@ -2094,50 +2131,50 @@
 15b2: d4 9e     mov   $9e+x,a
 15b4: e4 38     mov   a,$38
 15b6: d5 4a 04  mov   $044a+x,a
-15b9: f7 36     mov   a,($36)+y
+15b9: f7 36     mov   a,($36)+y         ; +01 flags
 15bb: d4 80     mov   $80+x,a
 15bd: fc        inc   y
-15be: f7 36     mov   a,($36)+y
+15be: f7 36     mov   a,($36)+y         ; +02 volume
 15c0: d5 1e 03  mov   $031e+x,a
 15c3: fc        inc   y
-15c4: f7 36     mov   a,($36)+y
+15c4: f7 36     mov   a,($36)+y         ; +03 volume envelope #
 15c6: d5 2d 03  mov   $032d+x,a
 15c9: fc        inc   y
-15ca: f7 36     mov   a,($36)+y
+15ca: f7 36     mov   a,($36)+y         ; +04 pitch envelope #
 15cc: d5 3c 03  mov   $033c+x,a
 15cf: fc        inc   y
-15d0: f7 36     mov   a,($36)+y
+15d0: f7 36     mov   a,($36)+y         ; +05 transpose
 15d2: 60        clrc
 15d3: 84 47     adc   a,$47
 15d5: d5 4b 03  mov   $034b+x,a
 15d8: fc        inc   y
-15d9: f7 36     mov   a,($36)+y
+15d9: f7 36     mov   a,($36)+y         ; +06 tempo
 15db: d5 5a 03  mov   $035a+x,a
 15de: fc        inc   y
-15df: f7 36     mov   a,($36)+y
+15df: f7 36     mov   a,($36)+y         ; +07 voice #
 15e1: d5 69 03  mov   $0369+x,a
 15e4: bc        inc   a
 15e5: 28 07     and   a,#$07
 15e7: d5 1d 04  mov   $041d+x,a
 15ea: fc        inc   y
-15eb: f7 36     mov   a,($36)+y
+15eb: f7 36     mov   a,($36)+y         ; +08 voice reading ptr (lo)
 15ed: d5 78 03  mov   $0378+x,a
 15f0: fc        inc   y
-15f1: f7 36     mov   a,($36)+y
+15f1: f7 36     mov   a,($36)+y         ; +09 voice reading ptr (hi)
 15f3: d5 87 03  mov   $0387+x,a
 15f6: fc        inc   y
-15f7: f7 36     mov   a,($36)+y
+15f7: f7 36     mov   a,($36)+y         ; +10 SRCN
 15f9: d5 96 03  mov   $0396+x,a
 15fc: fc        inc   y
-15fd: f7 36     mov   a,($36)+y
+15fd: f7 36     mov   a,($36)+y         ; +11 ADSR/GAIN pattern #
 15ff: d5 a5 03  mov   $03a5+x,a
 1602: fc        inc   y
 1603: e4 01     mov   a,$01
-1605: 28 04     and   a,#$04
+1605: 28 04     and   a,#$04            ; check stereo mode
 1607: f0 02     beq   $160b
-1609: f7 36     mov   a,($36)+y
+1609: f7 36     mov   a,($36)+y         ; +12 panpot
 160b: d5 b4 03  mov   $03b4+x,a
-160e: fc        inc   y
+160e: fc        inc   y                 ; +13 (not used)
 160f: fc        inc   y
 1610: e8 01     mov   a,#$01
 1612: d5 ff 03  mov   $03ff+x,a         ; set duration to #$01

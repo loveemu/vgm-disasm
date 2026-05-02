@@ -108,6 +108,10 @@
 0611: dw $0637  ; fd
 0613: dw $06d9  ; fe - reset
 0615: dw $06ea  ; ff
+
+0617: db $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01
+0627: db $01,$00,$00,$00,$00,$00,$00,$00,$01,$01,$00,$00,$00,$00,$01,$01
+
 ; CPU cmds FA,FB,FD
 0637: 6f        ret
 ; CPU cmd F1
@@ -532,7 +536,7 @@
 0995: dw $09f9  ; 80 - goto
 0997: dw $0a04  ; 81 - loop end
 0999: dw $0a50  ; 82 - halt
-099b: dw $0a5b  ; 83 - set vibrato
+099b: dw $0a5b  ; 83 - set pitch envelope id
 099d: dw $0a89  ; 84
 099f: dw $0aa1  ; 85
 09a1: dw $0a4b  ; 86
@@ -560,7 +564,7 @@
 09cc: dw $0b13  ; 9c
 09cf: dw $0b96  ; 9d
 09d1: dw $0b0b  ; 9e
-09d3: dw $0bca  ; 9f - set ADSR
+09d3: dw $0bca  ; 9f - set ADSR/GAIN
 09d5: dw $0b9a  ; a0 - set sample
 09d7: dw $0b82  ; a1 - slur on
 09d9: dw $0b8a  ; a2 - slur off
@@ -647,7 +651,7 @@
 0a56: ae        pop   a
 0a57: ae        pop   a
 0a58: 5f 25 08  jmp   $0825
-; vcmd 83 - set vibrato
+; vcmd 83 - set pitch envelope id
 0a5b: d5 40 03  mov   $0340+x,a
 0a5e: 6f        ret
 ; vcmd 88 - set software volume envelope
@@ -873,7 +877,7 @@
 0bc5: d5 80 01  mov   $0180+x,a
 0bc8: ee        pop   y
 0bc9: 6f        ret
-; vcmd 9F - set ADSR
+; vcmd 9F - set ADSR/GAIN
 0bca: d5 b0 03  mov   $03b0+x,a
 0bcd: 6f        ret
 ; vcmd 97 - tuning
@@ -1273,7 +1277,7 @@
 0eb1: d4 d0     mov   $d0+x,a
 0eb3: ee        pop   y
 0eb4: 6f        ret
-; read ADSR from $5e[$03b0+x] to $3b/c
+; read ADSR/GAIN from $5e[$03b0+x] to $3b/c
 0eb5: f5 b0 03  mov   a,$03b0+x
 0eb8: 1c        asl   a
 0eb9: b0 0b     bcs   $0ec6
@@ -1281,10 +1285,10 @@
 0ebc: f7 5e     mov   a,($5e)+y
 0ebe: c4 3b     mov   $3b,a
 0ec0: fc        inc   y
-0ec1: f7 5e     mov   a,($5e)+y
+0ec1: f7 5e     mov   a,($5e)+y ;used for both ADSR(2) and GAIN
 0ec3: c4 3c     mov   $3c,a
 0ec5: 6f        ret
-; reset ADSR if the index >= 0x80
+; reset ADSR/GAIN if the index = 0x80
 0ec6: 8f 00 3b  mov   $3b,#$00
 0ec9: d0 04     bne   $0ecf
 0ecb: 8f 7f 3c  mov   $3c,#$7f
@@ -1474,7 +1478,7 @@
 102f: f5 40 03  mov   a,$0340+x
 1032: d0 01     bne   $1035
 1034: 6f        ret
-; read vibrato params
+; read pitch envelope
 1035: 1c        asl   a
 1036: fd        mov   y,a
 1037: f7 58     mov   a,($58)+y
