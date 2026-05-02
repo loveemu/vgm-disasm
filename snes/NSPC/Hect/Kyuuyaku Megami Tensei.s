@@ -531,6 +531,7 @@
 0b55: 3f 11 09  call  $0911
 0b58: 6f        ret
 
+; dispatch subcmd (ff)
 0b59: 3f 7e 0b  call  $0b7e
 0b5c: 1c        asl   a
 0b5d: fd        mov   y,a
@@ -559,7 +560,7 @@
 0b86: fd        mov   y,a
 0b87: 6f        ret
 
-; vcmd e0
+; vcmd e0 - set instrument
 0b88: d5 11 02  mov   $0211+x,a
 0b8b: fd        mov   y,a
 0b8c: 10 08     bpl   $0b96
@@ -610,7 +611,7 @@
 0be2: d5 20 02  mov   $0220+x,a
 0be5: 6f        ret
 
-; vcmd e1
+; vcmd e1 - pan
 0be6: 2d        push  a
 0be7: f5 00 04  mov   a,$0400+x
 0bea: 68 01     cmp   a,#$01
@@ -629,7 +630,7 @@
 0c06: d5 20 03  mov   $0320+x,a
 0c09: 6f        ret
 
-; vcmd e2
+; vcmd e2 - pan fade
 0c0a: d4 6d     mov   $6d+x,a
 0c0c: 2d        push  a
 0c0d: 3f 7e 0b  call  $0b7e
@@ -643,19 +644,19 @@
 0c1f: d5 31 03  mov   $0331+x,a
 0c22: 6f        ret
 
-; vcmd e3
+; vcmd e3 - vibrato on
 0c23: d5 70 02  mov   $0270+x,a
 0c26: 3f 7e 0b  call  $0b7e
 0c29: d5 61 02  mov   $0261+x,a
 0c2c: 3f 7e 0b  call  $0b7e
-; vcmd e4
+; vcmd e4 - vibrato off
 0c2f: d4 8d     mov   $8d+x,a
 0c31: d5 81 02  mov   $0281+x,a
 0c34: e8 00     mov   a,#$00
 0c36: d5 71 02  mov   $0271+x,a
 0c39: 6f        ret
 
-; vcmd f0
+; vcmd f0 - vibrato fade
 0c3a: d5 71 02  mov   $0271+x,a
 0c3d: 2d        push  a
 0c3e: 8d 00     mov   y,#$00
@@ -666,12 +667,12 @@
 0c46: d5 80 02  mov   $0280+x,a
 0c49: 6f        ret
 
-; vcmd e5
+; vcmd e5 - master volume
 0c4a: e8 00     mov   a,#$00
 0c4c: da 4f     movw  $4f,ya
 0c4e: 6f        ret
 
-; vcmd e6
+; vcmd e6 - master volume fade
 0c4f: c4 58     mov   $58,a
 0c51: 3f 7e 0b  call  $0b7e
 0c54: c4 59     mov   $59,a
@@ -682,7 +683,7 @@
 0c5e: da 51     movw  $51,ya
 0c60: 6f        ret
 
-; vcmd e7
+; vcmd e7 - tempo
 0c61: f5 00 04  mov   a,$0400+x
 0c64: d0 05     bne   $0c6b
 0c66: e8 00     mov   a,#$00
@@ -702,7 +703,7 @@
 0c79: c4 5a     mov   $5a,a
 0c7b: 3f f7 1a  call  $1af7
 0c7e: 2f 0c     bra   $0c8c
-; vcmd e8
+; vcmd e8 - tempo fade
 0c80: 2d        push  a
 0c81: f5 00 04  mov   a,$0400+x
 0c84: d0 15     bne   $0c9b
@@ -747,27 +748,27 @@
 0ccd: ce        pop   x
 0cce: 6f        ret
 
-; vcmd e9
+; vcmd e9 - global transpose
 0ccf: c4 33     mov   $33,a
 0cd1: 6f        ret
 
-; vcmd ea
+; vcmd ea - per-voice transpose
 0cd2: d5 b0 02  mov   $02b0+x,a
 0cd5: 6f        ret
 
-; vcmd eb
+; vcmd eb - tremolo on
 0cd6: d5 a0 02  mov   $02a0+x,a
 0cd9: 3f 7e 0b  call  $0b7e
 0cdc: d5 91 02  mov   $0291+x,a
 0cdf: 3f 7e 0b  call  $0b7e
-; vcmd ec
+; vcmd ec - tremolo off
 0ce2: d4 9d     mov   $9d+x,a
 0ce4: 6f        ret
 
-; vcmd f1
+; vcmd f1 - pitch envelope (release)
 0ce5: e8 01     mov   a,#$01
 0ce7: 2f 02     bra   $0ceb
-; vcmd f2
+; vcmd f2 - pitch envelope (attack)
 0ce9: e8 00     mov   a,#$00
 0ceb: d5 50 02  mov   $0250+x,a
 0cee: dd        mov   a,y
@@ -778,11 +779,11 @@
 0cfb: d5 51 02  mov   $0251+x,a
 0cfe: 6f        ret
 
-; vcmd f3
+; vcmd f3 - pitch envelope off
 0cff: d5 40 02  mov   $0240+x,a
 0d02: 6f        ret
 
-; vcmd ed
+; vcmd ed - volume
 0d03: d5 d1 02  mov   $02d1+x,a
 0d06: d5 21 06  mov   $0621+x,a
 0d09: 3f 89 14  call  $1489
@@ -791,7 +792,7 @@
 0d11: d5 20 06  mov   $0620+x,a
 0d14: 6f        ret
 
-; vcmd ee
+; vcmd ee - volume fade
 0d15: d4 6c     mov   $6c+x,a
 0d17: 2d        push  a
 0d18: 3f 7e 0b  call  $0b7e
@@ -805,12 +806,12 @@
 0d2a: d5 01 03  mov   $0301+x,a
 0d2d: 6f        ret
 
-; vcmd f4
+; vcmd f4 - tuning
 0d2e: d5 71 03  mov   $0371+x,a
-; vcmd ef
+; vcmd ef - nop
 0d31: 6f        ret
 
-; vcmd f5
+; vcmd f5 - echo vbits/volume
 0d32: 2d        push  a
 0d33: f5 00 04  mov   a,$0400+x
 0d36: d0 1b     bne   $0d53
@@ -832,7 +833,7 @@
 0d54: 05 2e 00  or    a,$002e
 0d57: c5 2e 00  mov   $002e,a
 0d5a: 2f e2     bra   $0d3e
-; vcmd f8
+; vcmd f8 - echo volume fade
 0d5c: c4 3c     mov   $3c,a
 0d5e: 3f 7e 0b  call  $0b7e
 0d61: c4 3d     mov   $3d,a
@@ -850,13 +851,13 @@
 0d7a: da 3a     movw  $3a,ya
 0d7c: 6f        ret
 
-; vcmd f6
+; vcmd f6 - disable echo
 0d7d: da 34     movw  $34,ya
 0d7f: da 36     movw  $36,ya
 0d81: a2 2c     set5  $2c
 0d83: 6f        ret
 
-; vcmd f7
+; vcmd f7 - set echo params
 0d84: 3f a6 0d  call  $0da6
 0d87: 3f 7e 0b  call  $0b7e
 0d8a: c4 32     mov   $32,a
@@ -916,7 +917,7 @@
 0df4: 8d 6d     mov   y,#$6d
 0df6: 5f 19 09  jmp   $0919
 
-; vcmd fa
+; vcmd fa - set perc patch base
 0df9: c4 57     mov   $57,a
 0dfb: 6f        ret
 
@@ -927,7 +928,7 @@
 0e04: d0 2d     bne   $0e33
 0e06: 3f 80 0b  call  $0b80
 0e09: 3f 7e 0b  call  $0b7e
-; vcmd f9
+; vcmd f9 - pitch slide
 0e0c: d4 7d     mov   $7d+x,a
 0e0e: 3f 7e 0b  call  $0b7e
 0e11: d4 7c     mov   $7c+x,a
@@ -1294,33 +1295,33 @@
 10ee: db $35,$37,$32,$2e,$2c,$29,$04,$2d,$2f,$2a
 
 ; vcmd dispatch table
-10f8: dw $0b88  ; e0
-10fa: dw $0be6  ; e1
-10fc: dw $0c0a  ; e2
-10fe: dw $0c23  ; e3
-1100: dw $0c2f  ; e4
-1102: dw $0c4a  ; e5
-1104: dw $0c4f  ; e6
-1106: dw $0c61  ; e7
-1108: dw $0c80  ; e8
-110a: dw $0ccf  ; e9
-110c: dw $0cd2  ; ea
-110e: dw $0cd6  ; eb
-1110: dw $0ce2  ; ec
-1112: dw $0d03  ; ed
-1114: dw $0d15  ; ee
-1116: dw $0d31  ; ef
-1118: dw $0c3a  ; f0
-111a: dw $0ce5  ; f1
-111c: dw $0ce9  ; f2
-111e: dw $0cff  ; f3
-1120: dw $0d2e  ; f4
-1122: dw $0d32  ; f5
-1124: dw $0d7d  ; f6
-1126: dw $0d84  ; f7
-1128: dw $0d5c  ; f8
-112a: dw $0e0c  ; f9
-112c: dw $0df9  ; fa
+10f8: dw $0b88  ; e0 - set instrument
+10fa: dw $0be6  ; e1 - pan
+10fc: dw $0c0a  ; e2 - pan fade
+10fe: dw $0c23  ; e3 - vibrato on
+1100: dw $0c2f  ; e4 - vibrato off
+1102: dw $0c4a  ; e5 - master volume
+1104: dw $0c4f  ; e6 - master volume fade
+1106: dw $0c61  ; e7 - tempo
+1108: dw $0c80  ; e8 - tempo fade
+110a: dw $0ccf  ; e9 - global transpose
+110c: dw $0cd2  ; ea - per-voice transpose
+110e: dw $0cd6  ; eb - tremolo on
+1110: dw $0ce2  ; ec - tremolo off
+1112: dw $0d03  ; ed - volume
+1114: dw $0d15  ; ee - volume fade
+1116: dw $0d31  ; ef - nop
+1118: dw $0c3a  ; f0 - vibrato fade
+111a: dw $0ce5  ; f1 - pitch envelope (release)
+111c: dw $0ce9  ; f2 - pitch envelope (attack)
+111e: dw $0cff  ; f3 - pitch envelope off
+1120: dw $0d2e  ; f4 - tuning
+1122: dw $0d32  ; f5 - echo vbits/volume
+1124: dw $0d7d  ; f6 - disable echo
+1126: dw $0d84  ; f7 - set echo params
+1128: dw $0d5c  ; f8 - echo volume fade
+112a: dw $0e0c  ; f9 - pitch slide
+112c: dw $0df9  ; fa - set perc patch base
 
 ; vcmd length table
 112e: db $01,$01,$02,$03,$00,$01,$02,$01
@@ -1400,28 +1401,31 @@
 11da: 3f 3a 0f  call  $0f3a
 11dd: 5f fc 0d  jmp   $0dfc
 
-11e0: dw $12b1
-11e2: dw $12b7
-11e4: dw $12c4
-11e6: dw $12cf
-11e8: dw $12d5
-11ea: dw $1290
-11ec: dw $12a6
-11ee: dw $1286
-11f0: dw $1273
-11f2: dw $1277
-11f4: dw $126d
-11f6: dw $1244
-11f8: dw $124e
-11fa: dw $1258
-11fc: dw $120a
-11fe: dw $1200
+; subcmd dispatch table
+11e0: dw $12b1 ; 00 - set attack rate
+11e2: dw $12b7 ; 01 - set decay rate
+11e4: dw $12c4 ; 02 - set sustain level
+11e6: dw $12cf ; 03 - set release rate
+11e8: dw $12d5 ; 04 - set sustain rate
+11ea: dw $1290 ; 05 - call subroutine
+11ec: dw $12a6 ; 06 - return from subroutine
+11ee: dw $1286 ; 07 - jump
+11f0: dw $1273 ; 08 - repeat count
+11f2: dw $1277 ; 09 - conditional loop
+11f4: dw $126d ; 0a
+11f6: dw $1244 ; 0b - set pan value (1)
+11f8: dw $124e ; 0c - set pan value (2)
+11fa: dw $1258 ; 0d - set reverb
+11fc: dw $120a ; 0e - surround volume
+11fe: dw $1200 ; 0f - subtract volume
 
+; subcmd 0f - subtract volume
 1200: d5 5c 06  mov   $065c+x,a
 1203: 3f 7e 0b  call  $0b7e
 1206: d5 5d 06  mov   $065d+x,a
 1209: 6f        ret
 
+; subcmd 0e - surround volume
 120a: 2d        push  a
 120b: e5 81 06  mov   a,$0681
 120e: f0 1f     beq   $122f
@@ -1451,16 +1455,19 @@
 1240: 3f 19 09  call  $0919
 1243: 6f        ret
 
+; subcmd 0b - set pan value (1)
 1244: f5 40 15  mov   a,$1540+x
 1247: 05 2d 00  or    a,$002d
 124a: c5 2d 00  mov   $002d,a
 124d: 6f        ret
 
+; subcmd 0c - set pan value (2)
 124e: e5 2d 00  mov   a,$002d
 1251: 35 3f 15  and   a,$153f+x
 1254: c5 2d 00  mov   $002d,a
 1257: 6f        ret
 
+; subcmd 0d - set reverb
 1258: c5 89 06  mov   $0689,a
 125b: 2d        push  a
 125c: e5 2c 00  mov   a,$002c
@@ -1472,13 +1479,16 @@
 1269: c5 2c 00  mov   $002c,a
 126c: 6f        ret
 
+; subcmd 0a
 126d: e8 01     mov   a,#$01
 126f: c5 4a 06  mov   $064a,a
 1272: 6f        ret
 
+; subcmd 08 - repeat count
 1273: d5 f0 03  mov   $03f0+x,a
 1276: 6f        ret
 
+; subcmd 09 - conditional loop
 1277: 2d        push  a
 1278: f5 f0 03  mov   a,$03f0+x
 127b: 9c        dec   a
@@ -1488,6 +1498,7 @@
 1282: 5f 7e 0b  jmp   $0b7e
 
 1285: ae        pop   a
+; subcmd 07 - jump
 1286: 2d        push  a
 1287: 3f 7e 0b  call  $0b7e
 128a: d4 15     mov   $15+x,a
@@ -1495,6 +1506,7 @@
 128d: d4 14     mov   $14+x,a
 128f: 6f        ret
 
+; subcmd 05 - call subroutine
 1290: 2d        push  a
 1291: 3f 7e 0b  call  $0b7e
 1294: 2d        push  a
@@ -1508,16 +1520,19 @@
 12a3: d4 14     mov   $14+x,a
 12a5: 6f        ret
 
+; subcmd 06 - return from subroutine
 12a6: f5 e0 03  mov   a,$03e0+x
 12a9: d4 14     mov   $14+x,a
 12ab: f5 e1 03  mov   a,$03e1+x
 12ae: d4 15     mov   $15+x,a
 12b0: 6f        ret
 
+; subcmd 00 - set attack rate
 12b1: 28 0f     and   a,#$0f
 12b3: d5 80 03  mov   $0380+x,a
 12b6: 6f        ret
 
+; subcmd 01 - set decay rate
 12b7: 1c        asl   a
 12b8: 1c        asl   a
 12b9: 1c        asl   a
@@ -1528,6 +1543,7 @@
 12c0: d5 90 03  mov   $0390+x,a
 12c3: 6f        ret
 
+; subcmd 02 - set sustain level
 12c4: 1c        asl   a
 12c5: 1c        asl   a
 12c6: 1c        asl   a
@@ -1537,10 +1553,12 @@
 12cb: d5 a0 03  mov   $03a0+x,a
 12ce: 6f        ret
 
+; subcmd 03 - set release rate
 12cf: 28 1f     and   a,#$1f
 12d1: d5 b0 03  mov   $03b0+x,a
 12d4: 6f        ret
 
+; subcmd 04 - set sustain rate
 12d5: 28 1f     and   a,#$1f
 12d7: d5 c0 03  mov   $03c0+x,a
 12da: 6f        ret
@@ -2308,22 +2326,22 @@
 19f7: db $01,$03,$03,$00,$01,$03,$00,$03
 19ff: db $03,$03,$01
 
-1a02: dw $1aa8
-1a04: dw $1aae
-1a06: dw $1abb
-1a08: dw $1ac6
-1a0a: dw $1acc
-1a0c: dw $1a6a
-1a0e: dw $1a80
-1a10: dw $1a9a
-1a12: dw $1aa4
-1a14: dw $1a8b
-1a16: dw $126d
-1a18: dw $1a2c
-1a1a: dw $1a36
-1a1c: dw $1a40
-1a1e: dw $1a44
-1a20: dw $1a22
+1a02: dw $1aa8 ; 00
+1a04: dw $1aae ; 01
+1a06: dw $1abb ; 02
+1a08: dw $1ac6 ; 03
+1a0a: dw $1acc ; 04
+1a0c: dw $1a6a ; 05
+1a0e: dw $1a80 ; 06
+1a10: dw $1a9a ; 07
+1a12: dw $1aa4 ; 08
+1a14: dw $1a8b ; 09
+1a16: dw $126d ; 0a
+1a18: dw $1a2c ; 0b
+1a1a: dw $1a36 ; 0c
+1a1c: dw $1a40 ; 0d
+1a1e: dw $1a44 ; 0e
+1a20: dw $1a22 ; 0f
 
 1a22: d5 6c 06  mov   $066c+x,a
 1a25: 3f 7e 0b  call  $0b7e

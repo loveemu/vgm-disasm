@@ -1,7 +1,7 @@
 0600: 20        clrp
 0601: cd ff     mov   x,#$ff
 0603: bd        mov   sp,x
-0604: e8 00     mov   a,#$00
+0604: e8 00     mov   a,#$005
 0606: fd        mov   y,a
 0607: da f4     movw  $f4,ya
 0609: da f6     movw  $f6,ya
@@ -721,47 +721,48 @@
 0b87: 6f        ret
 
 ; vcmd dispatch table
-0b88: dw $1174  ; d8
-0b8a: dw $10ec  ; d9
-0b8c: dw $10d4  ; da
-0b8e: dw $11a8  ; db
-0b90: dw $11c9  ; dc
-0b92: dw $11e7  ; dd
-0b94: dw $11f8  ; de
+0b88: dw $1174  ; d8 - set channel parameters
+0b8a: dw $10ec  ; d9 - command with voice
+0b8c: dw $10d4  ; da - jump
+0b8e: dw $11a8  ; db - set ASDR and GAIN
+0b90: dw $11c9  ; dc - set pitch
+0b92: dw $11e7  ; dd - set ASDR and GAIN (2)
+0b94: dw $11f8  ; de - long note
 0b96: dw $1208  ; df
-0b98: dw $124f  ; e0
-0b9a: dw $128e  ; e1
-0b9c: dw $12b5  ; e2
-0b9e: dw $13b6  ; e3
-0ba0: dw $13eb  ; e4
-0ba2: dw $1308  ; e5
-0ba4: dw $133c  ; e6
-0ba6: dw $12c1  ; e7
-0ba8: dw $12e1  ; e8
-0baa: dw $12b5  ; e9
-0bac: dw $12bb  ; ea
-0bae: dw $1106  ; eb
-0bb0: dw $1125  ; ec
-0bb2: dw $134a  ; ed
-0bb4: dw $135b  ; ee
-0bb6: dw $14b1  ; ef
-0bb8: dw $13e0  ; f0
-0bba: dw $13fe  ; f1
-0bbc: dw $13fe  ; f2
-0bbe: dw $13f3  ; f3
-0bc0: dw $1387  ; f4
-0bc2: dw $1571  ; f5
-0bc4: dw $1150  ; f6
-0bc6: dw $1593  ; f7
-0bc8: dw $1628  ; f8
-0bca: dw $1422  ; f9
-0bcc: dw $138d  ; fa
+0b98: dw $124f  ; e0 - set instrument
+0b9a: dw $128e  ; e1 - pan
+0b9c: dw $12b5  ; e2 - global transpose
+0b9e: dw $13b6  ; e3 - vibrato on
+0ba0: dw $13eb  ; e4 - vibrato off
+0ba2: dw $1308  ; e5 - master volume
+0ba4: dw $133c  ; e6 - master volume fade
+0ba6: dw $12c1  ; e7 - tempo
+0ba8: dw $12e1  ; e8 - tempo fade
+0baa: dw $12b5  ; e9 - global transpose
+0bac: dw $12bb  ; ea - per-voice transpose
+0bae: dw $1106  ; eb - repeat start
+0bb0: dw $1125  ; ec - repeat end
+0bb2: dw $134a  ; ed - volume
+0bb4: dw $135b  ; ee - volume fade
+0bb6: dw $14b1  ; ef - call subroutine
+0bb8: dw $13e0  ; f0 - vibrato fade
+0bba: dw $13fe  ; f1 - pitch envelope
+0bbc: dw $13fe  ; f2 - pitch envelope
+0bbe: dw $13f3  ; f3 - pitch envelope off
+0bc0: dw $1387  ; f4 - tuning
+0bc2: dw $1571  ; f5 - echo vbits/volume
+0bc4: dw $1150  ; f6 - set GAIN
+0bc6: dw $1593  ; f7 - set echo params
+0bc8: dw $1628  ; f8 - echo start/delay
+0bca: dw $1422  ; f9 - pitch slide
+0bcc: dw $138d  ; fa - set perc patch base
 0bce: dw $137f  ; fb
-0bd0: dw $1628  ; fc
-0bd2: dw $1502  ; fd
+0bd0: dw $1628  ; fc - echo start/delay
+0bd2: dw $1502  ; fd - sub-command
+0bd4: dw $0bd8  ; fe
+0bd6: dw $113e  ; ff
 
-0bd4: d8 0b     mov   $0b,x
-0bd6: 3e 11     cmp   x,$11
+; vcmd fe
 0bd8: fc        inc   y
 0bd9: f7 0a     mov   a,($0a)+y
 0bdb: 68 04     cmp   a,#$04
@@ -1420,7 +1421,7 @@
 10d0: fa 00 4b  mov   ($4b),($00)
 10d3: 6f        ret
 
-; vcmd da
+; vcmd da - jump
 10d4: e4 df     mov   a,$df
 10d6: d0 0f     bne   $10e7
 10d8: fc        inc   y
@@ -1438,7 +1439,7 @@
 10e9: cb 03     mov   $03,y
 10eb: 6f        ret
 
-; vcmd d9
+; vcmd d9 - command with voice
 10ec: 4f f8     pcall $f8
 10ee: 4d        push  x
 10ef: c4 5a     mov   $5a,a
@@ -1458,7 +1459,7 @@
 1103: d8 5a     mov   $5a,x
 1105: 6f        ret
 
-; vcmd eb
+; vcmd eb - repeat start
 1106: 4f f0     pcall $f0
 1108: 10 06     bpl   $1110
 110a: 68 ff     cmp   a,#$ff
@@ -1476,7 +1477,7 @@
 1121: d5 cf 21  mov   $21cf+x,a
 1124: 6f        ret
 
-; vcmd ec
+; vcmd ec - repeat end
 1125: f8 5a     mov   x,$5a
 1127: f5 db 21  mov   a,$21db+x
 112a: f0 11     beq   $113d
@@ -1489,6 +1490,7 @@
 113a: 8f ff 03  mov   $03,#$ff
 113d: 6f        ret
 
+; vcmd ff
 113e: 4f f0     pcall $f0
 1140: d0 07     bne   $1149
 1142: f4 28     mov   a,$28+x
@@ -1501,7 +1503,7 @@
 114d: d4 28     mov   $28+x,a
 114f: 6f        ret
 
-; vcmd f6
+; vcmd f6 - set GAIN
 1150: 4f f8     pcall $f8
 1152: f0 1b     beq   $116f
 1154: d4 cf     mov   $cf+x,a
@@ -1524,7 +1526,7 @@
 1171: cb 03     mov   $03,y
 1173: 6f        ret
 
-; vcmd d8
+; vcmd d8 - set channel parameters
 1174: 4f f0     pcall $f0
 1176: d0 14     bne   $118c
 1178: f4 34     mov   a,$34+x
@@ -1554,7 +1556,7 @@
 11a5: c4 f3     mov   $f3,a
 11a7: 6f        ret
 
-; vcmd db
+; vcmd db - set ASDR and GAIN
 11a8: f8 5b     mov   x,$5b
 11aa: fc        inc   y
 11ab: cb 03     mov   $03,y
@@ -1573,7 +1575,7 @@
 11c7: ae        pop   a
 11c8: 6f        ret
 
-; vcmd dc
+; vcmd dc - set pitch
 11c9: f8 5b     mov   x,$5b
 11cb: fc        inc   y
 11cc: f7 0a     mov   a,($0a)+y
@@ -1590,7 +1592,7 @@
 11e5: ae        pop   a
 11e6: 6f        ret
 
-; vcmd dd
+; vcmd dd - set ASDR and GAIN (2)
 11e7: 4f f0     pcall $f0
 11e9: 5f b8 11  jmp   $11b8
 
@@ -1602,14 +1604,14 @@
 11f5: db 20     mov   $20+x,y
 11f7: 6f        ret
 
-; vcmd de
+; vcmd de - long note
 11f8: 4f f8     pcall $f8
-11fa: d5 e3 20  mov   $20e3+x,a
+11fa: d5 e3 20  mov   $20e3+x,a		; lower byte of length
 11fd: fc        inc   y
 11fe: f7 0a     mov   a,($0a)+y
-1200: d5 ef 20  mov   $20ef+x,a
+1200: d5 ef 20  mov   $20ef+x,a		; higher byte of length
 1203: cb 03     mov   $03,y
-1205: 5f 2c 0f  jmp   $0f2c
+1205: 5f 2c 0f  jmp   $0f2c		; get quantization
 
 ; vcmd df
 1208: f8 5a     mov   x,$5a
@@ -1652,7 +1654,7 @@
 124b: 8f ff 03  mov   $03,#$ff
 124e: 6f        ret
 
-; vcmd e0
+; vcmd e0 - set instrument
 124f: f8 5a     mov   x,$5a
 1251: e8 ff     mov   a,#$ff
 1253: d5 30 21  mov   $2130+x,a
@@ -1684,7 +1686,7 @@
 128a: d5 06 ff  mov   $ff06+x,a
 128d: 6f        ret
 
-; vcmd e1
+; vcmd e1 - pan
 128e: f8 5a     mov   x,$5a
 1290: e8 00     mov   a,#$00
 1292: d5 48 21  mov   $2148+x,a
@@ -1704,17 +1706,17 @@
 12b1: d5 54 21  mov   $2154+x,a
 12b4: 6f        ret
 
-; vcmd e2,e9
+; vcmd e2,e9 - global transpose
 12b5: 4f f2     pcall $f2
 12b7: c5 1f 21  mov   $211f,a
 12ba: 6f        ret
 
-; vcmd ea
+; vcmd ea - per-voice transpose
 12bb: 4f f0     pcall $f0
 12bd: d5 21 21  mov   $2121+x,a
 12c0: 6f        ret
 
-; vcmd e7
+; vcmd e7 - tempo
 12c1: 4f f2     pcall $f2
 12c3: 5d        mov   x,a
 12c4: e8 36     mov   a,#$36
@@ -1731,7 +1733,7 @@
 12dd: fa 4a f1  mov   ($f1),($4a)
 12e0: 6f        ret
 
-; vcmd e8
+; vcmd e8 - tempo fade
 12e1: e8 00     mov   a,#$00
 12e3: c5 eb 1f  mov   $1feb,a
 12e6: fc        inc   y
@@ -1751,7 +1753,7 @@
 1304: cc ee 1f  mov   $1fee,y
 1307: 6f        ret
 
-; vcmd e5
+; vcmd e5 - master volume
 1308: e5 79 21  mov   a,$2179
 130b: d0 2b     bne   $1338
 130d: 4f f2     pcall $f2
@@ -1780,7 +1782,7 @@
 1339: cb 03     mov   $03,y
 133b: 6f        ret
 
-; vcmd e6
+; vcmd e6 - master volume fade
 133c: e5 79 21  mov   a,$2179
 133f: d0 f7     bne   $1338
 1341: fc        inc   y
@@ -1789,7 +1791,7 @@
 1345: 4f f2     pcall $f2
 1347: 5f 96 10  jmp   $1096
 
-; vcmd ed
+; vcmd ed - volume
 134a: 4f f0     pcall $f0
 134c: d5 9c ff  mov   $ff9c+x,a
 134f: d5 78 ff  mov   $ff78+x,a
@@ -1799,7 +1801,7 @@
 1358: d4 ab     mov   $ab+x,a
 135a: 6f        ret
 
-; vcmd ee
+; vcmd ee - volume fade
 135b: 4f f8     pcall $f8
 135d: d5 6c ff  mov   $ff6c+x,a
 1360: 2d        push  a
@@ -1824,12 +1826,12 @@
 1383: d5 3c 21  mov   $213c+x,a
 1386: 6f        ret
 
-; vcmd f4
+; vcmd f4 - tuning
 1387: 4f f0     pcall $f0
 1389: d5 13 21  mov   $2113+x,a
 138c: 6f        ret
 
-; vcmd fa
+; vcmd fa - set perc patch base
 138d: 4f f2     pcall $f2
 138f: 30 04     bmi   $1395
 1391: c5 2f 21  mov   $212f,a
@@ -1854,7 +1856,7 @@
 13b2: c5 00 00  mov   $0000,a
 13b5: 6f        ret
 
-; vcmd e3
+; vcmd e3 - vibrato on
 13b6: 4f f8     pcall $f8
 13b8: d5 1b 01  mov   $011b+x,a
 13bb: fc        inc   y
@@ -1875,27 +1877,27 @@
 13dc: d5 0f 01  mov   $010f+x,a
 13df: 6f        ret
 
-; vcmd f0
+; vcmd f0 - vibrato fade
 13e0: 4f f8     pcall $f8
 13e2: d5 93 01  mov   $0193+x,a
 13e5: 4f f2     pcall $f2
 13e7: d5 9f 01  mov   $019f+x,a
 13ea: 6f        ret
 
-; vcmd e4
+; vcmd e4 - vibrato off
 13eb: f8 5a     mov   x,$5a
 13ed: e8 00     mov   a,#$00
 13ef: d5 03 01  mov   $0103+x,a
 13f2: 6f        ret
 
-; vcmd f3
+; vcmd f3 - pitch envelope off
 13f3: f8 5a     mov   x,$5a
 13f5: e8 00     mov   a,#$00
 13f7: d5 b7 01  mov   $01b7+x,a
 13fa: d5 0f 01  mov   $010f+x,a
 13fd: 6f        ret
 
-; vcmd f1,f2
+; vcmd f1,f2 - pitch envelope
 13fe: f8 5a     mov   x,$5a
 1400: e8 f1     mov   a,#$f1
 1402: d5 0f 01  mov   $010f+x,a
@@ -1914,7 +1916,7 @@
 141e: d5 03 01  mov   $0103+x,a
 1421: 6f        ret
 
-; vcmd f9
+; vcmd f9 - pitch slide
 1422: f8 5a     mov   x,$5a
 1424: f4 28     mov   a,$28+x
 1426: 10 4f     bpl   $1477
@@ -1980,7 +1982,7 @@
 14ad: d5 03 01  mov   $0103+x,a
 14b0: 6f        ret
 
-; vcmd ef
+; vcmd ef - call subroutine
 14b1: cb 06     mov   $06,y
 14b3: fc        inc   y
 14b4: f7 0a     mov   a,($0a)+y
@@ -2025,17 +2027,17 @@
 14fd: c4 f7     mov   $f7,a
 14ff: bc        inc   a
 1500: 2f fb     bra   $14fd
-; vcmd fd
+; vcmd fd - sub-command
 1502: f8 5b     mov   x,$5b
 1504: fc        inc   y
 1505: f7 0a     mov   a,($0a)+y
-1507: 68 ff     cmp   a,#$ff
+1507: 68 ff     cmp   a,#$ff		; ff - set pitch and DSP data - SRCN/ASDR
 1509: f0 29     beq   $1534
-150b: 68 fe     cmp   a,#$fe
+150b: 68 fe     cmp   a,#$fe		; fe - set DSP data - SRCN/ASDR
 150d: f0 34     beq   $1543
-150f: 68 fd     cmp   a,#$fd
+150f: 68 fd     cmp   a,#$fd		; fd - set DSP data - ASDR
 1511: f0 36     beq   $1549
-1513: 68 fc     cmp   a,#$fc
+1513: 68 fc     cmp   a,#$fc		; fc - set pitch
 1515: f0 47     beq   $155e
 1517: 6d        push  y
 1518: 08 80     or    a,#$80
@@ -2088,7 +2090,7 @@
 
 1570: 6f        ret
 
-; vcmd f5
+; vcmd f5 - echo vbits/volume
 1571: fc        inc   y
 1572: f7 0a     mov   a,($0a)+y
 1574: 2d        push  a
@@ -2109,7 +2111,7 @@
 158f: c5 f9 1f  mov   $1ff9,a
 1592: 6f        ret
 
-; vcmd f7
+; vcmd f7 - set echo params
 1593: fc        inc   y
 1594: f7 0a     mov   a,($0a)+y
 1596: 30 58     bmi   $15f0
@@ -2181,7 +2183,7 @@
 1624: 8f fe f3  mov   $f3,#$fe
 1627: 6f        ret
 
-; vcmd f8,fc
+; vcmd f8,fc - echo start/delay
 1628: f8 5a     mov   x,$5a
 162a: fc        inc   y
 162b: cb 03     mov   $03,y
@@ -2599,7 +2601,7 @@
 1968: 8d 24     mov   y,#$24
 196a: c5 f8 05  mov   $05f8,a
 196d: cc f9 05  mov   $05f9,y
-1970: e8 18     mov   a,#$18
+1970: e8 18     mov   a,#$18		; song table
 1972: 8d 24     mov   y,#$24
 1974: c5 fa 05  mov   $05fa,a
 1977: cc fb 05  mov   $05fb,y
