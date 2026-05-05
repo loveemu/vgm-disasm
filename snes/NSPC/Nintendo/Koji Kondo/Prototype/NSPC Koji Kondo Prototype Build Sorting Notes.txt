@@ -1,8 +1,10 @@
-Total number of known unique builds: 4
+Total number of known unique builds: 5
 
 (Program starts at $0500 - Using CD ?? F5 ?? ?? FD F5 ?? ?? 3F ?? ??)
+(Program starts at $0500 - AF 06)
+- Super Mario World (Japanese version)
 (Program starts at $0500 - 97 06 & C0 0B (using E5 ?? ?? D0 03 3F ?? ?? to distinguish))
-- Super Mario World
+- Super Mario World (US and European versions)
 (Program starts at $0500 - 97 06 & F4 0B (using E5 ?? ?? D0 03 3F ?? ?? to distinguish))
 - Super Mario All-Stars + Super Mario World (Super Mario World Build)
 (Program starts at $0500 - A3 06 & CD 12 (using E8 ?? 3F ?? ?? to distinguish))
