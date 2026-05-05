@@ -1,10 +1,5 @@
-Total number of known unique build variants: 6
+Total number of known unique build variants: 5
 
-(Program starts at $0800 - using D0 F7 3F ?? ??)
-(Program starts at $0800 - 0D 0B)
-- Elfaria
-- Super Momotarou Dentetsu II
-- Super Momotarou Dentetsu III
 (Program starts at $0600 - using D0 F1 3F ?? ??)
 (Program starts at $0600 - 67 09)
 - Super Adventure Island II (Beta)

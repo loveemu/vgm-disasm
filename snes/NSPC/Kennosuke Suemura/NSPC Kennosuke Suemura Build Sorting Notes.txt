@@ -1,0 +1,46 @@
+Total number of known unique builds: 18
+
+NOTE: Most of these have versioning info included with them, so they are noted below. There are a couple of exceptions, though.
+
+(Program starts at $0800 - using D0 F8 3F ?? ??)
+(=Suemura= Ver102 - Program starts at $0800 - 93 0A)
+- Gerry Anderson's Thunderbirds
+(== Ver1.21 Copyright K.Suemura == - Program starts at $0800 - A1 0A)
+- Battle Dodgeball II
+(No Signature ~ most likely Ver1.22 - Program starts at $0800 - AF 0A)
+- World Heroes
+(No Signature ~ most likely Ver1.23 - Program starts at $0800 - 0E 0B)
+- Garou Densetsu 2/Fatal Fury 2
+(== Ver1.24 - Program starts at $0800 - BE 0B)
+- Super Chase H.Q./Super H.Q. - Criminal Chaser
+(== Ver1.27 Copyright K.Suemura == - Program starts at $0800 - 53 0B)
+- Flintstones - The Treasure of Sierra Madrock (Beta)
+(== Ver1.27 Copyright K.Suemura == - Program starts at $0800 - 84 0B)
+- Sonic Blast Man II
+
+(Program starts at $0800 - using D0 F8 E8 ?? 3F ?? ??)
+(== Ver1.27 Copyright K.Suemura == - Program starts at $0800 - 0C 13)
+- Flintstones - The Treasure of Sierra Madrock
+(== Ver1.32 Copyright K.Suemura == - Program starts at $0700 - 02 14 & 94 14 (using 5F ?? ?? EB ?? E4 ?? to distinguish))
+- Great Battle IV
+(== Ver1.32 Copyright K.Suemura == - Program starts at $0700 - 02 14 & D0 14 (using 5F ?? ?? EB ?? E4 ?? to distinguish))
+- Aoki Densetsu Shoot!
+(== Ver1.32 Copyright K.Suemura == - Program starts at $0700 - 06 14)
+- J.League Super Soccer '95
+(== Ver1.32 Copyright K.Suemura == - Program starts at $0700 - 09 14)
+- Super Genjin/Super Bonk/Super B.C Kid
+(== Ver1.32 Copyright K.Suemura == - Program starts at $0700 - FC 14)
+- Battle Jockey
+- Libble Rabble
+(== Ver1.32 Copyright K.Suemura == - Program starts at $0700 - 15 17)
+- Zero 4 Champ RR-Z
+(== Ver1.32 Copyright K.Suemura == - Program starts at $0700 - 24 17)
+- J.League '96 Dream Stadium
+- Nishijin Pachinko Monogatari 2
+- Nishijin Pachinko 3
+(== Ver1.32 Copyright K.Suemura == - Program starts at $0700 - 26 17)
+- Mickey & Donald Magical Adventure 3
+(== Ver1.32 Copyright K.Suemura == - Program starts at $0700 - 2A 17)
+- Great Battle V
+(== Ver1.32 Copyright K.Suemura == - Program starts at $0700 - 95 17)
+- SimCity Jr.

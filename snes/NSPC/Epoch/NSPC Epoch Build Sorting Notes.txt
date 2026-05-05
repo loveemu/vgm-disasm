@@ -1,0 +1,23 @@
+Total number of known unique builds: 7
+
+(Program starts at $0800 - using D0 FB BC 3F ?? ??)
+(Program starts at $0800 - 6F 0E)
+- Chibi Maruko-chan: Harikiri 365-Nichi no Maki
+(Program starts at $0800 - 6F 0E (opcode difference at $08AB))
+- Dragon Slayer: Eiyuu Densetsu
+
+(*Ver S1.20*)
+(*Ver S1.20* - Program starts at $0800 - using D0 FA BC 3F ?? ??)
+(Program starts at $0800 - FB 0E & 2C 15 (using F0 ?? 8F ?? ?? 3F ?? ?? for distinguishing) & 75 16 (using C8 ?? 90 03 3F ?? ?? for distinguishing))
+- Doraemon: Nobita to Yousei no Kuni
+(Program starts at $0800 - FB 0E & 2C 15 (using F0 ?? 8F ?? ?? 3F ?? ?? for distinguishing) & 78 16 (using C8 ?? 90 03 3F ?? ?? for distinguishing))
+- Doraemon: Nobita to Yousei no Kuni (Revision 1)
+(Program starts at $0800 - FB 0E & 58 15 (using F0 ?? 8F ?? ?? 3F ?? ?? for distinguishing))
+- Dragon Slayer: Eiyuu Densetsu II
+(Program starts at $0800 - FE 0E & 62 15 (using F0 ?? 8F ?? ?? 3F ?? ?? for distinguishing))
+- Conveni Wars Barcode Battler Senki - Super Senshi Shutsugeki Seyo!
+(Program starts at $0800 - FE 0E & 6D 15 (using F0 ?? 8F ?? ?? 3F ?? ?? for distinguishing))
+- Alice no Paint Adventure
+- Donald Duck no Mahou no Boushi
+- Doraemon 2 - Nobita no Toys Land Daibouken
+- Lupin III - Densetsu no Hihou o Oe!

@@ -3,9 +3,9 @@ Total number of known unique builds: 9
 (Program starts at $0400 - using D0 FB C5 ?? ?? BC 3F ?? ??)
 (Program starts at $0400 - A9 09 & 06 0F (using 3F ?? ?? at $0601 to distinguish))
 - ActRaiser (English Prototype)
+- Soul Blader/Soul Blazer
 (Program starts at $0400 - A9 09 & 0C 0F (using 3F ?? ?? at $0601 to distinguish))
 - ActRaiser (US and European version)
-- Soul Blader/Soul Blazer
 (Program starts at $0400 - C3 09)
 - Magic Sword
 - Takahashi Meijin no Daibouken-jima/Super Adventure Island

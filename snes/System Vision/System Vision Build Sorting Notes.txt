@@ -1,0 +1,11 @@
+Total number of known unique builds: 4
+
+(Program starts at $0530 - Using E8 ?? CD ?? 8D ?? 3F ?? ??)
+(Program starts at $0530 - 93 07)
+- Chester Cheetah - Too Cool to Fool
+(Program starts at $0530 - FA 07)
+- Power Athlete
+(Program starts at $0530 - 0B 08)
+- Power Moves
+(Program starts at $0479 - 49 07)
+- Battle Master: Kyuukyoku no Senshitachi

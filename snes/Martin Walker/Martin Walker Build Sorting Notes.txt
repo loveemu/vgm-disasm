@@ -1,0 +1,33 @@
+Total number of known unique builds: 11
+
+(Program starts at $0500 - using E8 ?? 8D ?? 3F ?? ??)
+(Program starts at $0500 - AD 09)
+- Super James Pond (US and Japanese versions)
+(Program starts at $0600 - 0B 0F)
+- Super Putty/Putty Moon
+(Program starts at $0600 - 9E 0F)
+- James Pond's Crazy Sports/Super Aquatic Games Starring the Aquabats
+- Sensible Soccer/Championship Soccer '94
+(Program starts at $0600 - 11 10)
+- Time Slip (Beta)
+(Program starts at $0600 - 41 10)
+- Time Slip
+(Program starts at $0600 - 54 10)
+- Chaos Engine/Soldiers of Fortune
+(Program starts at $0600 - 54 10 (code difference at $1163))
+- Super Troll Islands
+(Program starts at $0600 - F1 10)
+- James Pond 3 - Operation Starfish
+- Pinkie
+- Rise of the Robots
+- Super Morph
+(Program starts at $0600 - F8 10)
+- Pinball Dreams (Beta)
+(Program starts at $0600 - 15 11)
+- 3 Ninjas Kick Back
+- Pinball Dreams/Pinball Pinball
+- Putty Squad
+- Spawn (Psygnosis)
+- Time Trax
+(Program starts at $0600 - 15 11 (code difference at $11EE))
+- FIFA '97

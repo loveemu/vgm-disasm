@@ -1,0 +1,29 @@
+Total number of known unique builds: 9
+
+(Program starts at $0200 - using 8F ?? ?? 3F ?? ??)
+(Program starts at $0200 - C5 09)
+- Super Smash TV
+(Program starts at $0200 - F6 0C)
+- George Foreman's KO Boxing
+(Program starts at $0200 - FB 0C)
+- NBA All-Star Challenge (US & Japanese Version)
+(Program starts at $0200 - FD 0C)
+- MechWarrior/BattleTech
+(Program starts at $0200 - 32 0D)
+- NBA All-Star Challenge (European Version)
+(Program starts at $0200 - 38 0D)
+- Shadowrun (US Beta Version)
+(Program starts at $0200 - 47 0D)
+- Shadowrun (US Version)
+(Program starts at $0200 - 54 0E)
+- Shadowrun (European version)
+- Super High Impact
+(Program starts at $0200 - 75 0E)
+- Atmosfear
+- Choplifter III
+- Baby T-Rex/Radical Rex
+- Shadowrun (Japanese version)
+- Super International Cricket
+- Super Solitaire/Trump Island
+- True Lies
+- WCW SuperBrawl Wrestling

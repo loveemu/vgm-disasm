@@ -1,0 +1,7 @@
+Total number of known unique builds: 2
+
+(Program starts at $0310 - using CD ?? BD 3F ?? ??)
+(Program starts at $0310 - 1F 0F)
+- Bushi Seiryuuden
+(Program starts at $0310 - 71 0F)
+- Quinty

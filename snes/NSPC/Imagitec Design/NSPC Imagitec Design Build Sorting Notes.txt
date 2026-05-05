@@ -1,0 +1,16 @@
+Total number of known unique builds: 4
+
+(Program starts at $0800 - using D0 E8 BC 3F ?? ??)
+(Program starts at $0800 - A5 0D)
+- Top Gear/Top Racer
+(Program starts at $0800 - A3 0D)
+- American Gladiators
+- Humans
+(Program starts at $0800 - CB 0D)
+- Wheel of Fortune (One of two versions used, used at the Title Screen)
+- Wheel of Fortune - Deluxe Edition
+
+(Program starts at $0400 - using D0 F4 BC 3F ?? ??)
+(Program starts at $0400 - 91 09)
+- Wheel of Fortune (One of two versions used, used in-game)
+- Wheel of Fortune - Deluxe Edition

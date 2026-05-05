@@ -1,0 +1,36 @@
+Total number of known unique builds: 12
+
+(*Ver S1.20*)
+(*Ver S1.20* - Program starts at $0800 - Using D0 FB BC 3F ?? ??)
+(Program starts at $0800 - DC 10)
+- Dimension Force/D-Force
+(Program starts at $0800 - DD 10)
+- Tokoro's Mahjong
+- Super F1 Circus 2
+- Super Pachi-slot Mahjong
+(Program starts at $0800 - EA 10)
+- Super Honmei: GI Seiha
+(Program starts at $0800 - 00 11)
+- Cosmo Police Galivan II - Arrow of Justice
+- Kero Kero Keroppi no Bouken Nikki - Nemureru Mori no Keroleen
+- Super Castles
+(Program starts at $0800 - 33 12)
+- Super F1 Circus/Super F1 Circus Limited
+(Program starts at $0800 - Using D0 FB E8 ?? 3F ?? ??)
+(Program starts at $0800 - 40 10)
+- Super Nichibutsu Mahjong 3: Yoshimoto Gekijou Hen
+(Program starts at $0800 - A4 10)
+- Numbers Paradise
+- Super F1 Circus 3
+(Program starts at $0800 - B9 10)
+- Nichibutsu Collection 1
+- Nichibutsu Collection 2
+(Program starts at $0800 - 40 12)
+- Kouryaku Casino Bar
+- Mahjong Hanjouki
+(Program starts at $0800 - 58 12)
+- Gionbana
+(Program starts at $0800 - A7 12)
+- Super F1 Circus Gaiden
+(Program starts at $0800 - AA 12)
+- Puzzle'n Desu!

@@ -1,0 +1,56 @@
+Total number of known unique builds: 24
+
+(Program starts at $0400 - Using D0 FB BC 3F ?? ??)
+(Program starts at $0400 - A9 0C)
+- KiKi KaiKai: Nazo no Kuro Mantle/Pocky and Rocky (European Sample)
+(Program starts at $0400 - Using D0 E1 BC 3F ?? ??)
+(Program starts at $0400 - 14 0D)
+- Pocky and Rocky (US version)
+(Program starts at $0400 - Using D0 F7 BC 3F ?? ??)
+(Program starts at $0400 - BA 0C)
+- Zen-Nihon Pro Wrestling
+(Program starts at $0400 - E8 0C)
+- Pocky and Rocky (European version)
+(Program starts at $0400 - F3 0C)
+- KiKi KaiKai: Tsukiyozoushi
+(Program starts at $0400 - 01 0D)
+- Pocky and Rocky 2 (US Beta Version)
+(Program starts at $0400 - 11 0D)
+- Zen-Nihon Pro Wrestling - Sekai Saikyou Tag/Natsume Championship Wrestling
+(Program starts at $0400 - 16 0D)
+- Fortune Quest - Dice o Korogase
+(Program starts at $0400 - 1F 0D & D4 10 (using A2 ?? E8 ?? 8C ?? 3F ?? ?? for distinguishing))
+- Shin Kidou Senki Gundam Wing: Endless Duel
+(Program starts at $0400 - 1F 0D & 30 11 (using A2 ?? E8 ?? 8C ?? 3F ?? ?? for distinguishing))
+- Zen-Nihon Pro Wrestling: Fight da Pon!
+(Program starts at $0400 - 24 0D)
+- Zen-Nihon Pro Wresling 2 - 3-4 Budoukan
+(Program starts at $0400 - 2D 0D)
+- Wild Guns
+(Program starts at $0400 - 2F 0D)
+- Casper (Japanese version)
+- Oomono Black Bass Fishing: Jinzouko Hen/Mark Davis' The Fishing Master
+(Program starts at $0400 - 31 0D)
+- Mighty Morphin Power Rangers
+(Program starts at $0400 - 35 0D & 24 11 (using A2 ?? E8 ?? 8D ?? 3F ?? ?? for distinguishing))
+- Ninja Warriors Again
+(Program starts at $0400 - 35 0D & 2A 11 (using A2 ?? E8 ?? 8D ?? 3F ?? ?? for distinguishing))
+- Ninja Warriors: The New Generation
+(Program starts at $0400 - 3A 0D)
+- Heian Fuuunden
+- Saibara Rieko no Mahjong Hourouki
+(Program starts at $0400 - 3F 0D & 26 11 (using A2 ?? E8 ?? 8D ?? 3F ?? ?? for distinguishing))
+- Wild Guns (Japanese Sample)
+(Program starts at $0400 - 3F 0D & 50 11 (using A2 ?? E8 ?? 8C ?? 3F ?? ?? for distinguishing))
+- Shimono Masaki no Fishing to Bassing
+(Program starts at $0400 - 59 0D & 58 11 (using A2 ?? E8 ?? 8D ?? 3F ?? ?? for distinguishing))
+- Mighty Morphin Power Rangers: The Fighting Edition
+- Mighty Morphin Power Rangers: The Movie
+(Program starts at $0400 - 59 0D & 6A 11 (using A2 ?? E8 ?? 8D ?? 3F ?? ?? for distinguishing))
+- Ghost Sweeper Mikami: Joreishi ha Nice Body
+(Program starts at $0400 - 5F 0D)
+- Gekisou Sentai Carranger: Zenkai! Racer Senshi
+(Program starts at $0400 - 96 0D)
+- Pocky and Rocky 2
+(Program starts at $0400 - C0 0E)
+- Power Rangers Zeo: Battle Racers

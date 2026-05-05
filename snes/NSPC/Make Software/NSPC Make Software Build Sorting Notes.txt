@@ -1,7 +1,7 @@
-Total number of known unique builds: 2
+Total number of known unique builds: 1
 
-(Program starts at $0800 - using F0 EE E8 ?? 3F ?? ??)
-(Program starts at $0800 - F4 0D)
-- Bill Laimbeer's Combat Basketball
-(Program starts at $0800 - 08 0E)
-- Earth Light
+(*Ver S1.20* - Program starts at $0800 - Using 90 F8 BC 3F ?? ??)
+(Program starts at $0800 - 7B 0D)
+- Super Nichibutsu Mahjong
+- Super Nichibutsu Mahjong 2
+- Super Nichibutsu Mahjong 4: Kiso Kenkyuu Hen

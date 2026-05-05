@@ -1,0 +1,46 @@
+Total number of known unique builds: 14
+
+(Program starts at $0800 - Using D0 FB BC 3F ?? ??)
+(Program starts at $0800 - 40 0D)
+- Kidou Senshi Gundam F91 - Formula Senki 0122 (Ending)
+(Program starts at $0800 - 84 0D)
+- SD The Great Battle (Cutscenes)
+(Program starts at $0800 - 86 0D)
+- 3x3 Eyes - Seima Kourinden (Opening and Ending)
+- Kidou Senshi Gundam F91 - Formula Senki 0122 (Opening)
+
+(Program starts at $0800 - Using D0 FB BC C4 ?? 3F ?? ??)
+(Program starts at $0800 - 0C 0F)
+- SD The Great Battle (In-Game)
+(Program starts at $0800 - 39 0F)
+- Kidou Senshi Gundam F91 - Formula Senki 0122 (In-Game)
+(Program starts at $0800 - 40 0F)
+- Ultraman - Towards the Future (This is referring to the US and European versions, which are completely different from the Japanese version)
+(Program starts at $0800 - 54 0F)
+- Magical Taruruuto-kun: Magic Adventure
+(Program starts at $0800 - 56 0F)
+- Super Wagyan Land
+(Program starts at $0800 - 7D 0F)
+- Battle Dodgeball
+(Program starts at $0800 - 92 0F)
+- 3x3 Eyes - Seima Kourinden (In-Game)
+- Garou Densetsu/Fatal Fury
+- Great Battle II: Last Fighter Twin
+- Kinnikuman - Dirty Challenger
+- Shounen Ashibe
+- Xandra no Daibouken: Valkyrie to no Deai/Whirlo
+(Program starts at $0800 - 94 0F)
+- Garou Densetsu/Fatal Fury (US version) (Title Screen)
+(Program starts at $0800 - 24 10)
+- Arkanoid: Doh it Again
+- Inspector Gadget (In-Game)
+
+(Program starts at $0800 - Using BD E8 ?? 8D ?? 3F ?? ??)
+(Program starts at $0800 - 0B 0A)
+- Fatal Fury (European Version) (Title Screen)
+- Super Wagyan Land 2
+
+(*Ver S1.20*)
+(Program starts at $0800 - Using D0 FB BC 3F ?? ??)
+(Program starts at $0800 - 58 0D)
+- Inspector Gadget (Title Screen and Ending)

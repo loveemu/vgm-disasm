@@ -1,0 +1,25 @@
+Total number of known unique builds: 9
+
+(Program starts at $0800 - Using D0 FB BC C4 ?? 3F ?? ??)
+(Program starts at $0800 - C4 13)
+- Super Famista
+(Program starts at $0800 - D8 13)
+- Super Batter Up
+(Program starts at $0800 - A6 14)
+- Cosmo Gang - The Puzzle
+- Pac-Attack
+(Program starts at $0800 - DE 14)
+- Metal Marines/Militia
+- Super Oozumou - Nessen Ooichiban
+(Program starts at $0800 - E4 14 & 36 1B (using 3F ?? ?? at $10DB to distinguish))
+- Super Famista 2
+(Program starts at $0800 - E4 14 & 3A 1B (using 3F ?? ?? at $10DB to distinguish))
+- J.League Soccer Prime Goal
+- Super Famista 3
+(Program starts at $0800 - 26 15)
+- Yuu Yuu Hakusho
+(Program starts at $0800 - 69 15)
+- Super Family Tennis/Smash Tennis
+(Program starts at $0800 - Using E8 ?? 8D ?? 3F ?? ??)
+(Program starts at $0800 - 8B 0B)
+- Hello! Pac-Man/Pac-Man 2: The New Adventures

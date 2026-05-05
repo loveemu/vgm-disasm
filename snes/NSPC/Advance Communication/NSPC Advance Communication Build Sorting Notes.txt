@@ -1,0 +1,22 @@
+Total number of known unique builds: 7
+
+(Program starts at $0800)
+(Program starts at $0800 - using D0 F9 AE CE BC 3F ?? ??)
+(Program starts at $0800 - 80 0D)
+- Ys III: Wanderers from Ys
+
+(Program starts at $0500 - using D0 F1 BC 3F ?? ??)
+(Program starts at $0500 - 3F 0C)
+- Light Fantasy
+
+(Program starts at $0800 - using D0 EE BC 3F ?? ??)
+(Program starts at $0800 - 3A 0E)
+- Ginga Eiyuu Densetsu
+(Program starts at $0800 - 3D 0E)
+- Chou Gojira/Super Godzilla
+(Program starts at $0800 - 51 0E & 55 12 (using A2 ?? E8 ?? 3F ?? ?? to distinguish))
+- Serizawa Nobuo no Birdie Try
+(Program starts at $0800 - 51 0E & 57 12 (using A2 ?? E8 ?? 3F ?? ?? to distinguish))
+- Mecarobot Golf
+(Program starts at $0800 - 60 0E)
+- Cyber Knight

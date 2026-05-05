@@ -1,0 +1,42 @@
+Total number of known unique builds: 12
+
+(Program starts at $0800 - Using D0 FB E8 ?? 3F ?? ??)
+(Program starts at $0800 - F3 0F)
+- Air Management/Aerobiz
+- Super Inindou - Datou Nobunaga/Inindo - Way of the Ninja
+- Super Nobunaga no Yabou - Bushou Fuuunroku (Japanese version only: does not apply to Lord of Darkness, which uses DBOOT)
+- Super Sangokushi II/Romance of the Three Kingdoms II
+(Program starts at $0800 - 05 10)
+- Super Daikoukai Jidai/Uncharted Waters
+(Program starts at $0800 - Using D0 FB BC 3F ?? ??)
+(Program starts at $0800 - 09 10)
+- Super Mahjong Taikai
+
+(*Ver S1.20*)
+(*Ver S1.20* - Program starts at $0800 - Using D0 FB BC 3F ?? ??)
+(Program starts at $0800 - C6 0B)
+- Super Royal Blood
+(Program starts at $0800 - E5 0B)
+- Sangokushi III (Japanese version)
+(Program starts at $0800 - E5 0B (Opcode difference at $0528))
+- Gemfire
+
+(Program starts at $0400 - Using D0 FB E8 ?? 3F ?? ??)
+(Program starts at $0400 - BE 0B)
+- Teitoku no Ketsudan
+(Program starts at $0400 - Using D0 FB BC 3F ?? ??)
+(Program starts at $0400 - E2 0B)
+- Europe Sensen/Operation Europe: Path to Victory 1939-1945
+- Leading Company
+- Super Aoki Ookami to Shiroki Mejika - Genchou Hishi
+(Program starts at $0400 - 03 0C)
+- Air Management II
+- P.T.O. - Pacific Theater of Operations
+- Taikou Risshiden
+(Program starts at $0400 - Using CD ?? BD 3F ?? ??)
+(Program starts at $0400 - BC 04)
+- Sangokushi III (Hong Kong version)/Romance of the Three Kingdoms III
+(Program starts at $0400 - BF 04 & B1 10 (using a second 3F ?? ?? right next to it to distinguish))
+- Genghis Khan II - Clan of the Gray Wolf
+(Program starts at $0400 - BF 04 & B7 10 (using a second 3F ?? ?? right next to it to distinguish))
+- Aerobiz Supersonic

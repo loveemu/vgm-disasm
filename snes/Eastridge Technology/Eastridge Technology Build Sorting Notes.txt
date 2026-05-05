@@ -1,0 +1,34 @@
+Total number of known unique builds: 14
+
+NOTE: The music data is stored on the SNES side and translated to commands for the SPC700 side to execute.
+
+(Program starts at $0200 - using 8D ?? E8 ?? 3F ?? ??)
+(Program starts at $0200 - 25 03)
+- Miracle Piano Teaching System
+(Program starts at $0200 - B5 04)
+- James Bond Jr.
+(Program starts at $0200 - C8 04)
+- Great Waldo Search
+(Program starts at $0200 - 19 05)
+- Pit Fighter
+(Program starts at $0200 - 1F 05)
+- Paperboy 2
+(Program starts at $0200 - 51 05)
+- Terminator
+(Program starts at $0200 - 52 05)
+- Wayne's World
+(Program starts at $0200 - 6C 05)
+- Relief Pitcher (6/15 Prototype)
+(Program starts at $0200 - 7C 05)
+- Steel Talons
+(Program starts at $0200 - 91 05)
+- Incredible Crash Dummies
+(Program starts at $0200 - 92 05)
+- Relief Pitcher
+(Program starts at $0200 - CA 05)
+- Ren and Stimpy - Veediots!
+
+(Program starts at $0700 - 0E 09)
+- Chessmaster (European and Japanese version)
+(Program starts at $0700 - 2A 09)
+- Chessmaster (US version)

@@ -1,0 +1,21 @@
+Total number of known unique builds: 4
+
+(Program starts at $0200 - using CD ?? BD 3F ?? ??)
+(Program starts at $0200 - 26 06)
+- Rushing Beat Ran - Fukusei Toshi
+(Program starts at $0200 - 86 06)
+- Brawl Brothers: Rival Turf! 2
+- Dead Dance/Tuff E Nuff
+- Ikari no Yousai/Operation Logic Bomb
+(Program starts at $0200 - 54 1C)
+- Rushing Beat/Rival Turf!
+
+(Program starts at $0200 - using 8F ?? ?? 3F ?? ??)
+(Program starts at $0200 - 91 10)
+- Bishoujo Janshi Suchie-Pai
+- Fire Fighting/Ignition Factor
+- JWP Joshi Pro Wrestling: Pure Wrestle Queens
+- Kingyo Chuuihou! - Tobidase! Game Gakuen
+- Rushing Beat Shura/Peace Keepers
+- Super Ninja-kun
+- Tenryuu Genichiro no Pro Wrestling Revolution/HammerLock Wrestling

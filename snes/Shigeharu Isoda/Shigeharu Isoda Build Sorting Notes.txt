@@ -1,0 +1,15 @@
+Total number of known unique builds: 5
+
+(Program starts at $06C0 - contains an opening jump - using the second 5F ?? ??)
+(ApuDrv v1.0 - Program starts at $06C0 - contains an opening jump - F1 06)
+- RPG Tsukuru: Super Dante
+(ApuDrv v1.1 - Program starts at $06C0 - contains an opening jump - F0 06)
+- Shanghai - Banri no Choujou
+
+(Program starts at $05E0 - Using 8F ?? ?? 8F ?? ?? 3F ?? ??)
+(ApuDrv v2.0 - Program starts at $05E0 - 99 07)
+- RPG Tsukuru 2
+(ApuDrv v2.1 - Program starts at $05E0 - BE 07)
+- Ongaku Tsukuru Kanadeeru
+(ApuDrv v2.2 - Program starts at $05E0 - D1 07)
+- Sound Novel Tsukuru
